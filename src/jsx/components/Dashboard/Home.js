@@ -148,7 +148,7 @@ const Home = () => {
 						</div>
 					</div>
 				</div>
-				<div className="col-xl-6">
+				{/* <div className="col-xl-6">
 					<div className="row">
 						<div className="col-xl-12">
 							<div className="card">
@@ -333,14 +333,13 @@ const Home = () => {
 									4% (30 days)</span>
 								</div>
 								<div className="card-body p-0">
-									{/* <canvas id="widgetChart3" height="80"></canvas> */}
 									<WidgetChart3 />
 								</div>
 							</div>
 						</div>
 					</div>
-				</div>
-				<div className="col-xl-6">
+				</div> */}
+				{/* <div className="col-xl-6">
 					<div className="row">
 						<div className="col-xl-12">
 							<div className="row">
@@ -385,9 +384,6 @@ const Home = () => {
 											</ul>
 											<h4 className="mt-3 mb-0">Insert Amount</h4>
 											<div className="format-slider">
-												{/* <input className="form-control amount-input"  title="Formatted number" id="input-format" 
-													placeholder="20.000"
-												/> */}
 												<div id="slider-format">
 													<NouiRangeSlider />
 												</div>
@@ -475,7 +471,7 @@ const Home = () => {
 							<PreviousTransactions />
 						</div>
 					</div>
-				</div>
+				</div> */}
 				
 			</div>	
 		</>

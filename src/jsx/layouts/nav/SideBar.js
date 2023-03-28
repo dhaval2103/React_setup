@@ -6,7 +6,7 @@ import PerfectScrollbar from "react-perfect-scrollbar";
 /// Link
 import { Link } from "react-router-dom";
 import { Dropdown } from "react-bootstrap";
-import {useScrollPosition} from "@n8tb1t/use-scroll-position";
+import { useScrollPosition } from "@n8tb1t/use-scroll-position";
 import { ThemeContext } from "../../../context/ThemeContext";
 import LogoutPage from './Logout';
 
@@ -16,10 +16,10 @@ import profile from "../../../images/user.jpg";
 
 
 class MM extends Component {
-	componentDidMount() {
-		this.$el = this.el;
-		this.mm = new Metismenu(this.$el);
-	}
+  componentDidMount() {
+    this.$el = this.el;
+    this.mm = new Metismenu(this.$el);
+  }
   componentWillUnmount() {
   }
   render() {
@@ -34,12 +34,12 @@ class MM extends Component {
 }
 
 const SideBar = () => {
-	const {
-		iconHover,
-		sidebarposition,
-		headerposition,
-		sidebarLayout,
-	} = useContext(ThemeContext);
+  const {
+    iconHover,
+    sidebarposition,
+    headerposition,
+    sidebarLayout,
+  } = useContext(ThemeContext);
   useEffect(() => {
     var btn = document.querySelector(".nav-control");
     var aaa = document.querySelector("#main-wrapper");
@@ -47,14 +47,14 @@ const SideBar = () => {
       return aaa.classList.toggle("menu-toggle");
     }
     btn.addEventListener("click", toggleFunc);
-	
-	//sidebar icon Heart blast
-	var handleheartBlast = document.querySelector('.heart');
-        function heartBlast() {
-            return handleheartBlast.classList.toggle("heart-blast");
-        }
-        handleheartBlast.addEventListener('click', heartBlast);
-	
+
+    //sidebar icon Heart blast
+    // var handleheartBlast = document.querySelector('.heart');
+    // function heartBlast() {
+    //   return handleheartBlast.classList.toggle("heart-blast");
+    // }
+    // handleheartBlast.addEventListener('click', heartBlast);
+
   }, []);
   let scrollPosition = useScrollPosition();
   /// Path
@@ -63,15 +63,15 @@ const SideBar = () => {
   path = path[path.length - 1];
   /// Active menu
   let deshBoard = [
-      "",
-      "dashboard-dark",
-	  "wallet",
-	  "invoices-list",
-	  "create-invoices",
-	  "card-center",
-       "transaction-details",
-       "task",
-    ],
+    "",
+    "dashboard-dark",
+    "wallet",
+    "invoices-list",
+    "create-invoices",
+    "card-center",
+    "transaction-details",
+    "task",
+  ],
     app = [
       "app-profile",
       "post-details",
@@ -127,17 +127,17 @@ const SideBar = () => {
     ],
     plugins = [
       "uc-select2",
-      
+
       "uc-sweetalert",
       "uc-toastr",
       "uc-noui-slider",
       "map-jqvmap",
       "uc-lightgallery",
     ],
-	redux = [
-       "redux-form",
-	   "redux-wizard",    
-       "todo",
+    redux = [
+      "redux-form",
+      "redux-wizard",
+      "todo",
     ],
     widget = ["widget-basic"],
     forms = [
@@ -167,56 +167,55 @@ const SideBar = () => {
     ];
   return (
     <div
-      className={`dlabnav ${iconHover} ${
-        sidebarposition.value === "fixed" &&
+      className={`dlabnav ${iconHover} ${sidebarposition.value === "fixed" &&
         sidebarLayout.value === "horizontal" &&
         headerposition.value === "static"
-          ? scrollPosition > 120
-            ? "fixed"
-            : ""
+        ? scrollPosition > 120
+          ? "fixed"
           : ""
-      }`}
+        : ""
+        }`}
     >
       <PerfectScrollbar className="dlabnav-scroll">
-		  	<Dropdown className="dropdown header-profile2">
-			  <Dropdown.Toggle variant="" as="a" className="nav-link i-false c-pointer">
-				<div className="header-info2 d-flex align-items-center border">
-				  <img src={profile} width={20} alt="" />
-				  <div className="d-flex align-items-center sidebar-info">
-					<div>
-					  <span className="font-w700 d-block mb-2">Eren Yeager</span>
-					  <small className="text-end font-w400">Super Admin</small>
-					</div>
-					<i className="fas fa-sort-down ms-4"></i>
-				  </div>
-				</div>
-			  </Dropdown.Toggle>
-				  <Dropdown.Menu align="right" className=" dropdown-menu dropdown-menu-end">
-					<Link to="/app-profile" className="dropdown-item ai-icon">
-					  <svg id="icon-user1" xmlns="http://www.w3.org/2000/svg" className="text-primary me-1"
-						width={18} height={18} viewBox="0 0 24 24" fill="none"
-						stroke="currentColor" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round"
-					  >
-						<path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" />
-						<circle cx={12} cy={7} r={4} />
-					  </svg>
-					  <span className="ms-2">Profile </span>
-					</Link>
-					<Link to="/email-inbox" className="dropdown-item ai-icon">
-					  <svg id="icon-inbox" xmlns="http://www.w3.org/2000/svg" className="text-success me-1" width={18}
-						height={18} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2}
-						strokeLinecap="round" strokeLinejoin="round"
-					  >
-						<path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z" />
-						<polyline points="22,6 12,13 2,6" />
-					  </svg>
-					  <span className="ms-2">Inbox</span>
-					</Link>
-					<LogoutPage />
-				  </Dropdown.Menu>
-			  </Dropdown> 
+        <Dropdown className="dropdown header-profile2">
+          <Dropdown.Toggle variant="" as="a" className="nav-link i-false c-pointer">
+            <div className="header-info2 d-flex align-items-center border">
+              <img src={profile} width={20} alt="" />
+              <div className="d-flex align-items-center sidebar-info">
+                <div>
+                  <span className="font-w700 d-block mb-2">Eren Yeager</span>
+                  <small className="text-end font-w400">Super Admin</small>
+                </div>
+                <i className="fas fa-sort-down ms-4"></i>
+              </div>
+            </div>
+          </Dropdown.Toggle>
+          <Dropdown.Menu align="right" className=" dropdown-menu dropdown-menu-end">
+            <Link to="/app-profile" className="dropdown-item ai-icon">
+              <svg id="icon-user1" xmlns="http://www.w3.org/2000/svg" className="text-primary me-1"
+                width={18} height={18} viewBox="0 0 24 24" fill="none"
+                stroke="currentColor" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round"
+              >
+                <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" />
+                <circle cx={12} cy={7} r={4} />
+              </svg>
+              <span className="ms-2">Profile </span>
+            </Link>
+            <Link to="/email-inbox" className="dropdown-item ai-icon">
+              <svg id="icon-inbox" xmlns="http://www.w3.org/2000/svg" className="text-success me-1" width={18}
+                height={18} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2}
+                strokeLinecap="round" strokeLinejoin="round"
+              >
+                <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z" />
+                <polyline points="22,6 12,13 2,6" />
+              </svg>
+              <span className="ms-2">Inbox</span>
+            </Link>
+            <LogoutPage />
+          </Dropdown.Menu>
+        </Dropdown>
         <MM className="metismenu" id="menu">
-		      <li className={`${deshBoard.includes(path) ? "mm-active" : ""}`}>
+          <li className={`${deshBoard.includes(path) ? "mm-active" : ""}`}>
             <Link className="has-arrow" to="#" >
               <i className="fas fa-home"></i>
               <span className="nav-text">Dashboard</span>
@@ -232,8 +231,19 @@ const SideBar = () => {
               <li><Link className={`${path === "task" ? "mm-active" : ""}`} to="/task">Task</Link></li>
             </ul>
           </li>
-			
+
           <li className={`${app.includes(path) ? "mm-active" : ""}`}>
+            <Link className="has-arrow ai-icon" to="#" >
+              <i className="fa fa-user"></i>
+              <span className="nav-text">Users</span>
+            </Link>
+            <ul >
+              <li><Link className={`${path === "user-list" ? "mm-active" : ""}`} to="/user-list">User List</Link></li>
+            </ul>
+          </li>
+
+          {/* Apps */}
+          {/* <li className={`${app.includes(path) ? "mm-active" : ""}`}>
             <Link className="has-arrow ai-icon" to="#" >
               <i className="fas fa-info-circle"></i>
               <span className="nav-text">Apps</span>
@@ -261,8 +271,9 @@ const SideBar = () => {
                 </ul>
               </li>
             </ul>
-          </li>
-          <li className={`${charts.includes(path) ? "mm-active" : ""}`}>
+          </li> */}
+          {/* Charts */}
+          {/* <li className={`${charts.includes(path) ? "mm-active" : ""}`}>
             <Link className="has-arrow ai-icon" to="#" >
               <i className="fas fa-chart-line"></i>
               <span className="nav-text">Charts</span>
@@ -274,8 +285,9 @@ const SideBar = () => {
               <li><Link className={`${path === "chart-sparkline" ? "mm-active" : ""}`} to="/chart-sparkline">Sparkline</Link></li>
               <li><Link className={`${path === "chart-apexchart" ? "mm-active" : ""}`} to="/chart-apexchart" >Apexchart</Link></li>
             </ul>
-          </li>
-          <li className={`${bootstrap.includes(path) ? "mm-active" : ""}`}>
+          </li> */}
+          {/* Bootstrap */}
+          {/* <li className={`${bootstrap.includes(path) ? "mm-active" : ""}`}>
             <Link className="has-arrow ai-icon" to="#" >
               <i className="fab fa-bootstrap"></i>
               <span className="nav-text">Bootstrap</span>
@@ -298,8 +310,9 @@ const SideBar = () => {
               <li><Link className={`${path === "ui-pagination" ? "mm-active" : ""}`} to="/ui-pagination">Pagination</Link></li>
               <li><Link className={`${path === "ui-grid" ? "mm-active" : ""}`} to="/ui-grid">Grid</Link></li>
             </ul>
-          </li>
-          <li className={`${plugins.includes(path) ? "mm-active" : ""}`}>
+          </li> */}
+          {/* Plugins */}
+          {/* <li className={`${plugins.includes(path) ? "mm-active" : ""}`}>
             <Link className="has-arrow ai-icon" to="#" >
               <i className="fas fa-heart"></i><span className="nav-text">Plugins</span>
             </Link>
@@ -311,22 +324,25 @@ const SideBar = () => {
               <li><Link className={`${path === "map-jqvmap" ? "mm-active" : ""}`} to="/map-jqvmap">Jqv Map</Link></li>
               <li><Link className={`${path === "uc-lightgallery" ? "mm-active" : ""}`} to="/uc-lightgallery">Light Gallery</Link></li>
             </ul>
-          </li>
-          <li className={`${redux.includes(path) ? "mm-active" : ""}`}>
+          </li> */}
+          {/* Redux */}
+          {/* <li className={`${redux.includes(path) ? "mm-active" : ""}`}>
               <Link className="has-arrow ai-icon" to="#" >
                   <i className="flaticon-087-stop"></i><span className="nav-text">Redux</span>
               </Link>
           <ul>
                 <li><Link className={`${path === "todo" ? "mm-active" : ""}`} to="/todo">Todo</Link></li>
           </ul>
-         </li>
-          <li className={`${widget.includes(path) ? "mm-active" : ""}`}>
+         </li> */}
+          {/* Widget */}
+          {/* <li className={`${widget.includes(path) ? "mm-active" : ""}`}>
             <Link to="widget-basic" className="ai-icon" >
               <i className="fas fa-user-check"></i>
               <span className="nav-text">Widget</span>
             </Link>
-          </li>
-          <li className={`${forms.includes(path) ? "mm-active" : ""}`}>
+          </li> */}
+          {/* Forms */}
+          {/* <li className={`${forms.includes(path) ? "mm-active" : ""}`}>
             <Link className="has-arrow ai-icon" to="#" >
               <i className="fas fa-file-alt"></i>
               <span className="nav-text forms">Forms</span>
@@ -335,7 +351,7 @@ const SideBar = () => {
               <li><Link className={`${path === "form-element" ? "mm-active" : ""}`} to="/form-element">Form Elements</Link></li>
               <li><Link className={`${path === "form-wizard" ? "mm-active" : ""}`} to="/form-wizard"> Wizard</Link></li>
               <li>
-                <Link className={`${path === "form-editor-summernote" ? "mm-active" : ""}`}to="/form-editor-summernote">
+                <Link className={`${path === "form-editor-summernote" ? "mm-active" : ""}`} to="/form-editor-summernote">
                   Summernote
                 </Link>
               </li>
@@ -346,56 +362,58 @@ const SideBar = () => {
                 </Link>
               </li>
             </ul>
-          </li>
-          <li className={`${table.includes(path) ? "mm-active" : ""}`}>
-             <Link className="has-arrow ai-icon" to="#" ><i className="fas fa-table"></i><span className="nav-text">Table</span></Link>
+          </li> */}
+          {/* Table */}
+          {/* <li className={`${table.includes(path) ? "mm-active" : ""}`}>
+            <Link className="has-arrow ai-icon" to="#" ><i className="fas fa-table"></i><span className="nav-text">Table</span></Link>
             <ul>
-                <li>
-                <Link className={`${ path === "table-filtering" ? "mm-active" : "" }`} to="/table-filtering">
+              <li>
+                <Link className={`${path === "table-filtering" ? "mm-active" : ""}`} to="/table-filtering">
                   Table Filtering
                 </Link>
               </li>
               <li>
-                <Link className={`${ path === "table-sorting" ? "mm-active" : "" }`} to="/table-sorting">
+                <Link className={`${path === "table-sorting" ? "mm-active" : ""}`} to="/table-sorting">
                   Table Sorting
                 </Link>
               </li>
               <li>
-                <Link className={`${ path === "table-bootstrap-basic" ? "mm-active" : "" }`} to="/table-bootstrap-basic">
+                <Link className={`${path === "table-bootstrap-basic" ? "mm-active" : ""}`} to="/table-bootstrap-basic">
                   Bootstrap
                 </Link>
               </li>
-                <li>
-                  <Link className={`${ path === "table-datatable-basic" ? "mm-active" : ""}`} to="/table-datatable-basic">
-                    Datatable
-                  </Link>
-                </li>
+              <li>
+                <Link className={`${path === "table-datatable-basic" ? "mm-active" : ""}`} to="/table-datatable-basic">
+                  Datatable
+                </Link>
+              </li>
             </ul>
-          </li>
-          <li className={`${pages.includes(path) ? "mm-active" : ""}`}>
+          </li> */}
+          {/* Pages */}
+          {/* <li className={`${pages.includes(path) ? "mm-active" : ""}`}>
             <Link className="has-arrow ai-icon" to="#" >
               <i className="fas fa-clone"></i>
               <span className="nav-text">Pages</span>
             </Link>
-              <ul >
-                <li className={`${error.includes(path) ? "mm-active" : ""}`}>
-                  <Link className="has-arrow" to="#" >Error</Link>
-                  <ul>
-                    <li><Link className={`${ path === "page-error-400" ? "mm-active" : "" }`} to="/page-error-400">Error 400</Link></li>
-                    <li><Link className={`${ path === "page-error-403" ? "mm-active" : "" }`} to="/page-error-403">Error 403</Link></li>
-                    <li><Link className={`${ path === "page-error-404" ? "mm-active" : "" }`} to="/page-error-404">Error 404</Link></li>
-                    <li><Link className={`${ path === "page-error-500" ? "mm-active" : "" }`} to="/page-error-500">Error 500</Link></li>
-                    <li><Link className={`${ path === "page-error-503" ? "mm-active" : "" }`} to="/page-error-503">Error 503</Link></li>
-                  </ul>
-                </li>
-                <li><Link className={`${path === "page-lock-screen" ? "mm-active" : ""}`} to="/page-lock-screen">Lock Screen</Link></li>
-              </ul>
-          </li>
+            <ul >
+              <li className={`${error.includes(path) ? "mm-active" : ""}`}>
+                <Link className="has-arrow" to="#" >Error</Link>
+                <ul>
+                  <li><Link className={`${path === "page-error-400" ? "mm-active" : ""}`} to="/page-error-400">Error 400</Link></li>
+                  <li><Link className={`${path === "page-error-403" ? "mm-active" : ""}`} to="/page-error-403">Error 403</Link></li>
+                  <li><Link className={`${path === "page-error-404" ? "mm-active" : ""}`} to="/page-error-404">Error 404</Link></li>
+                  <li><Link className={`${path === "page-error-500" ? "mm-active" : ""}`} to="/page-error-500">Error 500</Link></li>
+                  <li><Link className={`${path === "page-error-503" ? "mm-active" : ""}`} to="/page-error-503">Error 503</Link></li>
+                </ul>
+              </li>
+              <li><Link className={`${path === "page-lock-screen" ? "mm-active" : ""}`} to="/page-lock-screen">Lock Screen</Link></li>
+            </ul>
+          </li> */}
         </MM>
-		<div className="copyright">
-			<p><strong>Invome Admin Dashboard</strong> © 2022 All Rights Reserved</p>
-			<p className="fs-12">Made with <span className="heart"></span> by DexignLabs</p>
-		</div>
+        {/* <div className="copyright">
+          <p><strong>AZ Security Admin Dashboard</strong> © 2022 All Rights Reserved</p>
+          <p className="fs-12">Made with <span className="heart"></span> by DexignLabs</p>
+        </div> */}
       </PerfectScrollbar>
     </div>
   );

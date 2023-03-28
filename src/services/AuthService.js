@@ -4,6 +4,7 @@ import {
     loginConfirmedAction,
     logout,
 } from '../store/actions/AuthActions';
+import Http from '../Http';
 
 export function signUp(email, password) {
     //axios call
@@ -25,7 +26,8 @@ export function login(email, password) {
         returnSecureToken: true,
     };
     return axios.post(
-        `https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=AIzaSyD3RPAp3nuETDn9OQimqn_YF6zdzqWITII`,
+        `http://localhost:4000/admin/login`,
+        // `https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=AIzaSyD3RPAp3nuETDn9OQimqn_YF6zdzqWITII`,
         postData,
     );
 }
@@ -38,11 +40,11 @@ export function formatError(errorResponse) {
             break;
         case 'EMAIL_NOT_FOUND':
             //return 'Email not found';
-           swal("Oops", "Email not found", "error",{ button: "Try Again!",});
-           break;
+            swal("Oops", "Email not found", "error", { button: "Try Again!", });
+            break;
         case 'INVALID_PASSWORD':
             //return 'Invalid Password';
-            swal("Oops", "Invalid Password", "error",{ button: "Try Again!",});
+            swal("Oops", "Invalid Password", "error", { button: "Try Again!", });
             break;
         case 'USER_DISABLED':
             return 'User Disabled';
@@ -61,7 +63,9 @@ export function saveTokenInLocalStorage(tokenDetails) {
 
 export function runLogoutTimer(dispatch, timer, history) {
     setTimeout(() => {
-        dispatch(logout(history));
+        if(timer){
+            dispatch(logout(history));
+        }
     }, timer);
 }
 
@@ -74,6 +78,7 @@ export function checkAutoLogin(dispatch, history) {
     }
 
     tokenDetails = JSON.parse(tokenDetailsString);
+    Http.setBearerToken(tokenDetails.accessToken);
     let expireDate = new Date(tokenDetails.expireDate);
     let todaysDate = new Date();
 

@@ -112,6 +112,7 @@ import Error404 from "./pages/Error404";
 import Error500 from "./pages/Error500";
 import Error503 from "./pages/Error503";
 import { ThemeContext } from "../context/ThemeContext";
+import User from "./pages/User/User";
 
 const Markup = () => {
   const { menuToggle } = useContext(ThemeContext);
@@ -126,6 +127,9 @@ const Markup = () => {
     { url: "card-center", component: CardCenter },
     { url: "transaction-details", component: TransactionDetails },
     { url: "task", component: Task },
+    
+    // User
+    { url: "user-list", component: User },
 	
 	///Demo
     { url: "theme1", component: Theme1 },
