@@ -47,17 +47,17 @@ function Login(props) {
             <img src={logoWhite} alt="" className="ms-3" />
           </Link>
           <div className="login-description">
-            <h2 className="main-title mb-2">Welcome To Invome</h2>
-            <p className="">It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters,</p>
+            <h2 className="main-title mb-2">Welcome To AZ Security</h2>
+            <p className="">AZ Security & Smart Home</p>
             <ul className="social-icons mt-4">
-              <li><Link to={"#"}><i className="fab fa-facebook-f"></i></Link></li>
+              {/* <li><Link to={"#"}><i className="fab fa-facebook-f"></i></Link></li>
               <li><Link to={"#"}><i className="fab fa-twitter"></i></Link></li>
-              <li><Link to={"#"}><i className="fab fa-linkedin-in"></i></Link></li>
+              <li><Link to={"#"}><i className="fab fa-linkedin-in"></i></Link></li> */}
             </ul>
             <div className="mt-5 bottom-privacy">
-              <Link to={"#"} className="mr-4">Privacy Policy</Link>
+              {/* <Link to={"#"} className="mr-4">Privacy Policy</Link>
               <Link to={"#"} className="mr-4">Contact</Link>
-              <Link to={"#"} className="">© 20222 DexignLab</Link>
+              <Link to={"#"} className="">© 20222 DexignLab</Link> */}
             </div>
           </div>
         </div>
@@ -107,7 +107,7 @@ function Login(props) {
                           />
                           {errors.password && <div className="text-danger fs-12">{errors.password}</div>}
                         </div>
-                        <div className="form-row d-flex justify-content-between mt-4 mb-2">
+                        {/* <div className="form-row d-flex justify-content-between mt-4 mb-2">
                           <div className="form-group">
                             <div className="form-check custom-checkbox ml-1">
                               <input
@@ -123,7 +123,7 @@ function Login(props) {
                               </label>
                             </div>
                           </div>
-                        </div>
+                        </div> */}
                         <div className="text-center">
                           <button
                             type="submit"
@@ -133,14 +133,14 @@ function Login(props) {
                           </button>
                         </div>
                       </form>
-                      <div className="new-account mt-2">
+                      {/* <div className="new-account mt-2">
                         <p className="">
                           Don't have an account?{" "}
                           <Link className="text-primary" to="./page-register">
                             Sign up
                           </Link>
                         </p>
-                      </div>
+                      </div> */}
                     </div>
                   </div>
                 </div>
