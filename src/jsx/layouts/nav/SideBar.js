@@ -13,6 +13,7 @@ import LogoutPage from './Logout';
 /// Image
 //import user from "../../../images/user.jpg";
 import profile from "../../../images/user.jpg";
+import { connect } from "react-redux";
 
 
 class MM extends Component {
@@ -33,7 +34,9 @@ class MM extends Component {
   }
 }
 
-const SideBar = () => {
+const SideBar = (props) => {
+  const adminData = props?.adminData;
+  
   const {
     iconHover,
     sidebarposition,
@@ -180,10 +183,11 @@ const SideBar = () => {
         <Dropdown className="dropdown header-profile2">
           <Dropdown.Toggle variant="" as="a" className="nav-link i-false c-pointer">
             <div className="header-info2 d-flex align-items-center border">
-              <img src={profile} width={20} alt="" />
+              <img src={adminData?.profileImage} width={20} alt="" />
+              {/* <img src={profile} width={20} alt="" /> */}
               <div className="d-flex align-items-center sidebar-info">
                 <div>
-                  <span className="font-w700 d-block mb-2">Eren Yeager</span>
+                  <span className="font-w700 d-block mb-2">{adminData?.displayName}</span>
                   <small className="text-end font-w400">Super Admin</small>
                 </div>
                 <i className="fas fa-sort-down ms-4"></i>
@@ -201,7 +205,7 @@ const SideBar = () => {
               </svg>
               <span className="ms-2">Profile </span>
             </Link>
-            <Link to="/email-inbox" className="dropdown-item ai-icon">
+            {/* <Link to="/email-inbox" className="dropdown-item ai-icon">
               <svg id="icon-inbox" xmlns="http://www.w3.org/2000/svg" className="text-success me-1" width={18}
                 height={18} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2}
                 strokeLinecap="round" strokeLinejoin="round"
@@ -210,7 +214,7 @@ const SideBar = () => {
                 <polyline points="22,6 12,13 2,6" />
               </svg>
               <span className="ms-2">Inbox</span>
-            </Link>
+            </Link> */}
             <LogoutPage />
           </Dropdown.Menu>
         </Dropdown>
@@ -419,4 +423,9 @@ const SideBar = () => {
   );
 };
 
-export default SideBar;
+const mapStateToProps = (state) => {
+  return {
+    adminData: state.auth.auth
+  };
+};
+export default connect(mapStateToProps)(SideBar);

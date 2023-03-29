@@ -1,5 +1,6 @@
 import Http from '../../Http'
 import * as action from '../../store/actions'
+import { loginConfirmedAction } from '../../store/actions/AuthActions';
 // import ToastMe from '../../view/common/ToastMe';
 const BaseUrl = process.env.REACT_APP_BASE_URL;
 
@@ -39,13 +40,14 @@ export function getProfile() {
         })
     )
 }
-export function updateUserProfile(data) {
+export function updateUserProfile(data, adminData) {
     data.env = 'test'
     return dispatch => (
         new Promise((resolve, reject) => {
             Http.callApi('put', BaseUrl + '/admin/updateAdmin',data)
                 .then(function (res) {
-                    // dispatch(action.setNotificationData(res));
+                    adminData.displayName = data.username
+                    dispatch(loginConfirmedAction(adminData));
                     return resolve(res);
                 })
                 .catch(function (error) {
