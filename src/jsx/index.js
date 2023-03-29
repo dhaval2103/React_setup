@@ -113,6 +113,7 @@ import Error500 from "./pages/Error500";
 import Error503 from "./pages/Error503";
 import { ThemeContext } from "../context/ThemeContext";
 import User from "./pages/User/User";
+import Cms from "./pages/Cms/Cms";
 
 const Markup = () => {
   const { menuToggle } = useContext(ThemeContext);
@@ -130,6 +131,10 @@ const Markup = () => {
     
     // User
     { url: "user-list", component: User },
+
+    //Cms
+    { url: "cms-list", component: Cms },
+
 	
 	///Demo
     { url: "theme1", component: Theme1 },
