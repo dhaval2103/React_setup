@@ -80,3 +80,39 @@ export function uploadUserProfile(data) {
         })
     )
 }
+export function getCms() {
+    return dispatch => (
+        new Promise((resolve, reject) => {
+            Http.callApi('get', BaseUrl + '/common/listCMS')
+                .then(function (res) {
+                    return resolve(res);
+                })
+                .catch(function (error) {
+                    console.log(error);
+                    const data = {
+                        errorData: error.response.data.message,
+                        statusCode: error.response.status,
+                    };
+                    return reject(data);
+                })
+        })
+    )
+}
+export function addCms(data) {
+    return dispatch => (
+        new Promise((resolve, reject) => {
+            Http.callApi('post', BaseUrl + '/common/cms',data)
+                .then(function (res) {
+                    return resolve(res);
+                })
+                .catch(function (error) {
+                    console.log(error);
+                    const data = {
+                        errorData: error.response.data.message,
+                        statusCode: error.response.status,
+                    };
+                    return reject(data);
+                })
+        })
+    )
+}

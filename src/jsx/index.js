@@ -113,6 +113,7 @@ import Error500 from "./pages/Error500";
 import Error503 from "./pages/Error503";
 import { ThemeContext } from "../context/ThemeContext";
 import User from "./pages/User/User";
+import Cms from "./pages/Cms/Cms";
 import ViewUser from "./pages/User/ViewUser";
 
 const Markup = () => {
@@ -131,6 +132,10 @@ const Markup = () => {
     
     // User
     { url: "user-list", component: User },
+
+    //Cms
+    { url: "cms-list", component: Cms },
+
     { url: "user-detail", component: ViewUser },
 	
 	///Demo
