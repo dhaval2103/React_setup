@@ -7,14 +7,26 @@ import { Table } from 'antd';
 
 const User = () => {
     const dispatch = useDispatch();
-    const [userData, setUserData] = useState();
     const [data, setData] = useState([]);
 
     const getUserList = () => {
         dispatch(UserService.getUser())
             .then((res) => {
                 setData([]);
-                setUserData(res.data);
+                for (var i = 0; i < res.data.length; i++) {
+                    data.push(
+                        {
+                            key: i,
+                            email: res.data[i].email.text,
+                            mobile: res.data[i].mobile.text,
+                            fullName: res.data[i].fullName,
+                            securityQuestion: res.data[i].securityQuestion,
+                            yourQuestion: res.data[i].yourQuestion,
+                            answer: res.data[i].answer,
+                        }
+                    )
+                }
+                setData(data)
             })
             .catch((errors) => {
                 console.log({ errors })
@@ -26,6 +38,16 @@ const User = () => {
     }, [])
 
     const columnss = [
+        {
+            title: 'ID',
+            dataIndex: 'key',
+            key: 'key',
+            render: (text) => (
+                <div>
+                    {text + 1}
+                </div>
+            ),
+        },
         {
             title: 'Full name',
             dataIndex: 'fullName',
@@ -62,30 +84,6 @@ const User = () => {
         },
     ];
 
-    useEffect(() => {
-        if (userData) {
-            for (var i = 0; i < userData.length; i++) {
-                data.push(
-                    {
-                        key: i,
-                        email: userData[i].email.text,
-                        mobile: userData[i].mobile.text,
-                        fullName: userData[i].fullName,
-                        securityQuestion: userData[i].securityQuestion,
-                        yourQuestion: userData[i].yourQuestion,
-                        answer: userData[i].answer,
-                    }
-                )
-            }
-        }
-    }, [userData, columnss])
-
-    useEffect(() => {
-        if (data) {
-            setData(data)
-        }
-    }, [data])
-
     return (
         <>
             {/* <PageTitle activeMenu="Filtering" motherMenu="Table" /> */}
@@ -95,6 +93,7 @@ const User = () => {
                 </div>
                 <div className="card-body">
                     <div className="table-responsive">
+                        {console.log(data.length)}
                         {
                             data.length > 0 &&
                             <Table dataSource={data} columns={columnss} />
