@@ -5,6 +5,7 @@ import {
     logout,
 } from '../store/actions/AuthActions';
 import Http from '../Http';
+const BaseUrl = process.env.REACT_APP_BASE_URL;
 
 export function signUp(email, password) {
     //axios call
@@ -26,7 +27,7 @@ export function login(email, password) {
         returnSecureToken: true,
     };
     return axios.post(
-        `http://localhost:4000/admin/login`,
+        `${BaseUrl}/admin/login`,
         // `https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=AIzaSyD3RPAp3nuETDn9OQimqn_YF6zdzqWITII`,
         postData,
     );
@@ -63,7 +64,7 @@ export function saveTokenInLocalStorage(tokenDetails) {
 
 export function runLogoutTimer(dispatch, timer, history) {
     setTimeout(() => {
-        if(timer){
+        if (timer) {
             dispatch(logout(history));
         }
     }, timer);
