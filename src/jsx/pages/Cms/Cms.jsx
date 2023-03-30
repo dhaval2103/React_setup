@@ -1,14 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import '../../components/table/FilteringTable/filtering.css';
-// import PageTitle from '../../layouts/PageTitle';
 import UserService from '../../../services/user';
 import { useDispatch } from 'react-redux';
 import { Modal, Table, Button, Input, Form, Select } from 'antd';
 import { Dropdown } from "react-bootstrap";
 import ToastMe from '../Common/ToastMe';
-// import ToastMe from "../../../pages/Common/ToastMe";
-
-
 
 const Cms = () => {
     const dispatch = useDispatch();
@@ -28,10 +24,10 @@ const Cms = () => {
         setType(value)
     }
     const onSubmit = (values) => {
-        values.type = type
-
+        values.type = type;
         dispatch(UserService.addCms(values))
             .then((res) => {
+                getCms();
                 ToastMe("CMS Added Successfully", 'success')
             })
             .catch((errors) => {
@@ -47,9 +43,9 @@ const Cms = () => {
     const getCms = () => {
         dispatch(UserService.getCms())
             .then((res) => {
-                setData([]);
+                let newArr = [];
                 for (var i = 0; i < res.data.length; i++) {
-                    data.push(
+                    newArr.push(
                         {
                             key: i,
                             title: res.data[i].title || '-',
@@ -58,7 +54,7 @@ const Cms = () => {
                         }
                     )
                 }
-                setData(data)
+                setData(newArr);
             })
             .catch((errors) => {
                 console.log({ errors })
@@ -135,7 +131,6 @@ const Cms = () => {
                 </div>
                 <div className="card-body">
                     <div className="table-responsive">
-                        {/* {console.log(data.length)} */}
                         {
                             data.length > 0 &&
                             <Table dataSource={data} columns={columnss} />
