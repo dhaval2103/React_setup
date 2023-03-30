@@ -5,11 +5,10 @@ import { Row, Card, Col } from "react-bootstrap";
 const ViewUser = () => {
     const { state } = useLocation();
     const userDetail = state?.userDetail;
-    
+
     return (
         <>
             <Row>
-
                 <Col xl="6">
                     <Card className="text-white bg-dark">
                         <Card.Header>
@@ -28,7 +27,7 @@ const ViewUser = () => {
                         </Card.Body>
                     </Card>
                 </Col>
-                <Col xl="6">
+                {/* <Col xl="6">
                     <Card className="text-white bg-dark">
                         <Card.Header>
                             <Card.Title className="text-white">Security Question/Answer</Card.Title>
@@ -54,7 +53,7 @@ const ViewUser = () => {
                             </Card.Text>
                         </Card.Body>
                     </Card>
-                </Col>
+                </Col> */}
             </Row>
 
         </>
