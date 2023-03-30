@@ -44,7 +44,7 @@ export function updateUserProfile(data, adminData) {
     data.env = 'test'
     return dispatch => (
         new Promise((resolve, reject) => {
-            Http.callApi('put', BaseUrl + '/admin/updateAdmin',data)
+            Http.callApi('put', BaseUrl + '/admin/updateAdmin', data)
                 .then(function (res) {
                     adminData.displayName = data.username
                     dispatch(loginConfirmedAction(adminData));
@@ -101,7 +101,7 @@ export function getCms() {
 export function addCms(data) {
     return dispatch => (
         new Promise((resolve, reject) => {
-            Http.callApi('post', BaseUrl + '/common/cms',data)
+            Http.callApi('post', BaseUrl + '/common/cms', data)
                 .then(function (res) {
                     return resolve(res);
                 })
@@ -136,13 +136,51 @@ export function getMaintenance(data) {
 }
 export function approveRequest(data) {
     let data_ = {
-        mId:data._id,
-        env:'test',
-        verifyStatus:data.verifyStatus
+        mId: data._id,
+        env: 'test',
+        verifyStatus: data.verifyStatus
     }
     return dispatch => (
         new Promise((resolve, reject) => {
-            Http.callApi('post', 'http://localhost:4000' + '/admin/approveReject',data_)
+            Http.callApi('post', BaseUrl + '/admin/approveReject', data_)
+                .then(function (res) {
+                    return resolve(res);
+                })
+                .catch(function (error) {
+                    console.log(error);
+                    const data = {
+                        errorData: error.response.data.message,
+                        statusCode: error.response.status,
+                    };
+                    return reject(data);
+                })
+        })
+    )
+}
+export function updateCms(data) {
+
+    return dispatch => (
+        new Promise((resolve, reject) => {
+            Http.callApi('post', BaseUrl + '/common/editCms', data)
+                .then(function (res) {
+                    return resolve(res);
+                })
+                .catch(function (error) {
+                    console.log(error);
+                    const data = {
+                        errorData: error.response.data.message,
+                        statusCode: error.response.status,
+                    };
+                    return reject(data);
+                })
+        })
+    )
+}
+export function deleteCms(data) {
+
+    return dispatch => (
+        new Promise((resolve, reject) => {
+            Http.callApi('put', BaseUrl + '/common/deleteCms/' + data.id)
                 .then(function (res) {
                     return resolve(res);
                 })

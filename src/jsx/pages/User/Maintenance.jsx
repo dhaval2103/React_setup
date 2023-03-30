@@ -21,6 +21,7 @@ const User = (props) => {
                             location: res.data[i].location,
                             message: res.data[i].message,
                             _id: res.data[i]._id,
+                            attachments: res.data[i].attachments,
                             verifyStatus: res.data[i].verifyStatus
 
                         }
@@ -36,7 +37,7 @@ const User = (props) => {
         text.verifyStatus = verifyStatus
         dispatch(UserService.approveRequest(text))
             .then((res) => {
-                ToastMe(res.data.message,'success')
+                ToastMe(res.data.message, 'success')
                 getMaintenance()
             })
             .catch((errors) => {
@@ -82,6 +83,47 @@ const User = (props) => {
             key: 'message',
         },
         {
+            title: 'Attachments',
+            dataIndex: 'attachments',
+            key: 'attachments',
+            render: (text) => (
+                <div class='row'>
+                    {text?.map((item, i) => {
+                        return (
+                            <div>
+                                <img
+                                    key={i}
+                                    src={process.env.REACT_APP_PROFILE_URL + 'images/' + item}
+                                    alt=""
+                                    width="70px"
+                                    height="70px"
+                                />
+                            </div>
+                        )
+                    })}
+                </div>
+            )
+        },
+        {
+            title: 'Status',
+            key: 'verifyStatus',
+            render: (text) => {
+                if (text.verifyStatus == 0) {
+                    return (
+                        <span class="badge badge-warning text-dark">Pending</span>
+                    )
+                } else if (text.verifyStatus == 1) {
+                    return (
+                        <span class="badge badge-success">Approve</span>
+                    )
+                } else {
+                    return (
+                        <span class="badge badge-danger">Reject</span>
+                    )
+                }
+            }
+        },
+        {
             title: 'Actions',
             key: 'actions',
             render: (text) => (
@@ -99,11 +141,11 @@ const User = (props) => {
                                     <Dropdown.Item onClick={() => approveRequest(text, 1)}>Approve</Dropdown.Item>
                                     <Dropdown.Item onClick={() => approveRequest(text, 2)}>Reject</Dropdown.Item>
                                 </>
-                                : 
+                                :
                                 <>
-                                <Dropdown.Item disabled onClick={() => approveRequest(text, 1)}>Approve</Dropdown.Item>
-                                <Dropdown.Item disabled onClick={() => approveRequest(text, 2)}>Reject</Dropdown.Item>
-                            </>}
+                                    <Dropdown.Item disabled onClick={() => approveRequest(text, 1)}>Approve</Dropdown.Item>
+                                    <Dropdown.Item disabled onClick={() => approveRequest(text, 2)}>Reject</Dropdown.Item>
+                                </>}
 
                         </Dropdown.Menu>
                     </Dropdown>

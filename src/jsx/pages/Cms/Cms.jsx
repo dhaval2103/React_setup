@@ -14,15 +14,28 @@ const Cms = () => {
     const dispatch = useDispatch();
     const [data, setData] = useState([]);
     const [visible, setVisible] = useState(false);
-    const [type, setType] = useState(false);
+    const [type, setType] = useState('');
+    const [id, setId] = useState('');
     const [form] = Form.useForm();
 
     const editModal = (text) => {
         setVisible(true)
-        form.setFieldsValue({
-            title: text?.title || '',
-            description: text?.description || '',
-        })
+        if (text) {
+            form.setFieldsValue({
+                title: text?.title || '',
+                description: text?.description || '',
+            })
+            setType(text.type);
+            setId(text.id)
+        } else {
+            form.setFieldsValue({
+                title: '',
+                description: '',
+            })
+            setType('');
+            setId('')
+        }
+
     }
     const handleChange = (value) => {
         setType(value)
@@ -30,18 +43,36 @@ const Cms = () => {
     const onSubmit = (values) => {
         values.type = type
 
-        dispatch(UserService.addCms(values))
-            .then((res) => {
-                ToastMe("CMS Added Successfully", 'success')
+        if (id) {
+            values.id = id
+
+            dispatch(UserService.updateCms(values))
+                .then((res) => {
+                    ToastMe("CMS Updated Successfully", 'success')
+                })
+            setVisible(false);
+            setType('')
+            setId('')
+                .catch((errors) => {
+                    console.log({ errors })
+                })
+        } else {
+
+            dispatch(UserService.addCms(values))
+                .then((res) => {
+                    ToastMe("CMS Added Successfully", 'success')
+                })
+                .catch((errors) => {
+                    console.log({ errors })
+                })
+            setVisible(false);
+            setType('')
+            form.setFieldsValue({
+                title: '',
+                description: '',
             })
-            .catch((errors) => {
-                console.log({ errors })
-            })
-        setVisible(false);
-        form.setFieldsValue({
-            title: '',
-            description: '',
-        })
+        }
+
     }
 
     const getCms = () => {
@@ -54,6 +85,8 @@ const Cms = () => {
                             key: i,
                             title: res.data[i].title || '-',
                             description: res.data[i].description || '-',
+                            type: res.data[i].type || '-',
+                            id: res.data[i]._id || '-'
 
                         }
                     )
@@ -75,6 +108,17 @@ const Cms = () => {
             </g>
         </svg>
     );
+
+    const deleteCms = (text) => {
+        dispatch(UserService.deleteCms(text))
+            .then((res) => {
+                ToastMe("CMS Deleted Successfully", 'success')
+            })
+            .catch((errors) => {
+                console.log({ errors })
+            })
+
+    }
 
     useEffect(() => {
         getCms();
@@ -115,7 +159,7 @@ const Cms = () => {
                         </Dropdown.Toggle>
                         <Dropdown.Menu>
                             <Dropdown.Item onClick={() => editModal(text)}>Edit</Dropdown.Item>
-                            <Dropdown.Item>Delete</Dropdown.Item>
+                            <Dropdown.Item onClick={() => deleteCms(text)}>Delete</Dropdown.Item>
                         </Dropdown.Menu>
                     </Dropdown>
                 </>
@@ -185,7 +229,7 @@ const Cms = () => {
                 >
                     <Select
                         label="Title"
-                        defaultValue=""
+                        value={type}
                         style={{ width: 120 }}
                         onChange={handleChange}
                         allowClear
@@ -200,6 +244,15 @@ const Cms = () => {
                                 message: "Enter Title"
                             }
                         ]}
+                    >
+                        <Input />
+                    </Form.Item>
+                    <Form.Item
+                        hidden
+                        label="Id"
+                        name="id"
+                        value={id}
+
                     >
                         <Input />
                     </Form.Item>
@@ -219,6 +272,8 @@ const Cms = () => {
 
                 </Form>
             </Modal>
+
+            
         </>
 
     )
