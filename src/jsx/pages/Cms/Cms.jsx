@@ -5,6 +5,7 @@ import { useDispatch } from 'react-redux';
 import { Modal, Table, Button, Input, Form, Select, Empty } from 'antd';
 import { Dropdown } from "react-bootstrap";
 import ToastMe from '../Common/ToastMe';
+import Swal from 'sweetalert2';
 
 const Cms = () => {
     const dispatch = useDispatch();
@@ -36,6 +37,29 @@ const Cms = () => {
     const handleChange = (value) => {
         setType(value)
     }
+
+    const deleteCms = (text) => {
+        Swal.fire({
+            title: 'Are you sure?',
+            text: "You won't be able to revert this!",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Yes, delete it!'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                dispatch(UserService.deleteCms(text))
+                    .then((res) => {
+                        getCms();
+                        ToastMe("CMS Deleted Successfully", 'success')
+                    })
+                    .catch((errors) => {
+                        console.log({ errors })
+                    })
+            }
+        })
+    };
 
     const onSubmit = (values) => {
         values.type = type;
@@ -102,17 +126,6 @@ const Cms = () => {
             </g>
         </svg>
     );
-
-    const deleteCms = (text) => {
-        dispatch(UserService.deleteCms(text))
-            .then((res) => {
-                getCms();
-                ToastMe("CMS Deleted Successfully", 'success')
-            })
-            .catch((errors) => {
-                console.log({ errors })
-            })
-    }
 
     useEffect(() => {
         getCms();
