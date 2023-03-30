@@ -2,13 +2,13 @@ import React, { useEffect, useState } from 'react';
 import '../../components/table/FilteringTable/filtering.css';
 import UserService from '../../../services/user';
 import { useDispatch } from 'react-redux';
-import { Table } from 'antd';
+import { Empty, Table } from 'antd';
 import { Badge, Dropdown } from "react-bootstrap";
 
 const User = (props) => {
     const dispatch = useDispatch();
     const [data, setData] = useState([]);
-    
+
     const getUserList = () => {
         dispatch(UserService.getUser())
             .then((res) => {
@@ -134,8 +134,8 @@ const User = (props) => {
                 <div className="card-body">
                     <div className="table-responsive">
                         {
-                            data && data.length > 0 &&
-                            <Table dataSource={data} columns={columnss} />
+                            data && data.length > 0 ?
+                                <Table dataSource={data} columns={columnss} /> : <Empty />
                         }
                     </div>
                 </div>

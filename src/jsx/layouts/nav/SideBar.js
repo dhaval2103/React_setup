@@ -261,7 +261,7 @@ const SideBar = (props) => {
               <span className="nav-text">Maintenance</span>
             </Link>
             <ul >
-              <li><Link className={`${path === "maintenance-request-list" ? "mm-active" : ""}`} to="/maintenance-request-list">Maintenance Request List</Link></li>
+              <li><Link className={`${path === "maintenance-request-list" ? "mm-active" : ""}`} to="/maintenance-request-list">Maintenance Request</Link></li>
             </ul>
           </li>
 

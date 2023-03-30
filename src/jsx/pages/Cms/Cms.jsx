@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import '../../components/table/FilteringTable/filtering.css';
 import UserService from '../../../services/user';
 import { useDispatch } from 'react-redux';
-import { Modal, Table, Button, Input, Form, Select } from 'antd';
+import { Modal, Table, Button, Input, Form, Select, Empty } from 'antd';
 import { Dropdown } from "react-bootstrap";
 import ToastMe from '../Common/ToastMe';
 
@@ -31,19 +31,19 @@ const Cms = () => {
             setType('');
             setId('')
         }
-
     }
+
     const handleChange = (value) => {
         setType(value)
     }
+
     const onSubmit = (values) => {
-        values.type = type
-
+        values.type = type;
         if (id) {
-            values.id = id
-
+            values.id = id;
             dispatch(UserService.updateCms(values))
                 .then((res) => {
+                    getCms();
                     ToastMe("CMS Updated Successfully", 'success')
                 })
             setVisible(false);
@@ -53,9 +53,9 @@ const Cms = () => {
                     console.log({ errors })
                 })
         } else {
-
             dispatch(UserService.addCms(values))
                 .then((res) => {
+                    getCms();
                     ToastMe("CMS Added Successfully", 'success')
                 })
                 .catch((errors) => {
@@ -68,7 +68,6 @@ const Cms = () => {
                 description: '',
             })
         }
-
     }
 
     const getCms = () => {
@@ -83,7 +82,6 @@ const Cms = () => {
                             description: res.data[i].description || '-',
                             type: res.data[i].type || '-',
                             id: res.data[i]._id || '-'
-
                         }
                     )
                 }
@@ -108,12 +106,12 @@ const Cms = () => {
     const deleteCms = (text) => {
         dispatch(UserService.deleteCms(text))
             .then((res) => {
+                getCms();
                 ToastMe("CMS Deleted Successfully", 'success')
             })
             .catch((errors) => {
                 console.log({ errors })
             })
-
     }
 
     useEffect(() => {
@@ -176,12 +174,11 @@ const Cms = () => {
                 <div className="card-body">
                     <div className="table-responsive">
                         {
-                            data.length > 0 &&
-                            <Table dataSource={data} columns={columnss} />
+                            data && data.length > 0 ?
+                                <Table dataSource={data} columns={columnss} /> : <Empty />
                         }
                     </div>
                 </div>
-
             </div>
             <Modal
                 visible={visible}
@@ -247,7 +244,6 @@ const Cms = () => {
                         label="Id"
                         name="id"
                         value={id}
-
                     >
                         <Input />
                     </Form.Item>
@@ -264,13 +260,9 @@ const Cms = () => {
                     >
                         <Input type="textarea" />
                     </Form.Item>
-
                 </Form>
             </Modal>
-
-            
         </>
-
     )
 }
 
