@@ -116,3 +116,44 @@ export function addCms(data) {
         })
     )
 }
+export function getMaintenance(data) {
+    return dispatch => (
+        new Promise((resolve, reject) => {
+            Http.callApi('get', BaseUrl + '/admin/listRequest')
+                .then(function (res) {
+                    return resolve(res);
+                })
+                .catch(function (error) {
+                    console.log(error);
+                    const data = {
+                        errorData: error.response.data.message,
+                        statusCode: error.response.status,
+                    };
+                    return reject(data);
+                })
+        })
+    )
+}
+export function approveRequest(data) {
+    let data_ = {
+        mId:data._id,
+        env:'test',
+        verifyStatus:data.verifyStatus
+    }
+    return dispatch => (
+        new Promise((resolve, reject) => {
+            Http.callApi('post', 'http://localhost:4000' + '/admin/approveReject',data_)
+                .then(function (res) {
+                    return resolve(res);
+                })
+                .catch(function (error) {
+                    console.log(error);
+                    const data = {
+                        errorData: error.response.data.message,
+                        statusCode: error.response.status,
+                    };
+                    return reject(data);
+                })
+        })
+    )
+}

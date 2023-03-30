@@ -5,6 +5,7 @@ import UserService from '../../../services/user';
 import { useDispatch } from 'react-redux';
 import { Modal, Table, Button, Input, Form, Select } from 'antd';
 import { Dropdown } from "react-bootstrap";
+import ToastMe from '../Common/ToastMe';
 // import ToastMe from "../../../pages/Common/ToastMe";
 
 
@@ -31,7 +32,7 @@ const Cms = () => {
 
         dispatch(UserService.addCms(values))
             .then((res) => {
-                console.log("CMS Added Successfully", 'success');
+                ToastMe("CMS Added Successfully", 'success')
             })
             .catch((errors) => {
                 console.log({ errors })

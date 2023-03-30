@@ -115,6 +115,7 @@ import { ThemeContext } from "../context/ThemeContext";
 import User from "./pages/User/User";
 import Cms from "./pages/Cms/Cms";
 import ViewUser from "./pages/User/ViewUser";
+import Maintenance from "./pages/User/Maintenance";
 
 const Markup = () => {
   const { menuToggle } = useContext(ThemeContext);
@@ -137,6 +138,8 @@ const Markup = () => {
     { url: "cms-list", component: Cms },
 
     { url: "user-detail", component: ViewUser },
+    { url: "maintenance-request-list", component: Maintenance },
+
 	
 	///Demo
     { url: "theme1", component: Theme1 },

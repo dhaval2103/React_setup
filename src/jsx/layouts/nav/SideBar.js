@@ -36,7 +36,7 @@ class MM extends Component {
 
 const SideBar = (props) => {
   const adminData = props?.adminData;
-  
+
   const {
     iconHover,
     sidebarposition,
@@ -247,11 +247,21 @@ const SideBar = (props) => {
           </li>
           <li className={`${app.includes(path) ? "mm-active" : ""}`}>
             <Link className="has-arrow ai-icon" to="#" >
-              <i className="fa fa-user"></i>
-              <span className="nav-text">CMS</span>
+              <i class="fa fa-cog" aria-hidden="true"></i>
+              <span className="nav-text">Setting</span>
             </Link>
             <ul >
-              <li><Link className={`${path === "user-list" ? "mm-active" : ""}`} to="/cms-list">CMS List</Link></li>
+              <li><Link className={`${path === "cms-list" ? "mm-active" : ""}`} to="/cms-list">CMS List</Link></li>
+            </ul>
+          </li>
+          <li className={`${app.includes(path) ? "mm-active" : ""}`}>
+            <Link className="has-arrow ai-icon" to="#" >
+              <i class="fa fa-bars" aria-hidden="true"></i>
+
+              <span className="nav-text">Maintenance</span>
+            </Link>
+            <ul >
+              <li><Link className={`${path === "maintenance-request-list" ? "mm-active" : ""}`} to="/maintenance-request-list">Maintenance Request List</Link></li>
             </ul>
           </li>
 
