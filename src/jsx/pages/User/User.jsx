@@ -12,9 +12,9 @@ const User = (props) => {
     const getUserList = () => {
         dispatch(UserService.getUser())
             .then((res) => {
-                setData([]);
+                var newArr = [];
                 for (var i = 0; i < res.data.length; i++) {
-                    data.push(
+                    newArr.push(
                         {
                             key: i,
                             email: res.data[i].email.text,
@@ -28,7 +28,7 @@ const User = (props) => {
                         }
                     )
                 }
-                setData(data);
+                setData(newArr);
             })
             .catch((errors) => {
                 console.log({ errors })
@@ -100,21 +100,6 @@ const User = (props) => {
                 </div>
             )
         },
-        // {
-        //     title: 'Security Question',
-        //     dataIndex: 'securityQuestion',
-        //     key: 'securityQuestion',
-        // },
-        // {
-        //     title: 'Your Question',
-        //     dataIndex: 'yourQuestion',
-        //     key: 'yourQuestion',
-        // },
-        // {
-        //     title: 'Answer',
-        //     dataIndex: 'answer',
-        //     key: 'answer',
-        // },
         {
             title: 'Actions',
             key: 'actions',
@@ -129,7 +114,6 @@ const User = (props) => {
                         </Dropdown.Toggle>
                         <Dropdown.Menu>
                             <Dropdown.Item onClick={() => viewUser(text)}>View</Dropdown.Item>
-                            {/* <Dropdown.Item>Delete</Dropdown.Item> */}
                         </Dropdown.Menu>
                     </Dropdown>
                 </>
