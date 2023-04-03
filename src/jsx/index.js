@@ -114,6 +114,7 @@ import Error503 from "./pages/Error503";
 import { ThemeContext } from "../context/ThemeContext";
 import User from "./pages/User/User";
 import Cms from "./pages/Setting/Cms";
+import Faq from "./pages/Setting/Faq"
 import ViewUser from "./pages/User/ViewUser";
 import Maintenance from "./pages/User/Maintenance";
 import ManageSubscriptions from "./pages/Setting/ManageSubscriptions";
@@ -140,6 +141,8 @@ const Markup = () => {
     { url: "cms-list", component: Cms },
     { url: "manage-subscriptions", component: ManageSubscriptions },
     { url: "notification", component: Notification },
+    { url: "faq-list", component: Faq },
+
 
     { url: "user-detail", component: ViewUser },
     { url: "maintenance-request-list", component: Maintenance },

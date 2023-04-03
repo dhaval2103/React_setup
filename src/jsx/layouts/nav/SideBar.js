@@ -254,6 +254,7 @@ const SideBar = (props) => {
               <li><Link className={`${path === "cms-list" ? "mm-active" : ""}`} to="/cms-list">CMS List</Link></li>
               <li><Link className={`${path === "manage-subscriptions" ? "mm-active" : ""}`} to="/manage-subscriptions">Manage Subscriptions</Link></li>
               <li><Link className={`${path === "notification" ? "mm-active" : ""}`} to="/notification">Notification</Link></li>
+              <li><Link className={`${path === "faq-list" ? "mm-active" : ""}`} to="/faq-list">FAQ List</Link></li>
             </ul>
           </li>
           <li className={`${app.includes(path) ? "mm-active" : ""}`}>
