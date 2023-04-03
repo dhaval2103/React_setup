@@ -5,6 +5,7 @@ import { useDispatch } from 'react-redux';
 import { Table } from 'antd';
 import { Badge, Dropdown } from "react-bootstrap";
 import ToastMe from '../Common/ToastMe';
+import moment from 'moment';
 
 const User = (props) => {
     const dispatch = useDispatch();
@@ -22,8 +23,8 @@ const User = (props) => {
                             message: res.data[i].message,
                             _id: res.data[i]._id,
                             attachments: res.data[i].attachments,
-                            verifyStatus: res.data[i].verifyStatus
-
+                            verifyStatus: res.data[i].verifyStatus,
+                            createdAt: res.data[i].createdAt
                         }
                     )
                 }
@@ -110,18 +111,28 @@ const User = (props) => {
             render: (text) => {
                 if (text.verifyStatus == 0) {
                     return (
-                        <span class="badge badge-warning text-dark">Pending</span>
+                        <Badge bg=" badge-lg " className='badge-warning light badge-xs'>Pending</Badge>
                     )
                 } else if (text.verifyStatus == 1) {
                     return (
-                        <span class="badge badge-success">Approve</span>
+                        <Badge bg=" badge-lg " className='badge-primary light badge-xs'>Approve</Badge>
                     )
                 } else {
                     return (
-                        <span class="badge badge-danger">Reject</span>
+                        <Badge bg=" badge-lg " className='badge-danger light badge-xs'>Reject</Badge>
                     )
                 }
             }
+        },
+        {
+            title: 'Created At',
+            dataIndex: 'createdAt',
+            key: 'createdAt',
+            render: (text) => (
+                <div>
+                    {moment(text).format("DD MMM YYYY h:mm A")}
+                </div>
+            ),
         },
         {
             title: 'Actions',

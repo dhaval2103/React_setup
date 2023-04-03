@@ -113,9 +113,11 @@ import Error500 from "./pages/Error500";
 import Error503 from "./pages/Error503";
 import { ThemeContext } from "../context/ThemeContext";
 import User from "./pages/User/User";
-import Cms from "./pages/Cms/Cms";
+import Cms from "./pages/Setting/Cms";
 import ViewUser from "./pages/User/ViewUser";
 import Maintenance from "./pages/User/Maintenance";
+import ManageSubscriptions from "./pages/Setting/ManageSubscriptions";
+import Notification from "./pages/Setting/Notification";
 
 const Markup = () => {
   const { menuToggle } = useContext(ThemeContext);
@@ -134,8 +136,10 @@ const Markup = () => {
     // User
     { url: "user-list", component: User },
 
-    //Cms
+    //Setting
     { url: "cms-list", component: Cms },
+    { url: "manage-subscriptions", component: ManageSubscriptions },
+    { url: "notification", component: Notification },
 
     { url: "user-detail", component: ViewUser },
     { url: "maintenance-request-list", component: Maintenance },

@@ -3,31 +3,35 @@ import '../../components/table/FilteringTable/filtering.css';
 import UserService from '../../../services/user';
 import { useDispatch } from 'react-redux';
 import { Modal, Table, Button, Input, Form, Select, Empty } from 'antd';
-import { Dropdown } from "react-bootstrap";
+import { Badge, Dropdown } from "react-bootstrap";
 import ToastMe from '../Common/ToastMe';
 import Swal from 'sweetalert2';
+import SubscriptionService from '../../../services/subscription';
+import moment from "moment";
 
-const Cms = () => {
+const Notification = () => {
     const dispatch = useDispatch();
     const [data, setData] = useState([]);
     const [visible, setVisible] = useState(false);
     const [type, setType] = useState('');
     const [id, setId] = useState('');
     const [form] = Form.useForm();
+    const { Option } = Select;
 
     const editModal = (text) => {
+        setType('');
         setVisible(true)
         if (text) {
             form.setFieldsValue({
-                title: text?.title || '',
-                description: text?.description || '',
+                packageName: text?.packageName || '',
+                price: text?.price || '',
             })
-            setType(text.type);
+            setType(text.duration);
             setId(text.id)
         } else {
             form.setFieldsValue({
-                title: '',
-                description: '',
+                packageName: '',
+                price: '',
             })
             setType('');
             setId('')
@@ -51,7 +55,6 @@ const Cms = () => {
             if (result.isConfirmed) {
                 dispatch(UserService.deleteCms(text))
                     .then((res) => {
-                        getCms();
                         ToastMe("CMS Deleted Successfully", 'success')
                     })
                     .catch((errors) => {
@@ -62,13 +65,13 @@ const Cms = () => {
     };
 
     const onSubmit = (values) => {
-        values.type = type;
         if (id) {
             values.id = id;
-            dispatch(UserService.updateCms(values))
+            console.log({ values })
+            dispatch(SubscriptionService.editSubscriptionPlan(values))
                 .then((res) => {
-                    getCms();
-                    ToastMe("CMS Updated Successfully", 'success')
+                    getSubscription();
+                    ToastMe(res.data.message, 'success')
                 })
             setVisible(false);
             setType('')
@@ -77,10 +80,10 @@ const Cms = () => {
                     console.log({ errors })
                 })
         } else {
-            dispatch(UserService.addCms(values))
+            dispatch(SubscriptionService.addSubscriptionPlan(values))
                 .then((res) => {
-                    getCms();
-                    ToastMe("CMS Added Successfully", 'success')
+                    getSubscription();
+                    ToastMe(res.data.message, 'success')
                 })
                 .catch((errors) => {
                     console.log({ errors })
@@ -94,18 +97,21 @@ const Cms = () => {
         }
     }
 
-    const getCms = () => {
-        dispatch(UserService.getCms())
+    const getSubscription = () => {
+        dispatch(SubscriptionService.getSubscription())
             .then((res) => {
                 let newArr = [];
                 for (var i = 0; i < res.data.length; i++) {
+                    console.log(res.data)
                     newArr.push(
                         {
                             key: i,
-                            title: res.data[i].title || '-',
-                            description: res.data[i].description || '-',
-                            type: res.data[i].type || '-',
-                            id: res.data[i]._id || '-'
+                            packageName: res.data[i].packageName || '-',
+                            price: res.data[i].price || '-',
+                            duration: res.data[i].duration || '-',
+                            status: res.data[i].status || '-',
+                            id: res.data[i]._id || '-',
+                            createdAt: res.data[i].createdAt || '-'
                         }
                     )
                 }
@@ -115,6 +121,10 @@ const Cms = () => {
                 console.log({ errors })
             })
     }
+
+    useEffect(() => {
+        getSubscription();
+    }, [])
 
     const svg1 = (
         <svg width="20px" height="20px" viewBox="0 0 24 24" version="1.1">
@@ -126,10 +136,6 @@ const Cms = () => {
             </g>
         </svg>
     );
-
-    useEffect(() => {
-        getCms();
-    }, [])
 
     const columnss = [
         {
@@ -143,14 +149,45 @@ const Cms = () => {
             ),
         },
         {
-            title: 'Title',
-            dataIndex: 'title',
-            key: 'title',
+            title: 'Package Name',
+            dataIndex: 'packageName',
+            key: 'packageName',
         },
         {
-            title: 'Description',
-            dataIndex: 'description',
-            key: 'description',
+            title: 'Duration',
+            dataIndex: 'duration',
+            key: 'duration',
+        },
+        {
+            title: 'Price',
+            dataIndex: 'price',
+            key: 'price',
+            render: (text) => (
+                <div>
+                    {text + ' KD'}
+                </div>
+            ),
+        },
+        {
+            title: 'Status',
+            dataIndex: 'status',
+            key: 'status',
+            render: (text) => (
+                <div>
+                    {text == 1 ? <Badge bg=" badge-lg " className='badge-primary light badge-xs'>Active</Badge>
+                        : <Badge bg=" badge-lg " className='badge-danger light badge-xs'>Deactive</Badge>}
+                </div>
+            ),
+        },
+        {
+            title: 'Created At',
+            dataIndex: 'createdAt',
+            key: 'createdAt',
+            render: (text) => (
+                <div>
+                    {moment(text).format("DD MMM YYYY h:mm A")}
+                </div>
+            ),
         },
         {
             title: 'Actions',
@@ -166,7 +203,7 @@ const Cms = () => {
                         </Dropdown.Toggle>
                         <Dropdown.Menu>
                             <Dropdown.Item onClick={() => editModal(text)}>Edit</Dropdown.Item>
-                            <Dropdown.Item onClick={() => deleteCms(text)}>Delete</Dropdown.Item>
+                            {/* <Dropdown.Item onClick={() => deleteCms(text)}>Delete</Dropdown.Item> */}
                         </Dropdown.Menu>
                     </Dropdown>
                 </>
@@ -176,12 +213,11 @@ const Cms = () => {
 
     return (
         <>
-            {/* <PageTitle activeMenu="Filtering" motherMenu="Table" /> */}
             <div className="card">
                 <div className="card-header">
-                    <h4 className="card-title">CMS List</h4>
+                    <h4 className="card-title">Notification</h4>
                     <Button type="primary" onClick={() => editModal()}>
-                        Add CMS
+                        Add Notification
                     </Button>
                 </div>
                 <div className="card-body">
@@ -193,25 +229,17 @@ const Cms = () => {
                     </div>
                 </div>
             </div>
-            <Modal
-                visible={visible}
-                title="Add CMS"
-                okText="Submit"
-                cancelText="Cancel"
+            <Modal visible={visible} title={id ? "Edit Notification" : "Add Notification"} okText="Submit" cancelText="Cancel"
                 onCancel={() => {
                     setVisible(false);
                 }}
                 footer={[
-                    <Button key="cancel" onClick={() => setVisible(false)}>
-                        Cancel
-                    </Button>,
+                    <Button key="cancel" onClick={() => setVisible(false)}> Cancel </Button>,
                     <Button
                         key="submit"
                         type="primary"
-
                         onClick={() => {
-                            form
-                                .validateFields()
+                            form.validateFields()
                                 .then((values) => {
                                     onSubmit(values);
                                 })
@@ -224,54 +252,39 @@ const Cms = () => {
                     </Button>
                 ]}
             >
-                <Form
-                    form={form}
-                    layout="vertical"
-                    name="form_in_modal"
+                <Form form={form} layout="vertical" name="form_in_modal"
                     initialValues={{
                         modifier: "public"
                     }}
                 >
-                    <Select
-                        label="Title"
-                        value={type}
-                        style={{ width: 120 }}
-                        onChange={handleChange}
-                        allowClear
-                        options={[{ value: 1, label: 'Terms & Conditions' }, { value: 2, label: 'Privacy Policy' }, { value: 3, label: 'Disclaimer' }]}
-                    />
-                    <Form.Item
-                        label="Title"
-                        name="title"
-                        rules={[
-                            {
-                                required: true,
-                                message: "Enter Title"
-                            }
-                        ]}
-                    >
-                        <Input />
-                    </Form.Item>
-                    <Form.Item
-                        hidden
-                        label="Id"
-                        name="id"
-                        value={id}
+                    <div>
+                        <label class="label-name">Duration</label>
+                        <Form.Item
+                            name="duration"
+                            rules={[{ required: true, message: "Please select plan duration!" }]}
+                        >
+                            <Select className="select-control" defaultValue={type} style={{ width: 120 }} onChange={handleChange}>
+                                <Option value={'1 Month'}> 1 Month </Option>
+                                <Option value={'3 Month'}> 3 Month </Option>
+                                <Option value={'6 Month'}> 6 Month </Option>
+                                <Option value={'12 Month'}> 12 Month </Option>
+                            </Select>
+                        </Form.Item>
+                    </div>
+
+                    <label class="label-name">Package Name</label>
+                    <Form.Item name="packageName"
+                        rules={[{ required: true, message: "Please entre package name!" }]}
                     >
                         <Input />
                     </Form.Item>
 
+                    <label class="label-name">Price</label>
                     <Form.Item
-                        label="Description"
-                        name="description"
-                        rules={[
-                            {
-                                required: true,
-                                message: "Enter Description"
-                            }
-                        ]}
+                        name="price"
+                        rules={[{ required: true, message: "Please enter price!" }]}
                     >
-                        <Input type="textarea" />
+                        <Input type="number" />
                     </Form.Item>
                 </Form>
             </Modal>
@@ -279,4 +292,4 @@ const Cms = () => {
     )
 }
 
-export default Cms
+export default Notification

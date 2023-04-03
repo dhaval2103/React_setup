@@ -4,6 +4,7 @@ import UserService from '../../../services/user';
 import { useDispatch } from 'react-redux';
 import { Empty, Table } from 'antd';
 import { Badge, Dropdown } from "react-bootstrap";
+import moment from 'moment';
 
 const User = (props) => {
     const dispatch = useDispatch();
@@ -25,6 +26,7 @@ const User = (props) => {
                             securityQuestion: res.data[i].securityQuestion,
                             yourQuestion: res.data[i].yourQuestion,
                             answer: res.data[i].answer,
+                            createdAt: res.data[i].createdAt
                         }
                     )
                 }
@@ -99,6 +101,16 @@ const User = (props) => {
                     </Badge>
                 </div>
             )
+        },
+        {
+            title: 'Created At',
+            dataIndex: 'createdAt',
+            key: 'createdAt',
+            render: (text) => (
+                <div>
+                    {moment(text).format("DD MMM YYYY h:mm A")}
+                </div>
+            ),
         },
         {
             title: 'Actions',
