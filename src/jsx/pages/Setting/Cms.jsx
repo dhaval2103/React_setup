@@ -244,14 +244,17 @@ const Cms = () => {
                         modifier: "public"
                     }}
                 >
-                    <Select
-                        label="Title"
-                        value={type}
-                        style={{ width: 120 }}
-                        onChange={handleChange}
-                        allowClear
-                        options={[{ value: 1, label: 'Terms & Conditions' }, { value: 2, label: 'Privacy Policy' }, { value: 3, label: 'Disclaimer' }]}
-                    />
+                    <label class="label-name">Duration</label>
+                    <div>
+                        <Select
+                            label="Title"
+                            value={type}
+                            style={{ width: 120 }}
+                            onChange={handleChange}
+                            allowClear
+                            options={[{ value: 1, label: 'Terms & Conditions' }, { value: 2, label: 'Privacy Policy' }, { value: 3, label: 'Disclaimer' }]}
+                        />
+                    </div>
                     <Form.Item
                         label="Title"
                         name="title"

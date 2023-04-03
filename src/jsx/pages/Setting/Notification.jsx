@@ -2,113 +2,62 @@ import React, { useEffect, useState } from 'react';
 import '../../components/table/FilteringTable/filtering.css';
 import UserService from '../../../services/user';
 import { useDispatch } from 'react-redux';
-import { Modal, Table, Button, Input, Form, Select, Empty } from 'antd';
-import { Badge, Dropdown } from "react-bootstrap";
+import { Modal, Table, Button, Input, Form, Empty } from 'antd';
+import { Dropdown } from "react-bootstrap";
 import ToastMe from '../Common/ToastMe';
 import Swal from 'sweetalert2';
-import SubscriptionService from '../../../services/subscription';
 import moment from "moment";
+
 
 const Notification = () => {
     const dispatch = useDispatch();
     const [data, setData] = useState([]);
     const [visible, setVisible] = useState(false);
-    const [type, setType] = useState('');
     const [id, setId] = useState('');
     const [form] = Form.useForm();
-    const { Option } = Select;
 
     const editModal = (text) => {
-        setType('');
+        setId(text.id)
         setVisible(true)
         if (text) {
             form.setFieldsValue({
-                packageName: text?.packageName || '',
-                price: text?.price || '',
+                title: text.title,
+                message: text.message,
             })
-            setType(text.duration);
-            setId(text.id)
         } else {
-            form.setFieldsValue({
-                packageName: '',
-                price: '',
-            })
-            setType('');
-            setId('')
-        }
-    }
-
-    const handleChange = (value) => {
-        setType(value)
-    }
-
-    const deleteCms = (text) => {
-        Swal.fire({
-            title: 'Are you sure?',
-            text: "You won't be able to revert this!",
-            icon: 'warning',
-            showCancelButton: true,
-            confirmButtonColor: '#3085d6',
-            cancelButtonColor: '#d33',
-            confirmButtonText: 'Yes, delete it!'
-        }).then((result) => {
-            if (result.isConfirmed) {
-                dispatch(UserService.deleteCms(text))
-                    .then((res) => {
-                        ToastMe("CMS Deleted Successfully", 'success')
-                    })
-                    .catch((errors) => {
-                        console.log({ errors })
-                    })
-            }
-        })
-    };
-
-    const onSubmit = (values) => {
-        if (id) {
-            values.id = id;
-            console.log({ values })
-            dispatch(SubscriptionService.editSubscriptionPlan(values))
-                .then((res) => {
-                    getSubscription();
-                    ToastMe(res.data.message, 'success')
-                })
-            setVisible(false);
-            setType('')
-            setId('')
-                .catch((errors) => {
-                    console.log({ errors })
-                })
-        } else {
-            dispatch(SubscriptionService.addSubscriptionPlan(values))
-                .then((res) => {
-                    getSubscription();
-                    ToastMe(res.data.message, 'success')
-                })
-                .catch((errors) => {
-                    console.log({ errors })
-                })
-            setVisible(false);
-            setType('')
             form.setFieldsValue({
                 title: '',
-                description: '',
+                message: '',
             })
         }
     }
 
-    const getSubscription = () => {
-        dispatch(SubscriptionService.getSubscription())
+    const onSubmit = (values) => {
+        dispatch(UserService.sendNotification(values))
+            .then((res) => {
+                getNotificationlist();
+                form.setFieldsValue({
+                    title: '',
+                    message: '',
+                })
+                ToastMe(res.data.message, 'success')
+            })
+        setVisible(false)
+            .catch((errors) => {
+                console.log({ errors })
+            })
+    }
+
+    const getNotificationlist = () => {
+        dispatch(UserService.getNotificationlist())
             .then((res) => {
                 let newArr = [];
                 for (var i = 0; i < res.data.length; i++) {
-                    console.log(res.data)
                     newArr.push(
                         {
                             key: i,
-                            packageName: res.data[i].packageName || '-',
-                            price: res.data[i].price || '-',
-                            duration: res.data[i].duration || '-',
+                            title: res.data[i].notification.title || '-',
+                            message: res.data[i].notification.body || '-',
                             status: res.data[i].status || '-',
                             id: res.data[i]._id || '-',
                             createdAt: res.data[i].createdAt || '-'
@@ -123,7 +72,7 @@ const Notification = () => {
     }
 
     useEffect(() => {
-        getSubscription();
+        getNotificationlist();
     }, [])
 
     const svg1 = (
@@ -149,35 +98,14 @@ const Notification = () => {
             ),
         },
         {
-            title: 'Package Name',
-            dataIndex: 'packageName',
-            key: 'packageName',
+            title: 'Title',
+            dataIndex: 'title',
+            key: 'title',
         },
         {
-            title: 'Duration',
-            dataIndex: 'duration',
-            key: 'duration',
-        },
-        {
-            title: 'Price',
-            dataIndex: 'price',
-            key: 'price',
-            render: (text) => (
-                <div>
-                    {text + ' KD'}
-                </div>
-            ),
-        },
-        {
-            title: 'Status',
-            dataIndex: 'status',
-            key: 'status',
-            render: (text) => (
-                <div>
-                    {text == 1 ? <Badge bg=" badge-lg " className='badge-primary light badge-xs'>Active</Badge>
-                        : <Badge bg=" badge-lg " className='badge-danger light badge-xs'>Deactive</Badge>}
-                </div>
-            ),
+            title: 'Message',
+            dataIndex: 'message',
+            key: 'message',
         },
         {
             title: 'Created At',
@@ -202,7 +130,7 @@ const Notification = () => {
                             {svg1}
                         </Dropdown.Toggle>
                         <Dropdown.Menu>
-                            <Dropdown.Item onClick={() => editModal(text)}>Edit</Dropdown.Item>
+                            <Dropdown.Item onClick={() => editModal(text)}>Resend</Dropdown.Item>
                             {/* <Dropdown.Item onClick={() => deleteCms(text)}>Delete</Dropdown.Item> */}
                         </Dropdown.Menu>
                     </Dropdown>
@@ -229,7 +157,7 @@ const Notification = () => {
                     </div>
                 </div>
             </div>
-            <Modal visible={visible} title={id ? "Edit Notification" : "Add Notification"} okText="Submit" cancelText="Cancel"
+            <Modal visible={visible} title={id ? "Resend Notification" : "Add Notification"} okText="Submit" cancelText="Cancel"
                 onCancel={() => {
                     setVisible(false);
                 }}
@@ -257,34 +185,20 @@ const Notification = () => {
                         modifier: "public"
                     }}
                 >
-                    <div>
-                        <label class="label-name">Duration</label>
-                        <Form.Item
-                            name="duration"
-                            rules={[{ required: true, message: "Please select plan duration!" }]}
-                        >
-                            <Select className="select-control" defaultValue={type} style={{ width: 120 }} onChange={handleChange}>
-                                <Option value={'1 Month'}> 1 Month </Option>
-                                <Option value={'3 Month'}> 3 Month </Option>
-                                <Option value={'6 Month'}> 6 Month </Option>
-                                <Option value={'12 Month'}> 12 Month </Option>
-                            </Select>
-                        </Form.Item>
-                    </div>
 
-                    <label class="label-name">Package Name</label>
-                    <Form.Item name="packageName"
-                        rules={[{ required: true, message: "Please entre package name!" }]}
+                    <label class="label-name">Title</label>
+                    <Form.Item name="title"
+                        rules={[{ required: true, message: "Please entre title!" }]}
                     >
-                        <Input />
+                        <Input type="text" />
                     </Form.Item>
 
-                    <label class="label-name">Price</label>
+                    <label class="label-name">Message</label>
                     <Form.Item
-                        name="price"
-                        rules={[{ required: true, message: "Please enter price!" }]}
+                        name="message"
+                        rules={[{ required: true, message: "Please enter message!" }]}
                     >
-                        <Input type="number" />
+                        <Input type="text" />
                     </Form.Item>
                 </Form>
             </Modal>

@@ -18,14 +18,15 @@ const ManageSubscriptions = () => {
     const [form] = Form.useForm();
 
     const editModal = (text) => {
+
         setVisible(true)
         if (text) {
             form.setFieldsValue({
                 packageName: text?.packageName || '',
                 price: text?.price || '',
             })
-            setType(text.duration);
-            setId(text.id)
+            setType(text?.duration);
+            setId(text?.id)
         } else {
             form.setFieldsValue({
                 packageName: '',
@@ -63,9 +64,9 @@ const ManageSubscriptions = () => {
     };
 
     const onSubmit = (values) => {
+        values.duration = type;
         if (id) {
             values.id = id;
-            console.log({ values })
             dispatch(SubscriptionService.editSubscriptionPlan(values))
                 .then((res) => {
                     getSubscription();
@@ -179,7 +180,7 @@ const ManageSubscriptions = () => {
             key: 'duration',
             render: (text) => (
                 <div>
-                   {text == 1 ? '1 Month' : text == 2 ? '3 Month' : text == 3 ? '6 Month' : '12 Month'}
+                    {text == 1 ? '1 Month' : text == 2 ? '3 Month' : text == 3 ? '6 Month' : '12 Month'}
                 </div>
             ),
         },
@@ -282,7 +283,7 @@ const ManageSubscriptions = () => {
                         modifier: "public"
                     }}
                 >
-                    <div>
+                    {/* <div>
                         <label class="label-name">Duration</label>
                         <Form.Item
                             name="duration"
@@ -295,7 +296,29 @@ const ManageSubscriptions = () => {
                                     { value: 3, label: '6 Month' },
                                     { value: 4, label: '12 Month' }]} />
                         </Form.Item>
+                    </div> */}
+                    <label class="label-name">Duration</label>
+                    {/* <Form.Item
+                            name="duration"
+                            rules={[{ required: true, message: "Please select plan duration!" }]}
+                        > */}
+                    <div>
+                        <Select
+                            label="Duration"
+                            value={type}
+                            style={{ width: 120 }}
+                            onChange={handleChange}
+                            allowClear
+                            options={[
+                                { value: 1, label: '1 Month' },
+                                { value: 2, label: '3 Month' },
+                                { value: 3, label: '6 Month' },
+                                { value: 4, label: '12 Month' }]}
+                        />
+                        {/* </Form.Item> */}
+
                     </div>
+
 
                     <label class="label-name">Package Name</label>
                     <Form.Item name="packageName"
