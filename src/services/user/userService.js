@@ -195,3 +195,41 @@ export function deleteCms(data) {
         })
     )
 }
+export function sendNotification(data) {
+    data.env = 'test'
+    return dispatch => (
+        new Promise((resolve, reject) => {
+            Http.callApi('post', BaseUrl + '/admin/sendNotification', data)
+                .then(function (res) {
+                    return resolve(res);
+                })
+                .catch(function (error) {
+                    console.log(error);
+                    const data = {
+                        errorData: error.response.data.message,
+                        statusCode: error.response.status,
+                    };
+                    return reject(data);
+                })
+        })
+    )
+}
+export function getNotificationlist() {
+
+    return dispatch => (
+        new Promise((resolve, reject) => {
+            Http.callApi('get', BaseUrl + '/admin/getNotification')
+                .then(function (res) {
+                    return resolve(res);
+                })
+                .catch(function (error) {
+                    console.log(error);
+                    const data = {
+                        errorData: error.response.data.message,
+                        statusCode: error.response.status,
+                    };
+                    return reject(data);
+                })
+        })
+    )
+}
