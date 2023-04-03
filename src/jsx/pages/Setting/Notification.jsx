@@ -17,9 +17,9 @@ const Notification = () => {
     const [form] = Form.useForm();
 
     const editModal = (text) => {
-        setId(text.id)
         setVisible(true)
         if (text) {
+            setId(text.id)
             form.setFieldsValue({
                 title: text.title,
                 message: text.message,
@@ -157,7 +157,7 @@ const Notification = () => {
                     </div>
                 </div>
             </div>
-            <Modal visible={visible} title={id ? "Resend Notification" : "Add Notification"} okText="Submit" cancelText="Cancel"
+            <Modal open={visible} title={id ? "Resend Notification" : "Add Notification"} okText="Submit" cancelText="Cancel"
                 onCancel={() => {
                     setVisible(false);
                 }}
