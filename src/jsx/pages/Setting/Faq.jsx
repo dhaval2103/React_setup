@@ -69,21 +69,21 @@ const Faq = () => {
     }; */
 
     const onSubmit = (values) => {
-        console.log('values', values);
-        values.id = mainCategory;
-        // if (mainCategory) {
-        //     // values.id = id;
-        //     // dispatch(UserService.updateCms(values))
-        //     //     .then((res) => {
-        //     //         getFaq();
-        //     //         ToastMe("CMS Updated Successfully", 'success')
-        //     //     })
-        //     // setVisible(false);
-        //     // setType('')
-        //     // setId('')
-        //     //     .catch((errors) => {
-        //     //         console.log({ errors })
-        //     //     })
+        values.group = mainCategory;
+        // console.log('values', values);
+        // if (id) {
+        //     values.id = id;
+        //     dispatch(UserService.updateCms(values))
+        //         .then((res) => {
+        //             getFaq();
+        //             ToastMe("CMS Updated Successfully", 'success')
+        //         })
+        //     setVisible(false);
+        //     setType('')
+        //     setId('')
+        //         .catch((errors) => {
+        //             console.log({ errors })
+        //         })
         // } else {
             dispatch(UserService.addFaq(values))
                 .then((res) => {
@@ -95,7 +95,6 @@ const Faq = () => {
                     console.log({ errors })
                 })
             setVisible(false);
-            setCategory('')
             form.setFieldsValue({
                 group: '',
                 question: '',
@@ -316,7 +315,7 @@ const Faq = () => {
                     <Select name="category" id="category" value={mainCategory}
                         aria-label="Default select example" onChange={mainCategorysfun} style={{ width: 120 }}>
                             <option value="0">Please Select Group</option>
-                            {valueCategory.map((option, i) => (
+                            {valueCategory?.map((option, i) => (
                                 <option key={i} value={option._id}>{option.title}</option>
                             ))}
 					</Select>
