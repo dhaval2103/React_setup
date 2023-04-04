@@ -119,11 +119,8 @@ import ViewUser from "./pages/User/ViewUser";
 import Maintenance from "./pages/User/Maintenance";
 import ManageSubscriptions from "./pages/Setting/ManageSubscriptions";
 import Notification from "./pages/Setting/Notification";
-<<<<<<< HEAD
 import Technicalguide from "./pages/Setting/Technicalguide";
-=======
 import ContactUs from "./pages/Setting/ContactUs";
->>>>>>> a86c5fd4c88e43eaea69560457e35b36f35ae315
 
 const Markup = () => {
   const { menuToggle } = useContext(ThemeContext);
