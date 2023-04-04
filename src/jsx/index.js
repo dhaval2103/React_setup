@@ -119,6 +119,7 @@ import ViewUser from "./pages/User/ViewUser";
 import Maintenance from "./pages/User/Maintenance";
 import ManageSubscriptions from "./pages/Setting/ManageSubscriptions";
 import Notification from "./pages/Setting/Notification";
+import ContactUs from "./pages/Setting/ContactUs";
 
 const Markup = () => {
   const { menuToggle } = useContext(ThemeContext);
@@ -142,6 +143,7 @@ const Markup = () => {
     { url: "manage-subscriptions", component: ManageSubscriptions },
     { url: "notification", component: Notification },
     { url: "faq-list", component: Faq },
+    { url: "contact-us", component: ContactUs },
 
 
     { url: "user-detail", component: ViewUser },
