@@ -255,7 +255,7 @@ const ManageSubscriptions = () => {
                     </div>
                 </div>
             </div>
-            <Modal visible={visible} title="Add Plan" okText="Submit" cancelText="Cancel"
+            <Modal open={visible} title="Add Plan" okText="Submit" cancelText="Cancel"
                 onCancel={() => {
                     setVisible(false);
                 }}

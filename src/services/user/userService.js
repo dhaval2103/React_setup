@@ -180,7 +180,7 @@ export function deleteCms(data) {
 
     return dispatch => (
         new Promise((resolve, reject) => {
-            Http.callApi('put', BaseUrl + '/common/deleteCms/' + data.id)
+            Http.callApi('put', BaseUrl + '/common/deleteCms/' + data)
                 .then(function (res) {
                     return resolve(res);
                 })

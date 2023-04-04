@@ -3,7 +3,7 @@ import '../../components/table/FilteringTable/filtering.css';
 import UserService from '../../../services/user';
 import { useDispatch } from 'react-redux';
 import { Modal, Table, Button, Input, Form, Select, Empty } from 'antd';
-import { Dropdown } from "react-bootstrap";
+import { Dropdown,Badge } from "react-bootstrap";
 import ToastMe from '../Common/ToastMe';
 import Swal from 'sweetalert2';
 import moment from 'moment';
@@ -40,26 +40,35 @@ const Cms = () => {
     }
 
     const deleteCms = (text) => {
-        Swal.fire({
-            title: 'Are you sure?',
-            text: "You won't be able to revert this!",
-            icon: 'warning',
-            showCancelButton: true,
-            confirmButtonColor: '#3085d6',
-            cancelButtonColor: '#d33',
-            confirmButtonText: 'Yes, delete it!'
-        }).then((result) => {
-            if (result.isConfirmed) {
-                dispatch(UserService.deleteCms(text))
-                    .then((res) => {
-                        getCms();
-                        ToastMe("CMS Deleted Successfully", 'success')
-                    })
-                    .catch((errors) => {
-                        console.log({ errors })
-                    })
-            }
-        })
+        // Swal.fire({
+        //     title: 'Are you sure?',
+        //     text: "You won't be able to revert this!",
+        //     icon: 'warning',
+        //     showCancelButton: true,
+        //     confirmButtonColor: '#3085d6',
+        //     cancelButtonColor: '#d33',
+        //     confirmButtonText: 'Yes, delete it!'
+        // }).then((result) => {
+        //     if (result.isConfirmed) {
+        //         dispatch(UserService.deleteCms(text))
+        //             .then((res) => {
+        //                 getCms();
+        //                 ToastMe("CMS Deleted Successfully", 'success')
+        //             })
+        //             .catch((errors) => {
+        //                 console.log({ errors })
+        //             })
+        //     }
+        // })
+
+        dispatch(UserService.deleteCms(text))
+            .then((res) => {
+                getCms();
+                ToastMe("CMS Status Changed Successfully", 'success')
+            })
+            .catch((errors) => {
+                console.log({ errors })
+            })
     };
 
     const onSubmit = (values) => {
@@ -107,6 +116,7 @@ const Cms = () => {
                             description: res.data[i].description || '-',
                             type: res.data[i].type || '-',
                             id: res.data[i]._id || '-',
+                            status: res.data[i].status || '-',
                             createdAt: res.data[i].createdAt || '-'
                         }
                     )
@@ -155,6 +165,17 @@ const Cms = () => {
             key: 'description',
         },
         {
+            title: 'Status',
+            dataIndex: 'status',
+            key: 'status',
+            render: (text, data) => (
+                <div>
+                    {data.status === 1 ? <Badge bg=" badge-lg " className='badge-primary light badge-xs' style={{ cursor: 'pointer' }} onClick={() => deleteCms(data.id)} >Active</Badge>
+                        : <Badge bg=" badge-lg " className='badge-danger light badge-xs' style={{ cursor: 'pointer' }} onClick={() => deleteCms(data.id)} >Deactive</Badge>}
+                </div>
+            ),
+        },
+        {
             title: 'Created At',
             dataIndex: 'createdAt',
             key: 'createdAt',
@@ -178,7 +199,7 @@ const Cms = () => {
                         </Dropdown.Toggle>
                         <Dropdown.Menu>
                             <Dropdown.Item onClick={() => editModal(text)}>Edit</Dropdown.Item>
-                            <Dropdown.Item onClick={() => deleteCms(text)}>Delete</Dropdown.Item>
+                            {/* <Dropdown.Item onClick={() => deleteCms(text)}>Delete</Dropdown.Item> */}
                         </Dropdown.Menu>
                     </Dropdown>
                 </>
@@ -206,7 +227,7 @@ const Cms = () => {
                 </div>
             </div>
             <Modal
-                visible={visible}
+                open={visible}
                 title="Add CMS"
                 okText="Submit"
                 cancelText="Cancel"

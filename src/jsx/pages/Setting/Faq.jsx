@@ -263,7 +263,7 @@ const Faq = () => {
                 </div>
             </div>
             <Modal
-                visible={visible}
+                open={visible}
                 title="Add FAQ"
                 okText="Submit"
                 cancelText="Cancel"
@@ -319,18 +319,7 @@ const Faq = () => {
                                 <option key={i} value={option._id}>{option.title}</option>
                             ))}
 					</Select>
-                    {/* <Form.Item
-                        label="Title"
-                        name="title"
-                        rules={[
-                            {
-                                required: true,
-                                message: "Enter Title"
-                            }
-                        ]}
-                    >
-                        <Input />
-                    </Form.Item> */}
+                   
                     <Form.Item
                         hidden
                         label="Id"
