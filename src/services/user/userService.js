@@ -46,8 +46,9 @@ export function updateUserProfile(data, adminData) {
         new Promise((resolve, reject) => {
             Http.callApi('put', BaseUrl + '/admin/updateAdmin', data)
                 .then(function (res) {
-                    adminData.displayName = data.username
-                    dispatch(loginConfirmedAction(adminData));
+                    adminData.displayName = data.username;
+                    adminData.email = data.email;
+                    localStorage.setItem('userDetails', JSON.stringify(adminData));
                     return resolve(res);
                 })
                 .catch(function (error) {

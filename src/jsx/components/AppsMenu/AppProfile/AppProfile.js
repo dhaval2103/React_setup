@@ -1,6 +1,6 @@
 import React, { Fragment, useState, useReducer, useEffect } from "react";
 // import { Button, Dropdown, Modal, Tab, Nav, Form } from "react-bootstrap";
-import { useDispatch } from "react-redux";
+import { connect, useDispatch } from "react-redux";
 import { Button, Form, Input } from 'antd';
 import { Edit2 } from 'iconsax-react';
 import { Link } from "react-router-dom";
@@ -38,7 +38,7 @@ const reducer = (state, action) => {
 	}
 }
 
-const AppProfile = () => {
+const AppProfile = (props) => {
 	// const [state, dispatch] = useReducer(reducer, initialState);
 	const dispatch = useDispatch();
 	const [user, setUser] = useState();
@@ -58,10 +58,13 @@ const AppProfile = () => {
 	const onFinish = (data) => {
 		data['image'] = imageName;
 		// setButtonLoading(true)
-		dispatch(UserService.updateUserProfile(data))
+		dispatch(UserService.updateUserProfile(data, props?.adminData))
 			.then((res) => {
 				// setButtonLoading(false)
-				ToastMe("Profile Updated Successfully", 'success')
+				ToastMe("Profile Updated Successfully", 'success');
+				setTimeout(() => {
+					window.location.reload();
+				}, 500)
 			})
 			.catch((errors) => {
 				// setButtonLoading(false)
@@ -108,8 +111,6 @@ const AppProfile = () => {
 	}, [user])
 	return (
 		<Fragment>
-			<PageTitle activeMenu="Profile" motherMenu="App" />
-
 			<div className="row">
 				<div className="col-lg-12">
 					<div className="profile card card-body px-3 pt-3 pb-0">
@@ -324,4 +325,9 @@ const AppProfile = () => {
 	);
 };
 
-export default AppProfile;
+const mapStateToProps = (state) => {
+	return {
+	  adminData: state.auth.auth
+	};
+  };
+  export default connect(mapStateToProps)(AppProfile);
