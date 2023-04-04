@@ -127,7 +127,7 @@ const ManageSubscriptions = () => {
     const changeStatus = (id) => {
         Swal.fire({
             title: 'Are you sure?',
-            text: "You want to change this plan status!",
+            text: "To change this plan status!",
             icon: 'warning',
             showCancelButton: true,
             confirmButtonColor: '#3085d6',

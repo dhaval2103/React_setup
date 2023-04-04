@@ -14,7 +14,7 @@ const Header = ({ onNote }) => {
   const [searchBut, setSearchBut] = useState(false);
   var path = window.location.pathname.split("/");
   var name = path[path.length - 1].split("-");
-  var filterName = name.length >= 3 ? name.filter((n, i) => i > 0) : name;
+  var filterName = name.length >= 4 ? name.filter((n, i) => i > 0) : name;
   var finalName = filterName.includes("app")
     ? filterName.filter((f) => f !== "app")
     : filterName.includes("ui")

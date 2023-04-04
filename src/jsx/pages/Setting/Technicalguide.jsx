@@ -1,0 +1,391 @@
+import React, { useEffect, useState } from 'react';
+import UserService from '../../../services/user';
+import { useDispatch } from 'react-redux';
+import { Modal, Table, Button, Input, Form, Empty } from 'antd';
+import { Dropdown } from "react-bootstrap";
+import ToastMe from '../Common/ToastMe';
+import moment from "moment";
+
+
+const Technicalguide = () => {
+    const dispatch = useDispatch();
+    const [data, setData] = useState([]);
+    const [visible, setVisible] = useState(false);
+    const [id, setId] = useState('');
+    const [form] = Form.useForm();
+    const [uploadedImage, setUploadedImage] = useState([]);
+    const [uploadedVideo, setUploadedVideo] = useState([]);
+    const [viewImage, setViewImage] = useState([]);
+    const [viewVideo, setViewVideo] = useState([]);
+
+    const editModal = (text) => {
+        setVisible(true)
+        if (text) {
+            setId(text.id)
+            setViewImage(text.image)
+            setViewVideo(text.video)
+            form.setFieldsValue({
+                title: text.title,
+                description: text.description,
+            })
+        } else {
+            setViewImage('')
+            setViewVideo('')
+            form.setFieldsValue({
+                title: '',
+                description: '',
+            })
+        }
+    }
+    const onSubmit = async (values) => {
+        // return false
+        if(id){
+            if (uploadedImage || uploadedVideo) {
+                const formData = new FormData();
+                if(uploadedImage){
+                    uploadedImage?.map((file) => {
+                        formData.append('images', file)
+                    })
+                }
+                if(uploadedVideo){
+                    uploadedVideo?.map((file) => {
+                        formData.append('videos', file)
+                    })
+                }
+                dispatch(UserService.uploadMedia(formData))
+                    .then((res) => {
+                        if(res.data.images){
+                            res.data.images.map((result) => {
+                                viewImage.push(result)
+                            })
+                        }
+                        if(res.data.video){
+                            res.data.video.map((result) => {
+                                viewVideo.push(result)
+                            })
+                        }
+                        values.image = viewImage
+                        values.video = viewVideo
+                        values.id = id;
+                        dispatch(UserService.editTechnicalguides(values))
+                            .then((res) => {
+                                getTechnicalGuides();
+                                form.setFieldsValue({
+                                    title: '',
+                                    description: '',
+                                })
+                                ToastMe(res.data.message, 'success')
+                            })
+                        setVisible(false)
+                            .catch((errors) => {
+                                console.log({ errors })
+                            })
+                    })
+                    .catch((errors) => {
+                        console.log({ errors })
+                    })
+            }
+        } else {
+            if (uploadedImage || uploadedVideo) {
+                const formData = new FormData();
+    
+                uploadedImage?.map((file) => {
+                    formData.append('images', file)
+                })
+                uploadedVideo?.map((file) => {
+                    formData.append('videos', file)
+                })
+                dispatch(UserService.uploadMedia(formData))
+                    .then((res) => {
+                        values.image = res.data.images
+                        values.video = res.data.video
+                        dispatch(UserService.addTechnicalguides(values))
+                            .then((res) => {
+                                getTechnicalGuides();
+                                form.setFieldsValue({
+                                    title: '',
+                                    description: '',
+                                })
+                                ToastMe(res.data.message, 'success')
+                            })
+                        setVisible(false)
+                            .catch((errors) => {
+                                console.log({ errors })
+                            })
+                    })
+                    .catch((errors) => {
+                        console.log({ errors })
+                    })
+            }
+        }
+    }
+
+    const uploadImageVideo = async () => {
+        if (uploadedImage || uploadedVideo) {
+            const formData = new FormData();
+
+            uploadedImage?.map((file) => {
+                formData.append('images', file)
+            })
+            uploadedVideo?.map((file) => {
+                formData.append('videos', file)
+            })
+            dispatch(UserService.uploadMedia(formData))
+                .then((res) => {
+                    // setMedia(res?.data)
+                })
+                .catch((errors) => {
+                    console.log({ errors })
+                })
+        }
+    }
+
+    const getTechnicalGuides = () => {
+        dispatch(UserService.getTechnicalGuides())
+            .then((res) => {
+                let newArr = [];
+                for (var i = 0; i < res?.data.length; i++) {
+                    newArr.push(
+                        {
+                            key: i,
+                            title: res?.data[i].title || '-',
+                            description: res?.data[i].description || '-',
+                            video: res?.data[i].video || '-',
+                            image: res?.data[i].image || '-',
+                            id: res?.data[i]._id || '-',
+                            createdAt: res?.data[i].createdAt || '-'
+                        }
+                    )
+                }
+                setData(newArr);
+            })
+            .catch((errors) => {
+                console.log({ errors })
+            })
+    }
+
+    const handleProfilePicOnChange = async (ev) => {
+        const fileTypes = [...ev.target.files];
+        setUploadedImage([])
+        setUploadedVideo([])
+        fileTypes.map((file) => {
+            if (file.type.includes('video')) {
+                setUploadedVideo((prev) => [...prev, file])
+            } else if (file.type.includes('image')) {
+                setUploadedImage((prev) => [...prev, file])
+            }
+        })
+    };
+
+    useEffect(() => {
+        getTechnicalGuides();
+    }, [])
+
+    const svg1 = (
+        <svg width="20px" height="20px" viewBox="0 0 24 24" version="1.1">
+            <g stroke="none" strokeWidth="1" fill="none" fillRule="evenodd">
+                <rect x="0" y="0" width="24" height="24"></rect>
+                <circle fill="#000000" cx="5" cy="12" r="2"></circle>
+                <circle fill="#000000" cx="12" cy="12" r="2"></circle>
+                <circle fill="#000000" cx="19" cy="12" r="2"></circle>
+            </g>
+        </svg>
+    );
+
+    const columnss = [
+        {
+            title: 'ID',
+            dataIndex: 'key',
+            key: 'key',
+            render: (text) => (
+                <div>
+                    {text + 1}
+                </div>
+            ),
+        },
+        {
+            title: 'Title',
+            dataIndex: 'title',
+            key: 'title',
+        },
+        {
+            title: 'Description',
+            dataIndex: 'description',
+            key: 'description',
+        },
+        // {
+        //     title: 'Image',
+        //     dataIndex: 'image',
+        //     key: 'image',
+        //     render: (text) => (
+        //         <div className='row'>
+        //             {text?.map((item, i) => {
+        //                 return (
+        //                     <div key={i}>
+        //                         <img
+        //                             src={process.env.REACT_APP_PROFILE_URL + 'images/' + item}
+        //                             alt=""
+        //                             width="70px"
+        //                             height="70px"
+        //                         />
+        //                     </div>
+        //                 )
+        //             })}
+        //         </div>
+        //     )
+        // },
+        // {
+        //     title: 'Video',
+        //     dataIndex: 'video',
+        //     key: 'video',
+        //     render: (text) => (
+        //         <div className='row' >
+        //             {text?.map((item, i) => {
+        //                 <video
+        //                     src={files(process.env.REACT_APP_PROFILE_URL + 'images/' + item.video, "attachments")}
+        //                     autoPlay
+        //                     controls
+        //                     poster={files(process.env.REACT_APP_PROFILE_URL + 'images/' + item.thumbnail, "thumb")}
+        //                     loop
+        //                 />
+        //             })}
+        //         </div>
+        //     )
+        // },
+        {
+            title: 'Created At',
+            dataIndex: 'createdAt',
+            key: 'createdAt',
+            render: (text) => (
+                <div>
+                    {moment(text).format("DD MMM YYYY h:mm A")}
+                </div>
+            ),
+        },
+        {
+            title: 'Actions',
+            key: 'actions',
+            render: (text) => (
+                <>
+                    <Dropdown>
+                        <Dropdown.Toggle
+                            variant="danger"
+                            className="light sharp i-false"
+                        >
+                            {svg1}
+                        </Dropdown.Toggle>
+                        <Dropdown.Menu>
+                            <Dropdown.Item onClick={() => editModal(text)}>Edit</Dropdown.Item>
+                            {/* <Dropdown.Item onClick={() => deleteCms(text)}>Delete</Dropdown.Item> */}
+                        </Dropdown.Menu>
+                    </Dropdown>
+                </>
+            )
+        },
+    ];
+
+    return (
+        <>
+            <div className="card">
+                <div className="card-header">
+                    <h4 className="card-title">Technical guide</h4>
+                    <Button type="primary" onClick={() => editModal()}>
+                        Add Technical guide
+                    </Button>
+                </div>
+                <div className="card-body">
+                    <div className="table-responsive">
+                        {
+                            data && data.length > 0 ?
+                                <Table dataSource={data} columns={columnss} /> : <Empty />
+                        }
+                    </div>
+                </div>
+            </div>
+            <Modal open={visible} title={id ? "Edit Technical guide" : "Add Technical guide"} okText="Submit" cancelText="Cancel"
+                onCancel={() => {
+                    setVisible(false);
+                }}
+                footer={[
+                    <Button key="cancel" onClick={() => setVisible(false)}> Cancel </Button>,
+                    <Button
+                        key="submit"
+                        type="primary"
+                        onClick={() => {
+                            form.validateFields()
+                                .then((values) => {
+                                    onSubmit(values);
+                                })
+                                .catch((info) => {
+                                    console.log("Validate Failed:", info);
+                                });
+                        }}
+                    >
+                        Submit
+                    </Button>
+                ]}
+            >
+                <Form form={form} layout="vertical" name="form_in_modal"
+                    initialValues={{
+                        modifier: "public"
+                    }}
+                >
+
+                    <label class="label-name">Title</label>
+                    <Form.Item name="title"
+                        rules={[{ required: true, message: "Please entre title!" }]}
+                    >
+                        <Input type="text" />
+                    </Form.Item>
+
+                    <label class="label-name">Description</label>
+                    <Form.Item
+                        name="description"
+                        rules={[{ required: true, message: "Please enter message!" }]}
+                    >
+                        <Input type="text" />
+                    </Form.Item>
+                    {viewImage.length > 0 ?
+                        <div className="card-body pb-1">
+                            <label class="label-name">Images</label>
+                            <div id="lightgallery" className="row">
+                                {viewImage.map((item, index) => (
+                                    <a className="col-lg-3 col-md-6 mb-4" key={index}>
+                                        <img src={process.env.REACT_APP_PROFILE_URL + 'images/' + item} style={{ width: "100%" }} alt="gallery" />
+                                    </a>
+                                ))}
+                            </div>
+                        </div> : ''}
+                    {viewVideo.length > 0 ?
+                        <div className="card-body pb-1">
+                            <label class="label-name">Video</label>
+                            <div id="lightgallery" className="row">
+                                {viewVideo.map((item, i) => (
+                                    <video
+                                        key={i}
+                                        src={process.env.REACT_APP_PROFILE_URL + 'images/' + item?.video}
+                                        // autoPlay
+                                        controls
+                                        poster={process.env.REACT_APP_PROFILE_URL + 'images/' + item?.thumbnail}
+                                        // loop
+                                        width="70px"
+                                        height="70px"
+                                    />
+                                ))}
+                            </div>
+                        </div>
+                        : ''}
+                    <label class="label-name">Media</label>
+                    {/* <Form.Item
+                        name="images"
+                        rules={[{ required: true, message: "Please enter message!" }]}
+                    > */}
+                    <Input type="file" multiple onChange={(e) => handleProfilePicOnChange(e)} />
+                    {/* </Form.Item> */}
+                </Form>
+            </Modal>
+        </>
+    )
+}
+
+export default Technicalguide

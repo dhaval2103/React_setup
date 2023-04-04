@@ -254,7 +254,8 @@ const SideBar = (props) => {
               <li><Link className={`${path === "cms-list" ? "mm-active" : ""}`} to="/cms-list">CMS List</Link></li>
               <li><Link className={`${path === "manage-subscriptions" ? "mm-active" : ""}`} to="/manage-subscriptions">Manage Subscriptions</Link></li>
               <li><Link className={`${path === "notification" ? "mm-active" : ""}`} to="/notification">Notification</Link></li>
-              <li><Link className={`${path === "faq-list" ? "mm-active" : ""}`} to="/faq-list">FAQ List</Link></li>
+              <li><Link className={`${path === "Faq-list" ? "mm-active" : ""}`} to="/faq-list">FAQ List</Link></li>
+              <li><Link className={`${path === "technical-guide-list" ? "mm-active" : ""}`} to="/technical-guide-list">Technical Guide List</Link></li>
             </ul>
           </li>
           <li className={`${app.includes(path) ? "mm-active" : ""}`}>
@@ -336,7 +337,7 @@ const SideBar = (props) => {
               <li><Link className={`${path === "ui-pagination" ? "mm-active" : ""}`} to="/ui-pagination">Pagination</Link></li>
               <li><Link className={`${path === "ui-grid" ? "mm-active" : ""}`} to="/ui-grid">Grid</Link></li>
             </ul>
-          </li> */}
+          </li>
           {/* Plugins */}
           {/* <li className={`${plugins.includes(path) ? "mm-active" : ""}`}>
             <Link className="has-arrow ai-icon" to="#" >

@@ -87,7 +87,7 @@ const User = (props) => {
             dataIndex: 'attachments',
             key: 'attachments',
             render: (text) => (
-                <div class='row'>
+                <div className='row'>
                     {text?.map((item, i) => {
                         return (
                             <div>

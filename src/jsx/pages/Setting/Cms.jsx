@@ -40,35 +40,26 @@ const Cms = () => {
     }
 
     const deleteCms = (text) => {
-        // Swal.fire({
-        //     title: 'Are you sure?',
-        //     text: "You won't be able to revert this!",
-        //     icon: 'warning',
-        //     showCancelButton: true,
-        //     confirmButtonColor: '#3085d6',
-        //     cancelButtonColor: '#d33',
-        //     confirmButtonText: 'Yes, delete it!'
-        // }).then((result) => {
-        //     if (result.isConfirmed) {
-        //         dispatch(UserService.deleteCms(text))
-        //             .then((res) => {
-        //                 getCms();
-        //                 ToastMe("CMS Deleted Successfully", 'success')
-        //             })
-        //             .catch((errors) => {
-        //                 console.log({ errors })
-        //             })
-        //     }
-        // })
-
-        dispatch(UserService.deleteCms(text))
-            .then((res) => {
-                getCms();
-                ToastMe("CMS Status Changed Successfully", 'success')
-            })
-            .catch((errors) => {
-                console.log({ errors })
-            })
+        Swal.fire({
+            title: 'Are you sure?',
+            text: "To change this CMS status!",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Yes, Change it!'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                dispatch(UserService.deleteCms(text))
+                    .then((res) => {
+                        getCms();
+                        ToastMe("CMS status change successfully", 'success')
+                    })
+                    .catch((errors) => {
+                        console.log({ errors })
+                    })
+            }
+        })
     };
 
     const onSubmit = (values) => {
