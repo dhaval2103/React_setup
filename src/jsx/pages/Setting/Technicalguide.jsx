@@ -18,7 +18,8 @@ const Technicalguide = () => {
     const [viewImage, setViewImage] = useState([]);
     const [viewVideo, setViewVideo] = useState([]);
 
-    const editModal = (text) => {
+    const editModal = async (text) => {
+        form.resetFields();
         setVisible(true)
         if (text) {
             setId(text.id)
@@ -40,27 +41,27 @@ const Technicalguide = () => {
     }
     const onSubmit = async (values) => {
         // return false
-        if(id){
+        if (id) {
             if (uploadedImage || uploadedVideo) {
                 const formData = new FormData();
-                if(uploadedImage){
+                if (uploadedImage) {
                     uploadedImage?.map((file) => {
                         formData.append('images', file)
                     })
                 }
-                if(uploadedVideo){
+                if (uploadedVideo) {
                     uploadedVideo?.map((file) => {
                         formData.append('videos', file)
                     })
                 }
                 dispatch(UserService.uploadMedia(formData))
                     .then((res) => {
-                        if(res.data.images){
+                        if (res.data.images) {
                             res.data.images.map((result) => {
                                 viewImage.push(result)
                             })
                         }
-                        if(res.data.video){
+                        if (res.data.video) {
                             res.data.video.map((result) => {
                                 viewVideo.push(result)
                             })
@@ -85,17 +86,35 @@ const Technicalguide = () => {
                     .catch((errors) => {
                         console.log({ errors })
                     })
+            } else {
+                values.image = viewImage
+                values.video = viewVideo
+                values.id = id;
+                dispatch(UserService.editTechnicalguides(values))
+                    .then((res) => {
+                        getTechnicalGuides();
+                        form.setFieldsValue({
+                            title: '',
+                            description: '',
+                        })
+                        ToastMe(res.data.message, 'success')
+                    })
+                setVisible(false)
+                    .catch((errors) => {
+                        console.log({ errors })
+                    })
             }
         } else {
             if (uploadedImage || uploadedVideo) {
                 const formData = new FormData();
-    
+
                 uploadedImage?.map((file) => {
                     formData.append('images', file)
                 })
                 uploadedVideo?.map((file) => {
                     formData.append('videos', file)
                 })
+
                 dispatch(UserService.uploadMedia(formData))
                     .then((res) => {
                         values.image = res.data.images
@@ -177,6 +196,21 @@ const Technicalguide = () => {
             }
         })
     };
+
+    const removeImage = (img) => {
+        setViewImage(
+            viewImage.filter((ele) => {
+                return ele !== img;
+            })
+        )
+    }
+    const removeVideo = (img) => {
+        setViewVideo(
+            viewVideo.filter((ele) => {
+                return ele !== img;
+            })
+        )
+    }
 
     useEffect(() => {
         getTechnicalGuides();
@@ -325,6 +359,7 @@ const Technicalguide = () => {
                         Submit
                     </Button>
                 ]}
+                className='edit_technical_guide'
             >
                 <Form form={form} layout="vertical" name="form_in_modal"
                     initialValues={{
@@ -349,10 +384,14 @@ const Technicalguide = () => {
                     {viewImage.length > 0 ?
                         <div className="card-body pb-1">
                             <label class="label-name">Images</label>
-                            <div id="lightgallery" className="row">
+                            <div id="lightgallery" className="row gx-2">
                                 {viewImage.map((item, index) => (
                                     <a className="col-lg-3 col-md-6 mb-4" key={index}>
-                                        <img src={process.env.REACT_APP_PROFILE_URL + 'images/' + item} style={{ width: "100%" }} alt="gallery" />
+                                        <div className='img_video_wrapper'>
+                                            <span id="close" onClick={() => removeImage(item)} className='close_icon'>
+                                                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M12 22c5.5 0 10-4.5 10-10S17.5 2 12 2 2 6.5 2 12s4.5 10 10 10ZM9.17 14.83l5.66-5.66M14.83 14.83 9.17 9.17" stroke="#ffffff" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path></svg></span>
+                                            <img src={process.env.REACT_APP_PROFILE_URL + 'images/' + item} style={{ width: "100%" }} alt="gallery" />
+                                        </div>
                                     </a>
                                 ))}
                             </div>
@@ -362,27 +401,32 @@ const Technicalguide = () => {
                             <label class="label-name">Video</label>
                             <div id="lightgallery" className="row">
                                 {viewVideo.map((item, i) => (
-                                    <video
-                                        key={i}
-                                        src={process.env.REACT_APP_PROFILE_URL + 'images/' + item?.video}
-                                        // autoPlay
-                                        controls
-                                        poster={process.env.REACT_APP_PROFILE_URL + 'images/' + item?.thumbnail}
-                                        // loop
-                                        width="70px"
-                                        height="70px"
-                                    />
+                                    <a className='col-lg-6 col-md-6 mb-4'>
+                                        <div className='img_video_wrapper'>
+                                            <span id="close" onClick={() => removeVideo(item)} className='close_icon'>
+                                                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M12 22c5.5 0 10-4.5 10-10S17.5 2 12 2 2 6.5 2 12s4.5 10 10 10ZM9.17 14.83l5.66-5.66M14.83 14.83 9.17 9.17" stroke="#ffffff" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path></svg></span>
+                                            <video
+                                                key={i}
+                                                src={process.env.REACT_APP_PROFILE_URL + 'images/' + item?.video}
+                                                // autoPlay
+                                                controls
+                                                poster={process.env.REACT_APP_PROFILE_URL + 'thumb/' + item?.thumbnail}
+                                                // loop
+                                                width="70px"
+                                                height="70px"
+                                            />
+                                        </div>
+                                    </a>
                                 ))}
                             </div>
                         </div>
                         : ''}
                     <label class="label-name">Media</label>
-                    {/* <Form.Item
-                        name="images"
-                        rules={[{ required: true, message: "Please enter message!" }]}
-                    > */}
-                    <Input type="file" multiple onChange={(e) => handleProfilePicOnChange(e)} />
-                    {/* </Form.Item> */}
+                    <Form.Item
+                        name="media"
+                    >
+                    <Input type="file" id='file-input' multiple onChange={(e) => handleProfilePicOnChange(e)} />
+                    </Form.Item>
                 </Form>
             </Modal>
         </>
