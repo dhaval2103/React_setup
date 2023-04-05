@@ -227,12 +227,12 @@ const SideBar = (props) => {
             <ul >
               <li><Link className={`${path === "dashboard" ? "mm-active" : ""}`} to="/dashboard"> Dashboard Light</Link></li>
               <li><Link className={`${path === "dashboard-dark" ? "mm-active" : ""}`} to="/dashboard-dark"> Dashboard Dark</Link></li>
-              <li><Link className={`${path === "wallet" ? "mm-active" : ""}`} to="/wallet">My Wallet</Link></li>
+              {/* <li><Link className={`${path === "wallet" ? "mm-active" : ""}`} to="/wallet">My Wallet</Link></li>
               <li><Link className={`${path === "invoices-list" ? "mm-active" : ""}`} to="/invoices-list"> Invoices</Link></li>
               <li><Link className={`${path === "create-invoices" ? "mm-active" : ""}`} to="/create-invoices">Create Invoices</Link></li>
               <li><Link className={`${path === "card-center" ? "mm-active" : ""}`} to="/card-center">Card-Center</Link></li>
               <li><Link className={`${path === "transaction-details" ? "mm-active" : ""}`} to="/transaction-details"> Transaction</Link></li>
-              <li><Link className={`${path === "task" ? "mm-active" : ""}`} to="/task">Task</Link></li>
+              <li><Link className={`${path === "task" ? "mm-active" : ""}`} to="/task">Task</Link></li> */}
             </ul>
           </li>
 

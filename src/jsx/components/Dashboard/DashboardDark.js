@@ -1,8 +1,8 @@
-import React,{ useContext, useEffect} from 'react';
-import {Link} from 'react-router-dom';
+import React, { useContext, useEffect, useState } from 'react';
+import { Link } from 'react-router-dom';
 import loadable from "@loadable/component";
 import pMinDelay from "p-min-delay";
-import {Dropdown} from 'react-bootstrap';
+import { Dropdown } from 'react-bootstrap';
 
 ///Images
 import small from "./../../../images/profile/small/pic1.jpg";
@@ -24,6 +24,8 @@ import DonutChart from './Dashboard/DonutChart';
 import WidgetChart3 from './Dashboard/WidgetChart3';
 import PreviousTransactions from './Dashboard/PreviousTransactions';
 import NouiRangeSlider from './Dashboard/NouiRangeSlider';
+import { useDispatch } from 'react-redux';
+import CommonService from '../../../services/common';
 
 const TotalInvoices = loadable(() =>
 	pMinDelay(import("./Dashboard/TotalInvoices"), 1000)
@@ -43,11 +45,26 @@ const ChartBarApex = loadable(() =>
 
 
 const DashboardDark = () => {
+	const dispatch = useDispatch();
+	const [countData, setCountData] = useState();
 	const { changeBackground } = useContext(ThemeContext);
+
+	const dashboardCountData = () => {
+		dispatch(CommonService.dashboardCountData())
+			.then((res) => {
+				setCountData(res.data)
+			})
+			.catch((errors) => {
+				console.log({ errors })
+			})
+	}
+
 	useEffect(() => {
 		changeBackground({ value: "dark", label: "Dark" });
+		dashboardCountData();
 	}, []);
-	return(
+
+	return (
 		<>
 			<div className="row">
 				<div className="col-xl-12">
@@ -58,31 +75,30 @@ const DashboardDark = () => {
 									<div className="d-flex">
 										<span className="mt-2">
 											<svg width="32" height="40" viewBox="0 0 32 40" fill="none" xmlns="http://www.w3.org/2000/svg">
-												<path fillRule="evenodd" clipRule="evenodd" d="M9.812 34.64L3.2 39.6C2.594 40.054 1.784 40.128 1.106 39.788C0.428 39.45 0 38.758 0 38V2C0 0.896 0.896 0 2 0H30C31.104 0 32 0.896 32 2V38C32 38.758 31.572 39.45 30.894 39.788C30.216 40.128 29.406 40.054 28.8 39.6L22.188 34.64L17.414 39.414C16.634 40.196 15.366 40.196 14.586 39.414L9.812 34.64ZM28 34V4H4V34L8.8 30.4C9.596 29.802 10.71 29.882 11.414 30.586L16 35.172L20.586 30.586C21.29 29.882 22.404 29.802 23.2 30.4L28 34ZM14 20H18C19.104 20 20 19.104 20 18C20 16.896 19.104 16 18 16H14C12.896 16 12 16.896 12 18C12 19.104 12.896 20 14 20ZM10 12H22C23.104 12 24 11.104 24 10C24 8.896 23.104 8 22 8H10C8.896 8 8 8.896 8 10C8 11.104 8.896 12 10 12Z" fill="#717579"/>
+												<path fillRule="evenodd" clipRule="evenodd" d="M9.812 34.64L3.2 39.6C2.594 40.054 1.784 40.128 1.106 39.788C0.428 39.45 0 38.758 0 38V2C0 0.896 0.896 0 2 0H30C31.104 0 32 0.896 32 2V38C32 38.758 31.572 39.45 30.894 39.788C30.216 40.128 29.406 40.054 28.8 39.6L22.188 34.64L17.414 39.414C16.634 40.196 15.366 40.196 14.586 39.414L9.812 34.64ZM28 34V4H4V34L8.8 30.4C9.596 29.802 10.71 29.882 11.414 30.586L16 35.172L20.586 30.586C21.29 29.882 22.404 29.802 23.2 30.4L28 34ZM14 20H18C19.104 20 20 19.104 20 18C20 16.896 19.104 16 18 16H14C12.896 16 12 16.896 12 18C12 19.104 12.896 20 14 20ZM10 12H22C23.104 12 24 11.104 24 10C24 8.896 23.104 8 22 8H10C8.896 8 8 8.896 8 10C8 11.104 8.896 12 10 12Z" fill="#717579" />
 											</svg>
 										</span>
 										<div className="invoices">
-											<h4>2,478</h4>
-											<span>Total Invoices</span>
+											<h4>{countData?.user_count}</h4>
+											<span>User Count</span>
 										</div>
 									</div>
 								</div>
-								<div className="card-body p-0">	
+								<div className="card-body p-0">
 									<div id="totalInvoices">
 										<TotalInvoices />
 									</div>
 								</div>
-								
 							</div>
 						</div>
-						<div className="col-xl-3 col-sm-6">
+						{/* <div className="col-xl-3 col-sm-6">
 							<div className="card overflow-hidden">
 								<div className="card-header border-0">
 									<div className="d-flex">
 										<span className="mt-1">
 											<svg width="58" height="58" viewBox="0 0 58 58" fill="none" xmlns="http://www.w3.org/2000/svg">
-												<path fillRule="evenodd" clipRule="evenodd" d="M17.812 48.64L11.2 53.6C10.594 54.054 9.78401 54.128 9.10602 53.788C8.42802 53.45 8.00002 52.758 8.00002 52V16C8.00002 14.896 8.89602 14 10 14H38C39.104 14 40 14.896 40 16V52C40 52.758 39.572 53.45 38.894 53.788C38.216 54.128 37.406 54.054 36.8 53.6L30.188 48.64L25.414 53.414C24.634 54.196 23.366 54.196 22.586 53.414L17.812 48.64ZM36 48V18H12V48L16.8 44.4C17.596 43.802 18.71 43.882 19.414 44.586L24 49.172L28.586 44.586C29.29 43.882 30.404 43.802 31.2 44.4L36 48ZM22 34H26C27.104 34 28 33.104 28 32C28 30.896 27.104 30 26 30H22C20.896 30 20 30.896 20 32C20 33.104 20.896 34 22 34ZM18 26H30C31.104 26 32 25.104 32 24C32 22.896 31.104 22 30 22H18C16.896 22 16 22.896 16 24C16 25.104 16.896 26 18 26Z" fill="#44814E"/>
-												<circle cx="43.5" cy="14.5" r="12.5" fill="#09BD3C" stroke="white" strokeWidth="4"/>
+												<path fillRule="evenodd" clipRule="evenodd" d="M17.812 48.64L11.2 53.6C10.594 54.054 9.78401 54.128 9.10602 53.788C8.42802 53.45 8.00002 52.758 8.00002 52V16C8.00002 14.896 8.89602 14 10 14H38C39.104 14 40 14.896 40 16V52C40 52.758 39.572 53.45 38.894 53.788C38.216 54.128 37.406 54.054 36.8 53.6L30.188 48.64L25.414 53.414C24.634 54.196 23.366 54.196 22.586 53.414L17.812 48.64ZM36 48V18H12V48L16.8 44.4C17.596 43.802 18.71 43.882 19.414 44.586L24 49.172L28.586 44.586C29.29 43.882 30.404 43.802 31.2 44.4L36 48ZM22 34H26C27.104 34 28 33.104 28 32C28 30.896 27.104 30 26 30H22C20.896 30 20 30.896 20 32C20 33.104 20.896 34 22 34ZM18 26H30C31.104 26 32 25.104 32 24C32 22.896 31.104 22 30 22H18C16.896 22 16 22.896 16 24C16 25.104 16.896 26 18 26Z" fill="#44814E" />
+												<circle cx="43.5" cy="14.5" r="12.5" fill="#09BD3C" stroke="white" strokeWidth="4" />
 											</svg>
 										</span>
 										<div className="invoices">
@@ -91,22 +107,22 @@ const DashboardDark = () => {
 										</div>
 									</div>
 								</div>
-								<div className="card-body p-0">										
+								<div className="card-body p-0">
 									<div id="paidinvoices">
 										<Paidinvoices />
 									</div>
 								</div>
-								
+
 							</div>
-						</div>
-						<div className="col-xl-3 col-sm-6">
+						</div> */}
+						{/* <div className="col-xl-3 col-sm-6">
 							<div className="card overflow-hidden">
 								<div className="card-header border-0">
 									<div className="d-flex">
 										<span className="mt-1">
 											<svg width="58" height="58" viewBox="0 0 58 58" fill="none" xmlns="http://www.w3.org/2000/svg">
-												<path fillRule="evenodd" clipRule="evenodd" d="M17.812 48.64L11.2 53.6C10.594 54.054 9.78401 54.128 9.10602 53.788C8.42802 53.45 8.00002 52.758 8.00002 52V16C8.00002 14.896 8.89602 14 10 14H38C39.104 14 40 14.896 40 16V52C40 52.758 39.572 53.45 38.894 53.788C38.216 54.128 37.406 54.054 36.8 53.6L30.188 48.64L25.414 53.414C24.634 54.196 23.366 54.196 22.586 53.414L17.812 48.64ZM36 48V18H12V48L16.8 44.4C17.596 43.802 18.71 43.882 19.414 44.586L24 49.172L28.586 44.586C29.29 43.882 30.404 43.802 31.2 44.4L36 48ZM22 34H26C27.104 34 28 33.104 28 32C28 30.896 27.104 30 26 30H22C20.896 30 20 30.896 20 32C20 33.104 20.896 34 22 34ZM18 26H30C31.104 26 32 25.104 32 24C32 22.896 31.104 22 30 22H18C16.896 22 16 22.896 16 24C16 25.104 16.896 26 18 26Z" fill="#44814E"/>
-												<circle cx="43.5" cy="14.5" r="12.5" fill="#FD5353" stroke="white" strokeWidth="4"/>
+												<path fillRule="evenodd" clipRule="evenodd" d="M17.812 48.64L11.2 53.6C10.594 54.054 9.78401 54.128 9.10602 53.788C8.42802 53.45 8.00002 52.758 8.00002 52V16C8.00002 14.896 8.89602 14 10 14H38C39.104 14 40 14.896 40 16V52C40 52.758 39.572 53.45 38.894 53.788C38.216 54.128 37.406 54.054 36.8 53.6L30.188 48.64L25.414 53.414C24.634 54.196 23.366 54.196 22.586 53.414L17.812 48.64ZM36 48V18H12V48L16.8 44.4C17.596 43.802 18.71 43.882 19.414 44.586L24 49.172L28.586 44.586C29.29 43.882 30.404 43.802 31.2 44.4L36 48ZM22 34H26C27.104 34 28 33.104 28 32C28 30.896 27.104 30 26 30H22C20.896 30 20 30.896 20 32C20 33.104 20.896 34 22 34ZM18 26H30C31.104 26 32 25.104 32 24C32 22.896 31.104 22 30 22H18C16.896 22 16 22.896 16 24C16 25.104 16.896 26 18 26Z" fill="#44814E" />
+												<circle cx="43.5" cy="14.5" r="12.5" fill="#FD5353" stroke="white" strokeWidth="4" />
 											</svg>
 
 										</span>
@@ -121,17 +137,17 @@ const DashboardDark = () => {
 										<Unpaidinvoices />
 									</div>
 								</div>
-								
+
 							</div>
-						</div>
-						<div className="col-xl-3 col-sm-6">
+						</div> */}
+						{/* <div className="col-xl-3 col-sm-6">
 							<div className="card overflow-hidden">
 								<div className="card-header border-0">
 									<div className="d-flex">
 										<span className="mt-1">
 											<svg width="58" height="58" viewBox="0 0 58 58" fill="none" xmlns="http://www.w3.org/2000/svg">
-												<path fillRule="evenodd" clipRule="evenodd" d="M17.812 48.64L11.2 53.6C10.594 54.054 9.784 54.128 9.106 53.788C8.428 53.45 8 52.758 8 52V16C8 14.896 8.896 14 10 14H38C39.104 14 40 14.896 40 16V52C40 52.758 39.572 53.45 38.894 53.788C38.216 54.128 37.406 54.054 36.8 53.6L30.188 48.64L25.414 53.414C24.634 54.196 23.366 54.196 22.586 53.414L17.812 48.64ZM36 48V18H12V48L16.8 44.4C17.596 43.802 18.71 43.882 19.414 44.586L24 49.172L28.586 44.586C29.29 43.882 30.404 43.802 31.2 44.4L36 48ZM22 34H26C27.104 34 28 33.104 28 32C28 30.896 27.104 30 26 30H22C20.896 30 20 30.896 20 32C20 33.104 20.896 34 22 34ZM18 26H30C31.104 26 32 25.104 32 24C32 22.896 31.104 22 30 22H18C16.896 22 16 22.896 16 24C16 25.104 16.896 26 18 26Z" fill="#44814E"/>
-												<circle cx="43.5" cy="14.5" r="12.5" fill="#FFAA2B" stroke="white" strokeWidth="4"/>
+												<path fillRule="evenodd" clipRule="evenodd" d="M17.812 48.64L11.2 53.6C10.594 54.054 9.784 54.128 9.106 53.788C8.428 53.45 8 52.758 8 52V16C8 14.896 8.896 14 10 14H38C39.104 14 40 14.896 40 16V52C40 52.758 39.572 53.45 38.894 53.788C38.216 54.128 37.406 54.054 36.8 53.6L30.188 48.64L25.414 53.414C24.634 54.196 23.366 54.196 22.586 53.414L17.812 48.64ZM36 48V18H12V48L16.8 44.4C17.596 43.802 18.71 43.882 19.414 44.586L24 49.172L28.586 44.586C29.29 43.882 30.404 43.802 31.2 44.4L36 48ZM22 34H26C27.104 34 28 33.104 28 32C28 30.896 27.104 30 26 30H22C20.896 30 20 30.896 20 32C20 33.104 20.896 34 22 34ZM18 26H30C31.104 26 32 25.104 32 24C32 22.896 31.104 22 30 22H18C16.896 22 16 22.896 16 24C16 25.104 16.896 26 18 26Z" fill="#44814E" />
+												<circle cx="43.5" cy="14.5" r="12.5" fill="#FFAA2B" stroke="white" strokeWidth="4" />
 											</svg>
 
 
@@ -148,10 +164,10 @@ const DashboardDark = () => {
 									</div>
 								</div>
 							</div>
-						</div>
+						</div> */}
 					</div>
 				</div>
-				<div className="col-xl-6">
+				{/* <div className="col-xl-6">
 					<div className="row">
 						<div className="col-xl-12">
 							<div className="card">
@@ -285,7 +301,7 @@ const DashboardDark = () => {
 													defaultChecked
 												/>
 											</div>
-											<label className="form-check-label font-w600 fs-16" hmtlFor="flexSwitchCheckChecked2">Analytics</label>	
+											<label className="form-check-label font-w600 fs-16" htmlFor="flexSwitchCheckChecked2">Analytics</label>	
 											<div className="form-check form-switch toggle-switch">
 											    <input className="form-check-input custome" type="checkbox" 
 													defaultChecked
@@ -317,14 +333,13 @@ const DashboardDark = () => {
 									<div className="mb-sm-0 mb-2">
 										<p className="fs-14 mb-1 font-w700">Weekly Wallet Usage</p>
 										<span className="mb-0">
-											<svg width="12" height="6" viewBox="0 0 12 6" fill="none" xmlns="http://www.w3.org/2000/svg">
-												<path d="M11.9999 6L5.99994 -2.62268e-07L-6.10352e-05 6" fill="#2BC155"/>
-											</svg>
-											<strong className="fs-32 text-black ms-2 me-3 font-w800">43%</strong>Than last week
-										</span>
+										<svg width="12" height="6" viewBox="0 0 12 6" fill="none" xmlns="http://www.w3.org/2000/svg">
+											<path d="M11.9999 6L5.99994 -2.62268e-07L-6.10352e-05 6" fill="#2BC155"/>
+										</svg>
+										<strong className="fs-32 text-black ms-2 me-3 font-w800">43%</strong>Than last week</span>
 									</div>
 									<span className="fs-12">
-										<svg className="me-1" width="21" height="15" viewBox="0 0 21 15" fill="none" xmlns="http://www.w3.org/2000/svg">
+										<svg width="21" height="15" viewBox="0 0 21 15" fill="none" xmlns="http://www.w3.org/2000/svg" className="me-1">
 											<path d="M0.999939 13.5C1.91791 12.4157 4.89722 9.22772 6.49994 7.5L12.4999 10.5L19.4999 1.5" stroke="#2BC155" strokeWidth="2"/>
 											<path d="M6.49994 7.5C4.89722 9.22772 1.91791 12.4157 0.999939 13.5H19.4999V1.5L12.4999 10.5L6.49994 7.5Z" fill="url(#paint0_linear2)"/>
 											<defs>
@@ -334,18 +349,16 @@ const DashboardDark = () => {
 											</linearGradient>
 											</defs>
 										</svg>
-										4% (30 days)
-									</span>
+									4% (30 days)</span>
 								</div>
 								<div className="card-body p-0">
-									{/* <canvas id="widgetChart3" height="80"></canvas> */}
 									<WidgetChart3 />
 								</div>
 							</div>
 						</div>
 					</div>
-				</div>
-				<div className="col-xl-6">
+				</div> */}
+				{/* <div className="col-xl-6">
 					<div className="row">
 						<div className="col-xl-12">
 							<div className="row">
@@ -390,9 +403,6 @@ const DashboardDark = () => {
 											</ul>
 											<h4 className="mt-3 mb-0">Insert Amount</h4>
 											<div className="format-slider">
-												{/* <input className="form-control amount-input"  title="Formatted number" id="input-format" 
-													placeholder="20.000"
-												/> */}
 												<div id="slider-format">
 													<NouiRangeSlider />
 												</div>
@@ -480,9 +490,9 @@ const DashboardDark = () => {
 							<PreviousTransactions />
 						</div>
 					</div>
-				</div>
-				
-			</div>	
+				</div> */}
+
+			</div>
 		</>
 	)
 }
