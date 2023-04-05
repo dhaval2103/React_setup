@@ -29,6 +29,7 @@ const Technicalguide = () => {
                 description: text.description,
             })
         } else {
+            setId('')
             setViewImage('')
             setViewVideo('')
             form.setFieldsValue({
