@@ -22,6 +22,7 @@ const ManageSubscriptions = () => {
         setVisible(true)
         if (text) {
             form.setFieldsValue({
+                duration: text?.duration || '',
                 packageName: text?.packageName || '',
                 price: text?.price || '',
             })
@@ -29,6 +30,7 @@ const ManageSubscriptions = () => {
             setId(text?.id)
         } else {
             form.setFieldsValue({
+                duration: '',
                 packageName: '',
                 price: '',
             })
@@ -298,25 +300,27 @@ const ManageSubscriptions = () => {
                         </Form.Item>
                     </div> */}
                     <label class="label-name">Duration</label>
-                    {/* <Form.Item
+                    <div>
+                        <Form.Item
                             name="duration"
                             rules={[{ required: true, message: "Please select plan duration!" }]}
-                        > */}
-                    <div>
-                        <Select
-                            label="Duration"
-                            value={type}
-                            style={{ width: 120 }}
-                            onChange={handleChange}
-                            allowClear
-                            options={[
-                                { value: 1, label: '1 Month' },
-                                { value: 2, label: '3 Month' },
-                                { value: 3, label: '6 Month' },
-                                { value: 4, label: '12 Month' }]}
-                        />
-                        {/* </Form.Item> */}
+                        >
+                            <Select
+                                name="duration"
+                                id="duration"
+                                label="Duration"
+                                value={type}
+                                style={{ width: 120 }}
+                                onChange={handleChange}
+                                allowClear
+                                options={[
+                                    { value: 1, label: '1 Month' },
+                                    { value: 2, label: '3 Month' },
+                                    { value: 3, label: '6 Month' },
+                                    { value: 4, label: '12 Month' }]}
+                            />
 
+                        </Form.Item>
                     </div>
 
 
