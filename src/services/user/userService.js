@@ -100,6 +100,7 @@ export function getCms() {
     )
 }
 export function addCms(data) {
+    data.env = 'test';
     return dispatch => (
         new Promise((resolve, reject) => {
             Http.callApi('post', BaseUrl + '/common/cms', data)
@@ -107,9 +108,8 @@ export function addCms(data) {
                     return resolve(res);
                 })
                 .catch(function (error) {
-                    console.log(error);
                     const data = {
-                        errorData: error.response.data.message,
+                        errorData: error.response.data,
                         statusCode: error.response.status,
                     };
                     return reject(data);
@@ -159,7 +159,7 @@ export function approveRequest(data) {
     )
 }
 export function updateCms(data) {
-
+    data.env = 'test';
     return dispatch => (
         new Promise((resolve, reject) => {
             Http.callApi('post', BaseUrl + '/common/editCms', data)
@@ -169,7 +169,7 @@ export function updateCms(data) {
                 .catch(function (error) {
                     console.log(error);
                     const data = {
-                        errorData: error.response.data.message,
+                        errorData: error.response.data,
                         statusCode: error.response.status,
                     };
                     return reject(data);

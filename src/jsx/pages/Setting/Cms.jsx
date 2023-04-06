@@ -2,19 +2,45 @@ import React, { useEffect, useState } from 'react';
 import '../../components/table/FilteringTable/filtering.css';
 import UserService from '../../../services/user';
 import { useDispatch } from 'react-redux';
-import { Modal, Table, Button, Input, Form, Select, Empty } from 'antd';
-import { Dropdown,Badge } from "react-bootstrap";
+import { Modal, Table, Button, Input, Form, Empty } from 'antd';
+import { Dropdown, Badge } from "react-bootstrap";
 import ToastMe from '../Common/ToastMe';
 import Swal from 'sweetalert2';
 import moment from 'moment';
+import ReactQuill from 'react-quill';
+import 'react-quill/dist/quill.snow.css';
 
 const Cms = () => {
     const dispatch = useDispatch();
     const [data, setData] = useState([]);
     const [visible, setVisible] = useState(false);
-    const [type, setType] = useState('');
+    const [description, setDescription] = useState();
     const [id, setId] = useState('');
     const [form] = Form.useForm();
+
+    const getCms = () => {
+        dispatch(UserService.getCms())
+            .then((res) => {
+                let newArr = [];
+                for (var i = 0; i < res.data.length; i++) {
+                    newArr.push(
+                        {
+                            key: i,
+                            title: res.data[i].title || '-',
+                            description: res.data[i].description || '-',
+                            type: res.data[i].type || '-',
+                            id: res.data[i]._id || '-',
+                            status: res.data[i].status || '-',
+                            createdAt: res.data[i].createdAt || '-'
+                        }
+                    )
+                }
+                setData(newArr);
+            })
+            .catch((errors) => {
+                console.log({ errors })
+            })
+    }
 
     const editModal = (text) => {
         setVisible(true)
@@ -23,20 +49,16 @@ const Cms = () => {
                 title: text?.title || '',
                 description: text?.description || '',
             })
-            setType(text.type);
+            setDescription(text.description)
             setId(text.id)
         } else {
             form.setFieldsValue({
                 title: '',
                 description: '',
             })
-            setType('');
+            setDescription('');
             setId('')
         }
-    }
-
-    const handleChange = (value) => {
-        setType(value)
     }
 
     const deleteCms = (text) => {
@@ -63,19 +85,29 @@ const Cms = () => {
     };
 
     const onSubmit = (values) => {
-        values.type = type;
+        if (description !== '<p><br></p>') {
+            values.description = description;
+        }
         if (id) {
             values.id = id;
             dispatch(UserService.updateCms(values))
                 .then((res) => {
                     getCms();
                     ToastMe("CMS Updated Successfully", 'success')
+                    setVisible(false);
+                    setDescription('')
+                    setId('')
                 })
-            setVisible(false);
-            setType('')
-            setId('')
-                .catch((errors) => {
-                    console.log({ errors })
+                .catch(({ errorData }) => {
+                    for (const e in errorData.errors) {
+                        form.setFields([
+                            {
+                                name: e,
+                                touched: false,
+                                errors: [errorData.errors[e]],
+                            },
+                        ]);
+                    }
                 })
         } else {
             dispatch(UserService.addCms(values))
@@ -87,36 +119,12 @@ const Cms = () => {
                     console.log({ errors })
                 })
             setVisible(false);
-            setType('')
+            setDescription('')
             form.setFieldsValue({
                 title: '',
                 description: '',
             })
         }
-    }
-
-    const getCms = () => {
-        dispatch(UserService.getCms())
-            .then((res) => {
-                let newArr = [];
-                for (var i = 0; i < res.data.length; i++) {
-                    newArr.push(
-                        {
-                            key: i,
-                            title: res.data[i].title || '-',
-                            description: res.data[i].description || '-',
-                            type: res.data[i].type || '-',
-                            id: res.data[i]._id || '-',
-                            status: res.data[i].status || '-',
-                            createdAt: res.data[i].createdAt || '-'
-                        }
-                    )
-                }
-                setData(newArr);
-            })
-            .catch((errors) => {
-                console.log({ errors })
-            })
     }
 
     const svg1 = (
@@ -150,11 +158,16 @@ const Cms = () => {
             dataIndex: 'title',
             key: 'title',
         },
-        {
-            title: 'Description',
-            dataIndex: 'description',
-            key: 'description',
-        },
+        // {
+        //     title: 'Description',
+        //     dataIndex: 'description',
+        //     key: 'description',
+        //     render: (text) => (
+        //         <div>
+        //             {text ? text.substring(0, 200) + ' . . . . .' : ''}
+        //         </div>
+        //     ),
+        // },
         {
             title: 'Status',
             dataIndex: 'status',
@@ -198,15 +211,19 @@ const Cms = () => {
         },
     ];
 
+    const handleEditor = (data) => {
+        setDescription(data)
+    }
+
     return (
         <>
             {/* <PageTitle activeMenu="Filtering" motherMenu="Table" /> */}
             <div className="card">
                 <div className="card-header">
                     <h4 className="card-title">CMS List</h4>
-                    <Button type="primary" onClick={() => editModal()}>
+                    {/* <Button type="primary" onClick={() => editModal()}>
                         Add CMS
-                    </Button>
+                    </Button> */}
                 </div>
                 <div className="card-body">
                     <div className="table-responsive">
@@ -256,7 +273,7 @@ const Cms = () => {
                         modifier: "public"
                     }}
                 >
-                    <label class="label-name">Duration</label>
+                    {/* <label class="label-name">Select Topic</label>
                     <div>
                         <Select
                             label="Title"
@@ -266,39 +283,23 @@ const Cms = () => {
                             allowClear
                             options={[{ value: 1, label: 'Terms & Conditions' }, { value: 2, label: 'Privacy Policy' }, { value: 3, label: 'Disclaimer' }]}
                         />
-                    </div>
+                    </div> */}
+                    <label class="label-name">Title</label>
                     <Form.Item
-                        label="Title"
                         name="title"
-                        rules={[
-                            {
-                                required: true,
-                                message: "Enter Title"
-                            }
-                        ]}
+                        rules={[{ required: true, message: "Please enter title" }]}
                     >
                         <Input />
                     </Form.Item>
-                    <Form.Item
-                        hidden
-                        label="Id"
-                        name="id"
-                        value={id}
-                    >
+                    <Form.Item hidden label="Id" name="id" value={id} >
                         <Input />
                     </Form.Item>
-
+                    <label class="label-name">Description</label>
                     <Form.Item
-                        label="Description"
-                        name="description"
-                        rules={[
-                            {
-                                required: true,
-                                message: "Enter Description"
-                            }
-                        ]}
+                        name='description'
+                        rules={[{ required: true, message: "Please add description" }]}
                     >
-                        <Input type="textarea" />
+                        <ReactQuill name='description' theme="snow" value={description} onChange={handleEditor} />
                     </Form.Item>
                 </Form>
             </Modal>
