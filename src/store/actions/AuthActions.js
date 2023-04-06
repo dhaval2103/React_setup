@@ -51,6 +51,7 @@ export function loginAction(email, password, history) {
                     kind: "identitytoolkit#VerifyPasswordResponse",
                     localId: "qmt6dRyipIad8UCc0QpMV2MENSy1",
                     email: 'admin@admin.com',
+                    id: response.data.user.id,
                     displayName: response.data.user.displayName,
                     profileImage: response.data.user.photoURL,
                     registered: true,
