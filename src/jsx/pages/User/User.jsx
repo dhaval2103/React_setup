@@ -84,7 +84,7 @@ const User = (props) => {
             key: 'emailVerify',
             render: (text) => (
                 <div>
-                    <Badge as="a" href="" bg="primary badge-circle">
+                    <Badge as="a" bg="primary badge-circle">
                         {text === true ? <i class="fa fa-check" aria-hidden="true"></i> : <i class="fa fa-times" aria-hidden="true"></i>}
                     </Badge>
                 </div>
@@ -96,7 +96,7 @@ const User = (props) => {
             key: 'mobileVerify',
             render: (text) => (
                 <div>
-                    <Badge as="a" href="" bg="primary badge-circle">
+                    <Badge as="a" bg="primary badge-circle">
                         {text === true ? <i class="fa fa-check" aria-hidden="true"></i> : <i class="fa fa-times" aria-hidden="true"></i>}
                     </Badge>
                 </div>
