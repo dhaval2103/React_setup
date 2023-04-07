@@ -254,7 +254,8 @@ const SideBar = (props) => {
               <li><Link className={`${path === "cms-list" ? "mm-active" : ""}`} to="/cms-list">CMS List</Link></li>
               <li><Link className={`${path === "manage-subscriptions" ? "mm-active" : ""}`} to="/manage-subscriptions">Manage Subscriptions</Link></li>
               <li><Link className={`${path === "notification" ? "mm-active" : ""}`} to="/notification">Notification</Link></li>
-              <li><Link className={`${path === "Faq-list" ? "mm-active" : ""}`} to="/faq-list">FAQ List</Link></li>
+              {/* <li><Link className={`${path === "faq-group-list" ? "mm-active" : ""}`} to="/faq-group-list">FAQ Group List</Link></li> */}
+              <li><Link className={`${path === "faq-list" ? "mm-active" : ""}`} to="/faq-list">FAQ List</Link></li>
               <li><Link className={`${path === "technical-guide-list" ? "mm-active" : ""}`} to="/technical-guide-list">Technical Guide List</Link></li>
               <li><Link className={`${path === "contact-us" ? "mm-active" : ""}`} to="/contact-us">Contact Us</Link></li>
             </ul>

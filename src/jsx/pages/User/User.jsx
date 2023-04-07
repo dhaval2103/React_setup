@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react';
-import '../../components/table/FilteringTable/filtering.css';
 import UserService from '../../../services/user';
 import { useDispatch } from 'react-redux';
 import { Empty, Table } from 'antd';
@@ -19,6 +18,7 @@ const User = (props) => {
                         {
                             key: i,
                             email: res.data[i].email.text,
+                            id: res.data[i]._id,
                             emailVerify: res.data[i].email.verified,
                             mobile: res.data[i].mobile.text,
                             mobileVerify: res.data[i].mobile.verified,
@@ -126,6 +126,7 @@ const User = (props) => {
                         </Dropdown.Toggle>
                         <Dropdown.Menu>
                             <Dropdown.Item onClick={() => viewUser(text)}>View</Dropdown.Item>
+                            <Dropdown.Item onClick={() => viewChat(text)}>Chat</Dropdown.Item>
                         </Dropdown.Menu>
                     </Dropdown>
                 </>
@@ -135,6 +136,9 @@ const User = (props) => {
 
     const viewUser = (text) => {
         props.history.push("/user-detail", { userDetail: text })
+    }
+    const viewChat = (text) => {
+        props.history.push("/chat", { userDetail: text})
     }
 
     return (
