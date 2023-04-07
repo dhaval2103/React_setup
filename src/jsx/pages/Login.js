@@ -6,8 +6,7 @@ import {
 } from '../../store/actions/AuthActions';
 
 // image
-import logo from "../../images/logo-white.png";
-import logoWhite from "../../images/logo-whiite-text.png";
+import logo from "../../icons/appIcon.svg";
 import loginbg from "../../images/bg-login.jpg";
 
 function Login(props) {
@@ -43,8 +42,7 @@ function Login(props) {
       <div className="login-wrapper">
         <div className="login-aside-left" >
           <Link to={"#"} className="login-logo">
-            <img src={logo} alt="" width="50px" />
-            <img src={logoWhite} alt="" className="ms-3" />
+            <img src={logo} alt="" width="210px" />
           </Link>
           <div className="login-description">
             <h2 className="main-title mb-2">Welcome To AZ Security</h2>

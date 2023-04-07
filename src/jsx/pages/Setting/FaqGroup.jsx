@@ -14,20 +14,18 @@ const FaqGroup = () => {
     const dispatch = useDispatch();
     const [data, setData] = useState([]);
     const [visible, setVisible] = useState(false);
-    const [description, setDescription] = useState();
     const [id, setId] = useState('');
     const [form] = Form.useForm();
 
-       const getGroup = () => {
-        dispatch(UserService.getGroup)
+    const getGroup = () => {
+        dispatch(UserService.getGroup())
             .then((res) => {
-                console.log(res)
                 let newArr = [];
                 for (var i = 0; i < res.data.length; i++) {
                     newArr.push(
                         {
                             key: i,
-                            group: res.data[i].group.title || '-',
+                            title: res.data[i].title || '-',
                             id: res.data[i]._id || '-',
                             createdAt: res.data[i].createdAt || '-'
                         }
@@ -39,89 +37,77 @@ const FaqGroup = () => {
                 console.log({ errors })
             })
     }
-
     const editModal = (text) => {
         setVisible(true)
         if (text) {
             form.setFieldsValue({
                 title: text?.title || '',
-                description: text?.description || '',
             })
-            setDescription(text.description)
             setId(text.id)
         } else {
             form.setFieldsValue({
                 title: '',
-                description: '',
             })
-            setDescription('');
             setId('')
         }
     }
 
-    const deleteCms = (text) => {
-        Swal.fire({
-            title: 'Are you sure?',
-            text: "To change this CMS status!",
-            icon: 'warning',
-            showCancelButton: true,
-            confirmButtonColor: '#3085d6',
-            cancelButtonColor: '#d33',
-            confirmButtonText: 'Yes, Change it!'
-        }).then((result) => {
-            if (result.isConfirmed) {
-                dispatch(UserService.deleteCms(text))
-                    .then((res) => {
-                        // getCms();
-                        ToastMe("CMS status change successfully", 'success')
-                    })
-                    .catch((errors) => {
-                        console.log({ errors })
-                    })
-            }
-        })
-    };
+    // const deleteCms = (text) => {
+    //     Swal.fire({
+    //         title: 'Are you sure?',
+    //         text: "To change this CMS status!",
+    //         icon: 'warning',
+    //         showCancelButton: true,
+    //         confirmButtonColor: '#3085d6',
+    //         cancelButtonColor: '#d33',
+    //         confirmButtonText: 'Yes, Change it!'
+    //     }).then((result) => {
+    //         if (result.isConfirmed) {
+    //             dispatch(UserService.deleteCms(text))
+    //                 .then((res) => {
+    //                     // getCms();
+    //                     ToastMe("CMS status change successfully", 'success')
+    //                 })
+    //                 .catch((errors) => {
+    //                     console.log({ errors })
+    //                 })
+    //         }
+    //     })
+    // };
 
     const onSubmit = (values) => {
-        if (description !== '<p><br></p>') {
-            values.description = description;
-        }
+        console.log('values', values);
         if (id) {
             values.id = id;
-            dispatch(UserService.updateCms(values))
+            dispatch(UserService.editGroup(values))
                 .then((res) => {
-                    // getCms();
-                    ToastMe("CMS Updated Successfully", 'success')
-                    setVisible(false);
-                    setDescription('')
-                    setId('')
+                    getGroup();
+                    ToastMe("FAQ Group Updated Successfully", 'success')
                 })
-                .catch(({ errorData }) => {
-                    for (const e in errorData.errors) {
-                        form.setFields([
-                            {
-                                name: e,
-                                touched: false,
-                                errors: [errorData.errors[e]],
-                            },
-                        ]);
-                    }
-                })
-        } else {
-            dispatch(UserService.addCms(values))
-                .then((res) => {
-                    // getCms();
-                    ToastMe("CMS Added Successfully", 'success')
-                })
+            setVisible(false);
+            form.setFieldsValue({
+                title: '',
+            })
+            setId('')
                 .catch((errors) => {
                     console.log({ errors })
                 })
+        } else {
+            dispatch(UserService.createGroup(values))
+                .then((res) => {
+                    console.log('res', res);
+                    getGroup();
+                    ToastMe("FAQ  Group Added Successfully", 'success')
+                })
             setVisible(false);
-            setDescription('')
+            setId('')
             form.setFieldsValue({
                 title: '',
-                description: '',
             })
+                .catch((errors) => {
+                    console.log({ errors })
+                })
+
         }
     }
 
@@ -157,26 +143,16 @@ const FaqGroup = () => {
             key: 'title',
         },
         // {
-        //     title: 'Description',
-        //     dataIndex: 'description',
-        //     key: 'description',
-        //     render: (text) => (
+        //     title: 'Status',
+        //     dataIndex: 'status',
+        //     key: 'status',
+        //     render: (text, data) => (
         //         <div>
-        //             {text ? text.substring(0, 200) + ' . . . . .' : ''}
+        //             {data.status === 1 ? <Badge bg=" badge-lg " className='badge-primary light badge-xs' style={{ cursor: 'pointer' }} onClick={() => deleteCms(data.id)} >Active</Badge>
+        //                 : <Badge bg=" badge-lg " className='badge-danger light badge-xs' style={{ cursor: 'pointer' }} onClick={() => deleteCms(data.id)} >Deactive</Badge>}
         //         </div>
         //     ),
         // },
-        {
-            title: 'Status',
-            dataIndex: 'status',
-            key: 'status',
-            render: (text, data) => (
-                <div>
-                    {data.status === 1 ? <Badge bg=" badge-lg " className='badge-primary light badge-xs' style={{ cursor: 'pointer' }} onClick={() => deleteCms(data.id)} >Active</Badge>
-                        : <Badge bg=" badge-lg " className='badge-danger light badge-xs' style={{ cursor: 'pointer' }} onClick={() => deleteCms(data.id)} >Deactive</Badge>}
-                </div>
-            ),
-        },
         {
             title: 'Created At',
             dataIndex: 'createdAt',
@@ -209,19 +185,15 @@ const FaqGroup = () => {
         },
     ];
 
-    const handleEditor = (data) => {
-        setDescription(data)
-    }
-
     return (
         <>
             {/* <PageTitle activeMenu="Filtering" motherMenu="Table" /> */}
             <div className="card">
                 <div className="card-header">
-                    <h4 className="card-title">CMS List</h4>
-                    {/* <Button type="primary" onClick={() => editModal()}>
-                        Add CMS
-                    </Button> */}
+                    <h4 className="card-title">FAQ Group List</h4>
+                    <Button type="primary" onClick={() => editModal()}>
+                        Add FAQ Group
+                    </Button>
                 </div>
                 <div className="card-body">
                     <div className="table-responsive">
@@ -234,7 +206,7 @@ const FaqGroup = () => {
             </div>
             <Modal
                 open={visible}
-                title="Add CMS"
+                title="Add FAQ Group"
                 okText="Submit"
                 cancelText="Cancel"
                 onCancel={() => {
@@ -271,33 +243,12 @@ const FaqGroup = () => {
                         modifier: "public"
                     }}
                 >
-                    {/* <label class="label-name">Select Topic</label>
-                    <div>
-                        <Select
-                            label="Title"
-                            value={type}
-                            style={{ width: 120 }}
-                            onChange={handleChange}
-                            allowClear
-                            options={[{ value: 1, label: 'Terms & Conditions' }, { value: 2, label: 'Privacy Policy' }, { value: 3, label: 'Disclaimer' }]}
-                        />
-                    </div> */}
-                    <label class="label-name">Title</label>
+                    <label class="label-name">FAQ Group</label>
                     <Form.Item
                         name="title"
                         rules={[{ required: true, message: "Please enter title" }]}
                     >
                         <Input />
-                    </Form.Item>
-                    <Form.Item hidden label="Id" name="id" value={id} >
-                        <Input />
-                    </Form.Item>
-                    <label class="label-name">Description</label>
-                    <Form.Item
-                        name='description'
-                        rules={[{ required: true, message: "Please add description" }]}
-                    >
-                        <ReactQuill name='description' theme="snow" value={description} onChange={handleEditor} />
                     </Form.Item>
                 </Form>
             </Modal>

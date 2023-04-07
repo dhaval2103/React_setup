@@ -122,7 +122,7 @@ import Notification from "./pages/Setting/Notification";
 import Technicalguide from "./pages/Setting/Technicalguide";
 import ContactUs from "./pages/Setting/ContactUs";
 import Chat from "./pages/User/Chat";
-// import FagGroup from "./pages/Setting/FaqGroup";
+import FagGroup from "./pages/Setting/FaqGroup";
 
 const Markup = () => {
   const { menuToggle } = useContext(ThemeContext);
@@ -153,7 +153,7 @@ const Markup = () => {
     { url: "user-detail", component: ViewUser },
     { url: "maintenance-request-list", component: Maintenance },
     { url: "technical-guide-list", component: Technicalguide },
-    // { url: "faq-group-list", component: FagGroup },
+    { url: "faq-group-list", component: FagGroup },
 
 	
 	///Demo

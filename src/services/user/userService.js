@@ -366,4 +366,42 @@ export function editTechnicalguides(data) {
         })
     )
 }
+export function createGroup(data) {
+    // data.env = 'test'
+    return dispatch => (
+        new Promise((resolve, reject) => {
+            Http.callApi('post', BaseUrl + '/common/createGroup',data)
+                .then(function (res) {
+                    return resolve(res);
+                })
+                .catch(function (error) {
+                    console.log(error);
+                    const data = {
+                        errorData: error.response.data.message,
+                        statusCode: error.response.status,
+                    };
+                    return reject(data);
+                })
+        })
+    )
+}
+export function editGroup(data) {
+    // data.env = 'test'
+    return dispatch => (
+        new Promise((resolve, reject) => {
+            Http.callApi('post', BaseUrl + '/common/editGroup',data)
+                .then(function (res) {
+                    return resolve(res);
+                })
+                .catch(function (error) {
+                    console.log(error);
+                    const data = {
+                        errorData: error.response.data.message,
+                        statusCode: error.response.status,
+                    };
+                    return reject(data);
+                })
+        })
+    )
+}
 
