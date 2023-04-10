@@ -377,7 +377,7 @@ const Technicalguide = () => {
                     <label class="label-name">Description</label>
                     <Form.Item
                         name="description"
-                        rules={[{ required: true, message: "Please enter message!" }]}
+                        rules={[{ required: true, message: "Please enter description!" }]}
                     >
                         <Input type="text" placeholder='Enter description' />
                     </Form.Item>

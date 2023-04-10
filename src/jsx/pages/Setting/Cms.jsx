@@ -289,7 +289,7 @@ const Cms = () => {
                         name="title"
                         rules={[{ required: true, message: "Please enter title" }]}
                     >
-                        <Input />
+                        <Input placeholder='Enter title' />
                     </Form.Item>
                     <Form.Item hidden label="Id" name="id" value={id} >
                         <Input />
