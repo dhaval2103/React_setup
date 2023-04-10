@@ -25,6 +25,9 @@ const SocketContextProvider = (props) => {
     // const updateMessageStatus = ChatStore((state) => state.updateMessageStatus)
     // const disputeData = ChatStore((state) => state.disputeData);
 
+    // console.log(userId);
+    // console.log(admin.id)
+
     // connection
     useEffect(() => {
         if (admin) {
@@ -76,11 +79,7 @@ const SocketContextProvider = (props) => {
         })
     }
 
-    useEffect(() => {
-        if (chatId) {
-            getMessages();
-        }
-    }, [chatId])
+
 
     useEffect(() => {
         if (sendMessages) {
@@ -96,6 +95,18 @@ const SocketContextProvider = (props) => {
             });
         }
     }, [sendMessages])
+
+    // console.log(chatId)
+
+    useEffect(() => {
+        if (chatId != undefined) {
+            setTimeout(() => {
+                getMessages();
+            }, 1000);
+        }
+    }, [chatId])
+
+
 
     // useEffect(() => {
     //     if (connected == true) {

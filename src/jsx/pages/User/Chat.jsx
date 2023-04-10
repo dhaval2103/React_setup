@@ -33,7 +33,7 @@ const Chat = (props) => {
                 <div className="card-body">
                     {
                         chatData?.map((chat, i) => {
-                            console.log(chat.senderType)
+                            // console.log(chat.senderType)
                             if (chat.senderType == 2) {
                                 return (
                                     <div className="right" key={i}>
