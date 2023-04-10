@@ -85,21 +85,21 @@ const Faq = () => {
         //             console.log({ errors })
         //         })
         // } else {
-            dispatch(UserService.addFaq(values))
-                .then((res) => {
-                    console.log('res', res);
-                    getFaq();
-                    ToastMe("FAQ Added Successfully", 'success')
-                })
-                .catch((errors) => {
-                    console.log({ errors })
-                })
-            setVisible(false);
-            form.setFieldsValue({
-                group: '',
-                question: '',
-                answer: '',
+        dispatch(UserService.addFaq(values))
+            .then((res) => {
+                console.log('res', res);
+                getFaq();
+                ToastMe("FAQ Added Successfully", 'success')
             })
+            .catch((errors) => {
+                console.log({ errors })
+            })
+        setVisible(false);
+        form.setFieldsValue({
+            group: '',
+            question: '',
+            answer: '',
+        })
         // }
     }
 
@@ -127,25 +127,25 @@ const Faq = () => {
     }
 
     const mainCategorysfun = (e) => {
-		// if(e.target.value == 0){
-		// 	setError('Please Select Group');
-		// 	isactives(true);
-		// }
-		// else{
-			mainCategorys(e);
-		// }
-	  }
+        // if(e.target.value == 0){
+        // 	setError('Please Select Group');
+        // 	isactives(true);
+        // }
+        // else{
+        mainCategorys(e);
+        // }
+    }
 
-      const getGroup = () => {
-		dispatch(UserService.getGroup())
-			.then((res) => {
-				setCategory(res.data);
+    const getGroup = () => {
+        dispatch(UserService.getGroup())
+            .then((res) => {
+                setCategory(res.data);
 
-			})
-			.catch((errors) => {
-				console.log(errors);
-			})
-	}
+            })
+            .catch((errors) => {
+                console.log(errors);
+            })
+    }
 
     // const getGroup = () => {
     //     dispatch(UserService.getGroup)
@@ -312,14 +312,36 @@ const Faq = () => {
                             <option key={i} value={option._id}>{option.title}</option>
                         ))}
                     /> */}
-                    <Select name="category" id="category" value={mainCategory}
+                    {/* <Select name="category" id="category" value={mainCategory}
                         aria-label="Default select example" onChange={mainCategorysfun} style={{ width: 120 }}>
                             <option value="0">Please Select Group</option>
                             {valueCategory?.map((option, i) => (
                                 <option key={i} value={option._id}>{option.title}</option>
                             ))}
-					</Select>
-                   
+					</Select> */}
+                    <label class="label-name">Group Name</label>
+                    <div>
+                        <Form.Item
+                            name="category"
+                            rules={[{ required: true, message: "Please select group name!" }]}
+                        >
+                            <Select
+                                placeholder="Select a duration"
+                                name="category"
+                                id="category"
+                                label="category"
+                                value={mainCategory}
+                                style={{ width: 120 }}
+                                onChange={mainCategorysfun}
+                                allowClear
+                            >
+                                {valueCategory?.map((option, i) => (
+                                    <option key={i} value={option._id}>{option.title}</option>
+                                ))}
+                            </Select>
+
+                        </Form.Item>
+                    </div>
                     <Form.Item
                         hidden
                         label="Id"
@@ -329,30 +351,30 @@ const Faq = () => {
                         <Input />
                     </Form.Item>
 
+                    <label class="label-name">Question</label>
                     <Form.Item
-                        label="Question"
                         name="question"
                         rules={[
                             {
                                 required: true,
-                                message: "Enter Question"
+                                message: "Please enter question!"
                             }
                         ]}
                     >
-                        <Input type="textarea" />
+                        <Input type="textarea" placeholder='Enter question' />
                     </Form.Item>
 
+                    <label class="label-name">Answer</label>
                     <Form.Item
-                        label="Answer"
                         name="answer"
                         rules={[
                             {
                                 required: true,
-                                message: "Enter Answer"
+                                message: "Please enter answer!"
                             }
                         ]}
                     >
-                        <Input type="textarea" />
+                        <Input type="textarea" placeholder='Enter answer' />
                     </Form.Item>
                 </Form>
             </Modal>

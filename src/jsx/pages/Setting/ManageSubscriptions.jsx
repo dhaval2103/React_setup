@@ -306,6 +306,7 @@ const ManageSubscriptions = () => {
                             rules={[{ required: true, message: "Please select plan duration!" }]}
                         >
                             <Select
+                                placeholder="Select a duration"
                                 name="duration"
                                 id="duration"
                                 label="Duration"
@@ -328,7 +329,7 @@ const ManageSubscriptions = () => {
                     <Form.Item name="packageName"
                         rules={[{ required: true, message: "Please entre package name!" }]}
                     >
-                        <Input />
+                        <Input placeholder='Enter Package Name' />
                     </Form.Item>
 
                     <label class="label-name">Price</label>
@@ -336,7 +337,7 @@ const ManageSubscriptions = () => {
                         name="price"
                         rules={[{ required: true, message: "Please enter price!" }]}
                     >
-                        <Input type="number" />
+                        <Input type="number" placeholder='Enter Price' />
                     </Form.Item>
                 </Form>
             </Modal>

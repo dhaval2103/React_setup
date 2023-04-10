@@ -246,9 +246,9 @@ const FaqGroup = () => {
                     <label class="label-name">FAQ Group</label>
                     <Form.Item
                         name="title"
-                        rules={[{ required: true, message: "Please enter title" }]}
+                        rules={[{ required: true, message: "Please enter group name" }]}
                     >
-                        <Input />
+                        <Input placeholder='Enter group name' />
                     </Form.Item>
                 </Form>
             </Modal>
