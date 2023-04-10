@@ -190,7 +190,7 @@ const Notification = () => {
                     <Form.Item name="title"
                         rules={[{ required: true, message: "Please entre title!" }]}
                     >
-                        <Input type="text" />
+                        <Input type="text" placeholder='Enter Title' />
                     </Form.Item>
 
                     <label class="label-name">Message</label>
@@ -198,7 +198,7 @@ const Notification = () => {
                         name="message"
                         rules={[{ required: true, message: "Please enter message!" }]}
                     >
-                        <Input type="text" />
+                        <Input type="text" placeholder='Enter Message' />
                     </Form.Item>
                 </Form>
             </Modal>

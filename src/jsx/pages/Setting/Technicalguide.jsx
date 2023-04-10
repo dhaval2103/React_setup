@@ -371,7 +371,7 @@ const Technicalguide = () => {
                     <Form.Item name="title"
                         rules={[{ required: true, message: "Please entre title!" }]}
                     >
-                        <Input type="text" />
+                        <Input type="text" placeholder='Enter title' />
                     </Form.Item>
 
                     <label class="label-name">Description</label>
@@ -379,7 +379,7 @@ const Technicalguide = () => {
                         name="description"
                         rules={[{ required: true, message: "Please enter message!" }]}
                     >
-                        <Input type="text" />
+                        <Input type="text" placeholder='Enter description' />
                     </Form.Item>
                     {viewImage.length > 0 ?
                         <div className="card-body pb-1">
