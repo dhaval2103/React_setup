@@ -56,7 +56,7 @@ const Chat = (props) => {
                             }}
                         >
                             <Form.Item name="message"
-                                rules={[{ required: true, message: "Please entre message!" }]}
+                                rules={[{ required: true, message: "Please enter message!" }]}
                             >
                                 <Input type="text" placeholder="Type a message" />
                             </Form.Item>

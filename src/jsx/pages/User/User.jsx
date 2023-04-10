@@ -13,6 +13,7 @@ const User = (props) => {
         dispatch(UserService.getUser())
             .then((res) => {
                 var newArr = [];
+                console.log(res.data)
                 for (var i = 0; i < res.data.length; i++) {
                     newArr.push(
                         {
@@ -21,6 +22,8 @@ const User = (props) => {
                             id: res.data[i]._id,
                             emailVerify: res.data[i].email.verified,
                             mobile: res.data[i].mobile.text,
+                            user: res.data[i].user,
+                            role: res.data[i].role,
                             mobileVerify: res.data[i].mobile.verified,
                             fullName: res.data[i].fullName,
                             securityQuestion: res.data[i].securityQuestion,
@@ -79,6 +82,30 @@ const User = (props) => {
             key: 'mobile',
         },
         {
+            title: 'Role',
+            dataIndex: 'role',
+            render: (text) => {
+                if (text == 1) {
+                    return (
+                        <span>Master</span>
+                    )
+                } else if (text == 2) {
+                    return (
+                        <span >User</span>
+                    )
+                }
+                else if (text == 3) {
+                    return (
+                        <span >Pro</span>
+                    )
+                } else {
+                    return (
+                        <span >-</span>
+                    )
+                }
+            }
+        },
+        {
             title: 'Email Verified',
             dataIndex: 'emailVerify',
             key: 'emailVerify',
@@ -135,10 +162,11 @@ const User = (props) => {
     ];
 
     const viewUser = (text) => {
+        console.log(text)
         props.history.push("/user-detail", { userDetail: text })
     }
     const viewChat = (text) => {
-        props.history.push("/chat", { userDetail: text})
+        props.history.push("/chat", { userDetail: text })
     }
 
     return (
