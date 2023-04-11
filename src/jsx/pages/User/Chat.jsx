@@ -1,14 +1,10 @@
 import { Form, Input, Button } from "antd";
-import React, { useState, useEffect, useContext } from "react";
-import { Link, useLocation } from "react-router-dom";
-import { connect, useDispatch } from 'react-redux';
-// import { SendOutlined } from "@ant-design/icons";
-// import io from "socket.io-client";
+import React, { useEffect, useContext } from "react";
+import { useLocation } from "react-router-dom";
+import { connect } from 'react-redux';
 import { SocketContext } from "../../../context/Socket";
-// const socketURL = process.env.REACT_APP_BASE_URL;
 
 const Chat = (props) => {
-    // const authId = props.auth.id;
     const { state } = useLocation();
     const userDetail = state?.userDetail;
     const [form] = Form.useForm();
