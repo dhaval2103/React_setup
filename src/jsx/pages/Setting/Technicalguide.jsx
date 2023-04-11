@@ -424,6 +424,7 @@ const Technicalguide = () => {
                     <label class="label-name">Media</label>
                     <Form.Item
                         name="media"
+                        rules={[{ required: true, message: "Please select image or video!" }]}
                     >
                     <Input type="file" id='file-input' multiple onChange={(e) => handleProfilePicOnChange(e)} />
                     </Form.Item>
