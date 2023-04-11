@@ -56,6 +56,16 @@ const SocketContextProvider = (props) => {
         }, 500)
     }, [connected, pathName, userId])
 
+    useEffect(() => {
+        if(userId !== undefined){
+            chatClient.emit('messageStatus', {
+                "event": "readAllMessages",
+                "from": userId,
+                "to": admin.id
+            });
+        }
+    }, [userId])
+
     const getMessages = () => {
         chatClient.emit('getMessages', {
             "chatId": chatId,
@@ -63,11 +73,6 @@ const SocketContextProvider = (props) => {
         }, function (data) {
             if (data) {
                 setChatData(data)
-                chatClient.emit('messageStatus', {
-                    "event": "readAllMessages",
-                    "from": userId,
-                    "to": admin.id
-                });
             }
         })
 
@@ -99,7 +104,6 @@ const SocketContextProvider = (props) => {
                 getMessages();
             }, 500);
         }
-       
     }, [chatId])
 
     return (
