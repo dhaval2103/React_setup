@@ -13,7 +13,6 @@ const User = (props) => {
         dispatch(UserService.getUser())
             .then((res) => {
                 var newArr = [];
-                console.log(res.data)
                 for (var i = 0; i < res.data.length; i++) {
                     newArr.push(
                         {

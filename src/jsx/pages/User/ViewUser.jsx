@@ -12,16 +12,18 @@ const ViewUser = () => {
 
     const getDetail = () => {
         if (userDetail) {
+            console.log(userDetail)
             var newArr = [];
             for (var i = 0; i < userDetail?.user.length; i++) {
                 newArr.push(
                     {
                         key: i,
-                        email: userDetail?.user[i].email.text,
-                        id: userDetail?.user[i]._id,
-                        mobile: userDetail?.user[i].mobile.text,
-                        fullName: userDetail?.user[i].fullName,
-                        createdAt: userDetail?.user[i].createdAt
+                        email: userDetail?.user[i]?.email?.text,
+                        id: userDetail?.user[i]?._id,
+                        mobile: userDetail?.user[i]?.mobile?.text,
+                        role: userDetail?.user[i]?.role,
+                        fullName: userDetail?.user[i]?.fullName,
+                        createdAt: userDetail?.user[i]?.createdAt
                     }
                 )
             }
@@ -55,7 +57,30 @@ const ViewUser = () => {
             dataIndex: 'mobile',
             key: 'mobile',
         },
-
+        {
+            title: 'Role',
+            dataIndex: 'role',
+            render: (text) => {
+                if (text == 1) {
+                    return (
+                        <span>Master</span>
+                    )
+                } else if (text == 2) {
+                    return (
+                        <span >User</span>
+                    )
+                }
+                else if (text == 3) {
+                    return (
+                        <span >Pro</span>
+                    )
+                } else {
+                    return (
+                        <span >-</span>
+                    )
+                }
+            }
+        },
         {
             title: 'Created At',
             dataIndex: 'createdAt',
