@@ -1,10 +1,11 @@
 import { Form, Input, Button } from "antd";
-import React, { useEffect, useContext, useRef } from "react";
+import React, { useEffect, useContext, useRef, useState } from "react";
 import { useLocation } from "react-router-dom";
 import { connect } from 'react-redux';
 import { SocketContext } from "../../../context/Socket";
 import PerfectScrollbar from "react-perfect-scrollbar";
 import DefaultImage from '../../../images/static-image.jpg'
+import PageLoader from "../Common/PageLoader";
 
 const Chat = (props) => {
     const admin = props?.auth;
@@ -12,6 +13,7 @@ const Chat = (props) => {
     const userDetail = state?.userDetail;
     const [form] = Form.useForm();
     const { pathname } = useLocation();
+    const [loading, setLoading] = useState(true);
     const { connected, setPathName, setUserId, setSendMessages, chatData } = useContext(SocketContext);
 
     useEffect(() => {
@@ -28,6 +30,10 @@ const Chat = (props) => {
         }
     }
 
+    setTimeout(() => {
+        setLoading(false);
+    }, 1000)
+
     useEffect(() => {
         scrollUpdateHandel()
     }, [chatData, updateScrollHeight]);
@@ -42,6 +48,7 @@ const Chat = (props) => {
 
     return (
         <>
+            <PageLoader loading={loading} />
             <div className="user_chat_box chatbox card">
                 <div className="card-header chat-list-header d-block">
                     <h4 className="mb-1 font-w700 fs-20">Chat with {userDetail?.fullName}</h4>

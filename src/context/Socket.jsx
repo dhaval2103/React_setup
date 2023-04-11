@@ -63,6 +63,11 @@ const SocketContextProvider = (props) => {
         }, function (data) {
             if (data) {
                 setChatData(data)
+                chatClient.emit('messageStatus', {
+                    "event": "readAllMessages",
+                    "from": userId,
+                    "to": admin.id
+                });
             }
         })
     }
