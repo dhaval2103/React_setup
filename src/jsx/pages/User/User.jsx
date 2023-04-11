@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import UserService from '../../../services/user';
 import { useDispatch } from 'react-redux';
-import { Empty, Table } from 'antd';
+import { Empty, Input, Table } from 'antd';
 import { Badge, Dropdown } from "react-bootstrap";
 import moment from 'moment';
 
@@ -9,8 +9,8 @@ const User = (props) => {
     const dispatch = useDispatch();
     const [data, setData] = useState([]);
 
-    const getUserList = () => {
-        dispatch(UserService.getUser())
+    const getUserList = (value = '') => {
+        dispatch(UserService.getUser(value))
             .then((res) => {
                 var newArr = [];
                 for (var i = 0; i < res.data.length; i++) {
@@ -167,12 +167,18 @@ const User = (props) => {
     const viewChat = (text) => {
         props.history.push("/chat", { userDetail: text })
     }
+    const handleSearch = (value) => {
+        getUserList(value)
+    }
 
     return (
         <>
             <div className="card">
                 <div className="card-header">
                     <h4 className="card-title">User List</h4>
+                    <div className="search-group">
+                        <Input className="form-control" placeholder='Search' onChange={(e) => handleSearch(e.target.value)} />
+                    </div>
                 </div>
                 <div className="card-body">
                     <div className="table-responsive">

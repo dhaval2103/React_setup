@@ -4,10 +4,10 @@ import { loginConfirmedAction } from '../../store/actions/AuthActions';
 // import ToastMe from '../../view/common/ToastMe';
 const BaseUrl = process.env.REACT_APP_BASE_URL;
 
-export function getUser() {
+export function getUser(value) {
     return dispatch => (
         new Promise((resolve, reject) => {
-            Http.callApi('get', BaseUrl + '/admin/userList')
+            Http.callApi('get', BaseUrl + '/admin/userList?search=' + value)
                 .then(function (res) {
                     // dispatch(action.setNotificationData(res));
                     return resolve(res);
