@@ -28,6 +28,7 @@ const User = (props) => {
                             securityQuestion: res.data[i].securityQuestion,
                             yourQuestion: res.data[i].yourQuestion,
                             answer: res.data[i].answer,
+                            profilePic: res.data[i].profilePic,
                             createdAt: res.data[i].createdAt
                         }
                     )

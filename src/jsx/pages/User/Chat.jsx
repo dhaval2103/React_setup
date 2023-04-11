@@ -4,8 +4,10 @@ import { useLocation } from "react-router-dom";
 import { connect } from 'react-redux';
 import { SocketContext } from "../../../context/Socket";
 import PerfectScrollbar from "react-perfect-scrollbar";
+import DefaultImage from '../../../images/static-image.jpg'
 
 const Chat = (props) => {
+    const admin = props?.auth;
     const { state } = useLocation();
     const userDetail = state?.userDetail;
     const [form] = Form.useForm();
@@ -31,7 +33,10 @@ const Chat = (props) => {
     }, [chatData, updateScrollHeight]);
 
     const sendMessage = (values) => {
-        setSendMessages(values)
+        if (values.message.trim().length > 0) {
+            setSendMessages(values)
+        }
+        form.resetFields();
         scrollUpdateHandel()
     }
 
@@ -45,24 +50,7 @@ const Chat = (props) => {
                 <PerfectScrollbar containerRef={el => (updateScrollHandel.current = el)} className={`card-body msg_card_body dlab-scroll ps ps--active-y`} id="DZ_W_Contacts_Body3" >
                     {
                         chatData?.map((chat, i) => {
-                            console.log(chat)
                             if (chat.senderType == 2) {
-                                return (
-                                    <div className="d-flex justify-content-start mb-3 right" key={i}>
-                                        <div className="img_cont_msg">
-                                            <img
-                                                src={require('../../../images/avatar/1.jpg')}
-                                                className="rounded-circle user_img_msg"
-                                                alt=""
-                                            />
-                                        </div>
-                                        <div className="msg_cotainer">
-                                            {chat.message}
-                                            <span className="msg_time">{chat.createdAt}</span>
-                                        </div>
-                                    </div>
-                                )
-                            } else {
                                 return (
                                     <div className="d-flex justify-content-end mb-3 left" key={i}>
                                         <div className="msg_cotainer_send">
@@ -71,10 +59,26 @@ const Chat = (props) => {
                                         </div>
                                         <div className="img_cont_msg">
                                             <img
-                                                src={require('../../../images/avatar/2.jpg')}
+                                                src={admin?.profileImage ? admin?.profileImage : DefaultImage}
                                                 className="rounded-circle user_img_msg"
                                                 alt=""
                                             />
+                                        </div>
+                                    </div>
+                                )
+                            } else {
+                                return (
+                                    <div className="d-flex justify-content-start mb-3 right" key={i}>
+                                        <div className="img_cont_msg">
+                                            <img
+                                                src={userDetail?.profilePic ? userDetail?.profilePic : DefaultImage}
+                                                className="rounded-circle user_img_msg"
+                                                alt=""
+                                            />
+                                        </div>
+                                        <div className="msg_cotainer">
+                                            {chat.message}
+                                            <span className="msg_time">{chat.createdAt}</span>
                                         </div>
                                     </div>
                                 )
@@ -91,7 +95,7 @@ const Chat = (props) => {
                         }}
                     >
                         <Form.Item name="message" className="mb-0"
-                            rules={[{ required: true, message: "Please entre message!" }]}
+                        // rules={[{ required: true, message: "Please entre message!" }]}
                         >
                             <Input type="text" placeholder="Type a message" suffix={
                                 <Button
