@@ -21,6 +21,8 @@ const User = (props) => {
                             id: res.data[i]._id,
                             emailVerify: res.data[i].email.verified,
                             mobile: res.data[i].mobile.text,
+                            user: res.data[i].user,
+                            role: res.data[i].role,
                             mobileVerify: res.data[i].mobile.verified,
                             fullName: res.data[i].fullName,
                             securityQuestion: res.data[i].securityQuestion,
@@ -77,6 +79,30 @@ const User = (props) => {
             title: 'Mobile',
             dataIndex: 'mobile',
             key: 'mobile',
+        },
+        {
+            title: 'Role',
+            dataIndex: 'role',
+            render: (text) => {
+                if (text == 1) {
+                    return (
+                        <span>Master</span>
+                    )
+                } else if (text == 2) {
+                    return (
+                        <span >User</span>
+                    )
+                }
+                else if (text == 3) {
+                    return (
+                        <span >Pro</span>
+                    )
+                } else {
+                    return (
+                        <span >-</span>
+                    )
+                }
+            }
         },
         {
             title: 'Email Verified',
@@ -138,7 +164,7 @@ const User = (props) => {
         props.history.push("/user-detail", { userDetail: text })
     }
     const viewChat = (text) => {
-        props.history.push("/chat", { userDetail: text})
+        props.history.push("/chat", { userDetail: text })
     }
 
     return (
