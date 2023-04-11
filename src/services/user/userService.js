@@ -48,6 +48,7 @@ export function updateUserProfile(data, adminData) {
                 .then(function (res) {
                     adminData.displayName = data.username;
                     adminData.email = data.email;
+                    adminData.profileImage = data.image
                     localStorage.setItem('userDetails', JSON.stringify(adminData));
                     return resolve(res);
                 })
