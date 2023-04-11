@@ -12,7 +12,6 @@ const ViewUser = () => {
 
     const getDetail = () => {
         if (userDetail) {
-            console.log(userDetail)
             var newArr = [];
             for (var i = 0; i < userDetail?.user.length; i++) {
                 newArr.push(

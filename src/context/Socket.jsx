@@ -65,6 +65,12 @@ const SocketContextProvider = (props) => {
                 setChatData(data)
             }
         })
+
+        chatClient.on('message',  function (data) {
+            if (data) {
+                getMessages();
+            }
+        })
     }
 
     useEffect(() => {
@@ -88,6 +94,7 @@ const SocketContextProvider = (props) => {
                 getMessages();
             }, 500);
         }
+       
     }, [chatId])
 
     return (
