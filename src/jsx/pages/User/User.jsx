@@ -161,7 +161,6 @@ const User = (props) => {
     ];
 
     const viewUser = (text) => {
-        console.log(text)
         props.history.push("/user-detail", { userDetail: text })
     }
     const viewChat = (text) => {
