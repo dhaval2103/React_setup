@@ -13844,7 +13844,7 @@ Fixing Order => Base + Typography >> General Layout + Grid >> Page Layout + Comp
       color: #fff;
       background: #161717; }
   .chatbox .msg_card_body {
-    height: calc(100vh - 360px); }
+    height: calc(100vh - 195px); }
   .chatbox .contacts_body {
     height: calc(100vh - 120px); }
   .chatbox .card-header {
@@ -30539,4 +30539,7 @@ html[dir="rtl"] [direction="rtl"][data-sidebar-style="compact"]:not([data-layout
   right: unset;
   width: 100%;
   height: auto;
+}
+.chatbox .msg_card_body {
+  height: calc(100vh - 285px);
 }

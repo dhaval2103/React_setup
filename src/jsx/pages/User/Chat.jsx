@@ -44,7 +44,7 @@ const Chat = (props) => {
         <>
             <div className="user_chat_box chatbox card">
                 <div className="card-header chat-list-header d-block">
-                    <h4 className="mb-1 font-w700 fs-20">Chat with Khelesh</h4>
+                    <h4 className="mb-1 font-w700 fs-20">Chat with {userDetail?.fullName}</h4>
                     <p className="mb-0 text-success fs-14">Online</p>
                 </div>
                 <PerfectScrollbar containerRef={el => (updateScrollHandel.current = el)} className={`card-body msg_card_body dlab-scroll ps ps--active-y`} id="DZ_W_Contacts_Body3" >
@@ -53,10 +53,13 @@ const Chat = (props) => {
                             if (chat.senderType == 2) {
                                 return (
                                     <div className="d-flex justify-content-end mb-3 left" key={i}>
-                                        <div className="msg_cotainer_send">
-                                            {chat.message}
-                                            <span className="msg_time_send">8:55 AM, Today</span>
+                                        <div className="">
+                                            <div className="msg_cotainer_send">
+                                                {chat.message}
+                                            </div>
+                                            <span className="msg_time_send mt-1 d-inline-block lh-1">8:55 AM, Today</span>
                                         </div>
+
                                         <div className="img_cont_msg">
                                             <img
                                                 src={admin?.profileImage ? admin?.profileImage : DefaultImage}
@@ -76,9 +79,11 @@ const Chat = (props) => {
                                                 alt=""
                                             />
                                         </div>
-                                        <div className="msg_cotainer">
-                                            {chat.message}
-                                            <span className="msg_time">{chat.createdAt}</span>
+                                        <div className="">
+                                            <div className="msg_cotainer">
+                                                {chat.message}
+                                            </div>
+                                            <span className="msg_time mt-1 d-inline-block lh-1">{chat.createdAt}</span>
                                         </div>
                                     </div>
                                 )
