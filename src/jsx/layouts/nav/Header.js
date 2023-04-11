@@ -68,7 +68,7 @@ const Header = ({ onNote }) => {
 					</div>
 				</li>  */}
 
-              <Dropdown
+              {/* <Dropdown
                 as="li"
                 className="nav-item dropdown notification_dropdown "
               >
@@ -189,7 +189,7 @@ const Header = ({ onNote }) => {
                     See all notifications <i className="ti-arrow-right" />
                   </Link>
                 </Dropdown.Menu>
-              </Dropdown>
+              </Dropdown> */}
 
               {/* <Dropdown
                 as="li"
