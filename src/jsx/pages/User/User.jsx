@@ -1,13 +1,23 @@
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import UserService from '../../../services/user';
 import { useDispatch } from 'react-redux';
 import { Empty, Input, Table } from 'antd';
 import { Badge, Dropdown } from "react-bootstrap";
 import moment from 'moment';
+import { SocketContext } from '../../../context/Socket';
 
 const User = (props) => {
     const dispatch = useDispatch();
     const [data, setData] = useState([]);
+    const { chatClient } = useContext(SocketContext);
+
+    useEffect(() => {
+        chatClient.on('message', function (data) {
+            if (data) {
+                getUserList();
+            }
+        })
+    }, [chatClient])
 
     const getUserList = (value = '') => {
         dispatch(UserService.getUser(value))
@@ -29,6 +39,7 @@ const User = (props) => {
                             yourQuestion: res.data[i].yourQuestion,
                             answer: res.data[i].answer,
                             profilePic: res.data[i].profilePic,
+                            readStatusCount: res.data[i].readStatusCount,
                             createdAt: res.data[i].createdAt
                         }
                     )
@@ -150,6 +161,10 @@ const User = (props) => {
                             className="light sharp i-false"
                         >
                             {svg1}
+                            {
+                                text.readStatusCount > 0 ?
+                                    <span className="badge light text-white bg-danger rounded-circle">{text.readStatusCount}</span> : ''
+                            }
                         </Dropdown.Toggle>
                         <Dropdown.Menu>
                             <Dropdown.Item onClick={() => viewUser(text)}>View</Dropdown.Item>

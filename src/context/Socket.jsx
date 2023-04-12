@@ -64,7 +64,7 @@ const SocketContextProvider = (props) => {
                 "to": admin.id
             });
         }
-    }, [userId])
+    }, [userId, chatData])
 
     const getMessages = () => {
         chatClient.emit('getMessages', {
