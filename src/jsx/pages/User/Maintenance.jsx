@@ -90,14 +90,8 @@ const User = (props) => {
                 <div className='row'>
                     {text?.map((item, i) => {
                         return (
-                            <div>
-                                <img
-                                    key={i}
-                                    src={process.env.REACT_APP_PROFILE_URL + 'images/' + item}
-                                    alt=""
-                                    width="70px"
-                                    height="70px"
-                                />
+                            <div className='col-6'>
+                                <img key={i} src={process.env.REACT_APP_PROFILE_URL + 'images/' + item} alt="" width="70px" height="70px"/>
                             </div>
                         )
                     })}
@@ -128,27 +122,30 @@ const User = (props) => {
             key: 'actions',
             render: (text) => (
                 <>
-                    <Dropdown>
-                        <Dropdown.Toggle
-                            variant="danger"
-                            className="light sharp i-false"
-                        >
-                            {svg1}
-                        </Dropdown.Toggle>
-                        <Dropdown.Menu>
-                            {text.verifyStatus == 0 ?
-                                <>
-                                    <Dropdown.Item onClick={() => approveRequest(text, 1)}>Approve</Dropdown.Item>
-                                    <Dropdown.Item onClick={() => approveRequest(text, 2)}>Reject</Dropdown.Item>
-                                </>
-                                :
-                                <>
-                                    <Dropdown.Item disabled onClick={() => approveRequest(text, 1)}>Approve</Dropdown.Item>
-                                    <Dropdown.Item disabled onClick={() => approveRequest(text, 2)}>Reject</Dropdown.Item>
-                                </>}
+                    {
+                        text.verifyStatus == 0 ?
+                            <Dropdown>
+                                <Dropdown.Toggle
+                                    variant="danger"
+                                    className="light sharp i-false"
+                                >
+                                    {svg1}
+                                </Dropdown.Toggle>
+                                <Dropdown.Menu>
+                                    {text.verifyStatus == 0 ?
+                                        <>
+                                            <Dropdown.Item onClick={() => approveRequest(text, 1)}>Approve</Dropdown.Item>
+                                            <Dropdown.Item onClick={() => approveRequest(text, 2)}>Reject</Dropdown.Item>
+                                        </>
+                                        :
+                                        <>
+                                            <Dropdown.Item disabled onClick={() => approveRequest(text, 1)}>Approve</Dropdown.Item>
+                                            <Dropdown.Item disabled onClick={() => approveRequest(text, 2)}>Reject</Dropdown.Item>
+                                        </>}
 
-                        </Dropdown.Menu>
-                    </Dropdown>
+                                </Dropdown.Menu>
+                            </Dropdown> : ''
+                    }
                 </>
             )
         },
