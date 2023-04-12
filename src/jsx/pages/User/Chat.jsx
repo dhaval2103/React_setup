@@ -109,7 +109,7 @@ const Chat = (props) => {
                         <Form.Item name="message" className="mb-0"
                         // rules={[{ required: true, message: "Please entre message!" }]}
                         >
-                            <Input type="text" placeholder="Type a message" suffix={
+                            <Input type="text" placeholder="Type a message" onKeyDown={(e) => e.keyCode === 13 && sendMessage(form.getFieldValue())} suffix={
                                 <Button
                                     key="submit"
                                     type="primary"
