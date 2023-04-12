@@ -6,7 +6,6 @@ import { Dropdown } from "react-bootstrap";
 import ToastMe from '../Common/ToastMe';
 import moment from "moment";
 
-
 const Technicalguide = () => {
     const dispatch = useDispatch();
     const [data, setData] = useState([]);
@@ -17,10 +16,12 @@ const Technicalguide = () => {
     const [uploadedVideo, setUploadedVideo] = useState([]);
     const [viewImage, setViewImage] = useState([]);
     const [viewVideo, setViewVideo] = useState([]);
+    const [urlImage, setUrlImage] = useState([]);
 
     const editModal = async (text) => {
         form.resetFields();
         setVisible(true)
+        setUrlImage([])
         if (text) {
             setId(text.id)
             setViewImage(text.image)
@@ -31,16 +32,16 @@ const Technicalguide = () => {
             })
         } else {
             setId('')
-            setViewImage('')
-            setViewVideo('')
+            setViewImage([])
+            setViewVideo([])
             form.setFieldsValue({
                 title: '',
                 description: '',
             })
         }
     }
+
     const onSubmit = async (values) => {
-        // return false
         if (id) {
             if (uploadedImage || uploadedVideo) {
                 const formData = new FormData();
@@ -84,7 +85,7 @@ const Technicalguide = () => {
                             })
                     })
                     .catch((errors) => {
-                        console.log({ errors })
+                        // console.log({ errors })
                     })
             } else {
                 values.image = viewImage
@@ -107,14 +108,12 @@ const Technicalguide = () => {
         } else {
             if (uploadedImage || uploadedVideo) {
                 const formData = new FormData();
-
                 uploadedImage?.map((file) => {
                     formData.append('images', file)
                 })
                 uploadedVideo?.map((file) => {
                     formData.append('videos', file)
                 })
-
                 dispatch(UserService.uploadMedia(formData))
                     .then((res) => {
                         values.image = res.data.images
@@ -183,12 +182,20 @@ const Technicalguide = () => {
                 console.log({ errors })
             })
     }
-
-    const handleProfilePicOnChange = async (ev) => {
+    const Uid = () => {
+        return "_" + Math.random().toString(36).substring(2, 9);
+    };
+    const handleProfilePicOnChange = (ev) => {
         const fileTypes = [...ev.target.files];
-        setUploadedImage([])
-        setUploadedVideo([])
+        // setUploadedImage([])
+        // setUploadedVideo([])
         fileTypes.map((file) => {
+            let userSelectedfiles = [file];
+            userSelectedfiles.map((file) => {
+                file.id = Uid();
+                return file;
+            });
+            setUrlImage((prev) => [...prev, ...userSelectedfiles]);
             if (file.type.includes('video')) {
                 setUploadedVideo((prev) => [...prev, file])
             } else if (file.type.includes('image')) {
@@ -199,14 +206,21 @@ const Technicalguide = () => {
 
     const removeImage = (img) => {
         setViewImage(
-            viewImage.filter((ele) => {
+            viewImage?.filter((ele) => {
                 return ele !== img;
             })
         )
     }
     const removeVideo = (img) => {
         setViewVideo(
-            viewVideo.filter((ele) => {
+            viewVideo?.filter((ele) => {
+                return ele !== img;
+            })
+        )
+    }
+    const removeVideoUrl = (img) => {
+        setUrlImage(
+            urlImage?.filter((ele) => {
                 return ele !== img;
             })
         )
@@ -366,68 +380,89 @@ const Technicalguide = () => {
                         modifier: "public"
                     }}
                 >
-
-                    <label class="label-name">Title</label>
+                    <label className="label-name">Title</label>
                     <Form.Item name="title"
                         rules={[{ required: true, message: "Please entre title!" }]}
                     >
                         <Input type="text" placeholder='Enter title' />
                     </Form.Item>
 
-                    <label class="label-name">Description</label>
+                    <label className="label-name">Description</label>
                     <Form.Item
                         name="description"
                         rules={[{ required: true, message: "Please enter description!" }]}
                     >
                         <Input type="text" placeholder='Enter description' />
                     </Form.Item>
-                    {viewImage.length > 0 ?
-                        <div className="card-body pb-1">
-                            <label class="label-name">Images</label>
-                            <div id="lightgallery" className="row gx-2">
-                                {viewImage.map((item, index) => (
-                                    <a className="col-lg-3 col-md-6 mb-4" key={index}>
+                    <label className="label-name">Media</label>
+                    <Form.Item
+                        name="media"
+                    // rules={[{ required: true, message: "Please select image or video!" }]}
+                    >
+                        <Input type="file" id='file-input' multiple onChange={(e) => handleProfilePicOnChange(e)} />
+                    </Form.Item>
+                    <div className="card-body pb-1">
+                        <div id="lightgallery" className="row gx-2">
+                            {viewImage?.length > 0 && viewImage.map((item, index) => (
+                                <>
+                                    <label className="label-name">Images</label>
+                                    <a className="col-lg-6 col-md-6 mb-6" key={index}>
                                         <div className='img_video_wrapper'>
                                             <span id="close" onClick={() => removeImage(item)} className='close_icon'>
-                                                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M12 22c5.5 0 10-4.5 10-10S17.5 2 12 2 2 6.5 2 12s4.5 10 10 10ZM9.17 14.83l5.66-5.66M14.83 14.83 9.17 9.17" stroke="#ffffff" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path></svg></span>
+                                                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="20" viewBox="0 0 24 24" fill="none"><path d="M12 22c5.5 0 10-4.5 10-10S17.5 2 12 2 2 6.5 2 12s4.5 10 10 10ZM9.17 14.83l5.66-5.66M14.83 14.83 9.17 9.17" stroke="#ffffff" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path></svg></span>
                                             <img src={process.env.REACT_APP_PROFILE_URL + 'images/' + item} style={{ width: "100%" }} alt="gallery" />
                                         </div>
                                     </a>
-                                ))}
-                            </div>
-                        </div> : ''}
-                    {viewVideo.length > 0 ?
-                        <div className="card-body pb-1">
-                            <label class="label-name">Video</label>
-                            <div id="lightgallery" className="row">
-                                {viewVideo.map((item, i) => (
-                                    <a className='col-lg-6 col-md-6 mb-4'>
+                                </>
+                            ))}
+                            {
+                                urlImage?.map((item, index) => {
+                                    return (
+                                        item.type?.includes("image") ?
+                                            <a className="col-lg-6 col-md-6 mb-6" key={index}>
+                                                <div className='img_video_wrapper'>
+                                                    <span id="close" onClick={() => removeVideoUrl(item)} className='close_icon'>
+                                                        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="20" viewBox="0 0 24 24" fill="none"><path d="M12 22c5.5 0 10-4.5 10-10S17.5 2 12 2 2 6.5 2 12s4.5 10 10 10ZM9.17 14.83l5.66-5.66M14.83 14.83 9.17 9.17" stroke="#ffffff" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path></svg></span>
+                                                    <img src={URL.createObjectURL(item)} alt="profile" width="190px" height="100px" />
+                                                </div>
+                                            </a> : <></>
+                                    )
+                                })
+                            }
+                        </div>
+                    </div>
+                    <div className="card-body pb-1">
+                        <div id="lightgallery" className="row gx-2">
+                            {viewVideo?.map((item, index) => (
+                                <>
+                                    <label className="label-name">Videos</label>
+                                    <a className='col-lg-6 col-md-6 mb-6' key={index}>
                                         <div className='img_video_wrapper'>
                                             <span id="close" onClick={() => removeVideo(item)} className='close_icon'>
                                                 <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M12 22c5.5 0 10-4.5 10-10S17.5 2 12 2 2 6.5 2 12s4.5 10 10 10ZM9.17 14.83l5.66-5.66M14.83 14.83 9.17 9.17" stroke="#ffffff" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path></svg></span>
-                                            <video
-                                                key={i}
-                                                src={process.env.REACT_APP_PROFILE_URL + 'images/' + item?.video}
-                                                // autoPlay
-                                                controls
-                                                poster={process.env.REACT_APP_PROFILE_URL + 'thumb/' + item?.thumbnail}
-                                                // loop
-                                                width="70px"
-                                                height="70px"
-                                            />
+                                            <video key={index} src={process.env.REACT_APP_PROFILE_URL + 'images/' + item?.video} controls poster={process.env.REACT_APP_PROFILE_URL + 'thumb/' + item?.thumbnail} width="70px" height="70px" />
                                         </div>
                                     </a>
-                                ))}
-                            </div>
+                                </>
+                            ))}
+                            {
+                                urlImage?.map((item, index) => {
+                                    return (
+                                        item.type?.includes("video") ?
+                                            <a className='col-lg-6 col-md-6 mb-4' key={index}>
+                                                <div className='img_video_wrapper'>
+                                                    <span id="close" onClick={() => removeVideoUrl(item)} className='close_icon'>
+                                                        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M12 22c5.5 0 10-4.5 10-10S17.5 2 12 2 2 6.5 2 12s4.5 10 10 10ZM9.17 14.83l5.66-5.66M14.83 14.83 9.17 9.17" stroke="#ffffff" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path></svg></span>
+                                                    <video loop muted autoPlay width="190px" height="100px">
+                                                        <source src={URL.createObjectURL(item)} ></source>
+                                                    </video>
+                                                </div>
+                                            </a> : <></>
+                                    )
+                                })
+                            }
                         </div>
-                        : ''}
-                    <label class="label-name">Media</label>
-                    <Form.Item
-                        name="media"
-                        rules={[{ required: true, message: "Please select image or video!" }]}
-                    >
-                    <Input type="file" id='file-input' multiple onChange={(e) => handleProfilePicOnChange(e)} />
-                    </Form.Item>
+                    </div>
                 </Form>
             </Modal>
         </>

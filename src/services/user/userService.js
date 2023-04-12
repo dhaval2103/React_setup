@@ -302,7 +302,7 @@ export function uploadMedia(data) {
                 .catch(function (error) {
                     console.log(error);
                     const data = {
-                        errorData: error.response.data.message,
+                        errorData: error.response.data,
                         statusCode: error.response.status,
                     };
                     return reject(data);
@@ -359,7 +359,7 @@ export function editTechnicalguides(data) {
                 .catch(function (error) {
                     console.log(error);
                     const data = {
-                        errorData: error.response.data.message,
+                        errorData: error.response.data,
                         statusCode: error.response.status,
                     };
                     return reject(data);
