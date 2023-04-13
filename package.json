@@ -1,9 +1,10 @@
 {
-  "name": "invome",
+  "name": "az-security-admin",
   "version": "0.1.0",
   "homepage": "https://invome.dexignlab.com/react/demo",
   "private": true,
   "dependencies": {
+    "@ant-design/icons": "^5.0.1",
     "@asseinfo/react-kanban": "^2.2.0",
     "@date-io/date-fns": "^2.13.1",
     "@fullcalendar/core": "^5.4.0",
@@ -77,7 +78,8 @@
     "sweetalert2": "^10.10.4",
     "swiper": "^8.0.7",
     "web-vitals": "^2.1.4",
-    "yup": "^0.32.11"
+    "yup": "^0.32.11",
+    "zustand": "^4.3.7"
   },
   "scripts": {
     "start": "react-scripts start",

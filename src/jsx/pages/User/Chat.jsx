@@ -6,6 +6,7 @@ import { SocketContext } from "../../../context/Socket";
 import PerfectScrollbar from "react-perfect-scrollbar";
 import DefaultImage from '../../../images/static-image.jpg'
 import PageLoader from "../Common/PageLoader";
+import moment from "moment";
 
 const Chat = (props) => {
     const admin = props?.auth;
