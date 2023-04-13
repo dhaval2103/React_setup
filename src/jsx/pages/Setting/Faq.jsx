@@ -301,24 +301,6 @@ const Faq = () => {
                         modifier: "public"
                     }}
                 >
-                    {/* <Select
-                        label="Group"
-                        name="category" id="category"
-                        value={mainCategory}
-                        style={{ width: 120 }}
-                        onChange={mainCategorysfun}
-                        allowClear
-                        options={valueCategory.map((option, i) => (
-                            <option key={i} value={option._id}>{option.title}</option>
-                        ))}
-                    /> */}
-                    {/* <Select name="category" id="category" value={mainCategory}
-                        aria-label="Default select example" onChange={mainCategorysfun} style={{ width: 120 }}>
-                            <option value="0">Please Select Group</option>
-                            {valueCategory?.map((option, i) => (
-                                <option key={i} value={option._id}>{option.title}</option>
-                            ))}
-					</Select> */}
                     <label class="label-name">Group Name</label>
                     <div>
                         <Form.Item
@@ -331,7 +313,6 @@ const Faq = () => {
                                 id="category"
                                 label="category"
                                 value={mainCategory}
-                                style={{ width: 120 }}
                                 onChange={mainCategorysfun}
                                 allowClear
                             >
@@ -342,14 +323,6 @@ const Faq = () => {
 
                         </Form.Item>
                     </div>
-                    <Form.Item
-                        hidden
-                        label="Id"
-                        name="id"
-                        value={id}
-                    >
-                        <Input />
-                    </Form.Item>
 
                     <label class="label-name">Question</label>
                     <Form.Item

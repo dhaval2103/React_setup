@@ -311,7 +311,6 @@ const ManageSubscriptions = () => {
                                 id="duration"
                                 label="Duration"
                                 value={type}
-                                style={{ width: 120 }}
                                 onChange={handleChange}
                                 allowClear
                                 options={[

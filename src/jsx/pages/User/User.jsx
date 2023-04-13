@@ -5,6 +5,7 @@ import { Empty, Input, Table } from 'antd';
 import { Badge, Dropdown } from "react-bootstrap";
 import moment from 'moment';
 import { SocketContext } from '../../../context/Socket';
+import { SearchOutlined } from '@ant-design/icons';
 
 const User = (props) => {
     const dispatch = useDispatch();
@@ -158,7 +159,7 @@ const User = (props) => {
                     <Dropdown>
                         <Dropdown.Toggle
                             variant="danger"
-                            className="light sharp i-false"
+                            className="light sharp i-false badge_label"
                         >
                             {svg1}
                             {
@@ -192,7 +193,7 @@ const User = (props) => {
                 <div className="card-header">
                     <h4 className="card-title">User List</h4>
                     <div className="search-group">
-                        <Input className="form-control" placeholder='Search' onChange={(e) => handleSearch(e.target.value)} />
+                        <Input placeholder='Search' onChange={(e) => handleSearch(e.target.value)} prefix={<SearchOutlined className="site-form-item-icon" />} />
                     </div>
                 </div>
                 <div className="card-body">
