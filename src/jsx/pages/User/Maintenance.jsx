@@ -104,15 +104,15 @@ const User = (props) => {
             render: (text) => {
                 if (text.verifyStatus == 0) {
                     return (
-                        <span class="badge badge-warning text-dark">Pending</span>
+                        <span className="badge badge-warning text-dark">Pending</span>
                     )
                 } else if (text.verifyStatus == 1) {
                     return (
-                        <span class="badge badge-success">Approve</span>
+                        <span className="badge badge-success">Approve</span>
                     )
                 } else {
                     return (
-                        <span class="badge badge-danger">Reject</span>
+                        <span className="badge badge-danger">Reject</span>
                     )
                 }
             }

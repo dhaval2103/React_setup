@@ -243,7 +243,7 @@ const FaqGroup = () => {
                         modifier: "public"
                     }}
                 >
-                    <label class="label-name">FAQ Group Name</label>
+                    <label className="label-name">FAQ Group Name</label>
                     <Form.Item
                         name="title"
                         rules={[{ required: true, message: "Please enter group name" }]}

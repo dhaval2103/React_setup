@@ -273,7 +273,7 @@ const Cms = () => {
                         modifier: "public"
                     }}
                 >
-                    {/* <label class="label-name">Select Topic</label>
+                    {/* <label className="label-name">Select Topic</label>
                     <div>
                         <Select
                             label="Title"
@@ -284,7 +284,7 @@ const Cms = () => {
                             options={[{ value: 1, label: 'Terms & Conditions' }, { value: 2, label: 'Privacy Policy' }, { value: 3, label: 'Disclaimer' }]}
                         />
                     </div> */}
-                    <label class="label-name">Title</label>
+                    <label className="label-name">Title</label>
                     <Form.Item
                         name="title"
                         rules={[{ required: true, message: "Please enter title" }]}
@@ -294,7 +294,7 @@ const Cms = () => {
                     <Form.Item hidden label="Id" name="id" value={id} >
                         <Input />
                     </Form.Item>
-                    <label class="label-name">Description</label>
+                    <label className="label-name">Description</label>
                     <Form.Item
                         name='description'
                         rules={[{ required: true, message: "Please add description" }]}

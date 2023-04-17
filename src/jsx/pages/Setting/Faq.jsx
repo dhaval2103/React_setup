@@ -301,7 +301,7 @@ const Faq = () => {
                         modifier: "public"
                     }}
                 >
-                    <label class="label-name">Group Name</label>
+                    <label className="label-name">Group Name</label>
                     <div>
                         <Form.Item
                             name="category"
@@ -324,7 +324,7 @@ const Faq = () => {
                         </Form.Item>
                     </div>
 
-                    <label class="label-name">Question</label>
+                    <label className="label-name">Question</label>
                     <Form.Item
                         name="question"
                         rules={[
@@ -337,7 +337,7 @@ const Faq = () => {
                         <Input type="textarea" placeholder='Enter question' />
                     </Form.Item>
 
-                    <label class="label-name">Answer</label>
+                    <label className="label-name">Answer</label>
                     <Form.Item
                         name="answer"
                         rules={[

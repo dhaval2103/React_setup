@@ -63,7 +63,7 @@ const ContactUs = () => {
                         <Card.Body>
                             <div className="row">
                                 <div className="col-6">
-                                    <label class="label-name">Support Email</label>
+                                    <label className="label-name">Support Email</label>
                                     <Form.Item
                                         name="email"
                                         rules={[{ required: true, message: "Please enter support email!" }]}
@@ -72,7 +72,7 @@ const ContactUs = () => {
                                     </Form.Item>
                                 </div>
                                 <div className="col-6">
-                                    <label class="label-name">Support Mobile</label>
+                                    <label className="label-name">Support Mobile</label>
                                     <Form.Item
                                         name="mobile"
                                         rules={[{ required: true, message: "Please enter support phone number!" }]}

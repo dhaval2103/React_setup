@@ -286,7 +286,7 @@ const ManageSubscriptions = () => {
                     }}
                 >
                     {/* <div>
-                        <label class="label-name">Duration</label>
+                        <label className="label-name">Duration</label>
                         <Form.Item
                             name="duration"
                             rules={[{ required: true, message: "Please select plan duration!" }]}
@@ -299,7 +299,7 @@ const ManageSubscriptions = () => {
                                     { value: 4, label: '12 Month' }]} />
                         </Form.Item>
                     </div> */}
-                    <label class="label-name">Duration</label>
+                    <label className="label-name">Duration</label>
                     <div>
                         <Form.Item
                             name="duration"
@@ -324,14 +324,14 @@ const ManageSubscriptions = () => {
                     </div>
 
 
-                    <label class="label-name">Package Name</label>
+                    <label className="label-name">Package Name</label>
                     <Form.Item name="packageName"
                         rules={[{ required: true, message: "Please entre package name!" }]}
                     >
                         <Input placeholder='Enter Package Name' />
                     </Form.Item>
 
-                    <label class="label-name">Price</label>
+                    <label className="label-name">Price</label>
                     <Form.Item
                         name="price"
                         rules={[{ required: true, message: "Please enter price!" }]}

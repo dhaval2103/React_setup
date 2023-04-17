@@ -124,7 +124,7 @@ const User = (props) => {
             render: (text) => (
                 <div>
                     <Badge as="a" bg="primary badge-circle">
-                        {text === true ? <i class="fa fa-check" aria-hidden="true"></i> : <i class="fa fa-times" aria-hidden="true"></i>}
+                        {text === true ? <i className="fa fa-check" aria-hidden="true"></i> : <i className="fa fa-times" aria-hidden="true"></i>}
                     </Badge>
                 </div>
             )
@@ -136,7 +136,7 @@ const User = (props) => {
             render: (text) => (
                 <div>
                     <Badge as="a" bg="primary badge-circle">
-                        {text === true ? <i class="fa fa-check" aria-hidden="true"></i> : <i class="fa fa-times" aria-hidden="true"></i>}
+                        {text === true ? <i className="fa fa-check" aria-hidden="true"></i> : <i className="fa fa-times" aria-hidden="true"></i>}
                     </Badge>
                 </div>
             )

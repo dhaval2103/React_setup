@@ -186,14 +186,14 @@ const Notification = () => {
                     }}
                 >
 
-                    <label class="label-name">Title</label>
+                    <label className="label-name">Title</label>
                     <Form.Item name="title"
                         rules={[{ required: true, message: "Please entre title!" }]}
                     >
                         <Input type="text" placeholder='Enter Title' />
                     </Form.Item>
 
-                    <label class="label-name">Message</label>
+                    <label className="label-name">Message</label>
                     <Form.Item
                         name="message"
                         rules={[{ required: true, message: "Please enter message!" }]}

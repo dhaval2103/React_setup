@@ -105,13 +105,13 @@ const ViewUser = () => {
                         </Card.Header>
                         <Card.Body className="mb-0">
                             <Card.Text>
-                                <i class="fa fa-user" aria-hidden="true"></i> {userDetail?.fullName ? userDetail?.fullName : '-'}
+                                <i className="fa fa-user" aria-hidden="true"></i> {userDetail?.fullName ? userDetail?.fullName : '-'}
                             </Card.Text>
                             <Card.Text>
-                                <i class="fa fa-envelope" aria-hidden="true"></i> {userDetail?.email ? userDetail?.email : '-'}
+                                <i className="fa fa-envelope" aria-hidden="true"></i> {userDetail?.email ? userDetail?.email : '-'}
                             </Card.Text>
                             <Card.Text>
-                                <i class="fa fa-phone-square" aria-hidden="true"></i> {userDetail?.mobile ? userDetail?.mobile : '-'}
+                                <i className="fa fa-phone-square" aria-hidden="true"></i> {userDetail?.mobile ? userDetail?.mobile : '-'}
                             </Card.Text>
                         </Card.Body>
                     </Card>
