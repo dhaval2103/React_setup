@@ -1,4 +1,4 @@
- import React from "react";
+import React from "react";
 
 const Footer = () => {
   var d = new Date();
@@ -7,8 +7,8 @@ const Footer = () => {
       <div className="copyright">
         <p>
           Copyright © Designed &amp; Developed by{" "}
-          <a href="http://dexignlab.com/" target="_blank" rel="noreferrer">
-            DexignLab
+          <a href="https://www.elaunchinfotech.com/" target="_blank" rel="noreferrer">
+            ELaunch Solution Private Limited
           </a>{" "}
           {d.getFullYear()}
         </p>
