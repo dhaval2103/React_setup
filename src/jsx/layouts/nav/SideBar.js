@@ -242,17 +242,19 @@ const SideBar = (props) => {
             </Link>
             <ul >
               <li><Link className={`${path === "user-list" ? "mm-active" : ""}`} to="/user-list">User List</Link></li>
+              <li><Link className={`${path === "subscribe-user-list" ? "mm-active" : ""}`} to="/subscribe-user-list">Subscribed User List</Link></li>
+              <li><Link className={`${path === "payment-history" ? "mm-active" : ""}`} to="/payment-history">Payment History</Link></li>
+              <li><Link className={`${path === "upcoming-subscriptions" ? "mm-active" : ""}`} to="/upcoming-subscriptions">Upcoming Subscriptions</Link></li>
             </ul>
           </li>
           <li className={`${app.includes(path) ? "mm-active" : ""}`}>
             <Link className="has-arrow ai-icon" to="#" >
               <i class="fa fa-cog" aria-hidden="true"></i>
-              <span className="nav-text">Setting</span>
+              <span className="nav-text">General Setting</span>
             </Link>
             <ul >
               <li><Link className={`${path === "cms-list" ? "mm-active" : ""}`} to="/cms-list">CMS List</Link></li>
               <li><Link className={`${path === "manage-subscriptions" ? "mm-active" : ""}`} to="/manage-subscriptions">Manage Subscriptions</Link></li>
-              <li><Link className={`${path === "notification" ? "mm-active" : ""}`} to="/notification">Notification</Link></li>
               <li><Link className={`${path === "faq-group-list" ? "mm-active" : ""}`} to="/faq-group-list">FAQ Group List</Link></li>
               <li><Link className={`${path === "faq-list" ? "mm-active" : ""}`} to="/faq-list">FAQ List</Link></li>
               <li><Link className={`${path === "technical-guide-list" ? "mm-active" : ""}`} to="/technical-guide-list">Technical Guide List</Link></li>
@@ -261,9 +263,20 @@ const SideBar = (props) => {
           </li>
           <li className={`${app.includes(path) ? "mm-active" : ""}`}>
             <Link className="has-arrow ai-icon" to="#" >
+              <i class="fa fa-comments" aria-hidden="true"></i>
+
+              <span className="nav-text">Notifications</span>
+            </Link>
+            <ul >
+            <li><Link className={`${path === "notification" ? "mm-active" : ""}`} to="/notification">Notifications</Link></li>
+          
+            </ul>
+          </li>
+          <li className={`${app.includes(path) ? "mm-active" : ""}`}>
+            <Link className="has-arrow ai-icon" to="#" >
               <i class="fa fa-bars" aria-hidden="true"></i>
 
-              <span className="nav-text">Maintenance</span>
+              <span className="nav-text">Maintenance Module</span>
             </Link>
             <ul >
               <li><Link className={`${path === "maintenance-request-list" ? "mm-active" : ""}`} to="/maintenance-request-list">Maintenance Request</Link></li>

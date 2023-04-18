@@ -123,6 +123,9 @@ import Technicalguide from "./pages/Setting/Technicalguide";
 import ContactUs from "./pages/Setting/ContactUs";
 import Chat from "./pages/User/Chat";
 import FagGroup from "./pages/Setting/FaqGroup";
+import SubscribeUser from "./pages/User/SubscribeUser";
+import PaymentHistory from "./pages/User/PaymentHistory";
+import UpcomingSubscriptions from "./pages/User/UpcomingSubscriptions";
 
 const Markup = () => {
   const { menuToggle } = useContext(ThemeContext);
@@ -140,6 +143,9 @@ const Markup = () => {
     
     // User
     { url: "user-list", component: User },
+    { url: "subscribe-user-list", component: SubscribeUser },
+    { url: "payment-history", component: PaymentHistory },
+    { url: "upcoming-subscriptions", component: UpcomingSubscriptions },
 
     //Setting
     { url: "cms-list", component: Cms },
