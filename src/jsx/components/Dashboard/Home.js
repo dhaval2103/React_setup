@@ -64,6 +64,7 @@ const Home = () => {
 	return (
 		<>
 			<div className="row">
+				<h4><b>Users</b></h4>
 				<div className="col-xl-12">
 					<div className="row">
 						<div className="col-xl-3 col-sm-6">
@@ -163,6 +164,7 @@ const Home = () => {
 						</div>
 					</div>
 				</div>
+				<h4><b>Maintenance Request</b></h4>
 				<div className="col-xl-12">
 					<div className="row">
 						<div className="col-xl-3 col-sm-6">
