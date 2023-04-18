@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import '../../components/table/FilteringTable/filtering.css';
 import UserService from '../../../services/user';
 import { useDispatch } from 'react-redux';
-import { Modal, Table, Button, Input, Form, Select, Empty } from 'antd';
+import { Modal, Table, Button, Input, Form, Select, Empty, InputNumber } from 'antd';
 import { Badge, Dropdown } from "react-bootstrap";
 import ToastMe from '../Common/ToastMe';
 import Swal from 'sweetalert2';
@@ -323,10 +323,13 @@ const ManageSubscriptions = () => {
                         </Form.Item>
                     </div>
 
-
                     <label className="label-name">Package Name</label>
                     <Form.Item name="packageName"
-                        rules={[{ required: true, message: "Please entre package name!" }]}
+                        rules={[
+                            { required: true, message: "Please entre package name!" },
+                            { max: 15, message: 'You can not enter more than 15 characters' },
+                            { pattern: new RegExp("[a-zA-Z]+$"), message: 'Please enter only characters' }
+                        ]}
                     >
                         <Input placeholder='Enter Package Name' />
                     </Form.Item>
@@ -334,9 +337,10 @@ const ManageSubscriptions = () => {
                     <label className="label-name">Price</label>
                     <Form.Item
                         name="price"
-                        rules={[{ required: true, message: "Please enter price!" }]}
+                        rules={[{ required: true, message: "Please enter price!" },
+                        { pattern: new RegExp("^[1-9]"), message: 'Price should be greater then 1.' }]}
                     >
-                        <Input type="number" placeholder='Enter Price' />
+                        <Input type='number' max={5} placeholder='Enter Price' />
                     </Form.Item>
                 </Form>
             </Modal>

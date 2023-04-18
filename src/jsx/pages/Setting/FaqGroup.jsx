@@ -246,7 +246,7 @@ const FaqGroup = () => {
                     <label className="label-name">FAQ Group Name</label>
                     <Form.Item
                         name="title"
-                        rules={[{ required: true, message: "Please enter group name" }]}
+                        rules={[{ required: true, message: "Please enter group name" },{ max: 15, message: 'You can not enter more than 15 characters' }]}
                     >
                         <Input placeholder='Enter group name' />
                     </Form.Item>

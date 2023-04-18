@@ -382,7 +382,7 @@ const Technicalguide = () => {
                 >
                     <label className="label-name">Title</label>
                     <Form.Item name="title"
-                        rules={[{ required: true, message: "Please entre title!" }]}
+                        rules={[{ required: true, message: "Please entre title!" },{ max: 15, message: 'You can not enter more than 15 characters' }]}
                     >
                         <Input type="text" placeholder='Enter title' />
                     </Form.Item>
