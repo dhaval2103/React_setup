@@ -126,6 +126,9 @@ import FagGroup from "./pages/Setting/FaqGroup";
 import SubscribeUser from "./pages/User/SubscribeUser";
 import PaymentHistory from "./pages/User/PaymentHistory";
 import UpcomingSubscriptions from "./pages/User/UpcomingSubscriptions";
+import TechnicianList from "./pages/User/TechnicianList";
+import ViewMaintence from "./pages/User/ViewMaintence";
+import UserNotification from "./pages/Setting/UserNotification";
 
 const Markup = () => {
   const { menuToggle } = useContext(ThemeContext);
@@ -146,20 +149,24 @@ const Markup = () => {
     { url: "subscribe-user-list", component: SubscribeUser },
     { url: "payment-history", component: PaymentHistory },
     { url: "upcoming-subscriptions", component: UpcomingSubscriptions },
+    { url: "view-maintence", component: ViewMaintence },
 
     //Setting
     { url: "cms-list", component: Cms },
     { url: "manage-subscriptions", component: ManageSubscriptions },
-    { url: "notification", component: Notification },
     { url: "faq-list", component: Faq },
     { url: "contact-us", component: ContactUs },
     { url: "chat", component: Chat },
-
+    
+    //Notification
+    { url: "general-notification", component: Notification },
+    { url: "user-notification", component: UserNotification },
 
     { url: "user-detail", component: ViewUser },
     { url: "maintenance-request-list", component: Maintenance },
     { url: "technical-guide-list", component: Technicalguide },
     { url: "faq-group-list", component: FagGroup },
+    { url: "technician-list", component: TechnicianList },
 
 	
 	///Demo

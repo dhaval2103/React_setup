@@ -2,18 +2,20 @@ import React, { useEffect, useState } from 'react';
 import '../../components/table/FilteringTable/filtering.css';
 import UserService from '../../../services/user';
 import { useDispatch } from 'react-redux';
-import { Modal, Table, Button, Input, Form, Empty } from 'antd';
+import { Modal, Table, Button, Select, Input, Space, Form, Empty, AutoComplete } from 'antd';
 import { Dropdown } from "react-bootstrap";
 import ToastMe from '../Common/ToastMe';
 import Swal from 'sweetalert2';
 import moment from "moment";
 
 
-const Notification = () => {
+const UserNotification = () => {
     const dispatch = useDispatch();
     const [data, setData] = useState([]);
     const [visible, setVisible] = useState(false);
     const [id, setId] = useState('');
+    const [userData, setuserData] = useState([]);
+    const [userId, setuserId] = useState([]);
     const [form] = Form.useForm();
 
     const editModal = (text) => {
@@ -33,13 +35,12 @@ const Notification = () => {
     }
 
     const onSubmit = (values) => {
-        dispatch(UserService.sendNotification(values))
+        // values.userId = userId;
+        dispatch(UserService.sendUserNotification(values))
             .then((res) => {
                 getNotificationlist();
-                form.setFieldsValue({
-                    title: '',
-                    message: '',
-                })
+                form.resetFields();
+                setuserId([])
                 ToastMe(res.data.message, 'success')
             })
         setVisible(false)
@@ -49,7 +50,7 @@ const Notification = () => {
     }
 
     const getNotificationlist = () => {
-        let notification_type = 1;
+        let notification_type = 2;
         dispatch(UserService.getNotificationlist(notification_type))
             .then((res) => {
                 let newArr = [];
@@ -72,8 +73,31 @@ const Notification = () => {
             })
     }
 
+    const getUser = (value = '') => {
+        dispatch(UserService.getUser(value))
+            .then((res) => {
+                const newArr = [];
+                for (let i = 0; i < res.data.length; i++) {
+                    newArr.push({
+                        label: res.data[i].fullName,
+                        value: res.data[i]._id,
+                    });
+                }
+                setuserData(newArr);
+            })
+            .catch((errors) => {
+                console.log({ errors })
+            })
+    }
+
+    const handleChangeName = (e) => {
+        setuserId(e);
+        form.setFieldValue('userId', e)
+    }
+
     useEffect(() => {
         getNotificationlist();
+        getUser();
     }, [])
 
     const svg1 = (
@@ -201,10 +225,56 @@ const Notification = () => {
                     >
                         <Input type="text" placeholder='Enter Message' />
                     </Form.Item>
+                    <label className="label-name">Select User</label>
+                    <div>
+                        <Form.Item
+                            name="userId"
+                            rules={[{ required: true, message: "Please select User name!" }]}
+                        >
+                            {/* <Select
+                                placeholder="Select a User"
+                                name="userId"
+                                id="userId"
+                                label="userId"
+                                mode="multiple"
+                                value={userData}
+                                onChange={handleChangeName}
+                                allowClear
+                                showSearch
+                            >
+                                {userData?.map((option, i) => (
+                                    <option key={i} value={option._id}>{option.fullName}</option>
+                                ))}
+                            </Select> */}
+
+                            <Space
+                                style={{
+                                    width: '100%',
+                                }}
+                                direction="vertical"
+                            >
+                                <Select
+                                    mode="multiple"
+                                    allowClear
+                                    style={{
+                                        width: '100%',
+                                    }}
+                                    placeholder="Please select"
+                                    value={userId}
+                                    onChange={handleChangeName}
+                                    options={userData}
+                                    filterOption={(inputValue, option) =>
+                                        option.label.toUpperCase().indexOf(inputValue.toUpperCase()) !== -1
+                                    }
+                                />
+                            </Space>
+
+                        </Form.Item>
+                    </div>
                 </Form>
             </Modal>
         </>
     )
 }
 
-export default Notification
+export default UserNotification

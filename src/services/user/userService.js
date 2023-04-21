@@ -140,7 +140,8 @@ export function approveRequest(data) {
     let data_ = {
         mId: data._id,
         env: 'test',
-        verifyStatus: data.verifyStatus
+        verifyStatus: data?.verifyStatus,
+        technicianId: data?.technicianId
     }
     return dispatch => (
         new Promise((resolve, reject) => {
@@ -199,9 +200,10 @@ export function deleteCms(data) {
 }
 export function sendNotification(data) {
     data.env = 'test'
+    data.type = 1
     return dispatch => (
         new Promise((resolve, reject) => {
-            Http.callApi('post', BaseUrl + '/admin/sendNotification', data)
+            Http.callApi('post', BaseUrl + '/admin/sendAllUserNotification', data)
                 .then(function (res) {
                     return resolve(res);
                 })
@@ -216,11 +218,31 @@ export function sendNotification(data) {
         })
     )
 }
-export function getNotificationlist() {
+export function sendUserNotification(data) {
+    data.env = 'test'
+    data.type = 2
+    return dispatch => (
+        new Promise((resolve, reject) => {
+            Http.callApi('post', BaseUrl + '/admin/sendNotificationToUser', data)
+                .then(function (res) {
+                    return resolve(res);
+                })
+                .catch(function (error) {
+                    console.log(error);
+                    const data = {
+                        errorData: error.response.data.message,
+                        statusCode: error.response.status,
+                    };
+                    return reject(data);
+                })
+        })
+    )
+}
+export function getNotificationlist(type) {  
 
     return dispatch => (
         new Promise((resolve, reject) => {
-            Http.callApi('get', BaseUrl + '/admin/getNotification')
+            Http.callApi('get', BaseUrl + '/admin/getNotification?type=' + type)
                 .then(function (res) {
                     return resolve(res);
                 })
@@ -391,6 +413,82 @@ export function editGroup(data) {
     return dispatch => (
         new Promise((resolve, reject) => {
             Http.callApi('post', BaseUrl + '/common/editGroup',data)
+                .then(function (res) {
+                    return resolve(res);
+                })
+                .catch(function (error) {
+                    console.log(error);
+                    const data = {
+                        errorData: error.response.data.message,
+                        statusCode: error.response.status,
+                    };
+                    return reject(data);
+                })
+        })
+    )
+}
+export function getTechnician() {
+    // data.env = 'test'
+    return dispatch => (
+        new Promise((resolve, reject) => {
+            Http.callApi('get', BaseUrl + '/admin/listTechnician')
+                .then(function (res) {
+                    return resolve(res);
+                })
+                .catch(function (error) {
+                    console.log(error);
+                    const data = {
+                        errorData: error.response.data.message,
+                        statusCode: error.response.status,
+                    };
+                    return reject(data);
+                })
+        })
+    )
+}
+export function updateTechician(data) {
+    data.env = 'test'
+    return dispatch => (
+        new Promise((resolve, reject) => {
+            Http.callApi('put', BaseUrl + '/admin/updateTechnician',data)
+                .then(function (res) {
+                    return resolve(res);
+                })
+                .catch(function (error) {
+                    console.log(error);
+                    const data = {
+                        errorData: error.response.data.message,
+                        statusCode: error.response.status,
+                    };
+                    return reject(data);
+                })
+        })
+    )
+}
+export function addTechician(data) {
+    data.env = 'test'
+    return dispatch => (
+        new Promise((resolve, reject) => {
+            Http.callApi('post', BaseUrl + '/admin/addTechnician',data)
+                .then(function (res) {
+                    return resolve(res);
+                })
+                .catch(function (error) {
+                    console.log(error);
+                    const data = {
+                        errorData: error.response.data.message,
+                        statusCode: error.response.status,
+                    };
+                    return reject(data);
+                })
+        })
+    )
+}
+export function addRequest(data) {
+    data.env = 'test'
+    return dispatch => (
+        new Promise((resolve, reject) => {
+            Http.callApi('post', BaseUrl + '/admin/sendMaintenanceRequest',data)
                 .then(function (res) {
                     return resolve(res);
                 })

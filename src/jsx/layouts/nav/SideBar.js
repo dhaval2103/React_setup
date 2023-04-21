@@ -268,7 +268,8 @@ const SideBar = (props) => {
               <span className="nav-text">Notifications</span>
             </Link>
             <ul >
-            <li><Link className={`${path === "notification" ? "mm-active" : ""}`} to="/notification">Notifications</Link></li>
+            <li><Link className={`${path === "general-notification" ? "mm-active" : ""}`} to="/general-notification">General Notifications</Link></li>
+            <li><Link className={`${path === "user-notification" ? "mm-active" : ""}`} to="/user-notification">Individual/Group Notification</Link></li>
           
             </ul>
           </li>
@@ -280,6 +281,7 @@ const SideBar = (props) => {
             </Link>
             <ul >
               <li><Link className={`${path === "maintenance-request-list" ? "mm-active" : ""}`} to="/maintenance-request-list">Maintenance Request</Link></li>
+              <li><Link className={`${path === "technician-list" ? "mm-active" : ""}`} to="/technician-list">Technician List</Link></li>
             </ul>
           </li>
 
