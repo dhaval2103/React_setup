@@ -331,6 +331,10 @@ const Faq = () => {
                             {
                                 required: true,
                                 message: "Please enter question!"
+                            },
+                            {
+                                pattern: new RegExp(/^[a-zA-Z@~`!@#$%^&*()_=+\\\\';:\"\\/?>.<,-]+$/i),
+                                message: "Enter only characters"
                             }
                         ]}
                     >
@@ -344,6 +348,10 @@ const Faq = () => {
                             {
                                 required: true,
                                 message: "Please enter answer!"
+                            },
+                            {
+                                pattern: new RegExp(/^[a-zA-Z@~`!@#$%^&*()_=+\\\\';:\"\\/?>.<,-]+$/i),
+                                message: "Enter only characters"
                             }
                         ]}
                     >

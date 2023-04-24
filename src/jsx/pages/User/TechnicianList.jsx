@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import '../../components/table/FilteringTable/filtering.css';
 import UserService from '../../../services/user';
 import { useDispatch } from 'react-redux';
-import { Modal, Table, Button, Input, Form, Select, Empty } from 'antd';
+import { Modal, Table, Button, Input, Form, Empty } from 'antd';
 import { Dropdown } from "react-bootstrap";
 import ToastMe from '../Common/ToastMe';
 import Swal from 'sweetalert2';
@@ -14,8 +14,11 @@ const TechnicianList = () => {
   const [visible, setVisible] = useState(false);
   const [id, setId] = useState('');
   const [form] = Form.useForm();
-	const [userImg, setUserImg] = useState('');
-    const [imageName, setImageName] = useState();
+  const [userImg, setUserImg] = useState('');
+  const [imageName, setImageName] = useState();
+  const [serverErrors, setServerErrors] = useState({});
+
+  console.log(serverErrors);
 
   const editModal = (text) => {
     setVisible(true)
@@ -33,6 +36,20 @@ const TechnicianList = () => {
     }
   }
 
+  const handleServerErrors = (errors) => {
+    const newErrors = {};
+    Object.keys(errors).forEach((key) => {
+      console.log(errors[key]);
+      newErrors[key] = {
+        validateStatus: 'error',
+        help: errors[key].join(' '),
+      };
+    });
+    console.log(newErrors);
+
+    setServerErrors(newErrors);
+  };
+
   const onSubmit = (values) => {
     values['image'] = imageName;
     if (id) {
@@ -42,10 +59,10 @@ const TechnicianList = () => {
         .then((res) => {
           getTechnician();
           ToastMe("Techician Updated Successfully", 'success')
+          setVisible(false);
+          form.resetFields();
+          setId('')
         })
-      setVisible(false);
-      form.resetFields();
-      setId('')
         .catch((errors) => {
           console.log({ errors })
         })
@@ -54,12 +71,20 @@ const TechnicianList = () => {
         .then((res) => {
           getTechnician();
           ToastMe("Techician Added Successfully", 'success')
+          setVisible(false);
+          form.resetFields();
         })
         .catch((errors) => {
-          console.log({ errors })
+          ToastMe(errors.errors.email, 'error')
+          // handleServerErrors(errors.errors);
+          // Object.keys(errors.errors).forEach((key) => {
+          //   if (key === "email") {
+          //     form.getFieldError('email', errors.errors['email'])
+          //   } else {
+          //     console.log(errors.errors[key]);
+          //   }
+          // });
         })
-      setVisible(false);
-      form.resetFields();
     }
   }
 
@@ -87,23 +112,23 @@ const TechnicianList = () => {
       })
   }
 
-	const previewUserImageOnChange = (ev) => {
+  const previewUserImageOnChange = (ev) => {
     let userImgSrc = URL.createObjectURL(ev.target.files[0]);
     let filesPath = ev.target.files[0];
     setUserImg(userImgSrc);
     const image = new FormData();
     image.append('image', filesPath);
     dispatch(UserService.uploadUserProfile(image))
-        .then((res) => {
-            if (res.data) {
-                setImageName(res.data.imageWithName)
-            }
-        })
-        .catch((errors, statusCode) => {
-            setUserImg('')
-            ToastMe(errors.errorData, "error");
-        });
-}
+      .then((res) => {
+        if (res.data) {
+          setImageName(res.data.imageWithName)
+        }
+      })
+      .catch((errors, statusCode) => {
+        setUserImg('')
+        ToastMe(errors.errorData, "error");
+      });
+  }
 
   const svg1 = (
     <svg width="20px" height="20px" viewBox="0 0 24 24" version="1.1">
@@ -145,6 +170,21 @@ const TechnicianList = () => {
       title: 'About',
       dataIndex: 'about',
       key: 'about',
+      render: (text) => {
+        if (text.length > 30) {
+          return (
+            <div className='col-6'>
+              {text.substring(0, 30) + "...."}
+            </div>
+          )
+        } else {
+          return (
+            <div className='col-6'>
+              {text}
+            </div>
+          )
+        }
+      }
     },
     {
       title: 'Image',
@@ -209,7 +249,7 @@ const TechnicianList = () => {
       </div>
       <Modal
         open={visible}
-        title={id != null ?  'Add Technician':'Edit Technician'}
+        title={id != null ? 'Add Technician' : 'Edit Technician'}
         okText="Submit"
         cancelText="Cancel"
         onCancel={() => {
@@ -252,11 +292,15 @@ const TechnicianList = () => {
             rules={[
               {
                 required: true,
-                message: "Please enter name!"
+                message: "Please enter name!",
+              },
+              {
+                pattern: new RegExp(/^[a-zA-Z@~`!@#$%^&*()_=+\\\\';:\"\\/?>.<,-]+$/i),
+                message: "Enter only characters"
               }
             ]}
           >
-            <Input type="textarea" placeholder='Enter name' />
+            <Input type="text" placeholder='Enter name' />
           </Form.Item>
 
           <label className="label-name">Email</label>
@@ -268,8 +312,9 @@ const TechnicianList = () => {
                 message: "Please enter email!"
               }
             ]}
+            {...serverErrors.email}
           >
-            <Input type="textarea" placeholder='Enter email' />
+            <Input type="text" placeholder='Enter email' />
           </Form.Item>
           <label className="label-name">About</label>
           <Form.Item
@@ -281,7 +326,7 @@ const TechnicianList = () => {
               }
             ]}
           >
-            <Input type="textarea" placeholder='Enter about' />
+            <Input.TextArea />
           </Form.Item>
           <label className="label-name">Image</label>
           <Form.Item

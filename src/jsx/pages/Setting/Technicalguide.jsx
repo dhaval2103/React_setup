@@ -78,8 +78,8 @@ const Technicalguide = () => {
                                     description: '',
                                 })
                                 ToastMe(res.data.message, 'success')
+                                setVisible(false)
                             })
-                        setVisible(false)
                             .catch((errors) => {
                                 console.log({ errors })
                             })
@@ -99,8 +99,8 @@ const Technicalguide = () => {
                             description: '',
                         })
                         ToastMe(res.data.message, 'success')
+                        setVisible(false)
                     })
-                setVisible(false)
                     .catch((errors) => {
                         console.log({ errors })
                     })
@@ -126,8 +126,8 @@ const Technicalguide = () => {
                                     description: '',
                                 })
                                 ToastMe(res.data.message, 'success')
+                                setVisible(false)
                             })
-                        setVisible(false)
                             .catch((errors) => {
                                 console.log({ errors })
                             })
@@ -382,7 +382,13 @@ const Technicalguide = () => {
                 >
                     <label className="label-name">Title</label>
                     <Form.Item name="title"
-                        rules={[{ required: true, message: "Please entre title!" },{ max: 15, message: 'You can not enter more than 15 characters' }]}
+                        rules={[{ required: true, message: "Please entre title!" },
+                        { max: 15, message: 'You can not enter more than 15 characters' },
+                        {
+                            pattern: new RegExp(/^[a-zA-Z@~`!@#$%^&*()_=+\\\\';:\"\\/?>.<,-]+$/i),
+                            message: "Enter only characters"
+                        }
+                    ]}
                     >
                         <Input type="text" placeholder='Enter title' />
                     </Form.Item>
@@ -390,7 +396,10 @@ const Technicalguide = () => {
                     <label className="label-name">Description</label>
                     <Form.Item
                         name="description"
-                        rules={[{ required: true, message: "Please enter description!" }]}
+                        rules={[{ required: true, message: "Please enter description!" },{
+                            pattern: new RegExp(/^[a-zA-Z@~`!@#$%^&*()_=+\\\\';:\"\\/?>.<,-]+$/i),
+                            message: "Enter only characters"
+                        }]}
                     >
                         <Input type="text" placeholder='Enter description' />
                     </Form.Item>

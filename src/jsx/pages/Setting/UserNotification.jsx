@@ -20,6 +20,7 @@ const UserNotification = () => {
 
     const editModal = (text) => {
         setVisible(true)
+        setuserId([])
         if (text) {
             setId(text.id)
             form.setFieldsValue({

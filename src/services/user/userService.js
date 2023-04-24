@@ -474,9 +474,10 @@ export function addTechician(data) {
                     return resolve(res);
                 })
                 .catch(function (error) {
-                    console.log(error);
+                    // console.log(77799)
+                    // console.log(error);
                     const data = {
-                        errorData: error.response.data.message,
+                        errors: error.response.data.errors,
                         statusCode: error.response.status,
                     };
                     return reject(data);
