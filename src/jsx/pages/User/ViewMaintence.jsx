@@ -17,6 +17,7 @@ const ViewMaintence = () => {
     const [addtechancian, setAddTecnicianName] = useState();
     const [form] = Form.useForm();
 
+    console.log(userDetail)
     const openapprovemodal = () => {
         setVisibleApprove(true);
     }
@@ -32,14 +33,14 @@ const ViewMaintence = () => {
         values.verifyStatus = text
         values._id = userDetail?._id
 
-        // dispatch(UserService.approveRequest(values))
-        //     .then((res) => {
-        //         ToastMe(res.data.message, 'success')
-        //         databyId()
-        //     })
-        //     .catch((errors) => {
-        //         console.log({ errors })
-        //     })
+        dispatch(UserService.approveRequest(values))
+            .then((res) => {
+                ToastMe(res.data.message, 'success')
+                databyId()
+            })
+            .catch((errors) => {
+                console.log({ errors })
+            })
     }
 
     const databyId = () => {
@@ -47,9 +48,8 @@ const ViewMaintence = () => {
         dispatch(UserService.listRequestbyId(id))
             .then((res) => {
                 setUserDetail(res.data)
+                setVisibleApprove(false)
             })
-        setVisibleApprove(false)
-        form.resetFields()
             .catch((errors) => {
                 console.log({ errors })
             })
@@ -60,9 +60,9 @@ const ViewMaintence = () => {
         dispatch(UserService.approveRequest(values))
             .then((res) => {
                 ToastMe(res.data.message, 'success')
+                databyId()
+                setVisibleApprove(false)
             })
-        setVisibleApprove(false)
-        databyId()
         form.resetFields()
             .catch((errors) => {
                 console.log({ errors })
@@ -79,6 +79,7 @@ const ViewMaintence = () => {
     }
     useEffect(() => {
         getTechnician();
+        databyId();
     }, [])
     return (
         <>
@@ -92,7 +93,7 @@ const ViewMaintence = () => {
                                     <Dropdown.Toggle
                                         variant="danger"
                                         className="light sharp i-false"
-                                        
+
                                     >
                                         Change Status
                                     </Dropdown.Toggle>
@@ -104,7 +105,7 @@ const ViewMaintence = () => {
                                 userDetail?.verifyStatus == 2 ?
                                     <Button className="badge badge-primary" onClick={() => approveRejectRequest(1)}>Approve</Button> :
                                     userDetail?.verifyStatus == 1 ?
-                                        <span className="badge badge-success">Approve</span> :
+                                        <span className="badge badge-success">Completed</span> :
                                         <span className="badge badge-danger">Reject</span>
                             }
                         </Card.Header>
@@ -147,19 +148,34 @@ const ViewMaintence = () => {
                                 '' : <Button onClick={() => openapprovemodal(userDetail)}>Assign Technician</Button>}
                         </Card.Header>
                         <Card.Body className="mb-0">
-                            <Card.Text>
-                                <div>
-                                    {
-                                        userDetail?.technician != '-' ?
+
+                            {
+                                userDetail?.technician != '-' ?
+                                    <div>
+                                        <h4>Technician</h4>
+                                        <Card.Text>
                                             <div>
-                                                <label className="label-name">Assign Technician Name:</label>
+                                                <label className="label-name">Name:</label>
                                                 {userDetail?.technician?.name}
-                                            </div> : ''
-                                    }
-                                    {/* <label className="label-name">Location:</label>
+                                            </div>
+                                        </Card.Text>
+                                        <Card.Text>
+                                            <div>
+                                                <label className="label-name">Email:</label>
+                                                {userDetail?.technician?.email}
+                                            </div>
+                                        </Card.Text>
+                                        <Card.Text>
+                                            <div>
+                                                <label className="label-name">About:</label>
+                                                {userDetail?.technician?.about}
+                                            </div>
+                                        </Card.Text>
+                                    </div>
+                                    : ''
+                            }
+                            {/* <label className="label-name">Location:</label>
                                     {userDetail?.location ? userDetail?.location : '-'} */}
-                                </div>
-                            </Card.Text>
 
                         </Card.Body>
                     </Card>

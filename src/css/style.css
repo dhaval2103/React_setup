@@ -30568,3 +30568,6 @@ html[dir="rtl"] [direction="rtl"][data-sidebar-style="compact"]:not([data-layout
   top: -8px;
   right: -12px;
 }
+.form_item_datepicker .ant-picker{
+    width: 100%;
+}

@@ -14,6 +14,7 @@ const User = (props) => {
     const [visibleApprove, setVisibleApprove] = useState(false);
     const [techancian, setTechnician] = useState();
     const [addtechancian, setAddTecnicianName] = useState();
+    const [test, setTest] = useState('');
     const [id, setId] = useState();
     const [form] = Form.useForm();
 
@@ -89,16 +90,17 @@ const User = (props) => {
 
     const onSubmit = (values) => {
         values.time = moment(values.time).format('HH:mm A')
-        console.log(values)
+        // console.log(values)
         dispatch(UserService.addRequest(values))
             .then((res) => {
                 getMaintenance();
                 ToastMe("Maintance Request Added Successfully", 'success')
+                setVisible(false)
+                form.resetFields()
             })
-        setVisible(false)
-        form.resetFields()
             .catch((errors) => {
                 console.log({ errors })
+                setTest(errors.errorData.date);
             })
 
     }
@@ -301,11 +303,13 @@ const User = (props) => {
                                 message: "Please enter date!"
                             }
                         ]}
+                        className='form_item_datepicker mb-2'
                     >
-                        <Space direction="vertical">
-                            <DatePicker onChange={onDateChange} />
+                        <Space direction="vertical" className='d-block w-100'>
+                            <DatePicker onChange={onDateChange} className=''/>
                         </Space>
                     </Form.Item>
+                    <span style={{ color: 'red' }}>{test}</span><br></br>
                     <label className="label-name">Select Time</label>
                     <Form.Item
                         name="time"
@@ -315,8 +319,9 @@ const User = (props) => {
                                 message: "Please enter time!"
                             }
                         ]}
+                        className='form_item_datepicker'
                     >
-                        <Space direction="vertical">
+                        <Space direction="vertical" className='d-block w-100'>
                             <TimePicker onChange={onTimeChange} />
                         </Space>
                     </Form.Item>
