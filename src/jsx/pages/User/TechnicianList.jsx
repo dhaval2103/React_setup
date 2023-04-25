@@ -5,8 +5,8 @@ import { useDispatch } from 'react-redux';
 import { Modal, Table, Button, Input, Form, Empty } from 'antd';
 import { Dropdown } from "react-bootstrap";
 import ToastMe from '../Common/ToastMe';
-import Swal from 'sweetalert2';
-import moment from 'moment';
+import dummy from "../../../images/dummy.png"
+
 
 const TechnicianList = () => {
   const dispatch = useDispatch();
@@ -17,11 +17,11 @@ const TechnicianList = () => {
   const [userImg, setUserImg] = useState('');
   const [imageName, setImageName] = useState();
   const [serverErrors, setServerErrors] = useState({});
-
-  console.log(serverErrors);
+  const [test, setTest] = useState('');
 
   const editModal = (text) => {
     setVisible(true)
+    setTest('')
     if (text) {
       form.setFieldsValue({
         name: text?.name || '',
@@ -72,18 +72,12 @@ const TechnicianList = () => {
           getTechnician();
           ToastMe("Techician Added Successfully", 'success')
           setVisible(false);
+          setTest('');
           form.resetFields();
         })
         .catch((errors) => {
-          ToastMe(errors.errors.email, 'error')
-          // handleServerErrors(errors.errors);
-          // Object.keys(errors.errors).forEach((key) => {
-          //   if (key === "email") {
-          //     form.getFieldError('email', errors.errors['email'])
-          //   } else {
-          //     console.log(errors.errors[key]);
-          //   }
-          // });
+          console.log(errors)
+          setTest(errors.errors.email);
         })
     }
   }
@@ -171,10 +165,10 @@ const TechnicianList = () => {
       dataIndex: 'about',
       key: 'about',
       render: (text) => {
-        if (text.length > 30) {
+        if (text.length > 40) {
           return (
             <div className='col-6'>
-              {text.substring(0, 30) + "...."}
+              {text.substring(0, 40) + "...."}
             </div>
           )
         } else {
@@ -192,7 +186,7 @@ const TechnicianList = () => {
       key: 'image',
       render: (text) => (
         <div className='col-6'>
-          <img src={process.env.REACT_APP_PROFILE_URL + 'images/' + text} alt="" width="70px" height="70px" />
+          <img src={text == '-' ? dummy : process.env.REACT_APP_PROFILE_URL + 'images/' + text} alt="" width="70px" height="70px" />
         </div>
       ),
     },
@@ -234,6 +228,7 @@ const TechnicianList = () => {
       <div className="card">
         <div className="card-header">
           <h4 className="card-title">Technician List</h4>
+
           <Button type="primary" onClick={() => editModal()}>
             Add Technician
           </Button>
@@ -287,7 +282,8 @@ const TechnicianList = () => {
           }}
         >
           <label className="label-name">Technician Name</label>
-          <Form.Item
+          <Form.Item 
+            className='mb-2'
             name="name"
             rules={[
               {
@@ -295,7 +291,7 @@ const TechnicianList = () => {
                 message: "Please enter name!",
               },
               {
-                pattern: new RegExp(/^[a-zA-Z@~`!@#$%^&*()_=+\\\\';:\"\\/?>.<,-]+$/i),
+                pattern: new RegExp(/^[^-\s][a-zA-Z_\s-]+$/),
                 message: "Enter only characters"
               }
             ]}
@@ -304,7 +300,8 @@ const TechnicianList = () => {
           </Form.Item>
 
           <label className="label-name">Email</label>
-          <Form.Item
+          <Form.Item 
+            className='mb-2'
             name="email"
             rules={[
               {
@@ -312,12 +309,13 @@ const TechnicianList = () => {
                 message: "Please enter email!"
               }
             ]}
-            {...serverErrors.email}
           >
             <Input type="text" placeholder='Enter email' />
           </Form.Item>
+          <span style={{ color: 'red' }}>{test}</span><br></br>
           <label className="label-name">About</label>
-          <Form.Item
+          <Form.Item 
+            className='mb-2'
             name="about"
             rules={[
               {
@@ -329,7 +327,8 @@ const TechnicianList = () => {
             <Input.TextArea />
           </Form.Item>
           <label className="label-name">Image</label>
-          <Form.Item
+          <Form.Item 
+            className='mb-2'
             name="image"
           >
             <Input type="file" name='image' className="file-input-control" id='file-input-control' onChange={previewUserImageOnChange} accept="image/*" />

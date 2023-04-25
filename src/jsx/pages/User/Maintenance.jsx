@@ -4,7 +4,7 @@ import UserService from '../../../services/user';
 import { useDispatch } from 'react-redux';
 import { Badge, Dropdown } from "react-bootstrap";
 import ToastMe from '../Common/ToastMe';
-import { Modal, Table, Button, Input, Form, Select, Empty } from 'antd';
+import { Modal, Table, Button, Input, Form, DatePicker, Select, TimePicker, Space } from 'antd';
 import moment from 'moment';
 
 const User = (props) => {
@@ -16,6 +16,17 @@ const User = (props) => {
     const [addtechancian, setAddTecnicianName] = useState();
     const [id, setId] = useState();
     const [form] = Form.useForm();
+
+    const onDateChange = (date, dateString) => {
+        form.setFieldsValue({
+            date: dateString
+        })
+    };
+    const onTimeChange = (date, dateString) => {
+        form.setFieldsValue({
+            time: date.$d
+        })
+    };
 
     const getMaintenance = () => {
         dispatch(UserService.getMaintenance())
@@ -29,8 +40,8 @@ const User = (props) => {
                             message: res.data[i].message,
                             _id: res.data[i]._id,
                             attachments: res.data[i].attachments,
-                            verifyStatus: res.data[i].verifyStatus
-
+                            verifyStatus: res.data[i].verifyStatus,
+                            technician: res.data[i].technician || '-',
                         }
                     )
                 }
@@ -48,8 +59,8 @@ const User = (props) => {
                 ToastMe(res.data.message, 'success')
                 getMaintenance();
             })
-            setVisibleApprove(false)
-            form.resetFields()
+        setVisibleApprove(false)
+        form.resetFields()
             .catch((errors) => {
                 console.log({ errors })
             })
@@ -61,13 +72,13 @@ const User = (props) => {
                 ToastMe(res.data.message, 'success')
                 getMaintenance();
             })
-            setVisibleApprove(false)
+        setVisibleApprove(false)
             .catch((errors) => {
                 console.log({ errors })
             })
     }
 
-    const openapprovemodal = (text) =>{
+    const openapprovemodal = (text) => {
         setVisibleApprove(true);
         setId(text._id)
     }
@@ -77,8 +88,8 @@ const User = (props) => {
 
 
     const onSubmit = (values) => {
-        values.date = moment(new Date()).format('YYYY-MM-DD');
-        values.technicianId = addtechancian;
+        values.time = moment(values.time).format('HH:mm A')
+        console.log(values)
         dispatch(UserService.addRequest(values))
             .then((res) => {
                 getMaintenance();
@@ -94,6 +105,9 @@ const User = (props) => {
 
     const handleChangeName = (e) => {
         setAddTecnicianName(e);
+        form.setFieldsValue({
+            technicianId: e
+        })
     }
     const getTechnician = () => {
         dispatch(UserService.getTechnician())
@@ -144,6 +158,21 @@ const User = (props) => {
             title: 'Message',
             dataIndex: 'message',
             key: 'message',
+            render: (text) => {
+                if (text.length > 40) {
+                    return (
+                        <div className='col-6'>
+                            {text.substring(0, 40) + "...."}
+                        </div>
+                    )
+                } else {
+                    return (
+                        <div className='col-6'>
+                            {text}
+                        </div>
+                    )
+                }
+            }
         },
         {
             title: 'Status',
@@ -156,6 +185,11 @@ const User = (props) => {
                 } else if (text.verifyStatus == 1) {
                     return (
                         <span className="badge badge-success">Approve</span>
+                    )
+                } else if (text.verifyStatus == 2) {
+                    return (
+                        <span className="badge badge-success">In progress
+                        </span>
                     )
                 } else {
                     return (
@@ -170,31 +204,17 @@ const User = (props) => {
             render: (text) => (
                 <>
                     {
-                        text.verifyStatus == 0 ?
-                            <Dropdown>
-                                <Dropdown.Toggle
-                                    variant="danger"
-                                    className="light sharp i-false"
-                                >
-                                    {svg1}
-                                </Dropdown.Toggle>
-                                <Dropdown.Menu>
-                                    <Dropdown.Item onClick={() => openapprovemodal(text)}>Approve</Dropdown.Item>
-                                    <Dropdown.Item onClick={() => approveRequest(text, 2)}>Reject</Dropdown.Item>
-                                    <Dropdown.Item onClick={() => viewDetail(text)}>View</Dropdown.Item>
-                                </Dropdown.Menu>
-                            </Dropdown> :
-                            <Dropdown>
-                                <Dropdown.Toggle
-                                    variant="danger"
-                                    className="light sharp i-false"
-                                >
-                                    {svg1}
-                                </Dropdown.Toggle>
-                                <Dropdown.Menu>
-                                    <Dropdown.Item onClick={() => viewDetail(text)}>View</Dropdown.Item>
-                                </Dropdown.Menu>
-                            </Dropdown>
+                        <Dropdown>
+                            <Dropdown.Toggle
+                                variant="danger"
+                                className="light sharp i-false"
+                            >
+                                {svg1}
+                            </Dropdown.Toggle>
+                            <Dropdown.Menu>
+                                <Dropdown.Item onClick={() => viewDetail(text)}>View</Dropdown.Item>
+                            </Dropdown.Menu>
+                        </Dropdown>
                     }
                 </>
             )
@@ -272,6 +292,34 @@ const User = (props) => {
                     >
                         <Input type="textarea" placeholder='Enter location' />
                     </Form.Item>
+                    <label className="label-name">Select Date</label>
+                    <Form.Item
+                        name="date"
+                        rules={[
+                            {
+                                required: true,
+                                message: "Please enter date!"
+                            }
+                        ]}
+                    >
+                        <Space direction="vertical">
+                            <DatePicker onChange={onDateChange} />
+                        </Space>
+                    </Form.Item>
+                    <label className="label-name">Select Time</label>
+                    <Form.Item
+                        name="time"
+                        rules={[
+                            {
+                                required: true,
+                                message: "Please enter time!"
+                            }
+                        ]}
+                    >
+                        <Space direction="vertical">
+                            <TimePicker onChange={onTimeChange} />
+                        </Space>
+                    </Form.Item>
 
                     <label className="label-name">Message</label>
                     <Form.Item
@@ -288,7 +336,7 @@ const User = (props) => {
                     <label className="label-name">Technician Name</label>
                     <div>
                         <Form.Item
-                            name="category"
+                            name="technicianId"
                             rules={[{ required: true, message: "Please select Technician name!" }]}
                         >
                             <Select

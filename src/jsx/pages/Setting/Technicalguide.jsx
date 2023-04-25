@@ -261,6 +261,21 @@ const Technicalguide = () => {
             title: 'Description',
             dataIndex: 'description',
             key: 'description',
+            render: (text) => {
+                if (text.length > 40) {
+                    return (
+                        <div className='col-6'>
+                            {text.substring(0, 40) + "...."}
+                        </div>
+                    )
+                } else {
+                    return (
+                        <div className='col-6'>
+                            {text}
+                        </div>
+                    )
+                }
+            }
         },
         // {
         //     title: 'Image',
@@ -388,7 +403,7 @@ const Technicalguide = () => {
                             pattern: new RegExp(/^[a-zA-Z@~`!@#$%^&*()_=+\\\\';:\"\\/?>.<,-]+$/i),
                             message: "Enter only characters"
                         }
-                    ]}
+                        ]}
                     >
                         <Input type="text" placeholder='Enter title' />
                     </Form.Item>
@@ -396,7 +411,7 @@ const Technicalguide = () => {
                     <label className="label-name">Description</label>
                     <Form.Item
                         name="description"
-                        rules={[{ required: true, message: "Please enter description!" },{
+                        rules={[{ required: true, message: "Please enter description!" }, {
                             pattern: new RegExp(/^[a-zA-Z@~`!@#$%^&*()_=+\\\\';:\"\\/?>.<,-]+$/i),
                             message: "Enter only characters"
                         }]}

@@ -15,7 +15,7 @@ export function getUser(value) {
                 .catch(function (error) {
                     const data = {
                         errorData: error.response.data,
-                        statusCode: error.response.status,
+                        // statusCode: error.response.status,
                     };
                     return reject(data);
                 })
@@ -33,7 +33,7 @@ export function getProfile() {
                 .catch(function (error) {
                     const data = {
                         errorData: error.response.data,
-                        statusCode: error.response.status,
+                        // statusCode: error.response.status,
                     };
                     return reject(data);
                 })
@@ -55,7 +55,7 @@ export function updateUserProfile(data, adminData) {
                 .catch(function (error) {
                     const data = {
                         errorData: error.response.data,
-                        statusCode: error.response.status,
+                        // statusCode: error.response.status,
                     };
                     return reject(data);
                 })
@@ -75,7 +75,7 @@ export function uploadUserProfile(data) {
                     console.log(error);
                     const data = {
                         errorData: error.response.data.message,
-                        statusCode: error.response.status,
+                        // statusCode: error.response.status,
                     };
                     return reject(data);
                 })
@@ -93,7 +93,7 @@ export function getCms() {
                     console.log(error);
                     const data = {
                         errorData: error.response.data.message,
-                        statusCode: error.response.status,
+                        // statusCode: error.response.status,
                     };
                     return reject(data);
                 })
@@ -111,7 +111,7 @@ export function addCms(data) {
                 .catch(function (error) {
                     const data = {
                         errorData: error.response.data,
-                        statusCode: error.response.status,
+                        // statusCode: error.response.status,
                     };
                     return reject(data);
                 })
@@ -126,10 +126,9 @@ export function getMaintenance(data) {
                     return resolve(res);
                 })
                 .catch(function (error) {
-                    console.log(error);
                     const data = {
                         errorData: error.response.data.message,
-                        statusCode: error.response.status,
+                        // statusCode: error.response.status,
                     };
                     return reject(data);
                 })
@@ -153,7 +152,7 @@ export function approveRequest(data) {
                     console.log(error);
                     const data = {
                         errorData: error.response.data.message,
-                        statusCode: error.response.status,
+                        // statusCode: error.response.status,
                     };
                     return reject(data);
                 })
@@ -172,7 +171,7 @@ export function updateCms(data) {
                     console.log(error);
                     const data = {
                         errorData: error.response.data,
-                        statusCode: error.response.status,
+                        // statusCode: error.response.status,
                     };
                     return reject(data);
                 })
@@ -191,7 +190,7 @@ export function deleteCms(data) {
                     console.log(error);
                     const data = {
                         errorData: error.response.data.message,
-                        statusCode: error.response.status,
+                        // statusCode: error.response.status,
                     };
                     return reject(data);
                 })
@@ -211,7 +210,7 @@ export function sendNotification(data) {
                     console.log(error);
                     const data = {
                         errorData: error.response.data.message,
-                        statusCode: error.response.status,
+                        // statusCode: error.response.status,
                     };
                     return reject(data);
                 })
@@ -231,14 +230,14 @@ export function sendUserNotification(data) {
                     console.log(error);
                     const data = {
                         errorData: error.response.data.message,
-                        statusCode: error.response.status,
+                        // statusCode: error.response.status,
                     };
                     return reject(data);
                 })
         })
     )
 }
-export function getNotificationlist(type) {  
+export function getNotificationlist(type) {
 
     return dispatch => (
         new Promise((resolve, reject) => {
@@ -250,7 +249,7 @@ export function getNotificationlist(type) {
                     console.log(error);
                     const data = {
                         errorData: error.response.data.message,
-                        statusCode: error.response.status,
+                        // statusCode: error.response.status,
                     };
                     return reject(data);
                 })
@@ -268,7 +267,7 @@ export function addFaq(data) {
                     console.log(error);
                     const data = {
                         errorData: error.response.data.message,
-                        statusCode: error.response.status,
+                        // statusCode: error.response.status,
                     };
                     return reject(data);
                 })
@@ -287,7 +286,7 @@ export function getFaq() {
                     console.log(error);
                     const data = {
                         errorData: error.response.data.message,
-                        statusCode: error.response.status,
+                        // statusCode: error.response.status,
                     };
                     return reject(data);
                 })
@@ -306,7 +305,7 @@ export function getGroup() {
                     console.log(error);
                     const data = {
                         errorData: error.response.data.message,
-                        statusCode: error.response.status,
+                        // statusCode: error.response.status,
                     };
                     return reject(data);
                 })
@@ -325,7 +324,7 @@ export function uploadMedia(data) {
                     console.log(error);
                     const data = {
                         errorData: error.response.data,
-                        statusCode: error.response.status,
+                        // statusCode: error.response.status,
                     };
                     return reject(data);
                 })
@@ -344,7 +343,7 @@ export function addTechnicalguides(data) {
                     console.log(error);
                     const data = {
                         errorData: error.response.data.message,
-                        statusCode: error.response.status,
+                        // statusCode: error.response.status,
                     };
                     return reject(data);
                 })
@@ -363,7 +362,7 @@ export function getTechnicalGuides() {
                     console.log(error);
                     const data = {
                         errorData: error.response.data.message,
-                        statusCode: error.response.status,
+                        // statusCode: error.response.status,
                     };
                     return reject(data);
                 })
@@ -374,7 +373,7 @@ export function editTechnicalguides(data) {
     // data.env = 'test'
     return dispatch => (
         new Promise((resolve, reject) => {
-            Http.callApi('post', BaseUrl + '/common/editTechnicalguides',data)
+            Http.callApi('post', BaseUrl + '/common/editTechnicalguides', data)
                 .then(function (res) {
                     return resolve(res);
                 })
@@ -382,7 +381,7 @@ export function editTechnicalguides(data) {
                     console.log(error);
                     const data = {
                         errorData: error.response.data,
-                        statusCode: error.response.status,
+                        // statusCode: error.response.status,
                     };
                     return reject(data);
                 })
@@ -393,7 +392,7 @@ export function createGroup(data) {
     // data.env = 'test'
     return dispatch => (
         new Promise((resolve, reject) => {
-            Http.callApi('post', BaseUrl + '/common/createGroup',data)
+            Http.callApi('post', BaseUrl + '/common/createGroup', data)
                 .then(function (res) {
                     return resolve(res);
                 })
@@ -401,7 +400,7 @@ export function createGroup(data) {
                     console.log(error);
                     const data = {
                         errorData: error.response.data.message,
-                        statusCode: error.response.status,
+                        // statusCode: error.response.status,
                     };
                     return reject(data);
                 })
@@ -412,7 +411,7 @@ export function editGroup(data) {
     // data.env = 'test'
     return dispatch => (
         new Promise((resolve, reject) => {
-            Http.callApi('post', BaseUrl + '/common/editGroup',data)
+            Http.callApi('post', BaseUrl + '/common/editGroup', data)
                 .then(function (res) {
                     return resolve(res);
                 })
@@ -420,7 +419,7 @@ export function editGroup(data) {
                     console.log(error);
                     const data = {
                         errorData: error.response.data.message,
-                        statusCode: error.response.status,
+                        // statusCode: error.response.status,
                     };
                     return reject(data);
                 })
@@ -439,7 +438,7 @@ export function getTechnician() {
                     console.log(error);
                     const data = {
                         errorData: error.response.data.message,
-                        statusCode: error.response.status,
+                        // statusCode: error.response.status,
                     };
                     return reject(data);
                 })
@@ -450,7 +449,7 @@ export function updateTechician(data) {
     data.env = 'test'
     return dispatch => (
         new Promise((resolve, reject) => {
-            Http.callApi('put', BaseUrl + '/admin/updateTechnician',data)
+            Http.callApi('put', BaseUrl + '/admin/updateTechnician', data)
                 .then(function (res) {
                     return resolve(res);
                 })
@@ -458,7 +457,7 @@ export function updateTechician(data) {
                     console.log(error);
                     const data = {
                         errorData: error.response.data.message,
-                        statusCode: error.response.status,
+                        // statusCode: error.response.status,
                     };
                     return reject(data);
                 })
@@ -469,16 +468,14 @@ export function addTechician(data) {
     data.env = 'test'
     return dispatch => (
         new Promise((resolve, reject) => {
-            Http.callApi('post', BaseUrl + '/admin/addTechnician',data)
+            Http.callApi('post', BaseUrl + '/admin/addTechnician', data)
                 .then(function (res) {
                     return resolve(res);
                 })
                 .catch(function (error) {
-                    // console.log(77799)
-                    // console.log(error);
                     const data = {
                         errors: error.response.data.errors,
-                        statusCode: error.response.status,
+                        // statusCode: error.response.status,
                     };
                     return reject(data);
                 })
@@ -489,7 +486,7 @@ export function addRequest(data) {
     data.env = 'test'
     return dispatch => (
         new Promise((resolve, reject) => {
-            Http.callApi('post', BaseUrl + '/admin/sendMaintenanceRequest',data)
+            Http.callApi('post', BaseUrl + '/admin/sendMaintenanceRequest', data)
                 .then(function (res) {
                     return resolve(res);
                 })
@@ -497,7 +494,26 @@ export function addRequest(data) {
                     console.log(error);
                     const data = {
                         errorData: error.response.data.message,
-                        statusCode: error.response.status,
+                        // statusCode: error.response.status,
+                    };
+                    return reject(data);
+                })
+        })
+    )
+}
+export function listRequestbyId(data) {
+    // data.env = 'test'
+    return dispatch => (
+        new Promise((resolve, reject) => {
+            Http.callApi('get', BaseUrl + '/admin/listRequestbyId/' + data)
+                .then(function (res) {
+                    return resolve(res);
+                })
+                .catch(function (error) {
+                    console.log(error);
+                    const data = {
+                        errorData: error.response.data.message,
+                        // statusCode: error.response.status,
                     };
                     return reject(data);
                 })
