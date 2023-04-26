@@ -282,7 +282,7 @@ const TechnicianList = () => {
           }}
         >
           <label className="label-name">Technician Name</label>
-          <Form.Item 
+          <Form.Item
             className='mb-2'
             name="name"
             rules={[
@@ -300,7 +300,7 @@ const TechnicianList = () => {
           </Form.Item>
 
           <label className="label-name">Email</label>
-          <Form.Item 
+          <Form.Item
             className='mb-2'
             name="email"
             rules={[
@@ -314,7 +314,7 @@ const TechnicianList = () => {
           </Form.Item>
           <span style={{ color: 'red' }}>{test}</span><br></br>
           <label className="label-name">About</label>
-          <Form.Item 
+          <Form.Item
             className='mb-2'
             name="about"
             rules={[
@@ -327,12 +327,14 @@ const TechnicianList = () => {
             <Input.TextArea />
           </Form.Item>
           <label className="label-name">Image</label>
-          <Form.Item 
+          <Form.Item
             className='mb-2'
             name="image"
           >
             <Input type="file" name='image' className="file-input-control" id='file-input-control' onChange={previewUserImageOnChange} accept="image/*" />
           </Form.Item>
+          {userImg != '' ? <img src={userImg} style={{ width: "20%" }} alt="gallery" /> :''}
+
         </Form>
       </Modal>
     </>

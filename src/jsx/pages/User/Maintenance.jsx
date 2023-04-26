@@ -4,7 +4,7 @@ import UserService from '../../../services/user';
 import { useDispatch } from 'react-redux';
 import { Badge, Dropdown } from "react-bootstrap";
 import ToastMe from '../Common/ToastMe';
-import { Modal, Table, Button, Input, Form, DatePicker, Select, TimePicker, Space } from 'antd';
+import { Modal, Table, Button, Input, Form, DatePicker, Select, TimePicker, Space, Empty } from 'antd';
 import moment from 'moment';
 
 const User = (props) => {
@@ -25,7 +25,7 @@ const User = (props) => {
     };
     const onTimeChange = (date, dateString) => {
         form.setFieldsValue({
-            time: date.$d
+            time: moment(date.$d,'hh:mm').format('hh:mm A')
         })
     };
 
@@ -79,18 +79,17 @@ const User = (props) => {
             })
     }
 
-    const openapprovemodal = (text) => {
-        setVisibleApprove(true);
-        setId(text._id)
-    }
+    // const openapprovemodal = (text) => {
+    //     setVisibleApprove(true);
+    //     setId(text._id)
+    // }
     const editModal = (text) => {
         setVisible(true)
+        setTest('')
+        form.resetFields()
     }
 
-
     const onSubmit = (values) => {
-        values.time = moment(values.time).format('HH:mm A')
-        // console.log(values)
         dispatch(UserService.addRequest(values))
             .then((res) => {
                 getMaintenance();
@@ -186,7 +185,7 @@ const User = (props) => {
                     )
                 } else if (text.verifyStatus == 1) {
                     return (
-                        <span className="badge badge-success">Approve</span>
+                        <span className="badge badge-success">Completed</span>
                     )
                 } else if (text.verifyStatus == 2) {
                     return (
@@ -236,8 +235,8 @@ const User = (props) => {
                 <div className="card-body">
                     <div className="table-responsive">
                         {
-                            data && data.length > 0 &&
-                            <Table dataSource={data} columns={columnss} />
+                            data && data.length > 0 ?
+                                <Table dataSource={data} columns={columnss} /> : <Empty />
                         }
                     </div>
                 </div>
@@ -306,7 +305,7 @@ const User = (props) => {
                         className='form_item_datepicker mb-2'
                     >
                         <Space direction="vertical" className='d-block w-100'>
-                            <DatePicker onChange={onDateChange} className=''/>
+                            <DatePicker  onChange={onDateChange} className='' />
                         </Space>
                     </Form.Item>
                     <span style={{ color: 'red' }}>{test}</span><br></br>
@@ -322,7 +321,7 @@ const User = (props) => {
                         className='form_item_datepicker'
                     >
                         <Space direction="vertical" className='d-block w-100'>
-                            <TimePicker onChange={onTimeChange} />
+                            <TimePicker format={'HH:mm'} onChange={onTimeChange} />
                         </Space>
                     </Form.Item>
 

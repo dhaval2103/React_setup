@@ -17,7 +17,6 @@ const ViewMaintence = () => {
     const [addtechancian, setAddTecnicianName] = useState();
     const [form] = Form.useForm();
 
-    console.log(userDetail)
     const openapprovemodal = () => {
         setVisibleApprove(true);
     }
@@ -127,10 +126,13 @@ const ViewMaintence = () => {
                                     <label className="label-name">Attachments:</label>
                                     <div>
                                         {
-                                            userDetail?.attachments?.map((item) => {
+                                            userDetail?.attachments?.map((item, index) => {
                                                 return (
                                                     <>
-                                                        <img src={process.env.REACT_APP_PROFILE_URL + 'images/' + item} alt="" width="70px" height="70px" />
+                                                        <div className='img_video_wrapper' key={index}>
+                                                            <img src={process.env.REACT_APP_PROFILE_URL + 'images/' + item} style={{ width: "100%" }} alt="gallery" />
+                                                        </div>
+                                                        {/* <img src={process.env.REACT_APP_PROFILE_URL + 'images/' + item} alt="" width="70px" height="70px" /> */}
                                                     </>
                                                 )
                                             })
