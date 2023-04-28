@@ -5,6 +5,7 @@ import { Modal, Table, Button, Input, Form, Empty } from 'antd';
 import { Dropdown } from "react-bootstrap";
 import ToastMe from '../Common/ToastMe';
 import moment from "moment";
+import { SearchOutlined } from '@ant-design/icons';
 
 const Technicalguide = () => {
     const dispatch = useDispatch();
@@ -158,9 +159,11 @@ const Technicalguide = () => {
                 })
         }
     }
-
-    const getTechnicalGuides = () => {
-        dispatch(UserService.getTechnicalGuides())
+    const getSearchValue = (e) => {
+        getTechnicalGuides(e.target.value)
+    }
+    const getTechnicalGuides = (value) => {
+        dispatch(UserService.getTechnicalGuides(value))
             .then((res) => {
                 let newArr = [];
                 for (var i = 0; i < res?.data.length; i++) {
@@ -182,6 +185,7 @@ const Technicalguide = () => {
                 console.log({ errors })
             })
     }
+
     const Uid = () => {
         return "_" + Math.random().toString(36).substring(2, 9);
     };
@@ -353,9 +357,12 @@ const Technicalguide = () => {
             <div className="card">
                 <div className="card-header">
                     <h4 className="card-title">Technical guide</h4>
-                    <Button type="primary" onClick={() => editModal()}>
-                        Add Technical guide
-                    </Button>
+                    <div className="d-flex align-items-center gap-3">
+                        <Input placeholder='Search....' onChange={(e) => getSearchValue(e)}prefix={<SearchOutlined className="site-form-item-icon" />} />
+                        <Button type="primary" onClick={() => editModal()}>
+                            Add Technical guide
+                        </Button>
+                    </div>
                 </div>
                 <div className="card-body">
                     <div className="table-responsive">

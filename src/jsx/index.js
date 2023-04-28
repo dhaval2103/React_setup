@@ -129,6 +129,7 @@ import UpcomingSubscriptions from "./pages/User/UpcomingSubscriptions";
 import TechnicianList from "./pages/User/TechnicianList";
 import ViewMaintence from "./pages/User/ViewMaintence";
 import UserNotification from "./pages/Setting/UserNotification";
+import NotificationDetail from "./pages/Setting/NotificationDetail";
 
 const Markup = () => {
   const { menuToggle } = useContext(ThemeContext);
@@ -161,6 +162,7 @@ const Markup = () => {
     //Notification
     { url: "general-notification", component: Notification },
     { url: "user-notification", component: UserNotification },
+    { url: "notification-detail", component: NotificationDetail },
 
     { url: "user-detail", component: ViewUser },
     { url: "maintenance-request-list", component: Maintenance },

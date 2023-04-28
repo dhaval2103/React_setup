@@ -5,8 +5,8 @@ import { useDispatch } from 'react-redux';
 import { Modal, Table, Button, Input, Form, Empty } from 'antd';
 import { Dropdown } from "react-bootstrap";
 import ToastMe from '../Common/ToastMe';
-import dummy from "../../../images/dummy.png"
-
+import dummy from "../../../images/dummy.png";
+import { SearchOutlined } from '@ant-design/icons';
 
 const TechnicianList = () => {
   const dispatch = useDispatch();
@@ -36,25 +36,10 @@ const TechnicianList = () => {
     }
   }
 
-  const handleServerErrors = (errors) => {
-    const newErrors = {};
-    Object.keys(errors).forEach((key) => {
-      console.log(errors[key]);
-      newErrors[key] = {
-        validateStatus: 'error',
-        help: errors[key].join(' '),
-      };
-    });
-    console.log(newErrors);
-
-    setServerErrors(newErrors);
-  };
-
   const onSubmit = (values) => {
     values['image'] = imageName;
     if (id) {
       values.technicianId = id;
-      console.log(values)
       dispatch(UserService.updateTechician(values))
         .then((res) => {
           getTechnician();
@@ -82,8 +67,8 @@ const TechnicianList = () => {
     }
   }
 
-  const getTechnician = () => {
-    dispatch(UserService.getTechnician())
+  const getTechnician = (value) => {
+    dispatch(UserService.getTechnician(value))
       .then((res) => {
         let newArr = [];
         for (var i = 0; i < res.data.length; i++) {
@@ -105,7 +90,9 @@ const TechnicianList = () => {
         console.log({ errors })
       })
   }
-
+  const getSearchValue = (e) => {
+    getTechnician(e.target.value)
+  }
   const previewUserImageOnChange = (ev) => {
     let userImgSrc = URL.createObjectURL(ev.target.files[0]);
     let filesPath = ev.target.files[0];
@@ -228,10 +215,12 @@ const TechnicianList = () => {
       <div className="card">
         <div className="card-header">
           <h4 className="card-title">Technician List</h4>
-
-          <Button type="primary" onClick={() => editModal()}>
-            Add Technician
-          </Button>
+          <div className="d-flex align-items-center gap-3"> 
+            <Input placeholder='Search....' onChange={(e) => getSearchValue(e)} prefix={<SearchOutlined className="site-form-item-icon" />}/>
+            <Button type="primary" onClick={() => editModal()}>
+              Add Technician
+            </Button>
+          </div>
         </div>
         <div className="card-body">
           <div className="table-responsive">
@@ -290,6 +279,7 @@ const TechnicianList = () => {
                 required: true,
                 message: "Please enter name!",
               },
+              { max: 15, message: 'You can not enter more than 15 characters' },
               {
                 pattern: new RegExp(/^[^-\s][a-zA-Z_\s-]+$/),
                 message: "Enter only characters"
@@ -307,6 +297,10 @@ const TechnicianList = () => {
               {
                 required: true,
                 message: "Please enter email!"
+              },
+              {
+                pattern: new RegExp(/^([A-Z0-9a-z._%+-])+\@([A-Za-z0-9.-])+(\.[A-Za-z]{2,4})+$/),
+                message: "'Please enter valid email address!"
               }
             ]}
           >
@@ -333,7 +327,7 @@ const TechnicianList = () => {
           >
             <Input type="file" name='image' className="file-input-control" id='file-input-control' onChange={previewUserImageOnChange} accept="image/*" />
           </Form.Item>
-          {userImg != '' ? <img src={userImg} style={{ width: "20%" }} alt="gallery" /> :''}
+          {userImg != '' ? <img src={userImg} style={{ width: "20%" }} alt="gallery" /> : ''}
 
         </Form>
       </Modal>

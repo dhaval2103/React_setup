@@ -1,16 +1,21 @@
 import React, { useContext, useEffect, useState } from 'react';
 import UserService from '../../../services/user';
 import { useDispatch } from 'react-redux';
-import { Empty, Input, Table } from 'antd';
+import { Button, Empty, Form, Input, Modal, Table } from 'antd';
 import { Badge, Dropdown } from "react-bootstrap";
 import moment from 'moment';
 import { SocketContext } from '../../../context/Socket';
 import { SearchOutlined } from '@ant-design/icons';
+import Swal from 'sweetalert2';
+import ToastMe from '../Common/ToastMe';
 
 const User = (props) => {
     const dispatch = useDispatch();
     const [data, setData] = useState([]);
     const { chatClient } = useContext(SocketContext);
+    const [id, setId] = useState('');
+    const [visible, setVisible] = useState(false);
+    const [form] = Form.useForm();
 
     useEffect(() => {
         chatClient.on('message', function (data) {
@@ -41,7 +46,8 @@ const User = (props) => {
                             answer: res.data[i].answer,
                             profilePic: res.data[i].profilePic,
                             readStatusCount: res.data[i].readStatusCount,
-                            createdAt: res.data[i].createdAt
+                            createdAt: res.data[i].createdAt,
+                            isActive: res.data[i].isActive
                         }
                     )
                 }
@@ -50,6 +56,57 @@ const User = (props) => {
             .catch((errors) => {
                 console.log({ errors })
             })
+    }
+
+    const editModal = (text) => {
+        console.log(text);
+        setVisible(true)
+        form.setFieldsValue({
+            duration: text?.duration || '',
+            packageName: text?.packageName || '',
+            price: text?.price || '',
+        })
+        setId(text?.id)
+    }
+
+    const activeInactiveUser = (text) => {
+        let data={};
+        data.userid = text
+        Swal.fire({
+            title: 'Are you sure?',
+            text: "To change this User status!",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Yes, Change it!'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                dispatch(UserService.changeUserStatus(data))
+                    .then((res) => {
+                        getUserList();
+                        ToastMe("User status change successfully", 'success')
+                    })
+                    .catch((errors) => {
+                        console.log({ errors })
+                    })
+            }
+        })
+    };
+
+    const onSubmit = (values) => {
+        //   dispatch(UserService.addTechician(values))
+        //     .then((res) => {
+        //      getUserList();
+        //       ToastMe("Techician Added Successfully", 'success')
+        //       setVisible(false);
+        //       setTest('');
+        //       form.resetFields();
+        //     })
+        //     .catch((errors) => {
+        //       console.log(errors)
+        //       setTest(errors.errors.email);
+        //     })
     }
 
     useEffect(() => {
@@ -142,6 +199,17 @@ const User = (props) => {
             )
         },
         {
+            title: 'Status',
+            dataIndex: 'status',
+            key: 'status',
+            render: (text, data) => (
+                <div>
+                    {data.isActive === 1 ? <Badge bg=" badge-lg " className='badge-primary light badge-xs' style={{ cursor: 'pointer' }} onClick={() => activeInactiveUser(data.id)} >Active</Badge>
+                        : <Badge bg=" badge-lg " className='badge-danger light badge-xs' style={{ cursor: 'pointer' }} onClick={() => activeInactiveUser(data.id)} >Deactive</Badge>}
+                </div>
+            ),
+        },
+        {
             title: 'Created At',
             dataIndex: 'createdAt',
             key: 'createdAt',
@@ -170,6 +238,7 @@ const User = (props) => {
                         <Dropdown.Menu>
                             <Dropdown.Item onClick={() => viewUser(text)}>View</Dropdown.Item>
                             <Dropdown.Item onClick={() => viewChat(text)}>Chat</Dropdown.Item>
+                            {/* <Dropdown.Item onClick={() => editModal(text)}>Edit</Dropdown.Item> */}
                         </Dropdown.Menu>
                     </Dropdown>
                 </>
@@ -205,6 +274,65 @@ const User = (props) => {
                     </div>
                 </div>
             </div>
+
+            <Modal open={visible} title="Add Plan" okText="Submit" cancelText="Cancel"
+                onCancel={() => {
+                    setVisible(false);
+                }}
+                footer={[
+                    <Button key="cancel" onClick={() => setVisible(false)}> Cancel </Button>,
+                    <Button
+                        key="submit"
+                        type="primary"
+                        onClick={() => {
+                            form.validateFields()
+                                .then((values) => {
+                                    onSubmit(values);
+                                })
+                                .catch((info) => {
+                                    console.log("Validate Failed:", info);
+                                });
+                        }}
+                    >
+                        Submit
+                    </Button>
+                ]}
+            >
+                <Form form={form} layout="vertical" name="form_in_modal"
+                    initialValues={{
+                        modifier: "public"
+                    }}
+                >
+                    <label className="label-name">Full Name</label>
+                    <Form.Item name="fullName"
+                        rules={[
+                            { required: true, message: "Please entre package name!" },
+                            { max: 15, message: 'You can not enter more than 15 characters' },
+                            { pattern: new RegExp("[a-zA-Z]+$"), message: 'Please enter only characters' }
+                        ]}
+                    >
+                        <Input placeholder='Enter Name' />
+                    </Form.Item>
+
+                    <label className="label-name">Email</label>
+                    <Form.Item
+                        className='mb-2'
+                        name="email"
+                        rules={[
+                            {
+                                required: true,
+                                message: "Please enter email!"
+                            },
+                            {
+                                pattern: new RegExp(/^([A-Z0-9a-z._%+-])+\@([A-Za-z0-9.-])+(\.[A-Za-z]{2,4})+$/),
+                                message: "'Please enter valid email address!"
+                            }
+                        ]}
+                    >
+                        <Input type="text" placeholder='Enter email' />
+                    </Form.Item>
+                </Form>
+            </Modal>
         </>
     )
 }

@@ -5,8 +5,8 @@ import { useDispatch } from 'react-redux';
 import { Modal, Table, Button, Input, Form, Select, Empty } from 'antd';
 import { Dropdown } from "react-bootstrap";
 import ToastMe from '../Common/ToastMe';
-import Swal from 'sweetalert2';
 import moment from 'moment';
+import { SearchOutlined } from '@ant-design/icons';
 
 const Faq = () => {
     const dispatch = useDispatch();
@@ -103,8 +103,8 @@ const Faq = () => {
         // }
     }
 
-    const getFaq = () => {
-        dispatch(UserService.getFaq())
+    const getFaq = (value) => {
+        dispatch(UserService.getFaq(value))
             .then((res) => {
                 let newArr = [];
                 for (var i = 0; i < res.data.length; i++) {
@@ -124,6 +124,10 @@ const Faq = () => {
             .catch((errors) => {
                 console.log({ errors })
             })
+    }
+
+    const getSearchValue = (e) => {
+        getFaq(e.target.value)
     }
 
     const mainCategorysfun = (e) => {
@@ -249,9 +253,13 @@ const Faq = () => {
             <div className="card">
                 <div className="card-header">
                     <h4 className="card-title">FAQ List</h4>
-                    <Button type="primary" onClick={() => editModal()}>
-                        Add FAQ
-                    </Button>
+                    <div className="d-flex align-items-center gap-3">
+                        <Input placeholder='Search....' onChange={(e) => getSearchValue(e)}
+                            prefix={<SearchOutlined className="site-form-item-icon" />} />
+                        <Button type="primary" onClick={() => editModal()}>
+                            Add FAQ
+                        </Button>
+                    </div>
                 </div>
                 <div className="card-body">
                     <div className="table-responsive">

@@ -6,6 +6,7 @@ import { Badge, Dropdown } from "react-bootstrap";
 import ToastMe from '../Common/ToastMe';
 import { Modal, Table, Button, Input, Form, DatePicker, Select, TimePicker, Space, Empty } from 'antd';
 import moment from 'moment';
+import { SearchOutlined } from '@ant-design/icons';
 
 const User = (props) => {
     const dispatch = useDispatch();
@@ -25,12 +26,16 @@ const User = (props) => {
     };
     const onTimeChange = (date, dateString) => {
         form.setFieldsValue({
-            time: moment(date.$d,'hh:mm').format('hh:mm A')
+            time: moment(date.$d, 'hh:mm').format('hh:mm A')
         })
     };
 
-    const getMaintenance = () => {
-        dispatch(UserService.getMaintenance())
+    const getSearchValue = (e) => {
+        getMaintenance(e.target.value)
+    }
+
+    const getMaintenance = (value) => {
+        dispatch(UserService.getMaintenance(value))
             .then((res) => {
                 let arr = [];
                 for (var i = 0; i < res.data.length; i++) {
@@ -228,9 +233,11 @@ const User = (props) => {
             <div className="card">
                 <div className="card-header">
                     <h4 className="card-title">Request List</h4>
-                    <Button type="primary" onClick={() => editModal()}>
-                        Add Request
-                    </Button>
+                    <div className="d-flex align-items-center gap-3"> <Input placeholder='Search....' onChange={(e) => getSearchValue(e)} prefix={<SearchOutlined className="site-form-item-icon" />}/>
+                        <Button type="primary" onClick={() => editModal()}>
+                            Add Request
+                        </Button>
+                    </div>
                 </div>
                 <div className="card-body">
                     <div className="table-responsive">
@@ -288,7 +295,8 @@ const User = (props) => {
                             {
                                 required: true,
                                 message: "Please enter location!"
-                            }
+                            },
+                            { max: 15, message: 'You can not enter more than 15 characters' },
                         ]}
                     >
                         <Input type="textarea" placeholder='Enter location' />
@@ -305,7 +313,7 @@ const User = (props) => {
                         className='form_item_datepicker mb-2'
                     >
                         <Space direction="vertical" className='d-block w-100'>
-                            <DatePicker  onChange={onDateChange} className='' />
+                            <DatePicker onChange={onDateChange} className='' />
                         </Space>
                     </Form.Item>
                     <span style={{ color: 'red' }}>{test}</span><br></br>

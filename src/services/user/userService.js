@@ -119,9 +119,10 @@ export function addCms(data) {
     )
 }
 export function getMaintenance(data) {
+    let search = data || '';
     return dispatch => (
         new Promise((resolve, reject) => {
-            Http.callApi('get', BaseUrl + '/admin/listRequest')
+            Http.callApi('get', BaseUrl + '/admin/listRequest?search=' + search)
                 .then(function (res) {
                     return resolve(res);
                 })
@@ -275,10 +276,11 @@ export function addFaq(data) {
     )
 }
 
-export function getFaq() {
+export function getFaq(data) {
+    let search = data || '';
     return dispatch => (
         new Promise((resolve, reject) => {
-            Http.callApi('get', BaseUrl + '/common/allFaq')
+            Http.callApi('get', BaseUrl + '/common/allFaq?search=' + search)
                 .then(function (res) {
                     return resolve(res);
                 })
@@ -350,11 +352,12 @@ export function addTechnicalguides(data) {
         })
     )
 }
-export function getTechnicalGuides() {
+export function getTechnicalGuides(data) {
     // data.env = 'test'
+    let search = data || ''
     return dispatch => (
         new Promise((resolve, reject) => {
-            Http.callApi('get', BaseUrl + '/common/listTechnicalGuides')
+            Http.callApi('get', BaseUrl + '/common/listTechnicalGuides?search=' + search)
                 .then(function (res) {
                     return resolve(res);
                 })
@@ -426,11 +429,12 @@ export function editGroup(data) {
         })
     )
 }
-export function getTechnician() {
+export function getTechnician(data) {
     // data.env = 'test'
+    let search = data || '';
     return dispatch => (
         new Promise((resolve, reject) => {
-            Http.callApi('get', BaseUrl + '/admin/listTechnician')
+            Http.callApi('get', BaseUrl + '/admin/listTechnician?search=' + search)
                 .then(function (res) {
                     return resolve(res);
                 })
@@ -506,6 +510,65 @@ export function listRequestbyId(data) {
     return dispatch => (
         new Promise((resolve, reject) => {
             Http.callApi('get', BaseUrl + '/admin/listRequestbyId/' + data)
+                .then(function (res) {
+                    return resolve(res);
+                })
+                .catch(function (error) {
+                    console.log(error);
+                    const data = {
+                        errorData: error.response.data.message,
+                        // statusCode: error.response.status,
+                    };
+                    return reject(data);
+                })
+        })
+    )
+}
+export function listSubscribeUser(data) {
+    // data.env = 'test'
+    let search = data || '';
+    return dispatch => (
+        new Promise((resolve, reject) => {
+            Http.callApi('get', BaseUrl + '/admin/listSubscribeUser?search='+search)
+                .then(function (res) {
+                    return resolve(res);
+                })
+                .catch(function (error) {
+                    console.log(error);
+                    const data = {
+                        errorData: error.response.data.message,
+                        // statusCode: error.response.status,
+                    };
+                    return reject(data);
+                })
+        })
+    )
+}
+export function changeUserStatus(data) {
+    data.env = 'test'
+    console.log(data)
+    return dispatch => (
+        new Promise((resolve, reject) => {
+            Http.callApi('post', BaseUrl + '/admin/changeUserStatus', data)
+                .then(function (res) {
+                    return resolve(res);
+                })
+                .catch(function (error) {
+                    console.log(error);
+                    const data = {
+                        errorData: error.response.data.message,
+                        // statusCode: error.response.status,
+                    };
+                    return reject(data);
+                })
+        })
+    )
+}
+export function addSubscribeUser(data) {
+    data.env = 'test'
+    return dispatch => (
+        new Promise((resolve, reject) => {
+            Http.callApi('post', BaseUrl + '/admin/addSubscribeUser', data)
                 .then(function (res) {
                     return resolve(res);
                 })

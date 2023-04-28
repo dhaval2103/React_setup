@@ -9,7 +9,7 @@ import Swal from 'sweetalert2';
 import moment from "moment";
 
 
-const UserNotification = () => {
+const UserNotification = (props) => {
     const dispatch = useDispatch();
     const [data, setData] = useState([]);
     const [visible, setVisible] = useState(false);
@@ -63,7 +63,7 @@ const UserNotification = () => {
                             message: res.data[i].notification.body || '-',
                             status: res.data[i].status || '-',
                             id: res.data[i]._id || '-',
-                            createdAt: res.data[i].createdAt || '-'
+                            users: res.data[i].users || '-',
                         }
                     )
                 }
@@ -89,6 +89,10 @@ const UserNotification = () => {
             .catch((errors) => {
                 console.log({ errors })
             })
+    }
+
+    const viewDetail = (text) => {
+        props.history.push("/notification-detail", { notification: text })
     }
 
     const handleChangeName = (e) => {
@@ -134,16 +138,6 @@ const UserNotification = () => {
             key: 'message',
         },
         {
-            title: 'Created At',
-            dataIndex: 'createdAt',
-            key: 'createdAt',
-            render: (text) => (
-                <div>
-                    {moment(text).format("DD MMM YYYY h:mm A")}
-                </div>
-            ),
-        },
-        {
             title: 'Actions',
             key: 'actions',
             render: (text) => (
@@ -157,7 +151,7 @@ const UserNotification = () => {
                         </Dropdown.Toggle>
                         <Dropdown.Menu>
                             <Dropdown.Item onClick={() => editModal(text)}>Resend</Dropdown.Item>
-                            {/* <Dropdown.Item onClick={() => deleteCms(text)}>Delete</Dropdown.Item> */}
+                            <Dropdown.Item onClick={() => viewDetail(text)}>View</Dropdown.Item>
                         </Dropdown.Menu>
                     </Dropdown>
                 </>
@@ -214,7 +208,7 @@ const UserNotification = () => {
 
                     <label className="label-name">Title</label>
                     <Form.Item name="title"
-                        rules={[{ required: true, message: "Please entre title!" }]}
+                        rules={[{ required: true, message: "Please entre title!" }, { max: 15, message: 'You can not enter more than 15 characters' }]}
                     >
                         <Input type="text" placeholder='Enter Title' />
                     </Form.Item>

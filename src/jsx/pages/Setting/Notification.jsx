@@ -61,7 +61,6 @@ const Notification = () => {
                             message: res.data[i].notification.body || '-',
                             status: res.data[i].status || '-',
                             id: res.data[i]._id || '-',
-                            createdAt: res.data[i].createdAt || '-'
                         }
                     )
                 }
@@ -107,16 +106,6 @@ const Notification = () => {
             title: 'Message',
             dataIndex: 'message',
             key: 'message',
-        },
-        {
-            title: 'Created At',
-            dataIndex: 'createdAt',
-            key: 'createdAt',
-            render: (text) => (
-                <div>
-                    {moment(text).format("DD MMM YYYY h:mm A")}
-                </div>
-            ),
         },
         {
             title: 'Actions',
@@ -189,7 +178,7 @@ const Notification = () => {
 
                     <label className="label-name">Title</label>
                     <Form.Item name="title"
-                        rules={[{ required: true, message: "Please entre title!" }]}
+                        rules={[{ required: true, message: "Please entre title!" },{ max: 15, message: 'You can not enter more than 15 characters' }]}
                     >
                         <Input type="text" placeholder='Enter Title' />
                     </Form.Item>
