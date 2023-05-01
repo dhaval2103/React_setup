@@ -96,7 +96,6 @@ const User = (props) => {
     }
 
     const editModal = (text) => {
-        console.log(text)
         let number = text?.countryCode + text?.mobile;
         form.setFieldsValue({
             email: text?.email || '',
@@ -141,7 +140,6 @@ const User = (props) => {
         values.user_id = id;
         values.countryCode = countryCode;
         values.mobile = phoneNo;
-        console.log(values);
         dispatch(UserService.updateUser(values))
             .then((res) => {
                 getUserList();
