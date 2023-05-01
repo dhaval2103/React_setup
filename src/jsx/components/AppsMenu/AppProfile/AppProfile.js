@@ -19,6 +19,8 @@ import profile from "../../../../images/profile/profile.png";
 import UserService from "../../../../services/user";
 import PageTitle from "../../../layouts/PageTitle";
 import ToastMe from "../../../pages/Common/ToastMe";
+import dummy from "../../../../images/dummy.png";
+
 
 const initialState = false;
 const reducer = (state, action) => {
@@ -44,7 +46,7 @@ const AppProfile = (props) => {
 	const [user, setUser] = useState();
 	const [form] = Form.useForm();
 	const [userImg, setUserImg] = useState('');
-    const [imageName, setImageName] = useState();
+	const [imageName, setImageName] = useState();
 
 	const getProfile = () => {
 		dispatch(UserService.getProfile())
@@ -72,23 +74,23 @@ const AppProfile = (props) => {
 			})
 	};
 	const previewUserImageOnChange = (ev) => {
-        let userImgSrc = URL.createObjectURL(ev.target.files[0]);
-        let filesPath = ev.target.files[0];
-        setUserImg(userImgSrc);
-        const image = new FormData();
-        image.append('image', filesPath);
-        dispatch(UserService.uploadUserProfile(image))
-            .then((res) => {
-                if (res.data) {
-                    setImageName(res.data.imageWithName)
-                }
+		let userImgSrc = URL.createObjectURL(ev.target.files[0]);
+		let filesPath = ev.target.files[0];
+		setUserImg(userImgSrc);
+		const image = new FormData();
+		image.append('image', filesPath);
+		dispatch(UserService.uploadUserProfile(image))
+			.then((res) => {
+				if (res.data) {
+					setImageName(res.data.imageWithName)
+				}
 				getProfile();
-            })
-            .catch((errors, statusCode) => {
-                setUserImg('')
-                ToastMe(errors.errorData, "error");
-            });
-    }
+			})
+			.catch((errors, statusCode) => {
+				setUserImg('')
+				ToastMe(errors.errorData, "error");
+			});
+	}
 	const options = {
 		settings: {
 			overlayColor: "#000000",
@@ -121,7 +123,7 @@ const AppProfile = (props) => {
 							<div className="profile-info">
 								<div className="profile-photo">
 									<img
-										src={user?.image}
+										src={user?.image != '' ? user?.image : dummy}
 										className="img-fluid rounded-circle"
 										alt="profile"
 									/>
@@ -327,7 +329,7 @@ const AppProfile = (props) => {
 
 const mapStateToProps = (state) => {
 	return {
-	  adminData: state.auth.auth
+		adminData: state.auth.auth
 	};
-  };
-  export default connect(mapStateToProps)(AppProfile);
+};
+export default connect(mapStateToProps)(AppProfile);

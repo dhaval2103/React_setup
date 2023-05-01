@@ -18,6 +18,9 @@ const User = (props) => {
     const [test, setTest] = useState('');
     const [id, setId] = useState();
     const [form] = Form.useForm();
+    const [userData, setuserData] = useState([]);
+    const [userId, setuserId] = useState();
+
 
     const onDateChange = (date, dateString) => {
         form.setFieldsValue({
@@ -42,12 +45,13 @@ const User = (props) => {
                     arr.push(
                         {
                             key: i,
-                            location: res.data[i].location,
-                            message: res.data[i].message,
-                            _id: res.data[i]._id,
-                            attachments: res.data[i].attachments,
-                            verifyStatus: res.data[i].verifyStatus,
-                            technician: res.data[i].technician || '-',
+                            location: res?.data[i]?.location,
+                            message: res?.data[i]?.message,
+                            _id: res?.data[i]?._id,
+                            attachments: res?.data[i]?.attachments,
+                            verifyStatus: res?.data[i]?.verifyStatus,
+                            user: res?.data[i]?.user,
+                            technician: res?.data[i]?.technician || '-',
                         }
                     )
                 }
@@ -71,18 +75,18 @@ const User = (props) => {
                 console.log({ errors })
             })
     }
-    const approveRequest = (values) => {
-        values.verifyStatus = 2
-        dispatch(UserService.approveRequest(values))
-            .then((res) => {
-                ToastMe(res.data.message, 'success')
-                getMaintenance();
-            })
-        setVisibleApprove(false)
-            .catch((errors) => {
-                console.log({ errors })
-            })
-    }
+    // const approveRequest = (values) => {
+    //     values.verifyStatus = 2
+    //     dispatch(UserService.approveRequest(values))
+    //         .then((res) => {
+    //             ToastMe(res.data.message, 'success')
+    //             getMaintenance();
+    //         })
+    //     setVisibleApprove(false)
+    //         .catch((errors) => {
+    //             console.log({ errors })
+    //         })
+    // }
 
     // const openapprovemodal = (text) => {
     //     setVisibleApprove(true);
@@ -124,6 +128,26 @@ const User = (props) => {
                 console.log({ errors })
             })
     }
+    const handleChangeUserName = (e) => {
+        setuserId(e);
+        form.setFieldValue('userId', e)
+      }
+    const getUser = (value = '') => {
+        dispatch(UserService.getUser(value))
+            .then((res) => {
+                const newArr = [];
+                for (let i = 0; i < res.data.length; i++) {
+                    newArr.push({
+                        label: res.data[i].fullName,
+                        value: res.data[i]._id,
+                    });
+                }
+                setuserData(newArr);
+            })
+            .catch((errors) => {
+                console.log({ errors })
+            })
+    }
 
     const viewDetail = (text) => {
         props.history.push("/view-maintence", { userDetail: text })
@@ -142,6 +166,7 @@ const User = (props) => {
     useEffect(() => {
         getMaintenance();
         getTechnician();
+        getUser();
     }, [])
 
     const columnss = [
@@ -219,6 +244,7 @@ const User = (props) => {
                             </Dropdown.Toggle>
                             <Dropdown.Menu>
                                 <Dropdown.Item onClick={() => viewDetail(text)}>View</Dropdown.Item>
+                                <Dropdown.Item onClick={() => viewChat(text)}>Chat</Dropdown.Item>
                             </Dropdown.Menu>
                         </Dropdown>
                     }
@@ -227,13 +253,17 @@ const User = (props) => {
         },
     ];
 
+    const viewChat = (text) => {
+        props.history.push("/chat", { userDetail: text })
+    }
+
 
     return (
         <>
             <div className="card">
                 <div className="card-header">
                     <h4 className="card-title">Request List</h4>
-                    <div className="d-flex align-items-center gap-3"> <Input placeholder='Search....' onChange={(e) => getSearchValue(e)} prefix={<SearchOutlined className="site-form-item-icon" />}/>
+                    <div className="d-flex align-items-center gap-3"> <Input placeholder='Search....' onChange={(e) => getSearchValue(e)} prefix={<SearchOutlined className="site-form-item-icon" />} />
                         <Button type="primary" onClick={() => editModal()}>
                             Add Request
                         </Button>
@@ -280,6 +310,36 @@ const User = (props) => {
                     </Button>
                 ]}
             >
+                <label className="label-name">Select User</label>
+                <div>
+                    <Form.Item
+                        name="userId"
+                        rules={[{ required: true, message: "Please select User name!" }]}
+                    >
+                        <Space
+                            style={{
+                                width: '100%',
+                            }}
+                            direction="vertical"
+                        >
+                            <Select
+                                allowClear
+                                style={{
+                                    width: '100%',
+                                }}
+                                showSearch
+                                placeholder="Please select"
+                                value={userId}
+                                onChange={handleChangeUserName}
+                                options={userData}
+                                filterOption={(inputValue, option) =>
+                                    option.label.toUpperCase().indexOf(inputValue.toUpperCase()) !== -1
+                                }
+                            />
+                        </Space>
+
+                    </Form.Item>
+                </div>
                 <Form
                     form={form}
                     layout="vertical"
@@ -296,7 +356,7 @@ const User = (props) => {
                                 required: true,
                                 message: "Please enter location!"
                             },
-                            { max: 15, message: 'You can not enter more than 15 characters' },
+                            { max: 20, message: 'You can not enter more than 15 characters' },
                         ]}
                     >
                         <Input type="textarea" placeholder='Enter location' />
