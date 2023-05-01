@@ -546,7 +546,6 @@ export function listSubscribeUser(data) {
 }
 export function changeUserStatus(data) {
     data.env = 'test'
-    console.log(data)
     return dispatch => (
         new Promise((resolve, reject) => {
             Http.callApi('post', BaseUrl + '/admin/changeUserStatus', data)
@@ -569,6 +568,25 @@ export function addSubscribeUser(data) {
     return dispatch => (
         new Promise((resolve, reject) => {
             Http.callApi('post', BaseUrl + '/admin/addSubscribeUser', data)
+                .then(function (res) {
+                    return resolve(res);
+                })
+                .catch(function (error) {
+                    console.log(error);
+                    const data = {
+                        errorData: error.response.data.message,
+                        // statusCode: error.response.status,
+                    };
+                    return reject(data);
+                })
+        })
+    )
+}
+export function updateUser(data) {
+    data.env = 'test'
+    return dispatch => (
+        new Promise((resolve, reject) => {
+            Http.callApi('put', BaseUrl + '/admin/userProfileUpdate', data)
                 .then(function (res) {
                     return resolve(res);
                 })

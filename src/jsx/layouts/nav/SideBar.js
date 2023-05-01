@@ -9,6 +9,8 @@ import { Dropdown } from "react-bootstrap";
 import { useScrollPosition } from "@n8tb1t/use-scroll-position";
 import { ThemeContext } from "../../../context/ThemeContext";
 import LogoutPage from './Logout';
+import dummy from "../../../images/dummy.png";
+
 
 /// Image
 //import user from "../../../images/user.jpg";
@@ -182,7 +184,7 @@ const SideBar = (props) => {
         <Dropdown className="dropdown header-profile2">
           <Dropdown.Toggle variant="" as="a" className="nav-link i-false c-pointer">
             <div className="header-info2 d-flex align-items-center border">
-              <img src={adminData?.profileImage} width={20} alt="" />
+              <img src={adminData?.profileImage != null ? adminData?.profileImage : dummy} width={20} alt="" />
               {/* <img src={profile} width={20} alt="" /> */}
               <div className="d-flex align-items-center sidebar-info">
                 <div>

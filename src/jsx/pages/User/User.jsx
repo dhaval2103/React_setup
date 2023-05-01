@@ -8,14 +8,25 @@ import { SocketContext } from '../../../context/Socket';
 import { SearchOutlined } from '@ant-design/icons';
 import Swal from 'sweetalert2';
 import ToastMe from '../Common/ToastMe';
+import PhoneInput from "react-phone-input-2";
+import dummy from "../../../images/dummy.png";
+import 'react-phone-input-2/lib/style.css';
+import startsWith from 'lodash.startswith';
+
 
 const User = (props) => {
     const dispatch = useDispatch();
     const [data, setData] = useState([]);
     const { chatClient } = useContext(SocketContext);
     const [id, setId] = useState('');
+    const [phoneValue, setPhoneValue] = useState();
     const [visible, setVisible] = useState(false);
+    const [userImg, setUserImg] = useState('');
+    const [imageName, setImageName] = useState();
     const [form] = Form.useForm();
+    const [isDefaultCountryCode, setIsDefaultCountryCode] = useState('in');
+    const [phoneNo, setPhoneNo] = useState('');
+    const [countryCode, setCountryCode] = useState('');
 
     useEffect(() => {
         chatClient.on('message', function (data) {
@@ -24,6 +35,30 @@ const User = (props) => {
             }
         })
     }, [chatClient])
+
+    const handlePhoneValue = (value, data) => {
+        setPhoneNo(value.slice(data.dialCode.length));
+        setCountryCode(data.dialCode);
+    };
+
+    const previewUserImageOnChange = (ev) => {
+        let userImgSrc = URL.createObjectURL(ev.target.files[0]);
+        let filesPath = ev.target.files[0];
+        setUserImg(userImgSrc);
+        const image = new FormData();
+        image.append('image', filesPath);
+        dispatch(UserService.uploadUserProfile(image))
+            .then((res) => {
+                if (res.data) {
+                    setUserImg('');
+                    setImageName(res.data.imageWithName)
+                }
+            })
+            .catch((errors, statusCode) => {
+                setUserImg('')
+                ToastMe(errors.errorData, "error");
+            });
+    }
 
     const getUserList = (value = '') => {
         dispatch(UserService.getUser(value))
@@ -43,11 +78,13 @@ const User = (props) => {
                             fullName: res.data[i].fullName,
                             securityQuestion: res.data[i].securityQuestion,
                             yourQuestion: res.data[i].yourQuestion,
-                            answer: res.data[i].answer,
                             profilePic: res.data[i].profilePic,
+                            image: res.data[i].image,
+                            answer: res.data[i].answer,
                             readStatusCount: res.data[i].readStatusCount,
                             createdAt: res.data[i].createdAt,
-                            isActive: res.data[i].isActive
+                            isActive: res.data[i].isActive,
+                            countryCode: res.data[i].countryCode
                         }
                     )
                 }
@@ -59,18 +96,22 @@ const User = (props) => {
     }
 
     const editModal = (text) => {
-        console.log(text);
-        setVisible(true)
+        let number = text?.countryCode + text?.mobile;
         form.setFieldsValue({
-            duration: text?.duration || '',
-            packageName: text?.packageName || '',
-            price: text?.price || '',
+            email: text?.email || '',
+            mobile: number || '',
+            fullName: text?.fullName || '',
         })
+        setVisible(true)
+        setImageName(text?.image)
+        setUserImg('')
+        setCountryCode(text?.countryCode)
+        setPhoneNo(text?.mobile)
         setId(text?.id)
     }
 
     const activeInactiveUser = (text) => {
-        let data={};
+        let data = {};
         data.userid = text
         Swal.fire({
             title: 'Are you sure?',
@@ -95,18 +136,22 @@ const User = (props) => {
     };
 
     const onSubmit = (values) => {
-        //   dispatch(UserService.addTechician(values))
-        //     .then((res) => {
-        //      getUserList();
-        //       ToastMe("Techician Added Successfully", 'success')
-        //       setVisible(false);
-        //       setTest('');
-        //       form.resetFields();
-        //     })
-        //     .catch((errors) => {
-        //       console.log(errors)
-        //       setTest(errors.errors.email);
-        //     })
+        values.profilePic = imageName;
+        values.user_id = id;
+        values.countryCode = countryCode;
+        values.mobile = phoneNo;
+        dispatch(UserService.updateUser(values))
+            .then((res) => {
+                getUserList();
+                ToastMe("User Updated Successfully", 'success')
+                setVisible(false);
+                setPhoneNo('');
+                setCountryCode('');
+                form.resetFields();
+            })
+            .catch((errors) => {
+                console.log(errors)
+            })
     }
 
     useEffect(() => {
@@ -199,6 +244,16 @@ const User = (props) => {
             )
         },
         {
+            title: 'Profile',
+            dataIndex: 'profilePic',
+            key: 'profilePic',
+            render: (text) => (
+                <div className='col-6'>
+                    <img src={text == '-' ? dummy : text} alt="" width="70px" height="70px" />
+                </div>
+            ),
+        },
+        {
             title: 'Status',
             dataIndex: 'status',
             key: 'status',
@@ -237,8 +292,8 @@ const User = (props) => {
                         </Dropdown.Toggle>
                         <Dropdown.Menu>
                             <Dropdown.Item onClick={() => viewUser(text)}>View</Dropdown.Item>
-                            <Dropdown.Item onClick={() => viewChat(text)}>Chat</Dropdown.Item>
-                            {/* <Dropdown.Item onClick={() => editModal(text)}>Edit</Dropdown.Item> */}
+                            {/* <Dropdown.Item onClick={() => viewChat(text)}>Chat</Dropdown.Item> */}
+                            <Dropdown.Item onClick={() => editModal(text)}>Edit</Dropdown.Item>
                         </Dropdown.Menu>
                     </Dropdown>
                 </>
@@ -249,9 +304,9 @@ const User = (props) => {
     const viewUser = (text) => {
         props.history.push("/user-detail", { userDetail: text })
     }
-    const viewChat = (text) => {
-        props.history.push("/chat", { userDetail: text })
-    }
+    // const viewChat = (text) => {
+    //     props.history.push("/chat", { userDetail: text })
+    // }
     const handleSearch = (value) => {
         getUserList(value)
     }
@@ -275,7 +330,7 @@ const User = (props) => {
                 </div>
             </div>
 
-            <Modal open={visible} title="Add Plan" okText="Submit" cancelText="Cancel"
+            <Modal open={visible} title="Edit User" okText="Submit" cancelText="Cancel"
                 onCancel={() => {
                     setVisible(false);
                 }}
@@ -307,7 +362,7 @@ const User = (props) => {
                     <Form.Item name="fullName"
                         rules={[
                             { required: true, message: "Please entre package name!" },
-                            { max: 15, message: 'You can not enter more than 15 characters' },
+                            { max: 30, message: 'You can not enter more than 15 characters' },
                             { pattern: new RegExp("[a-zA-Z]+$"), message: 'Please enter only characters' }
                         ]}
                     >
@@ -331,6 +386,41 @@ const User = (props) => {
                     >
                         <Input type="text" placeholder='Enter email' />
                     </Form.Item>
+                    {/* <label class="label-name">Mobile Number</label> */}
+                    <Form.Item
+                        name="mobile"
+                        rules={[{ required: true, message: 'Please enter your mobile number!' }]}
+                    >
+                        {/* <PhoneInput
+                            country={'us'}
+                            onChange={(e) => handlePhoneValue(e)}
+                        /> */}
+
+                        <PhoneInput
+                            country={isDefaultCountryCode}
+                            countryCodeEditable={false}
+                            disableCountryCode={false}
+                            enableAreaCodes={false}
+                            inputclassName="input-control form-control"
+                            enableSearch={true}
+                            onChange={handlePhoneValue}
+                            value={phoneNo || undefined}
+                            isValid={(inputNumber, country, countries) => {
+                                return countries.some((country) => {
+                                    return startsWith(inputNumber, country.dialCode) || startsWith(country.dialCode, inputNumber);
+                                });
+                            }}
+                        />
+                    </Form.Item>
+                    <label className="label-name">Profile</label>
+                    <Form.Item
+                        className='mb-2'
+                        name="image"
+                    >
+                        <Input type="file" name='image' className="file-input-control" id='file-input-control' onChange={previewUserImageOnChange} accept="image/*" />
+                    </Form.Item>
+                    {userImg != '' ? <img src={userImg} style={{ width: "20%" }} alt="gallery" /> : ''}
+                    {imageName != '' ? <img src={process.env.REACT_APP_PROFILE_URL + 'images/' + imageName} style={{ width: "20%" }} alt="gallery" /> : ''}
                 </Form>
             </Modal>
         </>

@@ -123,7 +123,7 @@ const ViewMaintence = () => {
                             </Card.Text>
                             {userDetail?.attachments.length > 0 ?
                                 <Card.Text>
-                                    <label className="label-name" style={{ fontWeight: 'bold', fontSize: '16px' }}>Attachments :</label>
+                                    <label className="label-name">Attachments:</label>
                                     <div style={{ display: "flex", flexWrap: "wrap" }}>
                                         {
                                             userDetail?.attachments?.map((item, index) => {
@@ -131,10 +131,10 @@ const ViewMaintence = () => {
                                                     <>
                                                         <div className="img_wrapper" key={index} style={{ marginRight: "10px" }}>
                                                             <img src={process.env.REACT_APP_PROFILE_URL + 'images/' + item}
-                                                                style={{ width: "auto", height: "150px", objectFit: "cover" }}
+                                                                style={{ width: "auto", height: "100px", objectFit: "cover" }}
                                                                 alt="gallery" />
                                                         </div>
-                                                        {/* <img src={process.env.REACT_APP_PROFILE_URL + 'images/' + item} alt="" width="70px" height="70px" /> */}
+                                                        {/* {/ <img src={process.env.REACT_APP_PROFILE_URL + 'images/' + item} alt="" width="70px" height="70px" /> /} */}
                                                     </>
                                                 )
                                             })
@@ -144,46 +144,47 @@ const ViewMaintence = () => {
                         </Card.Body>
                     </Card>
                 </Col>
-                <Col xl="12">
-                    <Card className="text-white bg-dark">
-                        <Card.Header>
-                            <Card.Title className="text-white">Assign Technician</Card.Title>
-                            {userDetail?.verifyStatus == 3 ?
-                                '' : <Button onClick={() => openapprovemodal(userDetail)}>Assign Technician</Button>}
-                        </Card.Header>
-                        <Card.Body className="mb-0">
+                {userDetail?.verifyStatus == 3 ? '' :
+                    <Col xl="12">
+                        <Card className="text-white bg-dark">
+                            <Card.Header>
+                                <Card.Title className="text-white">Assign Technician</Card.Title>
+                                {userDetail?.verifyStatus == 3 || userDetail?.verifyStatus == 1 ?
+                                    '' : <Button onClick={() => openapprovemodal(userDetail)}>Assign Technician</Button>}
+                            </Card.Header>
+                            <Card.Body className="mb-0">
 
-                            {
-                                userDetail?.technician != '-' ?
-                                    <div>
-                                        {/* <label className="label-name" style={{ fontWeight: 'bold', fontSize: '20px' }}>Technician</label> */}
-                                        <Card.Text>
-                                            <div>
-                                                <label className="label-name" style={{ fontWeight: 'bold', fontSize: '16px' }}>Name :&nbsp;</label>
-                                                {userDetail?.technician?.name}
-                                            </div>
-                                        </Card.Text>
-                                        <Card.Text>
-                                            <div>
-                                                <label className="label-name" style={{ fontWeight: 'bold', fontSize: '16px' }}>Email :&nbsp;</label>
-                                                {userDetail?.technician?.email}
-                                            </div>
-                                        </Card.Text>
-                                        <Card.Text>
-                                            <div>
-                                                <label className="label-name" style={{ fontWeight: 'bold', fontSize: '16px' }}>About :&nbsp;</label>
-                                                {userDetail?.technician?.about}
-                                            </div>
-                                        </Card.Text>
-                                    </div>
-                                    : ''
-                            }
-                            {/* <label className="label-name">Location:</label>
+                                {
+                                    userDetail?.technician != '-' ?
+                                        <div>
+                                            <h4>Technician</h4>
+                                            <Card.Text>
+                                                <div>
+                                                    <label className="label-name">Name:</label>
+                                                    {userDetail?.technician?.name}
+                                                </div>
+                                            </Card.Text>
+                                            <Card.Text>
+                                                <div>
+                                                    <label className="label-name">Email:</label>
+                                                    {userDetail?.technician?.email}
+                                                </div>
+                                            </Card.Text>
+                                            <Card.Text>
+                                                <div>
+                                                    <label className="label-name">About:</label>
+                                                    {userDetail?.technician?.about}
+                                                </div>
+                                            </Card.Text>
+                                        </div>
+                                        : ''
+                                }
+                                {/* <label className="label-name">Location:</label>
                                     {userDetail?.location ? userDetail?.location : '-'} */}
 
-                        </Card.Body>
-                    </Card>
-                </Col>
+                            </Card.Body>
+                        </Card>
+                    </Col>}
             </Row >
 
 

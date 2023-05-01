@@ -21,6 +21,7 @@ const TechnicianList = () => {
 
   const editModal = (text) => {
     setVisible(true)
+    setUserImg('')
     setTest('')
     if (text) {
       form.setFieldsValue({
@@ -45,6 +46,7 @@ const TechnicianList = () => {
           getTechnician();
           ToastMe("Techician Updated Successfully", 'success')
           setVisible(false);
+          setUserImg('')
           form.resetFields();
           setId('')
         })
@@ -279,7 +281,7 @@ const TechnicianList = () => {
                 required: true,
                 message: "Please enter name!",
               },
-              { max: 15, message: 'You can not enter more than 15 characters' },
+              { max: 30, message: 'You can not enter more than 15 characters' },
               {
                 pattern: new RegExp(/^[^-\s][a-zA-Z_\s-]+$/),
                 message: "Enter only characters"

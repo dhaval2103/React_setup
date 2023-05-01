@@ -16,10 +16,9 @@ const Chat = (props) => {
     const { pathname } = useLocation();
     const [loading, setLoading] = useState(true);
     const { connected, setPathName, setUserId, setSendMessages, chatData } = useContext(SocketContext);
-
     useEffect(() => {
         setPathName({ path: pathname });
-        setUserId(userDetail.id)
+        setUserId(userDetail?.user?._id)
     }, [pathname]);
 
     const updateScrollHandel = useRef()
@@ -52,20 +51,20 @@ const Chat = (props) => {
             <PageLoader loading={loading} />
             <div className="user_chat_box chatbox card">
                 <div className="card-header chat-list-header d-block">
-                    <h4 className="mb-1 font-w700 fs-20">Chat with {userDetail?.fullName}</h4>
+                    <h4 className="mb-1 font-w700 fs-20">Chat with {userDetail?.user?.fullName}</h4>
                     <p className="mb-0 text-success fs-14">Online</p>
                 </div>
                 <PerfectScrollbar containerRef={el => (updateScrollHandel.current = el)} className={`card-body msg_card_body dlab-scroll ps ps--active-y`} id="DZ_W_Contacts_Body3" >
                     {
                         chatData?.map((chat, i) => {
-                            if (chat.senderType == 2) {
+                            if (chat?.senderType == 2) {
                                 return (
                                     <div className="d-flex justify-content-end mb-3 left" key={i}>
                                         <div className="">
                                             <div className="msg_cotainer_send">
                                                 {chat.message}
                                             </div>
-                                            <span className="msg_time_send mt-1 d-inline-block lh-1">8:55 AM, Today</span>
+                                            <span className="msg_time_send mt-1 d-inline-block lh-1">{moment(chat?.createdAt).format('HH:mm A')}</span>
                                         </div>
 
                                         <div className="img_cont_msg">
@@ -91,7 +90,7 @@ const Chat = (props) => {
                                             <div className="msg_cotainer">
                                                 {chat.message}
                                             </div>
-                                            <span className="msg_time mt-1 d-inline-block lh-1">{chat.createdAt}</span>
+                                            <span className="msg_time mt-1 d-inline-block lh-1">{moment(chat?.createdAt).format('HH:mm A')}</span>
                                         </div>
                                     </div>
                                 )
