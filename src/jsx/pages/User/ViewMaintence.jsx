@@ -111,26 +111,28 @@ const ViewMaintence = () => {
                         <Card.Body className="mb-0">
                             <Card.Text>
                                 <div>
-                                    <label className="label-name">Location:</label>
+                                    <label className="label-name" style={{ fontWeight: 'bold', fontSize: '16px' }}>Location :&nbsp;</label>
                                     {userDetail?.location ? userDetail?.location : '-'}
                                 </div>
                             </Card.Text>
                             <Card.Text>
                                 <div>
-                                    <label className="label-name">Message:</label>
+                                    <label className="label-name" style={{ fontWeight: 'bold', fontSize: '16px' }}>Message :&nbsp;</label>
                                     {userDetail?.message ? userDetail?.message : '-'}
                                 </div>
                             </Card.Text>
                             {userDetail?.attachments.length > 0 ?
                                 <Card.Text>
-                                    <label className="label-name">Attachments:</label>
-                                    <div>
+                                    <label className="label-name" style={{ fontWeight: 'bold', fontSize: '16px' }}>Attachments :</label>
+                                    <div style={{ display: "flex", flexWrap: "wrap" }}>
                                         {
                                             userDetail?.attachments?.map((item, index) => {
                                                 return (
                                                     <>
-                                                        <div className='img_video_wrapper' key={index}>
-                                                            <img src={process.env.REACT_APP_PROFILE_URL + 'images/' + item} style={{ width: "100%" }} alt="gallery" />
+                                                        <div className="img_wrapper" key={index} style={{ marginRight: "10px" }}>
+                                                            <img src={process.env.REACT_APP_PROFILE_URL + 'images/' + item}
+                                                                style={{ width: "auto", height: "150px", objectFit: "cover" }}
+                                                                alt="gallery" />
                                                         </div>
                                                         {/* <img src={process.env.REACT_APP_PROFILE_URL + 'images/' + item} alt="" width="70px" height="70px" /> */}
                                                     </>
@@ -154,22 +156,22 @@ const ViewMaintence = () => {
                             {
                                 userDetail?.technician != '-' ?
                                     <div>
-                                        <h4>Technician</h4>
+                                        {/* <label className="label-name" style={{ fontWeight: 'bold', fontSize: '20px' }}>Technician</label> */}
                                         <Card.Text>
                                             <div>
-                                                <label className="label-name">Name:</label>
+                                                <label className="label-name" style={{ fontWeight: 'bold', fontSize: '16px' }}>Name :&nbsp;</label>
                                                 {userDetail?.technician?.name}
                                             </div>
                                         </Card.Text>
                                         <Card.Text>
                                             <div>
-                                                <label className="label-name">Email:</label>
+                                                <label className="label-name" style={{ fontWeight: 'bold', fontSize: '16px' }}>Email :&nbsp;</label>
                                                 {userDetail?.technician?.email}
                                             </div>
                                         </Card.Text>
                                         <Card.Text>
                                             <div>
-                                                <label className="label-name">About:</label>
+                                                <label className="label-name" style={{ fontWeight: 'bold', fontSize: '16px' }}>About :&nbsp;</label>
                                                 {userDetail?.technician?.about}
                                             </div>
                                         </Card.Text>

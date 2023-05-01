@@ -22,12 +22,28 @@ const SubscribeUser = () => {
   const [plans, setplanData] = useState([]);
   const [userId, setuserId] = useState();
   const [planId, setplanId] = useState();
-
-  const editModal = () => {
-    setVisible(true);
-    setplanId('');
-    setuserId('');
-    form.resetFields();
+  const [test, setTest] = useState('');
+  const editModal = (text) => {
+    console.log('text', text);
+    setVisible(true)
+    setTest('')
+    if (text) {
+      form.setFieldsValue({
+        planId: text?.id || '',
+        name: text?.name || '',
+      })
+      setplanId(text.id);
+      setuserId(text.name);
+      setImageName(text.image)
+    } else {
+      form.resetFields();
+      setplanId('');
+      setuserId('');
+    }
+    // setVisible(true);
+    // setplanId('');
+    // setuserId('');
+    // form.resetFields();
   }
 
   const onSubmit = (values) => {

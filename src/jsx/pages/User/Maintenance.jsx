@@ -233,7 +233,7 @@ const User = (props) => {
             <div className="card">
                 <div className="card-header">
                     <h4 className="card-title">Request List</h4>
-                    <div className="d-flex align-items-center gap-3"> <Input placeholder='Search....' onChange={(e) => getSearchValue(e)} prefix={<SearchOutlined className="site-form-item-icon" />}/>
+                    <div className="d-flex align-items-center gap-3"> <Input placeholder='Search....' onChange={(e) => getSearchValue(e)} prefix={<SearchOutlined className="site-form-item-icon" />} />
                         <Button type="primary" onClick={() => editModal()}>
                             Add Request
                         </Button>
