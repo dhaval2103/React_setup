@@ -11,6 +11,7 @@ const SocketContextProvider = (props) => {
     const [connected, setConnected] = useState(false);
     const [pathName, setPathName] = useState({});
     const [userId, setUserId] = useState();
+    console.log(12, userId)
     const [sendMessages, setSendMessages] = useState();
     const [chatData, setChatData] = useState();
     const [chatId, setChatId] = useState();
@@ -43,6 +44,7 @@ const SocketContextProvider = (props) => {
         }
     }, [admin]);
 
+    // Maintenance chat
     useEffect(() => {
         setTimeout(() => {
             if (connected == true && pathName && pathName.path !== undefined && userId !== undefined) {
@@ -56,8 +58,22 @@ const SocketContextProvider = (props) => {
         }, 500)
     }, [connected, pathName, userId])
 
+    // live chat
     useEffect(() => {
-        if(userId !== undefined){
+        setTimeout(() => {
+            if (connected == true && userId !== undefined) {
+                chatClient.emit('createConversation', {
+                    "from": admin.id,
+                    "to": userId
+                }, function (data) {
+                    setChatId(data.chatId)
+                })
+            }
+        }, 500)
+    }, [connected, userId])
+
+    useEffect(() => {
+        if (userId !== undefined) {
             chatClient.emit('messageStatus', {
                 "event": "readAllMessages",
                 "from": userId,
@@ -65,7 +81,7 @@ const SocketContextProvider = (props) => {
             });
         }
     }, [userId, chatData])
-
+    // console.log(chatId, admin.id)
     const getMessages = () => {
         chatClient.emit('getMessages', {
             "chatId": chatId,
@@ -76,7 +92,7 @@ const SocketContextProvider = (props) => {
             }
         })
 
-        chatClient.on('message',  function (data) {
+        chatClient.on('message', function (data) {
             if (data) {
                 getMessages();
             }
