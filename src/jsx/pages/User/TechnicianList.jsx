@@ -217,8 +217,8 @@ const TechnicianList = () => {
       <div className="card">
         <div className="card-header">
           <h4 className="card-title">Technician List</h4>
-          <div className="d-flex align-items-center gap-3"> 
-            <Input placeholder='Search....' onChange={(e) => getSearchValue(e)} prefix={<SearchOutlined className="site-form-item-icon" />}/>
+          <div className="d-flex align-items-center gap-3">
+            <Input placeholder='Search....' onChange={(e) => getSearchValue(e)} prefix={<SearchOutlined className="site-form-item-icon" />} />
             <Button type="primary" onClick={() => editModal()}>
               Add Technician
             </Button>
@@ -320,7 +320,7 @@ const TechnicianList = () => {
               }
             ]}
           >
-            <Input.TextArea />
+            <Input.TextArea type="text" placeholder='Enter about' />
           </Form.Item>
           <label className="label-name">Image</label>
           <Form.Item

@@ -29,11 +29,12 @@ const ManageSubscriptions = () => {
             setType(text?.duration);
             setId(text?.id)
         } else {
-            form.setFieldsValue({
-                duration: '',
-                packageName: '',
-                price: '',
-            })
+            // form.setFieldsValue({
+            //     duration: '',
+            //     packageName: '',
+            //     price: '',
+            // })
+            form.resetFields();
             setType('');
             setId('')
         }

@@ -25,10 +25,11 @@ const Notification = () => {
                 message: text.message,
             })
         } else {
-            form.setFieldsValue({
-                title: '',
-                message: '',
-            })
+            // form.setFieldsValue({
+            //     title: '',
+            //     message: '',
+            // })
+            form.resetFields();
         }
     }
 
@@ -178,7 +179,7 @@ const Notification = () => {
 
                     <label className="label-name">Title</label>
                     <Form.Item name="title"
-                        rules={[{ required: true, message: "Please entre title!" },{ max: 15, message: 'You can not enter more than 15 characters' }]}
+                        rules={[{ required: true, message: "Please entre title!" }, { max: 15, message: 'You can not enter more than 15 characters' }]}
                     >
                         <Input type="text" placeholder='Enter Title' />
                     </Form.Item>

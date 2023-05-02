@@ -28,10 +28,11 @@ const UserNotification = (props) => {
                 message: text.message,
             })
         } else {
-            form.setFieldsValue({
-                title: '',
-                message: '',
-            })
+            // form.setFieldsValue({
+            //     title: '',
+            //     message: '',
+            // })
+            form.resetFields();
         }
     }
 

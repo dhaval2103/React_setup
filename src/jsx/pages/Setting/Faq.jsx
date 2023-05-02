@@ -31,11 +31,12 @@ const Faq = () => {
             setType(text.type);
             setId(text.id)
         } else {
-            form.setFieldsValue({
-                group: '',
-                question: '',
-                answer: '',
-            })
+            // form.setFieldsValue({
+            //     group: '',
+            //     question: '',
+            //     answer: '',
+            // })
+            form.resetFields();
             setType('');
             setId('')
         }
