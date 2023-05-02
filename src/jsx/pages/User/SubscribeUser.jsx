@@ -184,26 +184,26 @@ const SubscribeUser = () => {
       dataIndex: 'price',
       key: 'price',
     },
-    {
-      title: 'Actions',
-      key: 'actions',
-      render: (text) => (
-        <>
-          <Dropdown>
-            <Dropdown.Toggle
-              variant="danger"
-              className="light sharp i-false"
-            >
-              {svg1}
-            </Dropdown.Toggle>
-            <Dropdown.Menu>
-              <Dropdown.Item onClick={() => editModal(text)}>Edit</Dropdown.Item>
-              {/* <Dropdown.Item onClick={() => deleteCms(text)}>Delete</Dropdown.Item> */}
-            </Dropdown.Menu>
-          </Dropdown>
-        </>
-      )
-    },
+    // {
+    //   title: 'Actions',
+    //   key: 'actions',
+    //   render: (text) => (
+    //     <>
+    //       <Dropdown>
+    //         <Dropdown.Toggle
+    //           variant="danger"
+    //           className="light sharp i-false"
+    //         >
+    //           {svg1}
+    //         </Dropdown.Toggle>
+    //         <Dropdown.Menu>
+    //           <Dropdown.Item onClick={() => editModal(text)}>Edit</Dropdown.Item>
+    //           {/* <Dropdown.Item onClick={() => deleteCms(text)}>Delete</Dropdown.Item> */}
+    //         </Dropdown.Menu>
+    //       </Dropdown>
+    //     </>
+    //   )
+    // },
   ];
 
   return (
