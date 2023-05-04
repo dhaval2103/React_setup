@@ -47,8 +47,8 @@ const TechnicianList = () => {
           ToastMe("Techician Updated Successfully", 'success')
           setVisible(false);
           setUserImg('')
-          form.resetFields();
           setId('')
+          // form.resetFields();
         })
         .catch((errors) => {
           console.log({ errors })
@@ -96,7 +96,9 @@ const TechnicianList = () => {
     getTechnician(e.target.value)
   }
   const previewUserImageOnChange = (ev) => {
+    console.log({ev});
     let userImgSrc = URL.createObjectURL(ev.target.files[0]);
+    console.log({userImgSrc});
     let filesPath = ev.target.files[0];
     setUserImg(userImgSrc);
     const image = new FormData();
@@ -327,7 +329,16 @@ const TechnicianList = () => {
             className='mb-2'
             name="image"
           >
-            <Input type="file" name='image' className="file-input-control" id='file-input-control' onChange={previewUserImageOnChange} accept="image/*" />
+            <Input type="file" name='image' className="file-input-control" id='file-input-control'
+              // onChange={(event) => {
+              //   const files = event.target.files[0];
+              //   if (files !== undefined) {
+              //     setFlag('asd')
+              //     previewUserImageOnChange(files);
+              //   }
+              // }}
+              onChange={previewUserImageOnChange} 
+              accept="image/*" />
           </Form.Item>
           {userImg != '' ? <img src={userImg} style={{ width: "20%" }} alt="gallery" /> : ''}
 
