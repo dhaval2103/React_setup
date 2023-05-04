@@ -147,7 +147,7 @@ const User = (props) => {
                 setVisible(false);
                 setPhoneNo('');
                 setCountryCode('');
-                form.resetFields();
+                // form.resetFields();
             })
             .catch((errors) => {
                 console.log(errors)
