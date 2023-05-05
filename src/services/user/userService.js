@@ -458,7 +458,6 @@ export function updateTechician(data) {
                     return resolve(res);
                 })
                 .catch(function (error) {
-                    console.log(error);
                     const data = {
                         errorData: error.response.data.message,
                         // statusCode: error.response.status,
