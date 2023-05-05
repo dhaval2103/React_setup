@@ -19,7 +19,7 @@ const User = (props) => {
     const dispatch = useDispatch();
     const [data, setData] = useState([]);
     const { chatClient } = useContext(SocketContext);
-    const [id, setId] = useState('');
+    const [id, setId] = useState(null);
     const [phoneValue, setPhoneValue] = useState();
     const [visible, setVisible] = useState(false);
     const [userImg, setUserImg] = useState('');
@@ -97,20 +97,29 @@ const User = (props) => {
                 console.log({ errors })
             })
     }
-
+    console.log(id)
     const editModal = (text) => {
-        let number = text?.countryCode + text?.mobile;
-        form.setFieldsValue({
-            email: text?.email || '',
-            mobile: number || '',
-            fullName: text?.fullName || '',
-        })
         setVisible(true)
-        setImageName(text?.image)
-        setUserImg('')
-        setCountryCode(text?.countryCode)
-        setPhoneNo(text?.mobile)
-        setId(text?.id)
+        if (text) {
+            let number = text?.countryCode + text?.mobile;
+            form.setFieldsValue({
+                email: text?.email || '',
+                mobile: number || '',
+                fullName: text?.fullName || '',
+            })
+            setImageName(text?.image)
+            setUserImg('')
+            setCountryCode(text?.countryCode)
+            setPhoneNo(text?.mobile)
+            setId(text?.id)
+        } else {
+            form.resetFields();
+            setImageName('')
+            setUserImg('')
+            setCountryCode('')
+            setPhoneNo('')
+            setId(null)
+        }
     }
 
     const activeInactiveUser = (text) => {
@@ -140,21 +149,36 @@ const User = (props) => {
 
     const onSubmit = (values) => {
         values.profilePic = imageName;
-        values.user_id = id;
         values.countryCode = countryCode;
         values.mobile = phoneNo;
-        dispatch(UserService.updateUser(values))
-            .then((res) => {
-                getUserList();
-                ToastMe("User Updated Successfully", 'success')
-                setVisible(false);
-                setPhoneNo('');
-                setCountryCode('');
-                // form.resetFields();
-            })
-            .catch((errors) => {
-                console.log(errors)
-            })
+        if (id) {
+            values.user_id = id;
+            dispatch(UserService.updateUser(values))
+                .then((res) => {
+                    getUserList();
+                    ToastMe("User Updated Successfully", 'success')
+                    setVisible(false);
+                    setUserImg('')
+                    setId('')
+                    // form.resetFields();
+                })
+                .catch((errors) => {
+                    console.log({ errors })
+                })
+        } else {
+            dispatch(UserService.addUser(values))
+                .then((res) => {
+                    getUserList();
+                    ToastMe("User Added Successfully", 'success')
+                    setVisible(false);
+                    // setTest('');
+                    form.resetFields();
+                })
+                .catch((errors) => {
+                    console.log(errors)
+                    // setTest(errors.errors.email);
+                })
+        }
     }
 
     useEffect(() => {
@@ -316,12 +340,15 @@ const User = (props) => {
 
     return (
         <>
-          <PageLoader loading={loading} />
+            <PageLoader loading={loading} />
             <div className="card">
                 <div className="card-header">
-                    <h4 className="card-title">User List</h4>
-                    <div className="search-group">
-                        <Input placeholder='Search' onChange={(e) => handleSearch(e.target.value)} prefix={<SearchOutlined className="site-form-item-icon" />} />
+                    <h4 className="card-title">Technician List</h4>
+                    <div className="d-flex align-items-center gap-3">
+                        <Input placeholder='Search....' onChange={(e) => handleSearch(e)} prefix={<SearchOutlined className="site-form-item-icon" />} />
+                        <Button type="primary" onClick={() => editModal()}>
+                            Add User
+                        </Button>
                     </div>
                 </div>
                 <div className="card-body">
@@ -334,7 +361,7 @@ const User = (props) => {
                 </div>
             </div>
 
-            <Modal open={visible} title="Edit User" okText="Submit" cancelText="Cancel"
+            <Modal open={visible} title={id != null ? 'Add User' : 'Edit User'} okText="Submit" cancelText="Cancel"
                 onCancel={() => {
                     setVisible(false);
                 }}
@@ -390,7 +417,28 @@ const User = (props) => {
                     >
                         <Input type="text" placeholder='Enter email' />
                     </Form.Item>
-                    {/* <label class="label-name">Mobile Number</label> */}
+                    {id == null ?
+                        <>
+                            <label className="label-name">Password</label>
+                            <Form.Item
+                                className='mb-2'
+                                name="password"
+                                rules={[
+                                    {
+                                        required: true,
+                                        message: "Please enter password!"
+                                    },
+                                    { min: 8, message: 'You can not enter atleast 8 characters' },
+                                    {
+                                        pattern: new RegExp('^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[@$!%*?&])[A-Za-z\\d@$!%*?&]{8,}$'),
+                                        message: 'Password must contain at least one lowercase letter, uppercase letter, number, and special character'
+                                    }
+                                ]}
+                            >
+                                <Input type="password" />
+                            </Form.Item>
+                        </> : ''}
+                    <label class="label-name">Mobile Number</label>
                     <Form.Item
                         name="mobile"
                         rules={[{ required: true, message: 'Please enter your mobile number!' }]}
