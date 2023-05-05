@@ -69,7 +69,6 @@ const SocketContextProvider = (props) => {
                 chatClient.emit('liveConnection', {
                     "isLive": true
                 }, function (data) {
-                    // console.log({data});
                     setUserData(data)
                 })
             }
@@ -77,16 +76,10 @@ const SocketContextProvider = (props) => {
     }, [connected, pathName])
 
     useEffect(() => {
-        // chatClient.on('liveConnection',function (data) {
-        //     console.log({data});
-        //     setUserData(data)
-        // })
         if (connected == true) {
-
             chatClient.on('liveConnection', function (data) {
                 if (data) {
-                    console.log({ data });
-                    // getMessages();
+                    setUserData(data)
                 }
             })
         }
@@ -102,11 +95,6 @@ const SocketContextProvider = (props) => {
                     setChatId(data.livechatId)
                 })
             }
-
-            // chatClient.on('liveConnection', function (data) {
-            //     console.log(data)
-            //     setUserData(data)
-            // })
         }, 500)
     }, [connected, userId, isLive])
 
