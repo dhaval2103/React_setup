@@ -8,6 +8,7 @@ import ToastMe from '../Common/ToastMe';
 import dummy from "../../../images/dummy.png"
 import SubscriptionService from '../../../services/subscription';
 import { SearchOutlined } from '@ant-design/icons';
+import PageLoader from '../Common/PageLoader';
 
 const SubscribeUser = () => {
   const dispatch = useDispatch();
@@ -23,6 +24,8 @@ const SubscribeUser = () => {
   const [userId, setuserId] = useState();
   const [planId, setplanId] = useState();
   const [test, setTest] = useState('');
+  const [loading, setLoading] = useState(true);
+
   const editModal = (text) => {
     console.log('text', text);
     setVisible(true)
@@ -82,6 +85,7 @@ const SubscribeUser = () => {
           )
         }
         setData(newArr);
+        setLoading(false);
       })
       .catch((errors) => {
         console.log({ errors })
@@ -209,6 +213,7 @@ const SubscribeUser = () => {
   return (
     <>
       {/* <PageTitle activeMenu="Filtering" motherMenu="Table" /> */}
+      <PageLoader loading={loading} />
       <div className="card">
         <div className="card-header">
           <h4 className="card-title">Subscribe User List</h4>

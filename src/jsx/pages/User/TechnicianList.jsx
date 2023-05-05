@@ -7,6 +7,7 @@ import { Dropdown } from "react-bootstrap";
 import ToastMe from '../Common/ToastMe';
 import dummy from "../../../images/dummy.png";
 import { SearchOutlined } from '@ant-design/icons';
+import PageLoader from '../Common/PageLoader';
 
 const TechnicianList = () => {
   const dispatch = useDispatch();
@@ -18,6 +19,7 @@ const TechnicianList = () => {
   const [imageName, setImageName] = useState();
   const [serverErrors, setServerErrors] = useState({});
   const [test, setTest] = useState('');
+  const [loading, setLoading] = useState(true);
 
   const editModal = (text) => {
     setVisible(true)
@@ -87,6 +89,7 @@ const TechnicianList = () => {
           )
         }
         setData(newArr);
+        setLoading(false);
       })
       .catch((errors) => {
         console.log({ errors })
@@ -214,6 +217,7 @@ const TechnicianList = () => {
   return (
     <>
       {/* <PageTitle activeMenu="Filtering" motherMenu="Table" /> */}
+      <PageLoader loading={loading} />
       <div className="card">
         <div className="card-header">
           <h4 className="card-title">Technician List</h4>

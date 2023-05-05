@@ -15,11 +15,12 @@ const Chat = (props) => {
     const [form] = Form.useForm();
     const { pathname } = useLocation();
     const [loading, setLoading] = useState(true);
-    const { connected, setPathName, setUserId, setSendMessages, chatData } = useContext(SocketContext);
+    const { connected, setPathName, setUserId, setSendMessages, chatData, setmaintenceId } = useContext(SocketContext);
     useEffect(() => {
         setPathName({ path: pathname });
-        setUserId(userDetail?.user?._id)
-    }, [pathname]);
+        setUserId(userDetail?.user?._id);
+        setmaintenceId(userDetail?._id)
+    }, [pathname, userDetail]);
 
     const updateScrollHandel = useRef()
     const updateScrollHeight = updateScrollHandel.current

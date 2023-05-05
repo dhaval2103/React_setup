@@ -7,6 +7,7 @@ import ToastMe from '../Common/ToastMe';
 import { Modal, Table, Button, Input, Form, DatePicker, Select, TimePicker, Space, Empty } from 'antd';
 import moment from 'moment';
 import { SearchOutlined } from '@ant-design/icons';
+import PageLoader from '../Common/PageLoader';
 
 const User = (props) => {
     const dispatch = useDispatch();
@@ -20,7 +21,7 @@ const User = (props) => {
     const [form] = Form.useForm();
     const [userData, setuserData] = useState([]);
     const [userId, setuserId] = useState();
-
+    const [loading, setLoading] = useState(true);
 
     const onDateChange = (date, dateString) => {
         form.setFieldsValue({
@@ -56,6 +57,7 @@ const User = (props) => {
                     )
                 }
                 setData(arr);
+                setLoading(false);
             })
             .catch((errors) => {
                 console.log({ errors })
@@ -260,6 +262,7 @@ const User = (props) => {
 
     return (
         <>
+         <PageLoader loading={loading} />
             <div className="card">
                 <div className="card-header">
                     <h4 className="card-title">Request List</h4>

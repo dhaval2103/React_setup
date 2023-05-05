@@ -12,6 +12,7 @@ import PhoneInput from "react-phone-input-2";
 import dummy from "../../../images/dummy.png";
 import 'react-phone-input-2/lib/style.css';
 import startsWith from 'lodash.startswith';
+import PageLoader from '../Common/PageLoader';
 
 
 const User = (props) => {
@@ -27,6 +28,7 @@ const User = (props) => {
     const [isDefaultCountryCode, setIsDefaultCountryCode] = useState('in');
     const [phoneNo, setPhoneNo] = useState('');
     const [countryCode, setCountryCode] = useState('');
+    const [loading, setLoading] = useState(true);
 
     useEffect(() => {
         chatClient.on('message', function (data) {
@@ -89,6 +91,7 @@ const User = (props) => {
                     )
                 }
                 setData(newArr);
+                setLoading(false)
             })
             .catch((errors) => {
                 console.log({ errors })
@@ -313,6 +316,7 @@ const User = (props) => {
 
     return (
         <>
+          <PageLoader loading={loading} />
             <div className="card">
                 <div className="card-header">
                     <h4 className="card-title">User List</h4>
