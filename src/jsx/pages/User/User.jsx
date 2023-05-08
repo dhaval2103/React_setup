@@ -355,7 +355,7 @@ const User = (props) => {
                     <div className="table-responsive">
                         {
                             data && data.length > 0 ?
-                                <Table dataSource={data} columns={columnss} /> : <Empty />
+                                <Table dataSource={data} columns={columnss}  className='table_custom'/> : <Empty />
                         }
                     </div>
                 </div>

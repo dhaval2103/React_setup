@@ -1,0 +1,20 @@
+body[data-theme-version="dark"] .table-responsive .table_custom .ant-table{
+     background-color: #202020 !important;
+}
+body[data-theme-version="dark"] .table-responsive .table_custom .ant-table .ant-table-container .ant-table-content table tbody tr:hover td {
+    background-color: #b3b3b3 !important;
+    color:#000000 !important;
+}
+
+body[data-theme-version="dark"] .table-responsive .table_custom .ant-table .ant-table-container .ant-table-content table tbody tr > td,
+body[data-theme-version="dark"] .table-responsive .table_custom .ant-table .ant-table-container .ant-table-content table thead tr > th{
+      border-bottom: 1px solid #313131 !important;
+}
+body[data-theme-version="dark"] .table-responsive .table_custom .ant-table .ant-table-container .ant-table-content table tbody tr > td{
+    background-color: #202020 !important;
+    color:#ffffff !important;
+}
+body[data-theme-version="dark"] .table-responsive .table_custom .ant-table .ant-table-container .ant-table-content table thead tr > th{
+    background-color:#b3b3b3 !important;
+    color:#000000 !important;
+}
