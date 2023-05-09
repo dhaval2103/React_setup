@@ -135,7 +135,7 @@ const Notification = () => {
 
     return (
         <>
-         <PageLoader loading={loading} />
+            <PageLoader loading={loading} />
             <div className="card">
                 <div className="card-header">
                     <h4 className="card-title">Notification</h4>
@@ -183,7 +183,7 @@ const Notification = () => {
 
                     <label className="label-name">Title</label>
                     <Form.Item name="title"
-                        rules={[{ required: true, message: "Please entre title!" }, { max: 50, message: 'You can not enter more than 50 characters' }]}
+                        rules={[{ required: true, message: "Please enter title" }, { max: 50, message: 'You can not enter more than 50 characters' }]}
                     >
                         <Input type="text" placeholder='Enter Title' />
                     </Form.Item>
@@ -191,7 +191,7 @@ const Notification = () => {
                     <label className="label-name">Message</label>
                     <Form.Item
                         name="message"
-                        rules={[{ required: true, message: "Please enter message!" }]}
+                        rules={[{ required: true, message: "Please enter message" }]}
                     >
                         <Input type="text" placeholder='Enter Message' />
                     </Form.Item>

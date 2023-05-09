@@ -227,7 +227,7 @@ const SubscribeUser = () => {
           <div className="table-responsive">
             {
               data && data.length > 0 ?
-                <Table dataSource={data} columns={columnss} className='table_custom'/> : <Empty />
+                <Table dataSource={data} columns={columnss} className='table_custom' /> : <Empty />
             }
           </div>
         </div>
@@ -275,7 +275,7 @@ const SubscribeUser = () => {
           <div>
             <Form.Item
               name="userId"
-              rules={[{ required: true, message: "Please select user name!" }]}
+              rules={[{ required: true, message: "Please select user name" }]}
             >
               <Space
                 style={{
@@ -306,7 +306,7 @@ const SubscribeUser = () => {
           <div>
             <Form.Item
               name="planId"
-              rules={[{ required: true, message: "Please select Plan!" }]}
+              rules={[{ required: true, message: "Please select Plan" }]}
             >
               <Space
                 style={{

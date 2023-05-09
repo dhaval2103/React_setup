@@ -407,9 +407,9 @@ const Technicalguide = () => {
                 >
                     <label className="label-name">Title</label>
                     <Form.Item name="title"
-                        rules={[{ required: true, message: "Please entre title!" },
+                        rules={[{ required: true, message: "Please enter title" },
                         { max: 50, message: 'You can not enter more than 50 characters' },
-                        { pattern: new RegExp(".*\\S.*[a-zA-z0-9 ]"), message: 'Only space is not allowed!' }
+                        { pattern: new RegExp(".*\\S.*[a-zA-z0-9 ]"), message: 'Only space is not allowed' }
                         ]}
                     >
                         <Input type="text" placeholder='Enter title' />
@@ -418,8 +418,8 @@ const Technicalguide = () => {
                     <label className="label-name">Description</label>
                     <Form.Item
                         name="description"
-                        rules={[{ required: true, message: "Please enter description!" },
-                        { pattern: new RegExp(".*\\S.*[a-zA-z0-9 ]"), message: 'Only space is not allowed!' }
+                        rules={[{ required: true, message: "Please enter description" },
+                        { pattern: new RegExp(".*\\S.*[a-zA-z0-9 ]"), message: 'Only space is not allowed' }
                         ]}
                     >
                         <Input.TextArea type="text" placeholder='Enter description' />

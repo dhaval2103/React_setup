@@ -283,9 +283,9 @@ const TechnicianList = () => {
             className='mb-2'
             name="name"
             rules={[
-              { required: true, message: "Please enter name!" },
+              { required: true, message: "Please enter name" },
               { max: 50, message: 'You can not enter more than 50 characters' },
-              { pattern: new RegExp(".*\\S.*[a-zA-z0-9 ]"), message: 'Only space is not allowed!' }
+              { pattern: new RegExp(".*\\S.*[a-zA-z0-9 ]"), message: 'Only space is not allowed' }
 
             ]}
           >
@@ -299,11 +299,11 @@ const TechnicianList = () => {
             rules={[
               {
                 required: true,
-                message: "Please enter email!"
+                message: "Please enter email"
               },
               {
                 pattern: new RegExp(/^([A-Z0-9a-z._%+-])+\@([A-Za-z0-9.-])+(\.[A-Za-z]{2,4})+$/),
-                message: "'Please enter valid email address!"
+                message: "Please enter valid email address"
               }
             ]}
           >
@@ -317,7 +317,7 @@ const TechnicianList = () => {
             rules={[
               {
                 required: true,
-                message: "Please enter about!"
+                message: "Please enter about"
               }
             ]}
           >

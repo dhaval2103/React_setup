@@ -222,7 +222,7 @@ const ManageSubscriptions = () => {
 
     return (
         <>
-         <PageLoader loading={loading} />
+            <PageLoader loading={loading} />
             <div className="card">
                 <div className="card-header">
                     <h4 className="card-title">Subscriptions Plan List</h4>
@@ -271,7 +271,7 @@ const ManageSubscriptions = () => {
                         <label className="label-name">Duration</label>
                         <Form.Item
                             name="duration"
-                            rules={[{ required: true, message: "Please select plan duration!" }]}
+                            rules={[{ required: true, message: "Please select plan duration" }]}
                         >
                             <Select className="select-control" value={type} style={{ width: 120 }} onChange={handleChange}
                                 options={[
@@ -285,7 +285,7 @@ const ManageSubscriptions = () => {
                     <div>
                         <Form.Item
                             name="duration"
-                            rules={[{ required: true, message: "Please select plan duration!" }]}
+                            rules={[{ required: true, message: "Please select plan duration" }]}
                         >
                             <Select
                                 placeholder="Select a duration"
@@ -308,9 +308,9 @@ const ManageSubscriptions = () => {
                     <label className="label-name">Package Name</label>
                     <Form.Item name="packageName"
                         rules={[
-                            { required: true, message: "Please entre package name!" },
+                            { required: true, message: "Please entre package name" },
                             { max: 50, message: 'You can not enter more than 50 characters' },
-                            { pattern: new RegExp(".*\\S.*[a-zA-z0-9 ]"), message: 'Only space is not allowed!' }
+                            { pattern: new RegExp(".*\\S.*[a-zA-z0-9 ]"), message: 'Only space is not allowed' }
                         ]}
                     >
                         <Input placeholder='Enter Package Name' />
@@ -319,7 +319,7 @@ const ManageSubscriptions = () => {
                     <label className="label-name">Price</label>
                     <Form.Item
                         name="price"
-                        rules={[{ required: true, message: "Please enter price!" },
+                        rules={[{ required: true, message: "Please enter price" },
                         { pattern: new RegExp("^[1-9]"), message: 'Price should be greater then 1.' }]}
                     >
                         <Input type='number' max={5} placeholder='Enter Price' />

@@ -21,7 +21,7 @@ const Faq = () => {
     const [getError, setError] = useState('');
     const [isactive, isactives] = useState(false);
     const [loading, setLoading] = useState(true);
-    
+
     const editModal = (text) => {
         setVisible(true)
         if (text) {
@@ -270,7 +270,7 @@ const Faq = () => {
                     <div className="table-responsive">
                         {
                             data && data.length > 0 ?
-                                <Table dataSource={data} columns={columnss} className='table_custom'/> : <Empty />
+                                <Table dataSource={data} columns={columnss} className='table_custom' /> : <Empty />
                         }
                     </div>
                 </div>
@@ -318,7 +318,7 @@ const Faq = () => {
                     <div>
                         <Form.Item
                             name="category"
-                            rules={[{ required: true, message: "Please select group name!" }]}
+                            rules={[{ required: true, message: "Please select group name" }]}
                         >
                             <Select
                                 placeholder="Select a duration"
@@ -343,9 +343,9 @@ const Faq = () => {
                         rules={[
                             {
                                 required: true,
-                                message: "Please enter question!"
-                            },  
-                            { pattern: new RegExp(".*\\S.*[a-zA-z0-9 ]"), message: 'Only space is not allowed!' }                
+                                message: "Please enter question"
+                            },
+                            { pattern: new RegExp(".*\\S.*[a-zA-z0-9 ]"), message: 'Only space is not allowed' }
                         ]}
                     >
                         <Input type="textarea" placeholder='Enter question' />
@@ -357,9 +357,9 @@ const Faq = () => {
                         rules={[
                             {
                                 required: true,
-                                message: "Please enter answer!"
+                                message: "Please enter answer"
                             },
-                            { pattern: new RegExp(".*\\S.*[a-zA-z0-9 ]"), message: 'Only space is not allowed!' }
+                            { pattern: new RegExp(".*\\S.*[a-zA-z0-9 ]"), message: 'Only space is not allowed' }
                         ]}
                     >
                         <Input type="textarea" placeholder='Enter answer' />

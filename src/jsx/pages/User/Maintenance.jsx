@@ -330,7 +330,7 @@ const User = (props) => {
                     <div>
                         <Form.Item
                             name="userId"
-                            rules={[{ required: true, message: "Please select User name!" }]}
+                            rules={[{ required: true, message: "Please select User name" }]}
                         >
                             <Space
                                 style={{
@@ -360,9 +360,9 @@ const User = (props) => {
                     <Form.Item
                         name="location"
                         rules={[
-                            { required: true, message: "Please enter location!" },
+                            { required: true, message: "Please enter location" },
                             { max: 50, message: 'You can not enter more than 50 characters' },
-                            { pattern: new RegExp(".*\\S.*[a-zA-z0-9 ]"), message: 'Only space is not allowed!' }
+                            { pattern: new RegExp(".*\\S.*[a-zA-z0-9 ]"), message: 'Only space is not allowed' }
                         ]}
                     >
                         <Input type="text" placeholder='Enter location' />
@@ -371,7 +371,7 @@ const User = (props) => {
                     <Form.Item
                         name="date"
                         rules={[
-                            { required: true, message: "Please enter date!" }]}
+                            { required: true, message: "Please enter date" }]}
                         className='form_item_datepicker mb-2'
                     >
                         <Space direction="vertical" className='d-block w-100'>
@@ -383,7 +383,7 @@ const User = (props) => {
                     <Form.Item
                         name="time"
                         rules={[
-                            { required: true, message: "Please enter time!" }
+                            { required: true, message: "Please enter time" }
                         ]}
                         className='form_item_datepicker'
                     >
@@ -396,8 +396,8 @@ const User = (props) => {
                     <Form.Item
                         name="message"
                         rules={[
-                            { required: true, message: "Please enter message!" },
-                            { pattern: new RegExp(".*\\S.*[a-zA-z0-9 ]"), message: 'Only space is not allowed!' }
+                            { required: true, message: "Please enter message" },
+                            { pattern: new RegExp(".*\\S.*[a-zA-z0-9 ]"), message: 'Only space is not allowed' }
                         ]}
                     >
                         <Input.TextArea type="text" placeholder='Enter message' />
@@ -406,7 +406,7 @@ const User = (props) => {
                     <div>
                         <Form.Item
                             name="technicianId"
-                            rules={[{ required: true, message: "Please select Technician name!" }]}
+                            rules={[{ required: true, message: "Please select Technician name" }]}
                         >
                             <Select
                                 placeholder="Select a Technician"
@@ -470,7 +470,7 @@ const User = (props) => {
                     <div>
                         <Form.Item
                             name="technicianId"
-                            rules={[{ required: true, message: "Please select Technician name!" }]}
+                            rules={[{ required: true, message: "Please select Technician name" }]}
                         >
                             <Select
                                 placeholder="Select a Technician"

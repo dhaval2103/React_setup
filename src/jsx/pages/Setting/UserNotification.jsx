@@ -165,7 +165,7 @@ const UserNotification = (props) => {
 
     return (
         <>
-         <PageLoader loading={loading} />
+            <PageLoader loading={loading} />
             <div className="card">
                 <div className="card-header">
                     <h4 className="card-title">Notification</h4>
@@ -177,7 +177,7 @@ const UserNotification = (props) => {
                     <div className="table-responsive">
                         {
                             data && data.length > 0 ?
-                                <Table dataSource={data} columns={columnss} className='table_custom'/> : <Empty />
+                                <Table dataSource={data} columns={columnss} className='table_custom' /> : <Empty />
                         }
                     </div>
                 </div>
@@ -213,7 +213,7 @@ const UserNotification = (props) => {
 
                     <label className="label-name">Title</label>
                     <Form.Item name="title"
-                        rules={[{ required: true, message: "Please entre title!" }, { max: 50, message: 'You can not enter more than 50 characters' }]}
+                        rules={[{ required: true, message: "Please enter title" }, { max: 50, message: 'You can not enter more than 50 characters' }]}
                     >
                         <Input type="text" placeholder='Enter Title' />
                     </Form.Item>
@@ -221,7 +221,7 @@ const UserNotification = (props) => {
                     <label className="label-name">Message</label>
                     <Form.Item
                         name="message"
-                        rules={[{ required: true, message: "Please enter message!" }]}
+                        rules={[{ required: true, message: "Please enter message" }]}
                     >
                         <Input type="text" placeholder='Enter Message' />
                     </Form.Item>
@@ -229,7 +229,7 @@ const UserNotification = (props) => {
                     <div>
                         <Form.Item
                             name="userId"
-                            rules={[{ required: true, message: "Please select User name!" }]}
+                            rules={[{ required: true, message: "Please select User name" }]}
                         >
                             <Space
                                 style={{

@@ -57,7 +57,7 @@ const ContactUs = () => {
 
     return (
         <>
-         <PageLoader loading={loading} />
+            <PageLoader loading={loading} />
             <Col xl="12">
                 <Card className='table_custom'>
                     <Card.Header className=" border-0 pb-0">
@@ -70,7 +70,7 @@ const ContactUs = () => {
                                     <label className="label-name">Support Email</label>
                                     <Form.Item
                                         name="email"
-                                        rules={[{ required: true, message: "Please enter support email!" }]}
+                                        rules={[{ required: true, message: "Please enter support email" }]}
                                     >
                                         <Input />
                                     </Form.Item>
@@ -79,7 +79,7 @@ const ContactUs = () => {
                                     <label className="label-name">Support Mobile</label>
                                     <Form.Item
                                         name="mobile"
-                                        rules={[{ required: true, message: "Please enter support phone number!" }]}
+                                        rules={[{ required: true, message: "Please enter support phone number" }]}
                                     >
                                         <Input type="number" />
                                     </Form.Item>
