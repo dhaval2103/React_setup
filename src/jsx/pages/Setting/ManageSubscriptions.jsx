@@ -52,8 +52,7 @@ const ManageSubscriptions = () => {
             dispatch(SubscriptionService.editSubscriptionPlan(values))
                 .then((res) => {
                     getSubscription();
-                    console.log(res.data)
-                    ToastMe(res.data.message, 'success')
+                    ToastMe("Suscription plan updated successfully", 'success')
                     setVisible(false);
                     setType('')
                     setId('')
@@ -65,7 +64,7 @@ const ManageSubscriptions = () => {
             dispatch(SubscriptionService.addSubscriptionPlan(values))
                 .then((res) => {
                     getSubscription();
-                    ToastMe(res.data.message, 'success')
+                    ToastMe("Suscription plan added successfully", 'success')
                 })
                 .catch((errors) => {
                     console.log({ errors })
@@ -240,7 +239,7 @@ const ManageSubscriptions = () => {
                     </div>
                 </div>
             </div>
-            <Modal open={visible} title="Add Plan" okText="Submit" cancelText="Cancel"
+            <Modal open={visible} title={id ? "Edit Plan" : "Add Plan"} okText="Submit" cancelText="Cancel"
                 onCancel={() => {
                     setVisible(false);
                 }}

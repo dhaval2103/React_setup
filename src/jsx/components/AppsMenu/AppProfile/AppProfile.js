@@ -98,9 +98,8 @@ const AppProfile = (props) => {
 	};
 
 	useEffect(() => {
-		getProfile()
+		getProfile();
 	}, [])
-
 	useEffect(() => {
 		form.setFieldsValue({
 			username: user?.name,
@@ -150,9 +149,9 @@ const AppProfile = (props) => {
 												<label htmlFor="" className="fs14 fw500 lh-1 mb-2">Name</label>
 												<Form.Item
 													name="username"
-													rules={[{ required: true, message: 'Please enter your first name!' }]}
+													rules={[{ required: true, message: 'Please enter your name!' }]}
 												>
-													<Input placeholder="First Name" className='input-control' />
+													<Input placeholder="Name" className='input-control' />
 												</Form.Item>
 												<Form.Item label="Username" name="admin_id" noStyle>
 													<Input type="hidden" />
@@ -164,9 +163,9 @@ const AppProfile = (props) => {
 												<label htmlFor="" className="fs14 fw500 lh-1 mb-2">About</label>
 												<Form.Item
 													name="about"
-													rules={[{ required: true, message: 'Please enter your last name!' }]}
+													rules={[{ required: true, message: 'Please enter your about!' }]}
 												>
-													<Input placeholder="last Name" className='input-control' />
+													<Input placeholder="About" className='input-control' />
 												</Form.Item>
 											</div>
 										</div>

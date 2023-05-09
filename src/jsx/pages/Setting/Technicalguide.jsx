@@ -60,8 +60,6 @@ const Technicalguide = () => {
                 }
                 dispatch(UserService.uploadMedia(formData))
                     .then((res) => {
-                        console.log(viewImage)
-                        console.log(viewVideo)
                         if (res.data.images) {
                             res.data.images.map((result) => {
                                 viewImage.push(result)
@@ -75,7 +73,6 @@ const Technicalguide = () => {
                         values.image = viewImage
                         values.video = viewVideo
                         values.id = id;
-                        console.log(777, values)
                         dispatch(UserService.editTechnicalguides(values))
                             .then((res) => {
                                 getTechnicalGuides();

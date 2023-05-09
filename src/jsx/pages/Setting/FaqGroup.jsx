@@ -211,7 +211,7 @@ const FaqGroup = () => {
             </div>
             <Modal
                 open={visible}
-                title="Add FAQ Group"
+                title={id ? "Edit FAQ Group" : "Add FAQ Group"}
                 okText="Submit"
                 cancelText="Cancel"
                 onCancel={() => {

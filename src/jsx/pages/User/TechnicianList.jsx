@@ -241,7 +241,7 @@ const TechnicianList = () => {
       </div>
       <Modal
         open={visible}
-        title={id != null ? 'Add Technician' : 'Edit Technician'}
+        title={id ? 'Edit Technician' : 'Add Technician'}
         okText="Submit"
         cancelText="Cancel"
         onCancel={() => {

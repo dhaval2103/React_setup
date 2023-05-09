@@ -3,7 +3,8 @@ import { useLocation } from "react-router-dom";
 import { Row, Card, Col } from "react-bootstrap";
 import { Empty, Table } from 'antd';
 import moment from "moment";
-import { Badge } from "react-bootstrap";
+import dummy from "../../../images/dummy.png";
+
 
 const ViewUser = () => {
     const { state } = useLocation();
@@ -102,6 +103,9 @@ const ViewUser = () => {
                     <Card className="text-white bg-dark">
                         <Card.Header>
                             <Card.Title className="text-white">User Detail</Card.Title>
+                            <Card.Text>
+                            <img src={userDetail?.profilePic ? userDetail?.profilePic : dummy} alt="" width="70px" height="70px" />
+                            </Card.Text>
                         </Card.Header>
                         <Card.Body className="mb-0">
                             <Card.Text>
