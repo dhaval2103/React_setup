@@ -62,7 +62,7 @@ const User = (props) => {
             });
     }
 
-    const getUserList = (value = '') => {
+    const getUserList = (value) => {
         dispatch(UserService.getUser(value))
             .then((res) => {
                 var newArr = [];
@@ -97,9 +97,9 @@ const User = (props) => {
                 console.log({ errors })
             })
     }
-    console.log(id)
     const editModal = (text) => {
-        setVisible(true)
+        setVisible(true);
+        form.resetFields();
         if (text) {
             let number = text?.countryCode + text?.mobile;
             form.setFieldsValue({
@@ -160,7 +160,7 @@ const User = (props) => {
                     setVisible(false);
                     setUserImg('')
                     setId('')
-                    // form.resetFields();
+                    form.resetFields();
                 })
                 .catch((errors) => {
                     console.log({ errors })
@@ -334,8 +334,8 @@ const User = (props) => {
     // const viewChat = (text) => {
     //     props.history.push("/chat", { userDetail: text })
     // }
-    const handleSearch = (value) => {
-        getUserList(value)
+    const handleSearch = (e) => {
+        getUserList(e.target.value)
     }
 
     return (
@@ -343,7 +343,7 @@ const User = (props) => {
             <PageLoader loading={loading} />
             <div className="card">
                 <div className="card-header">
-                    <h4 className="card-title">Technician List</h4>
+                    <h4 className="card-title">User List</h4>
                     <div className="d-flex align-items-center gap-3">
                         <Input placeholder='Search....' onChange={(e) => handleSearch(e)} prefix={<SearchOutlined className="site-form-item-icon" />} />
                         <Button type="primary" onClick={() => editModal()}>
@@ -355,13 +355,13 @@ const User = (props) => {
                     <div className="table-responsive">
                         {
                             data && data.length > 0 ?
-                                <Table dataSource={data} columns={columnss}  className='table_custom'/> : <Empty />
+                                <Table dataSource={data} columns={columnss} className='table_custom' /> : <Empty />
                         }
                     </div>
                 </div>
             </div>
 
-            <Modal open={visible} title={id != null ? 'Add User' : 'Edit User'} okText="Submit" cancelText="Cancel"
+            <Modal open={visible} title={id != null ? 'Edit User' : 'Add User'} okText="Submit" cancelText="Cancel"
                 onCancel={() => {
                     setVisible(false);
                 }}
@@ -392,9 +392,9 @@ const User = (props) => {
                     <label className="label-name">Full Name</label>
                     <Form.Item name="fullName"
                         rules={[
-                            { required: true, message: "Please entre package name!" },
-                            { max: 30, message: 'You can not enter more than 15 characters' },
-                            { pattern: new RegExp("[a-zA-Z]+$"), message: 'Please enter only characters' }
+                            { required: true, message: "Please enter name!" },
+                            { max: 50, message: 'You can not enter more than 50 characters' },
+                            { pattern: new RegExp(".*\\S.*[a-zA-z0-9 ]"), message: 'Only space is not allowed!' }
                         ]}
                     >
                         <Input placeholder='Enter Name' />
@@ -405,10 +405,7 @@ const User = (props) => {
                         className='mb-2'
                         name="email"
                         rules={[
-                            {
-                                required: true,
-                                message: "Please enter email!"
-                            },
+                            { required: true, message: "Please enter email!" },
                             {
                                 pattern: new RegExp(/^([A-Z0-9a-z._%+-])+\@([A-Za-z0-9.-])+(\.[A-Za-z]{2,4})+$/),
                                 message: "'Please enter valid email address!"
@@ -424,10 +421,7 @@ const User = (props) => {
                                 className='mb-2'
                                 name="password"
                                 rules={[
-                                    {
-                                        required: true,
-                                        message: "Please enter password!"
-                                    },
+                                    { required: true, message: "Please enter password!" },
                                     { min: 8, message: 'You can not enter atleast 8 characters' },
                                     {
                                         pattern: new RegExp('^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[@$!%*?&])[A-Za-z\\d@$!%*?&]{8,}$'),

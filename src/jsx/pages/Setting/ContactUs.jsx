@@ -4,16 +4,19 @@ import { Button, Card, Col } from "react-bootstrap";
 import { useDispatch } from "react-redux";
 import SettingService from "../../../services/setting"
 import ToastMe from "../Common/ToastMe";
+import PageLoader from "../Common/PageLoader";
 
 const ContactUs = () => {
 
     const [form] = Form.useForm();
     const dispatch = useDispatch();
     const [contactData, setContactData] = useState();
+    const [loading, setLoading] = useState(true);
 
     const getContactList = () => {
         dispatch(SettingService.getContactList())
             .then((res) => {
+                setLoading(false);
                 setContactData(res.data[0])
             })
             .catch((errors) => {
@@ -54,8 +57,9 @@ const ContactUs = () => {
 
     return (
         <>
+         <PageLoader loading={loading} />
             <Col xl="12">
-                <Card>
+                <Card className='table_custom'>
                     <Card.Header className=" border-0 pb-0">
                         <Card.Title>Contact Us</Card.Title>
                     </Card.Header>

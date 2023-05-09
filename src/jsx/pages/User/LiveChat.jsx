@@ -2,18 +2,18 @@ import React, { useContext, useEffect, useRef, useState } from 'react';
 import UserService from '../../../services/user';
 import { useDispatch } from 'react-redux';
 import { Button, Empty, Form, Input, Modal, Table } from 'antd';
-import { Badge, Col, Card, Dropdown, Row } from "react-bootstrap";
+import { Col, Row } from "react-bootstrap";
 import moment from 'moment';
 import { SocketContext } from '../../../context/Socket';
 import { SearchOutlined } from '@ant-design/icons';
-import Swal from 'sweetalert2';
-import ToastMe from '../Common/ToastMe';
 import { useLocation } from 'react-router';
 import PerfectScrollbar from "react-perfect-scrollbar";
 import DefaultImage from '../../../images/static-image.jpg'
+import { connect } from 'react-redux';
 import PageLoader from '../Common/PageLoader';
 
 const LiveChat = (props) => {
+    console.log(props)
     const admin = props?.auth;
     const dispatch = useDispatch();
     const [data, setData] = useState([]);
@@ -51,7 +51,6 @@ const LiveChat = (props) => {
     }, [chatData, updateScrollHeight]);
 
     const sendMessage = (values) => {
-        console.log('sendMessage',values);
         if (values.message.trim().length > 0) {
             setSendMessages(values)
         }
@@ -242,7 +241,7 @@ const LiveChat = (props) => {
                                                             </div>
                                                             <span className="msg_time_send mt-1 d-inline-block lh-1">{moment(chat?.createdAt).format('HH:mm A')}</span>
                                                         </div>
-
+                                                        {console.log(admin)}
                                                         <div className="img_cont_msg">
                                                             <img
                                                                 src={admin?.profileImage ? admin?.profileImage : DefaultImage}
@@ -307,4 +306,9 @@ const LiveChat = (props) => {
     )
 }
 
-export default LiveChat
+const mapStateToProps = (state) => {
+    return {
+        auth: state.auth.auth,
+    };
+};
+export default connect(mapStateToProps)(LiveChat);

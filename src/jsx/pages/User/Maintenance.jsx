@@ -70,9 +70,9 @@ const User = (props) => {
             .then((res) => {
                 ToastMe(res.data.message, 'success')
                 getMaintenance();
+                setVisibleApprove(false)
+                form.resetFields()
             })
-        setVisibleApprove(false)
-        form.resetFields()
             .catch((errors) => {
                 console.log({ errors })
             })
@@ -97,6 +97,7 @@ const User = (props) => {
     const editModal = (text) => {
         setVisible(true)
         setTest('')
+        setuserId('')
         form.resetFields()
     }
 
@@ -106,6 +107,8 @@ const User = (props) => {
                 getMaintenance();
                 ToastMe("Maintance Request Added Successfully", 'success')
                 setVisible(false)
+                setTest('')
+                setuserId('')
                 form.resetFields()
             })
             .catch((errors) => {
@@ -133,7 +136,7 @@ const User = (props) => {
     const handleChangeUserName = (e) => {
         setuserId(e);
         form.setFieldValue('userId', e)
-      }
+    }
     const getUser = (value = '') => {
         dispatch(UserService.getUser(value))
             .then((res) => {
@@ -262,7 +265,7 @@ const User = (props) => {
 
     return (
         <>
-         <PageLoader loading={loading} />
+            <PageLoader loading={loading} />
             <div className="card">
                 <div className="card-header">
                     <h4 className="card-title">Request List</h4>
@@ -276,7 +279,7 @@ const User = (props) => {
                     <div className="table-responsive">
                         {
                             data && data.length > 0 ?
-                                <Table dataSource={data} columns={columnss} /> : <Empty />
+                                <Table dataSource={data} columns={columnss} className='table_custom' /> : <Empty />
                         }
                     </div>
                 </div>
@@ -313,36 +316,7 @@ const User = (props) => {
                     </Button>
                 ]}
             >
-                <label className="label-name">Select User</label>
-                <div>
-                    <Form.Item
-                        name="userId"
-                        rules={[{ required: true, message: "Please select User name!" }]}
-                    >
-                        <Space
-                            style={{
-                                width: '100%',
-                            }}
-                            direction="vertical"
-                        >
-                            <Select
-                                allowClear
-                                style={{
-                                    width: '100%',
-                                }}
-                                showSearch
-                                placeholder="Please select"
-                                value={userId}
-                                onChange={handleChangeUserName}
-                                options={userData}
-                                filterOption={(inputValue, option) =>
-                                    option.label.toUpperCase().indexOf(inputValue.toUpperCase()) !== -1
-                                }
-                            />
-                        </Space>
 
-                    </Form.Item>
-                </div>
                 <Form
                     form={form}
                     layout="vertical"
@@ -350,29 +324,54 @@ const User = (props) => {
                     initialValues={{
                         modifier: "public"
                     }}
+
                 >
+                    <label className="label-name">Select User</label>
+                    <div>
+                        <Form.Item
+                            name="userId"
+                            rules={[{ required: true, message: "Please select User name!" }]}
+                        >
+                            <Space
+                                style={{
+                                    width: '100%',
+                                }}
+                                direction="vertical"
+                            >
+                                <Select
+                                    allowClear
+                                    style={{
+                                        width: '100%',
+                                    }}
+                                    showSearch
+                                    placeholder="Please select"
+                                    value={userId}
+                                    onChange={handleChangeUserName}
+                                    options={userData}
+                                    filterOption={(inputValue, option) =>
+                                        option.label.toUpperCase().indexOf(inputValue.toUpperCase()) !== -1
+                                    }
+                                />
+                            </Space>
+
+                        </Form.Item>
+                    </div>
                     <label className="label-name">Location</label>
                     <Form.Item
                         name="location"
                         rules={[
-                            {
-                                required: true,
-                                message: "Please enter location!"
-                            },
-                            { max: 20, message: 'You can not enter more than 15 characters' },
+                            { required: true, message: "Please enter location!" },
+                            { max: 50, message: 'You can not enter more than 50 characters' },
+                            { pattern: new RegExp(".*\\S.*[a-zA-z0-9 ]"), message: 'Only space is not allowed!' }
                         ]}
                     >
-                        <Input type="textarea" placeholder='Enter location' />
+                        <Input type="text" placeholder='Enter location' />
                     </Form.Item>
                     <label className="label-name">Select Date</label>
                     <Form.Item
                         name="date"
                         rules={[
-                            {
-                                required: true,
-                                message: "Please enter date!"
-                            }
-                        ]}
+                            { required: true, message: "Please enter date!" }]}
                         className='form_item_datepicker mb-2'
                     >
                         <Space direction="vertical" className='d-block w-100'>
@@ -384,10 +383,7 @@ const User = (props) => {
                     <Form.Item
                         name="time"
                         rules={[
-                            {
-                                required: true,
-                                message: "Please enter time!"
-                            }
+                            { required: true, message: "Please enter time!" }
                         ]}
                         className='form_item_datepicker'
                     >
@@ -400,13 +396,11 @@ const User = (props) => {
                     <Form.Item
                         name="message"
                         rules={[
-                            {
-                                required: true,
-                                message: "Please enter message!"
-                            }
+                            { required: true, message: "Please enter message!" },
+                            { pattern: new RegExp(".*\\S.*[a-zA-z0-9 ]"), message: 'Only space is not allowed!' }
                         ]}
                     >
-                        <Input type="textarea" placeholder='Enter message' />
+                        <Input.TextArea type="text" placeholder='Enter message' />
                     </Form.Item>
                     <label className="label-name">Technician Name</label>
                     <div>

@@ -36,6 +36,7 @@ const TechnicianList = () => {
     } else {
       form.resetFields();
       setId('')
+      setImageName('')
     }
   }
 
@@ -50,7 +51,7 @@ const TechnicianList = () => {
           setVisible(false);
           setUserImg('')
           setId('')
-          // form.resetFields();
+          form.resetFields();
         })
         .catch((errors) => {
           console.log({ errors })
@@ -99,9 +100,7 @@ const TechnicianList = () => {
     getTechnician(e.target.value)
   }
   const previewUserImageOnChange = (ev) => {
-    console.log({ev});
     let userImgSrc = URL.createObjectURL(ev.target.files[0]);
-    console.log({userImgSrc});
     let filesPath = ev.target.files[0];
     setUserImg(userImgSrc);
     const image = new FormData();
@@ -110,6 +109,7 @@ const TechnicianList = () => {
       .then((res) => {
         if (res.data) {
           setImageName(res.data.imageWithName)
+          setUserImg('')
         }
       })
       .catch((errors, statusCode) => {
@@ -234,7 +234,7 @@ const TechnicianList = () => {
           <div className="table-responsive">
             {
               data && data.length > 0 ?
-                <Table dataSource={data} columns={columnss} /> : <Empty />
+                <Table dataSource={data} columns={columnss} className='table_custom' /> : <Empty />
             }
           </div>
         </div>
@@ -283,21 +283,16 @@ const TechnicianList = () => {
             className='mb-2'
             name="name"
             rules={[
-              {
-                required: true,
-                message: "Please enter name!",
-              },
-              { max: 30, message: 'You can not enter more than 15 characters' },
-              {
-                pattern: new RegExp(/^[^-\s][a-zA-Z_\s-]+$/),
-                message: "Enter only characters"
-              }
+              { required: true, message: "Please enter name!" },
+              { max: 50, message: 'You can not enter more than 50 characters' },
+              { pattern: new RegExp(".*\\S.*[a-zA-z0-9 ]"), message: 'Only space is not allowed!' }
+
             ]}
           >
             <Input type="text" placeholder='Enter name' />
           </Form.Item>
 
-          <label className="label-name">Email</label>
+          <label className="label-name" >Email</label>
           <Form.Item
             className='mb-2'
             name="email"
@@ -341,10 +336,11 @@ const TechnicianList = () => {
               //     previewUserImageOnChange(files);
               //   }
               // }}
-              onChange={previewUserImageOnChange} 
+              onChange={previewUserImageOnChange}
               accept="image/*" />
           </Form.Item>
           {userImg != '' ? <img src={userImg} style={{ width: "20%" }} alt="gallery" /> : ''}
+          {imageName != '' ? <img src={process.env.REACT_APP_PROFILE_URL + 'images/' + imageName} style={{ width: "20%" }} alt="gallery" /> : ''}
 
         </Form>
       </Modal>

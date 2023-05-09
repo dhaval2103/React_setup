@@ -84,7 +84,7 @@ const ViewMaintence = () => {
         <>
             <Row>
                 <Col xl="12">
-                    <Card className="text-white bg-dark">
+                    <Card className='table_custom'>
                         <Card.Header>
                             <Card.Title className="text-white">Maintenance Detail</Card.Title>
                             {userDetail?.verifyStatus == 0 ?
@@ -146,7 +146,7 @@ const ViewMaintence = () => {
                 </Col>
                 {userDetail?.verifyStatus == 3 ? '' :
                     <Col xl="12">
-                        <Card className="text-white bg-dark">
+                        <Card className='table_custom'>
                             <Card.Header>
                                 <Card.Title className="text-white">Assign Technician</Card.Title>
                                 {userDetail?.verifyStatus == 3 || userDetail?.verifyStatus == 1 ?

@@ -9,6 +9,7 @@ import Swal from 'sweetalert2';
 import moment from 'moment';
 import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
+import PageLoader from '../Common/PageLoader';
 
 const FaqGroup = () => {
     const dispatch = useDispatch();
@@ -16,6 +17,7 @@ const FaqGroup = () => {
     const [visible, setVisible] = useState(false);
     const [id, setId] = useState('');
     const [form] = Form.useForm();
+    const [loading, setLoading] = useState(true);
 
     const getGroup = () => {
         dispatch(UserService.getGroup())
@@ -32,6 +34,7 @@ const FaqGroup = () => {
                     )
                 }
                 setData(newArr);
+                setLoading(false);
             })
             .catch((errors) => {
                 console.log({ errors })
@@ -189,6 +192,7 @@ const FaqGroup = () => {
     return (
         <>
             {/* <PageTitle activeMenu="Filtering" motherMenu="Table" /> */}
+            <PageLoader loading={loading} />
             <div className="card">
                 <div className="card-header">
                     <h4 className="card-title">FAQ Group List</h4>
@@ -200,7 +204,7 @@ const FaqGroup = () => {
                     <div className="table-responsive">
                         {
                             data && data.length > 0 ?
-                                <Table dataSource={data} columns={columnss} /> : <Empty />
+                                <Table dataSource={data} columns={columnss} className='table_custom' /> : <Empty />
                         }
                     </div>
                 </div>
@@ -247,10 +251,11 @@ const FaqGroup = () => {
                     <label className="label-name">FAQ Group Name</label>
                     <Form.Item
                         name="title"
-                        rules={[{ required: true, message: "Please enter group name" }, { max: 15, message: 'You can not enter more than 15 characters' }, {
-                            pattern: new RegExp(/^[a-zA-Z@~`!@#$%^&*()_=+\\\\';:\"\\/?>.<,-]+$/i),
-                            message: "Enter only characters"
-                        }]}
+                        rules={[{ required: true, message: "Please enter group name" },
+                        { max: 50, message: 'You can not enter more than 50 characters' },
+                        { pattern: new RegExp(".*\\S.*[a-zA-z0-9 ]"), message: 'Only space is not allowed!' }
+                    ]}
+                        
                     >
                         <Input placeholder='Enter group name' />
                     </Form.Item>

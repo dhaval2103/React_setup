@@ -8,6 +8,7 @@ import ToastMe from '../Common/ToastMe';
 import Swal from 'sweetalert2';
 import SubscriptionService from '../../../services/subscription';
 import moment from "moment";
+import PageLoader from '../Common/PageLoader';
 
 const ManageSubscriptions = () => {
     const dispatch = useDispatch();
@@ -16,6 +17,7 @@ const ManageSubscriptions = () => {
     const [type, setType] = useState('');
     const [id, setId] = useState('');
     const [form] = Form.useForm();
+    const [loading, setLoading] = useState(true);
 
     const editModal = (text) => {
 
@@ -50,11 +52,12 @@ const ManageSubscriptions = () => {
             dispatch(SubscriptionService.editSubscriptionPlan(values))
                 .then((res) => {
                     getSubscription();
+                    console.log(res.data)
                     ToastMe(res.data.message, 'success')
+                    setVisible(false);
+                    setType('')
+                    setId('')
                 })
-            setVisible(false);
-            setType('')
-            setId('')
                 .catch((errors) => {
                     console.log({ errors })
                 })
@@ -94,6 +97,7 @@ const ManageSubscriptions = () => {
                     )
                 }
                 setData(newArr);
+                setLoading(false);
             })
             .catch((errors) => {
                 console.log({ errors })
@@ -219,6 +223,7 @@ const ManageSubscriptions = () => {
 
     return (
         <>
+         <PageLoader loading={loading} />
             <div className="card">
                 <div className="card-header">
                     <h4 className="card-title">Subscriptions Plan List</h4>
@@ -230,7 +235,7 @@ const ManageSubscriptions = () => {
                     <div className="table-responsive">
                         {
                             data && data.length > 0 ?
-                                <Table dataSource={data} columns={columnss} /> : <Empty />
+                                <Table dataSource={data} columns={columnss} className='table_custom' /> : <Empty />
                         }
                     </div>
                 </div>
@@ -305,8 +310,8 @@ const ManageSubscriptions = () => {
                     <Form.Item name="packageName"
                         rules={[
                             { required: true, message: "Please entre package name!" },
-                            { max: 15, message: 'You can not enter more than 15 characters' },
-                            { pattern: new RegExp("[a-zA-Z]+$"), message: 'Please enter only characters' }
+                            { max: 50, message: 'You can not enter more than 50 characters' },
+                            { pattern: new RegExp(".*\\S.*[a-zA-z0-9 ]"), message: 'Only space is not allowed!' }
                         ]}
                     >
                         <Input placeholder='Enter Package Name' />

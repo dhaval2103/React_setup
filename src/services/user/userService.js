@@ -5,9 +5,10 @@ import { loginConfirmedAction } from '../../store/actions/AuthActions';
 const BaseUrl = process.env.REACT_APP_BASE_URL;
 
 export function getUser(value) {
+    let search = value || '';
     return dispatch => (
         new Promise((resolve, reject) => {
-            Http.callApi('get', BaseUrl + '/admin/userList?search=' + value)
+            Http.callApi('get', BaseUrl + '/admin/userList?search=' + search)
                 .then(function (res) {
                     // dispatch(action.setNotificationData(res));
                     return resolve(res);
@@ -605,6 +606,25 @@ export function addUser(data) {
     return dispatch => (
         new Promise((resolve, reject) => {
             Http.callApi('post', BaseUrl + '/admin/userRegister', data)
+                .then(function (res) {
+                    return resolve(res);
+                })
+                .catch(function (error) {
+                    console.log(error);
+                    const data = {
+                        errorData: error.response.data.errors,
+                        // statusCode: error.response.status,
+                    };
+                    return reject(data);
+                })
+        })
+    )
+}
+export function getPaymentHistory() {
+    // data.env = 'test'
+    return dispatch => (
+        new Promise((resolve, reject) => {
+            Http.callApi('get', BaseUrl + '/admin/PaymentHistory')
                 .then(function (res) {
                     return resolve(res);
                 })
