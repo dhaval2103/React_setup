@@ -484,8 +484,8 @@ const User = (props) => {
                         />
 
                     </Form.Item>
-                    <span style={{ color: 'red' }}>{phoneVelidation}</span><br></br>
-                    <span style={{ color: 'red' }}>{mobile}</span><br></br>
+                    <span style={{ color: 'red', lineHeight : 1, padding: 1,marginTop:'-20px'}}>{mobile}</span><br></br>
+                    <p style={{ color: 'red', lineHeight : 1, padding: 1,marginTop:'-20px'}}>{phoneVelidation}</p>
                     <label className="label-name">Profile</label>
                     <Form.Item
                         className='mb-2'
