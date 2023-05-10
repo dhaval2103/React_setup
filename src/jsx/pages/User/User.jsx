@@ -49,7 +49,7 @@ const User = (props) => {
 
         let dataValue = '' + phoneNo;
         // console.log("dataValue", dataValue.length);
-
+        setPhoneVlidation('')
         if (dataValue.length == 1) {
             setPhoneVlidation('please enter your phone number')
         }
