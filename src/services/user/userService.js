@@ -64,6 +64,25 @@ export function updateUserProfile(data, adminData) {
     )
 }
 
+export function uploadProfile(data) {
+    data.env = 'test';
+    return dispatch => (
+        new Promise((resolve, reject) => {
+            Http.callApi('post', BaseUrl + '/admin/uploadImage', data)
+                .then(function (res) {
+                    return resolve(res);
+                })
+                .catch(function (error) {
+                    console.log(error);
+                    const data = {
+                        errorData: error.response.data.message,
+                        // statusCode: error.response.status,
+                    };
+                    return reject(data);
+                })
+        })
+    )
+}
 export function uploadUserProfile(data) {
     data.env = 'test';
     return dispatch => (

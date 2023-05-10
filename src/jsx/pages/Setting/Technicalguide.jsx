@@ -28,6 +28,8 @@ const Technicalguide = () => {
         setVisible(true)
         setUrlImage([])
         setUrlVideo([])
+        setUploadedVideo([])
+        setUploadedImage([])
         if (text) {
             setId(text.id)
             setViewImage(text.image)
@@ -46,26 +48,26 @@ const Technicalguide = () => {
 
     const onSubmit = async (values) => {
         if (id) {
-            if (uploadedImage || uploadedVideo) {
+            if (uploadedImage.length > 0 || uploadedVideo.length > 0) {
                 const formData = new FormData();
-                if (uploadedImage) {
+                if (uploadedImage.length > 0) {
                     uploadedImage?.map((file) => {
                         formData.append('images', file)
                     })
                 }
-                if (uploadedVideo) {
+                if (uploadedVideo.length > 0) {
                     uploadedVideo?.map((file) => {
                         formData.append('videos', file)
                     })
                 }
                 dispatch(UserService.uploadMedia(formData))
                     .then((res) => {
-                        if (res.data.images) {
+                        if (res.data.images.length > 0) {
                             res.data.images.map((result) => {
                                 viewImage.push(result)
                             })
                         }
-                        if (res.data.video) {
+                        if (res.data.video.length > 0) {
                             res.data.video.map((result) => {
                                 viewVideo.push(result)
                             })
@@ -79,8 +81,11 @@ const Technicalguide = () => {
                                 form.resetFields();
                                 setUrlImage([])
                                 setUrlVideo([])
+                                setUploadedVideo([])
+                                setUploadedImage([])
                                 setViewImage([])
                                 setViewVideo([])
+                                setId('')
                                 ToastMe(res.data.message, 'success')
                                 setVisible(false)
                             })
@@ -101,8 +106,11 @@ const Technicalguide = () => {
                         form.resetFields();
                         setUrlImage([])
                         setUrlVideo([])
+                        setUploadedVideo([])
+                        setUploadedImage([])
                         setViewImage([])
                         setViewVideo([])
+                        setId('')
                         ToastMe(res.data.message, 'success')
                         setVisible(false)
                     })
@@ -129,6 +137,8 @@ const Technicalguide = () => {
                                 form.resetFields();
                                 setUrlImage([])
                                 setUrlVideo([])
+                                setUploadedVideo([])
+                                setUploadedImage([])
                                 setViewImage([])
                                 setViewVideo([])
                                 ToastMe(res.data.message, 'success')
@@ -376,7 +386,8 @@ const Technicalguide = () => {
                     </div>
                 </div>
             </div>
-            <Modal open={visible} title={id ? "Edit Technical guide" : "Add Technical guide"} okText="Submit" cancelText="Cancel"
+            <Modal open={visible} title={id ? "Edit Technical guide" : "Add Technical guide"}
+                width={600} okText="Submit" cancelText="Cancel"
                 onCancel={() => {
                     setVisible(false);
                 }}

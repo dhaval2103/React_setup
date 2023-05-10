@@ -13,9 +13,24 @@ const PaymentHistory = () => {
     const getPaymentHistory = () => {
         dispatch(UserService.getPaymentHistory())
             .then((res) => {
-                console.log(res.data)
-               
-                // setData(newArr);
+                let newArr = [];
+                for (var i = 0; i < res?.data.length; i++) {
+                    newArr.push(
+                        {
+                            key: i,
+                            planName: res?.data[i].subscribeUsers.plan.packageName || '-',
+                            fullName: res?.data[i].user.fullName || '-',
+                            mobile: res?.data[i].user.mobile || '-',
+                            email: res?.data[i].user.email || '-',
+                            userId: res?.data[i].userId || '-',
+                            image: res?.data[i].image || '-',
+                            id: res?.data[i]._id || '-',
+                            createdAt: res?.data[i].createdAt || '-'
+                        }
+                    )
+                }
+                setLoading(false)
+                setData(newArr);
             })
             .catch((errors) => {
                 console.log({ errors })
@@ -35,8 +50,8 @@ const PaymentHistory = () => {
         },
         {
             title: 'Name',
-            dataIndex: 'name',
-            key: 'name',
+            dataIndex: 'fullName',
+            key: 'fullName',
         },
         {
             title: 'Email',
@@ -50,12 +65,7 @@ const PaymentHistory = () => {
         },
         {
             title: 'PackageName',
-            dataIndex: 'packageName',
-        },
-        {
-            title: 'Price',
-            dataIndex: 'price',
-            key: 'price',
+            dataIndex: 'planName',
         },
     ];
 

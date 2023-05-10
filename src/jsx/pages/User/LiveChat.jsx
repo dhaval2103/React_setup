@@ -13,7 +13,6 @@ import { connect } from 'react-redux';
 import PageLoader from '../Common/PageLoader';
 
 const LiveChat = (props) => {
-    console.log(props)
     const admin = props?.auth;
     const dispatch = useDispatch();
     const [data, setData] = useState([]);
