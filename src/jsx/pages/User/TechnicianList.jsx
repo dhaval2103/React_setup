@@ -105,7 +105,7 @@ const TechnicianList = () => {
     setUserImg(userImgSrc);
     const image = new FormData();
     image.append('image', filesPath);
-    dispatch(UserService.uploadUserProfile(image))
+    dispatch(UserService.uploadCommonImage(image))
       .then((res) => {
         if (res.data) {
           setImageName(res.data.imageWithName)
