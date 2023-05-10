@@ -183,7 +183,9 @@ const User = (props) => {
                 })
                 .catch((errors) => {
                     setEmail(errors.errors.email);
+                    ToastMe(errors.errors.email, 'error')
                     setMobile(errors.errors.mobile);
+                    ToastMe(errors.errors.mobile, 'error')
                 })
         } else {
             dispatch(UserService.addUser(values))
@@ -431,13 +433,13 @@ const User = (props) => {
                             { required: true, message: "Please enter email" },
                             {
                                 pattern: new RegExp(/^([A-Z0-9a-z._%+-])+\@([A-Za-z0-9.-])+(\.[A-Za-z]{2,4})+$/),
-                                message: "'Please enter valid email address"
+                                message: "Please enter valid email address"
                             }
                         ]}
                     >
                         <Input type="text" placeholder='Enter email' />
                     </Form.Item>
-                    <span style={{ color: 'red' }}>{email}</span><br></br>
+                    {/* <span style={{ color: 'red' }}>{email}</span><br></br> */}
                     {id == null ?
                         <>
                             <label className="label-name">Password</label>
@@ -462,11 +464,6 @@ const User = (props) => {
                         name="mobile"
                         rules={[{ required: true, message: 'Please enter your mobile number' }]}
                     >
-                        {/* <PhoneInput
-                            country={'us'}
-                            onChange={(e) => handlePhoneValue(e)}
-                        /> */}
-
                         <PhoneInput
                             country={isDefaultCountryCode}
                             countryCodeEditable={false}
@@ -485,7 +482,7 @@ const User = (props) => {
 
                     </Form.Item>
                     <span style={{ color: 'red' }}>{phoneVelidation}</span><br></br>
-                    <span style={{ color: 'red' }}>{mobile}</span><br></br>
+                    {/* <span style={{ color: 'red' }}>{mobile}</span><br></br> */}
                     <label className="label-name">Profile</label>
                     <Form.Item
                         className='mb-2'

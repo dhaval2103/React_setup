@@ -77,23 +77,6 @@ const User = (props) => {
                 console.log({ errors })
             })
     }
-    // const approveRequest = (values) => {
-    //     values.verifyStatus = 2
-    //     dispatch(UserService.approveRequest(values))
-    //         .then((res) => {
-    //             ToastMe(res.data.message, 'success')
-    //             getMaintenance();
-    //         })
-    //     setVisibleApprove(false)
-    //         .catch((errors) => {
-    //             console.log({ errors })
-    //         })
-    // }
-
-    // const openapprovemodal = (text) => {
-    //     setVisibleApprove(true);
-    //     setId(text._id)
-    // }
     const editModal = (text) => {
         setVisible(true)
         setTest('')
@@ -112,8 +95,8 @@ const User = (props) => {
                 form.resetFields()
             })
             .catch((errors) => {
-                console.log({ errors })
                 setTest(errors.errorData.date);
+                ToastMe(errors.errorData.date, 'error')
             })
 
     }
@@ -262,7 +245,25 @@ const User = (props) => {
         props.history.push("/chat", { userDetail: text })
     }
 
-
+    const generateHours = () => {
+        const now = moment();
+        const selectedDate = form.getFieldValue('date');
+        if (selectedDate && moment(selectedDate).isSame(now, 'day')) {
+          return [...Array(now.hour())].map((_, i) => i);
+        }
+        return [];
+      };
+      
+      const generateMinutes = (selectedHour) => {
+        const now = moment();
+        const selectedDate = form.getFieldValue('date');
+        if (selectedDate && moment(selectedDate).isSame(now, 'day') && selectedHour === now.hour()) {
+          return [...Array(now.minute())].map((_, i) => i);
+        }
+        return [];
+      };
+      
+      
     return (
         <>
             <PageLoader loading={loading} />
@@ -375,10 +376,10 @@ const User = (props) => {
                         className='form_item_datepicker mb-2'
                     >
                         <Space direction="vertical" className='d-block w-100'>
-                            <DatePicker onChange={onDateChange} className='' />
+                            <DatePicker onChange={onDateChange} disabledDate={(current) => current && current < moment().startOf('day')} className='' />
                         </Space>
                     </Form.Item>
-                    <span style={{ color: 'red' }}>{test}</span><br></br>
+                    {/* <span style={{ color: 'red' }}>{test}</span><br></br> */}
                     <label className="label-name">Select Time</label>
                     <Form.Item
                         name="time"
@@ -388,7 +389,10 @@ const User = (props) => {
                         className='form_item_datepicker'
                     >
                         <Space direction="vertical" className='d-block w-100'>
-                            <TimePicker format={'HH:mm'} onChange={onTimeChange} />
+                            <TimePicker format={'HH:mm'} onChange={onTimeChange}
+                               disabledHours={() => generateHours()}
+                               disabledMinutes={(selectedHour) => generateMinutes(selectedHour)}
+                            />
                         </Space>
                     </Form.Item>
 

@@ -55,6 +55,7 @@ const TechnicianList = () => {
         })
         .catch((errors) => {
           setTest(errors.errors.email);
+          ToastMe(errors.errors.email, 'error')
           console.log({ errors })
         })
     } else {
@@ -69,6 +70,7 @@ const TechnicianList = () => {
         .catch((errors) => {
           console.log(errors)
           setTest(errors.errors.email);
+          ToastMe(errors.errors.email, 'error')
         })
     }
   }
@@ -310,7 +312,7 @@ const TechnicianList = () => {
           >
             <Input type="text" placeholder='Enter email' />
           </Form.Item>
-          <span style={{ color: 'red' }}>{test}</span><br></br>
+          {/* <span style={{ color: 'red' }}>{test}</span><br></br> */}
           <label className="label-name">About</label>
           <Form.Item
             className='mb-2'
