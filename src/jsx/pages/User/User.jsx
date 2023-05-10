@@ -38,9 +38,23 @@ const User = (props) => {
         })
     }, [chatClient])
 
+    const [phoneVelidation,setPhoneVlidation] = useState('')
+
     const handlePhoneValue = (value, data) => {
+       
         setPhoneNo(value.slice(data.dialCode.length));
         setCountryCode(data.dialCode);
+
+        let dataValue = '' + phoneNo;
+        console.log("dataValue", dataValue.length);
+      
+        if (dataValue.length == 1) {
+            setPhoneVlidation('please enter your phone number')
+        }
+        // console.log("value",value);
+        // console.log("data",data);
+     
+        // console.log("countryCode",countryCode);
     };
 
     const previewUserImageOnChange = (ev) => {
@@ -97,9 +111,12 @@ const User = (props) => {
                 console.log({ errors })
             })
     }
+
     const editModal = (text) => {
         setVisible(true);
         form.resetFields();
+
+        setPhoneVlidation('')
         if (text) {
             let number = text?.countryCode + text?.mobile;
             form.setFieldsValue({
@@ -109,6 +126,7 @@ const User = (props) => {
             })
             setImageName(text?.image)
             setUserImg('')
+            setPhoneVlidation('')
             setCountryCode(text?.countryCode)
             setPhoneNo(text?.mobile)
             setId(text?.id)
@@ -118,6 +136,7 @@ const User = (props) => {
             setUserImg('')
             setCountryCode('')
             setPhoneNo('')
+            setPhoneVlidation('')
             setId(null)
         }
     }
@@ -160,6 +179,7 @@ const User = (props) => {
                     setVisible(false);
                     setUserImg('')
                     setId('')
+                    setPhoneVlidation('');
                     form.resetFields();
                 })
                 .catch((errors) => {
@@ -171,6 +191,7 @@ const User = (props) => {
                     getUserList();
                     ToastMe("User Added Successfully", 'success')
                     setVisible(false);
+                    setPhoneVlidation('');
                     // setTest('');
                     form.resetFields();
                 })
@@ -392,9 +413,9 @@ const User = (props) => {
                     <label className="label-name">Full Name</label>
                     <Form.Item name="fullName"
                         rules={[
-                            { required: true, message: "Please enter name!" },
+                            { required: true, message: "Please enter name" },
                             { max: 50, message: 'You can not enter more than 50 characters' },
-                            { pattern: new RegExp(".*\\S.*[a-zA-z0-9 ]"), message: 'Only space is not allowed!' }
+                            { pattern: new RegExp(".*\\S.*[a-zA-z0-9 ]"), message: 'Only space is not allowed' }
                         ]}
                     >
                         <Input placeholder='Enter Name' />
@@ -405,10 +426,10 @@ const User = (props) => {
                         className='mb-2'
                         name="email"
                         rules={[
-                            { required: true, message: "Please enter email!" },
+                            { required: true, message: "Please enter email" },
                             {
                                 pattern: new RegExp(/^([A-Z0-9a-z._%+-])+\@([A-Za-z0-9.-])+(\.[A-Za-z]{2,4})+$/),
-                                message: "'Please enter valid email address!"
+                                message: "'Please enter valid email address"
                             }
                         ]}
                     >
@@ -421,7 +442,7 @@ const User = (props) => {
                                 className='mb-2'
                                 name="password"
                                 rules={[
-                                    { required: true, message: "Please enter password!" },
+                                    { required: true, message: "Please enter password" },
                                     { min: 8, message: 'You can not enter atleast 8 characters' },
                                     {
                                         pattern: new RegExp('^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[@$!%*?&])[A-Za-z\\d@$!%*?&]{8,}$'),
@@ -435,7 +456,7 @@ const User = (props) => {
                     <label class="label-name">Mobile Number</label>
                     <Form.Item
                         name="mobile"
-                        rules={[{ required: true, message: 'Please enter your mobile number!' }]}
+                        rules={[{ required: true, message: 'Please enter your mobile number' }]}
                     >
                         {/* <PhoneInput
                             country={'us'}
@@ -457,7 +478,11 @@ const User = (props) => {
                                 });
                             }}
                         />
+                        
                     </Form.Item>
+                 
+                    {/* <div className="ant-form-item-explain-error">{phoneVelidation}</div> */}
+                    <p style={{ color: 'red', lineHeight : 1, padding: 1,marginTop:'-20px'}}>{phoneVelidation}</p>
                     <label className="label-name">Profile</label>
                     <Form.Item
                         className='mb-2'

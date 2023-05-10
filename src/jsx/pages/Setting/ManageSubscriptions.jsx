@@ -308,7 +308,7 @@ const ManageSubscriptions = () => {
                     <label className="label-name">Package Name</label>
                     <Form.Item name="packageName"
                         rules={[
-                            { required: true, message: "Please entre package name" },
+                            { required: true, message: "Please enter package name" },
                             { max: 50, message: 'You can not enter more than 50 characters' },
                             { pattern: new RegExp(".*\\S.*[a-zA-z0-9 ]"), message: 'Only space is not allowed' }
                         ]}

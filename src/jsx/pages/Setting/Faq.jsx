@@ -321,7 +321,7 @@ const Faq = () => {
                             rules={[{ required: true, message: "Please select group name" }]}
                         >
                             <Select
-                                placeholder="Select a duration"
+                                placeholder="Select a group"
                                 name="category"
                                 id="category"
                                 label="category"
