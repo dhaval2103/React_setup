@@ -29,6 +29,9 @@ const User = (props) => {
     const [phoneNo, setPhoneNo] = useState('');
     const [countryCode, setCountryCode] = useState('');
     const [loading, setLoading] = useState(true);
+    const [mobile, setMobile] = useState('');
+    const [email, setEmail] = useState('');
+    const [phoneVelidation, setPhoneVlidation] = useState('')
 
     useEffect(() => {
         chatClient.on('message', function (data) {
@@ -38,23 +41,18 @@ const User = (props) => {
         })
     }, [chatClient])
 
-    const [phoneVelidation,setPhoneVlidation] = useState('')
 
     const handlePhoneValue = (value, data) => {
-       
+
         setPhoneNo(value.slice(data.dialCode.length));
         setCountryCode(data.dialCode);
 
         let dataValue = '' + phoneNo;
-        console.log("dataValue", dataValue.length);
-      
+        // console.log("dataValue", dataValue.length);
+
         if (dataValue.length == 1) {
             setPhoneVlidation('please enter your phone number')
         }
-        // console.log("value",value);
-        // console.log("data",data);
-     
-        // console.log("countryCode",countryCode);
     };
 
     const previewUserImageOnChange = (ev) => {
@@ -115,8 +113,9 @@ const User = (props) => {
     const editModal = (text) => {
         setVisible(true);
         form.resetFields();
-
         setPhoneVlidation('')
+        setEmail('');
+        setMobile('');
         if (text) {
             let number = text?.countryCode + text?.mobile;
             form.setFieldsValue({
@@ -180,10 +179,11 @@ const User = (props) => {
                     setUserImg('')
                     setId('')
                     setPhoneVlidation('');
-                    form.resetFields();
+                    setEmail('');
                 })
                 .catch((errors) => {
-                    console.log({ errors })
+                    setEmail(errors.errors.email);
+                    setMobile(errors.errors.mobile);
                 })
         } else {
             dispatch(UserService.addUser(values))
@@ -192,12 +192,14 @@ const User = (props) => {
                     ToastMe("User Added Successfully", 'success')
                     setVisible(false);
                     setPhoneVlidation('');
-                    // setTest('');
+                    setEmail('');
+                    setMobile('');
                     form.resetFields();
                 })
                 .catch((errors) => {
                     console.log(errors)
-                    // setTest(errors.errors.email);
+                    setEmail(errors.errors.email);
+                    setMobile(errors.errors.mobile);
                 })
         }
     }
@@ -435,6 +437,7 @@ const User = (props) => {
                     >
                         <Input type="text" placeholder='Enter email' />
                     </Form.Item>
+                    <span style={{ color: 'red' }}>{email}</span><br></br>
                     {id == null ?
                         <>
                             <label className="label-name">Password</label>
@@ -455,6 +458,7 @@ const User = (props) => {
                         </> : ''}
                     <label class="label-name">Mobile Number</label>
                     <Form.Item
+                        className='mb-2'
                         name="mobile"
                         rules={[{ required: true, message: 'Please enter your mobile number' }]}
                     >
@@ -478,11 +482,10 @@ const User = (props) => {
                                 });
                             }}
                         />
-                        
+
                     </Form.Item>
-                 
-                    {/* <div className="ant-form-item-explain-error">{phoneVelidation}</div> */}
-                    <p style={{ color: 'red', lineHeight : 1, padding: 1,marginTop:'-20px'}}>{phoneVelidation}</p>
+                    <span style={{ color: 'red' }}>{phoneVelidation}</span><br></br>
+                    <span style={{ color: 'red' }}>{mobile}</span><br></br>
                     <label className="label-name">Profile</label>
                     <Form.Item
                         className='mb-2'

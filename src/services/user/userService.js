@@ -500,7 +500,7 @@ export function updateTechician(data) {
                 })
                 .catch(function (error) {
                     const data = {
-                        errorData: error.response.data.message,
+                        errors: error.response.data.errors,
                         // statusCode: error.response.status,
                     };
                     return reject(data);
@@ -633,7 +633,7 @@ export function updateUser(data) {
                 .catch(function (error) {
                     console.log(error);
                     const data = {
-                        errorData: error.response.data.message,
+                        errors: error.response.data.errors,
                         // statusCode: error.response.status,
                     };
                     return reject(data);
@@ -652,7 +652,7 @@ export function addUser(data) {
                 .catch(function (error) {
                     console.log(error);
                     const data = {
-                        errorData: error.response.data.errors,
+                        errors: error.response.data.errors,
                         // statusCode: error.response.status,
                     };
                     return reject(data);

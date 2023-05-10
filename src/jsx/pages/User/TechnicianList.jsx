@@ -54,6 +54,7 @@ const TechnicianList = () => {
           form.resetFields();
         })
         .catch((errors) => {
+          setTest(errors.errors.email);
           console.log({ errors })
         })
     } else {
