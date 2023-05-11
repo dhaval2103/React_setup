@@ -2,7 +2,7 @@ import React, {  useReducer } from "react";
 import { Link } from "react-router-dom";
 
 /// Image
-import profile01 from "../../../../images/profile/1.jpg";
+import profile01 from "../../../../images/profile/2.jpg";
 import profile02 from "../../../../images/profile/2.jpg";
 import profile03 from "../../../../images/profile/3.jpg";
 import profile04 from "../../../../images/profile/4.jpg";
