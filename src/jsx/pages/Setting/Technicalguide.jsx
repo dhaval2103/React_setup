@@ -78,7 +78,7 @@ const Technicalguide = () => {
                         dispatch(UserService.editTechnicalguides(values))
                             .then((res) => {
                                 getTechnicalGuides();
-                                form.resetFields();
+                                // form.resetFields();
                                 setUrlImage([])
                                 setUrlVideo([])
                                 setUploadedVideo([])
@@ -134,7 +134,7 @@ const Technicalguide = () => {
                         dispatch(UserService.addTechnicalguides(values))
                             .then((res) => {
                                 getTechnicalGuides();
-                                form.resetFields();
+                                // form.resetFields();
                                 setUrlImage([])
                                 setUrlVideo([])
                                 setUploadedVideo([])
