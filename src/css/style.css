@@ -30576,7 +30576,6 @@ html[dir="rtl"] [direction="rtl"][data-sidebar-style="compact"]:not([data-layout
   width: 180px !important;
   height: 180px !important;
   border-radius: 50%;
-
 }
 
 .img_wrapper img{
@@ -30594,7 +30593,7 @@ html[dir="rtl"] [direction="rtl"][data-sidebar-style="compact"]:not([data-layout
 .img_wrapper_h100 {
   width: 100%;
   height: 210px;
-  border-radius: 30px;
+  border-radius: 15px;
   overflow: hidden;
 }
 

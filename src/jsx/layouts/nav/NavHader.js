@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 import { ThemeContext } from "../../../context/ThemeContext";
 import logoblack from "../../../icons/appIcon-black.svg"
 import logo from "../../../icons/appIcon.svg"
+import main_logo from "../../../icons/main_logo.svg"
 
 
 const NavHader = () => {
@@ -23,7 +24,9 @@ const NavHader = () => {
         ) : (
           <Fragment>
             <div className="App text-center mt-3">
-              <img src={logoblack} width="160px" />
+              {toggle ? <img src={main_logo} width="50px" /> : <img src={logoblack} width="160px" />}
+              {/* <img src={logoblack} width="160px" /> */}
+              {/* <img src={main_logo} width="160px" /> */}
             </div>
           </Fragment>
         )}
