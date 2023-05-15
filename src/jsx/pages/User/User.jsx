@@ -301,7 +301,7 @@ const User = (props) => {
             key: 'profilePic',
             render: (text) => (
                 <div className='col-6'>
-                    <img src={text == '-' ? dummy : text} alt="" width="70px" height="70px" />
+                    <img src={text == '-' ? dummy : text} alt="" width="120px" height="80px" />
                 </div>
             ),
         },
@@ -491,7 +491,7 @@ const User = (props) => {
                         <Input type="file" name='image' className="file-input-control" id='file-input-control' onChange={previewUserImageOnChange} accept="image/*" />
                     </Form.Item>
                     {userImg != '' ? <img src={userImg} style={{ width: "20%" }} alt="gallery" /> : ''}
-                    {imageName != '' ? <img src={process.env.REACT_APP_PROFILE_URL + 'images/' + imageName} style={{ width: "20%" }} alt="gallery" /> : ''}
+                    {imageName != '' ? <img src={process.env.REACT_APP_PROFILE_URL + 'images/' + imageName} style={{ width: "35%" }} alt="gallery" /> : ''}
                 </Form>
             </Modal>
         </>
