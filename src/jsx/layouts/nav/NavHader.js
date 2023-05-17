@@ -4,6 +4,9 @@ import { Link } from "react-router-dom";
 import { ThemeContext } from "../../../context/ThemeContext";
 import logoblack from "../../../icons/appIcon-black.svg"
 import logo from "../../../icons/appIcon.svg"
+import main_logo from "../../../icons/main_logo.svg"
+import white_logo from "../../../icons/white_logo.svg"
+import dark_logo from "../../../images/logo_az.png"
 
 
 const NavHader = () => {
@@ -17,13 +20,13 @@ const NavHader = () => {
         {background.value === "dark" ? (
           <Fragment>
             <div className="App text-center mt-3">
-              <img src={logo} width="160px" />
+            {toggle ? <img src={white_logo} width="50px" /> : <img src={dark_logo} width="160px" />}
             </div>
           </Fragment>
         ) : (
           <Fragment>
             <div className="App text-center mt-3">
-              <img src={logoblack} width="160px" />
+              {toggle ? <img src={main_logo} width="50px" /> : <img src={logoblack} width="160px" />}
             </div>
           </Fragment>
         )}

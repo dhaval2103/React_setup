@@ -99,54 +99,25 @@ const ViewUser = () => {
     return (
         <>
             <Row>
-                <Col xl="6">
-                    <Card className="text-white bg-dark">
-                        <Card.Header>
-                            <Card.Title className="text-white">User Detail</Card.Title>
-                            <Card.Text>
-                            <img src={userDetail?.profilePic ? userDetail?.profilePic : dummy} alt="" width="70px" height="70px" />
-                            </Card.Text>
-                        </Card.Header>
-                        <Card.Body className="mb-0">
-                            <Card.Text>
-                                <i className="fa fa-user" aria-hidden="true"></i> {userDetail?.fullName ? userDetail?.fullName : '-'}
-                            </Card.Text>
-                            <Card.Text>
-                                <i className="fa fa-envelope" aria-hidden="true"></i> {userDetail?.email ? userDetail?.email : '-'}
-                            </Card.Text>
-                            <Card.Text>
-                                <i className="fa fa-phone-square" aria-hidden="true"></i> {userDetail?.mobile ? userDetail?.mobile : '-'}
-                            </Card.Text>
-                        </Card.Body>
-                    </Card>
+                <Col xl="8">
+                    <div className="custome_card bg-dark text-white mb-4">
+                        <div class="row gy-4">
+                            <div class="col-md-12 col-lg-4">
+                                <div class="img_wrapper_h100">
+                                <img src={userDetail?.profilePic ? userDetail?.profilePic : dummy}  class="imaga_fluid" alt="" />
+                                </div>
+                            </div>
+                            <div class="col-md-12 col-lg-4">
+                                <div class="text_content">
+                                    <p className="fs16 fw-400 lh-lg mb-2"> <i className="fa fa-user" aria-hidden="true"></i> &nbsp; {userDetail?.fullName ? userDetail?.fullName : '-'}</p>
+                                    <p className="fs16 fw-400 lh-lg mb-2"> <i className="fa fa-envelope" aria-hidden="true"></i> &nbsp; {userDetail?.email ? userDetail?.email : '-'}</p>
+                                    {/* <p className="fs16 fw-400 lh-lg mb-2"> <i className="fa fa-flag" aria-hidden="true"></i> &nbsp; {userDetail?.countryCode ? userDetail?.countryCode : '-'}</p> */}
+                                    <p className="fs16 fw-400 lh-lg mb-2"> <i className="fa fa-phone-square" aria-hidden="true"></i> &nbsp; {userDetail?.mobile ? userDetail?.mobile : '-'}</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </Col>
-                {/* <Col xl="6">
-                    <Card className="text-white bg-dark">
-                        <Card.Header>
-                            <Card.Title className="text-white">Security Question/Answer</Card.Title>
-                        </Card.Header>
-                        <Card.Body className="mb-0">
-                            <Card.Text>
-                                Q: {userDetail?.securityQuestion ? userDetail?.securityQuestion : '-'}
-                            </Card.Text>
-                            <Card.Text>
-                                A: {userDetail?.answer ? userDetail?.answer : '-'}
-                            </Card.Text>
-                        </Card.Body>
-                    </Card>
-                </Col>
-                <Col xl="6">
-                    <Card className="text-white bg-dark">
-                        <Card.Header>
-                            <Card.Title className="text-white">User Question/Answer</Card.Title>
-                        </Card.Header>
-                        <Card.Body className="mb-0">
-                            <Card.Text>
-                                Q: {userDetail?.yourQuestion ? userDetail?.yourQuestion : '-'}
-                            </Card.Text>
-                        </Card.Body>
-                    </Card>
-                </Col> */}
             </Row>
 
            { userDetail?.role == 1 ?<div className="card">
