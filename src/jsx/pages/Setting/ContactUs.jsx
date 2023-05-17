@@ -5,6 +5,8 @@ import { useDispatch } from "react-redux";
 import SettingService from "../../../services/setting"
 import ToastMe from "../Common/ToastMe";
 import PageLoader from "../Common/PageLoader";
+import PhoneInput from "react-phone-input-2";
+import startsWith from 'lodash.startswith';
 
 const ContactUs = () => {
 
@@ -12,6 +14,10 @@ const ContactUs = () => {
     const dispatch = useDispatch();
     const [contactData, setContactData] = useState();
     const [loading, setLoading] = useState(true);
+    const [phoneNo, setPhoneNo] = useState('');
+    const [phoneVelidation, setPhoneVlidation] = useState('')
+    const [isDefaultCountryCode, setIsDefaultCountryCode] = useState('in');
+
 
     const getContactList = () => {
         dispatch(SettingService.getContactList())
@@ -24,7 +30,20 @@ const ContactUs = () => {
             })
     }
 
+    const handlePhoneValue = (value, data) => {
+
+        setPhoneNo(value);
+
+        let dataValue = '' + phoneNo;
+        // console.log("dataValue", dataValue.length);
+        setPhoneVlidation('')
+        if (dataValue.length == 1) {
+            setPhoneVlidation('please enter your phone number')
+        }
+    };
+
     const onFinish = (data) => {
+        data.mobile = phoneNo;
         dispatch(SettingService.addSupportEmailMobile(data))
             .then((res) => {
                 ToastMe(res.data.message, 'success')
@@ -78,11 +97,28 @@ const ContactUs = () => {
                                 <div className="col-6">
                                     <label className="label-name">Support Mobile</label>
                                     <Form.Item
+                                        className='mb-2'
                                         name="mobile"
-                                        rules={[{ required: true, message: "Please enter support phone number" }]}
+                                        rules={[{ required: true, message: 'Please enter your mobile number' }]}
                                     >
-                                        <Input type="number" />
+                                        <PhoneInput
+                                            country={isDefaultCountryCode}
+                                            countryCodeEditable={false}
+                                            disableCountryCode={false}
+                                            enableAreaCodes={false}
+                                            inputclassName="input-control form-control"
+                                            enableSearch={true}
+                                            onChange={handlePhoneValue}
+                                            value={phoneNo || undefined}
+                                            isValid={(inputNumber, country, countries) => {
+                                                return countries.some((country) => {
+                                                    return startsWith(inputNumber, country.dialCode) || startsWith(country.dialCode, inputNumber);
+                                                });
+                                            }}
+                                        />
+
                                     </Form.Item>
+                                    <span style={{ color: 'red' }}>{phoneVelidation}</span><br></br>
                                 </div>
                             </div>
                             <Button type="submit" className="float-end me-2 btn-xl" variant="primary">
