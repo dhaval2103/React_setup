@@ -24,6 +24,8 @@ const ContactUs = () => {
             .then((res) => {
                 setLoading(false);
                 setContactData(res.data[0])
+                setPhoneNo(res.data[0].mobile);
+
             })
             .catch((errors) => {
                 console.log({ errors })
@@ -34,11 +36,12 @@ const ContactUs = () => {
 
         setPhoneNo(value);
 
-        let dataValue = '' + phoneNo;
-        // console.log("dataValue", dataValue.length);
+        let phone = value.slice(data.dialCode.length);
+
+        let dataValue = '' + phone;
         setPhoneVlidation('')
-        if (dataValue.length == 1) {
-            setPhoneVlidation('please enter your phone number')
+        if (dataValue.length < 7) {
+            setPhoneVlidation('Enter valid mobile number')
         }
     };
 
