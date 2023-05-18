@@ -51,6 +51,7 @@ const User = (props) => {
                             _id: res?.data[i]?._id,
                             attachments: res?.data[i]?.attachments,
                             verifyStatus: res?.data[i]?.verifyStatus,
+                            technicianStatus: res?.data[i]?.verifyStatus,
                             user: res?.data[i]?.user,
                             technician: res?.data[i]?.technician || '-',
                         }
@@ -197,15 +198,15 @@ const User = (props) => {
             title: 'Status',
             key: 'verifyStatus',
             render: (text) => {
-                if (text.verifyStatus == 0) {
+                if (text.technicianStatus == 0) {
                     return (
                         <span className="badge badge-primary">Pending</span>
                     )
-                } else if (text.verifyStatus == 1) {
+                } else if (text.technicianStatus == 1) {
                     return (
                         <span className="badge badge-success">Completed</span>
                     )
-                } else if (text.verifyStatus == 2) {
+                } else if (text.technicianStatus == 2) {
                     return (
                         <span className="badge badge-warning">In progress
                         </span>
