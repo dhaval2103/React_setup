@@ -415,7 +415,6 @@ const User = (props) => {
                     <div>
                         <Form.Item
                             name="technicianId"
-                            rules={[{ required: true, message: "Please select Technician name" }]}
                         >
                             <Select
                                 placeholder="Select a Technician"

@@ -106,32 +106,47 @@ const ViewMaintence = () => {
                     <Card className='table_custom'>
                         <Card.Header>
                             <Card.Title className="text-white">Maintenance Detail</Card.Title>
-                            {/* {userDetail?.verifyStatus == 0 ?
-                                <Dropdown className="drop" drop="end">
-                                    <Dropdown.Toggle
-                                        variant="danger"
-                                        className="light sharp i-false"
+                            <div className="d-flex align-items-center gap-3">
+                                {userDetail?.technicianStatus == 0 ?
+                                    <span className="badge badge-primary" >Pending</span> :
+                                    userDetail?.technicianStatus === 1 ?
+                                        <span className="badge badge-success" >Completed</span> :
+                                        userDetail?.technicianStatus === 2 ?
+                                            <span className="badge badge-warning" >In progress</span> :
+                                            userDetail?.technicianStatus === 3 ?
+                                                <span className="badge badge-danger" >Reject</span> :
+                                                userDetail?.technicianStatus === 4 ?
+                                                    <span className="badge badge-success" >Closed</span> : ''
 
-                                    >
-                                        Change Status
-                                    </Dropdown.Toggle>
-                                    <Dropdown.Menu className="dropdown-menu-end">
-                                        <Dropdown.Item onClick={() => approveRejectRequest(2)}>In Progress</Dropdown.Item>
-                                        <Dropdown.Item onClick={() => approveRejectRequest(3)}>Reject</Dropdown.Item>
-                                    </Dropdown.Menu>
-                                </Dropdown> :
-                                userDetail?.verifyStatus == 2 ?
-                                    <Button className="badge badge-primary" onClick={() => approveRejectRequest(1)}>Approve</Button> :
-                                    userDetail?.verifyStatus == 1 ?
-                                        <span className="badge badge-success">Completed</span> :
-                                        <span className="badge badge-danger">Reject</span>
-                            } */}
-                            {userDetail?.technicianStatus === 0 ?
-                                <Button className="badge badge-danger" onClick={() => approveRejectRequest(3)}>Reject</Button> :
-                                userDetail?.technicianStatus === 1 ?
-                                    <Button className="badge badge-info" onClick={() => approveRejectRequest(4)}>Closed</Button> : ''
+                                }
+                                {userDetail?.technicianStatus == 0 ?
+                                    <Dropdown className="drop" drop="end">
+                                        <Dropdown.Toggle
+                                            variant="danger"
+                                            className="light sharp i-false"
 
-                            }
+                                        >
+                                            Change Status
+                                        </Dropdown.Toggle>
+                                        <Dropdown.Menu className="dropdown-menu-end">
+                                            <Dropdown.Item onClick={() => approveRejectRequest(3)}>Reject</Dropdown.Item>
+                                        </Dropdown.Menu>
+                                    </Dropdown> :
+                                    userDetail?.technicianStatus == 1 ?
+                                        <Dropdown className="drop" drop="end">
+                                            <Dropdown.Toggle
+                                                variant="danger"
+                                                className="light sharp i-false"
+
+                                            >
+                                                Change Status
+                                            </Dropdown.Toggle>
+                                            <Dropdown.Menu className="dropdown-menu-end">
+                                                <Dropdown.Item onClick={() => approveRejectRequest(4)}>Closed</Dropdown.Item>
+                                            </Dropdown.Menu>
+                                        </Dropdown> : ''
+                                }
+                            </div>
 
                         </Card.Header>
                         <Card.Body className="mb-0">
@@ -187,19 +202,19 @@ const ViewMaintence = () => {
                                             <Card.Text>
                                                 <div>
                                                     <label className="label-name">Name:</label>
-                                                    {userDetail?.technician?.name}
+                                                    {userDetail?.technician?.name ? userDetail?.technician?.name : '-'}
                                                 </div>
                                             </Card.Text>
                                             <Card.Text>
                                                 <div>
                                                     <label className="label-name">Email:</label>
-                                                    {userDetail?.technician?.email}
+                                                    {userDetail?.technician?.email ? userDetail?.technician?.email : '-'}
                                                 </div>
                                             </Card.Text>
                                             <Card.Text>
                                                 <div>
                                                     <label className="label-name">About:</label>
-                                                    {userDetail?.technician?.about}
+                                                    {userDetail?.technician?.about ? userDetail?.technician?.about : '-'}
                                                 </div>
                                             </Card.Text>
                                         </div>
