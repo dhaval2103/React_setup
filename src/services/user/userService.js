@@ -181,7 +181,7 @@ export function approveRequest(data) {
     let data_ = {
         mId: data._id,
         env: 'test',
-        verifyStatus: data?.verifyStatus,
+        technicianStatus: data?.technicianStatus,
         technicianId: data?.technicianId
     }
     return dispatch => (

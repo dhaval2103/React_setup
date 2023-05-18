@@ -51,7 +51,7 @@ const User = (props) => {
                             _id: res?.data[i]?._id,
                             attachments: res?.data[i]?.attachments,
                             verifyStatus: res?.data[i]?.verifyStatus,
-                            technicianStatus: res?.data[i]?.verifyStatus,
+                            technicianStatus: res?.data[i]?.technicianStatus,
                             user: res?.data[i]?.user,
                             technician: res?.data[i]?.technician || '-',
                         }
@@ -196,7 +196,7 @@ const User = (props) => {
         },
         {
             title: 'Status',
-            key: 'verifyStatus',
+            key: 'technicianStatus',
             render: (text) => {
                 if (text.technicianStatus == 0) {
                     return (
@@ -211,7 +211,11 @@ const User = (props) => {
                         <span className="badge badge-warning">In progress
                         </span>
                     )
-                } else {
+                } else if (text.technicianStatus == 4){
+                    return (
+                        <span className="badge badge-info">Closed</span>
+                    )
+                }else{
                     return (
                         <span className="badge badge-danger">Reject</span>
                     )
