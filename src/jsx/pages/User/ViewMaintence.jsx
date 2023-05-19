@@ -116,7 +116,7 @@ const ViewMaintence = () => {
                                             userDetail?.technicianStatus === 3 ?
                                                 <span className="badge badge-danger" >Reject</span> :
                                                 userDetail?.technicianStatus === 4 ?
-                                                    <span className="badge badge-success" >Closed</span> : ''
+                                                    <span className="badge badge-info" >Closed</span> : ''
 
                                 }
                                 {userDetail?.technicianStatus == 0 ?
