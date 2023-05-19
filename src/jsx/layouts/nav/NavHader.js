@@ -15,18 +15,31 @@ const NavHader = () => {
     ThemeContext
   );
   return (
-    <div className="nav-header">
+    <div className="nav-header" >
+       {/* <div
+        className="nav-control"
+        onClick={() => {
+          setToggle(!toggle);
+          openMenuToggle();
+        }}
+      >
+        <div className={`hamburger ${toggle ? "is-active" : ""}`}>
+          <span className="line"></span>
+          <span className="line"></span>
+          <span className="line"></span>
+        </div>
+      </div> */}
       <Link to="/dashboard" className="brand-logo">
         {background.value === "dark" ? (
           <Fragment>
             <div className="App text-center mt-3">
-            {toggle ? <img src={white_logo} width="50px" /> : <img src={dark_logo} width="160px" />}
+            {toggle ? <img src={white_logo} width="50px" className="logo" /> : <img src={dark_logo} width="160px" />}
             </div>
           </Fragment>
         ) : (
           <Fragment>
             <div className="App text-center mt-3">
-              {toggle ? <img src={main_logo} width="50px" /> : <img src={logoblack} width="160px" />}
+              {toggle ? <img src={main_logo} width="50px" className="logo" /> : <img src={logoblack} width="160px" />}
             </div>
           </Fragment>
         )}
