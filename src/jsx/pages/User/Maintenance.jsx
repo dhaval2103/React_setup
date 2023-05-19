@@ -219,7 +219,7 @@ const User = (props) => {
                     return (
                         <span className="badge badge-danger">Reject</span>
                     )
-                }
+                }   
             }
         },
         {
