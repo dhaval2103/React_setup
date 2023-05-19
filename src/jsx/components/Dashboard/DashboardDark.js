@@ -230,7 +230,7 @@ const DashboardDark = () => {
 										</span>
 										<div className="invoices">
 											<h4>{countData?.count_data?.approved_request_count}</h4>
-											<span>Approved Requests</span>
+											<span>Completed Requests</span>
 										</div>
 									</div>
 								</div>
