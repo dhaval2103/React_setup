@@ -14,7 +14,7 @@ ReactDOM.render(
         <Provider store={store}>
             <SimpleReactLightbox>
                 <SocketContextProvider>
-                    <BrowserRouter basename='/admin'>
+                    <BrowserRouter basename={process.env.PUBLIC_URL}>
                         <ThemeContext>
                             <App />
                         </ThemeContext>
