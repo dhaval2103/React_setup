@@ -46,7 +46,7 @@ function App (props) {
                     </div>  
                    }
                 >
-                    <Index / >
+                    <Index />
                 </Suspense>
             </>
         );

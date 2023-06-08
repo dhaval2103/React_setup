@@ -1,1 +1,8 @@
-node_modules
+/node_modules
+/*.dio
+/src/uploads/
+/.vscode
+/.idea
+build
+**/.DS_Store
+.DS_Store
