@@ -14,7 +14,7 @@ ReactDOM.render(
         <Provider store={store}>
             <SimpleReactLightbox>
                 <SocketContextProvider>
-                    <BrowserRouter basename='/AZ-security/admin'>
+                    <BrowserRouter basename='/admin'>
                         <ThemeContext>
                             <App />
                         </ThemeContext>
