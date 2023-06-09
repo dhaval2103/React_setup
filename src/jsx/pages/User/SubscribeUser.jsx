@@ -8,6 +8,7 @@ import ToastMe from '../Common/ToastMe';
 import dummy from "../../../images/dummy.png"
 import SubscriptionService from '../../../services/subscription';
 import { SearchOutlined } from '@ant-design/icons';
+import PageLoader from '../Common/PageLoader';
 
 const SubscribeUser = () => {
   const dispatch = useDispatch();
@@ -23,8 +24,9 @@ const SubscribeUser = () => {
   const [userId, setuserId] = useState();
   const [planId, setplanId] = useState();
   const [test, setTest] = useState('');
+  const [loading, setLoading] = useState(true);
+
   const editModal = (text) => {
-    console.log('text', text);
     setVisible(true)
     setTest('')
     if (text) {
@@ -82,6 +84,7 @@ const SubscribeUser = () => {
           )
         }
         setData(newArr);
+        setLoading(false);
       })
       .catch((errors) => {
         console.log({ errors })
@@ -184,31 +187,32 @@ const SubscribeUser = () => {
       dataIndex: 'price',
       key: 'price',
     },
-    {
-      title: 'Actions',
-      key: 'actions',
-      render: (text) => (
-        <>
-          <Dropdown>
-            <Dropdown.Toggle
-              variant="danger"
-              className="light sharp i-false"
-            >
-              {svg1}
-            </Dropdown.Toggle>
-            <Dropdown.Menu>
-              <Dropdown.Item onClick={() => editModal(text)}>Edit</Dropdown.Item>
-              {/* <Dropdown.Item onClick={() => deleteCms(text)}>Delete</Dropdown.Item> */}
-            </Dropdown.Menu>
-          </Dropdown>
-        </>
-      )
-    },
+    // {
+    //   title: 'Actions',
+    //   key: 'actions',
+    //   render: (text) => (
+    //     <>
+    //       <Dropdown>
+    //         <Dropdown.Toggle
+    //           variant="danger"
+    //           className="light sharp i-false"
+    //         >
+    //           {svg1}
+    //         </Dropdown.Toggle>
+    //         <Dropdown.Menu>
+    //           <Dropdown.Item onClick={() => editModal(text)}>Edit</Dropdown.Item>
+    //           {/* <Dropdown.Item onClick={() => deleteCms(text)}>Delete</Dropdown.Item> */}
+    //         </Dropdown.Menu>
+    //       </Dropdown>
+    //     </>
+    //   )
+    // },
   ];
 
   return (
     <>
       {/* <PageTitle activeMenu="Filtering" motherMenu="Table" /> */}
+      <PageLoader loading={loading} />
       <div className="card">
         <div className="card-header">
           <h4 className="card-title">Subscribe User List</h4>
@@ -223,7 +227,7 @@ const SubscribeUser = () => {
           <div className="table-responsive">
             {
               data && data.length > 0 ?
-                <Table dataSource={data} columns={columnss} /> : <Empty />
+                <Table dataSource={data} columns={columnss} className='table_custom' /> : <Empty />
             }
           </div>
         </div>
@@ -271,7 +275,7 @@ const SubscribeUser = () => {
           <div>
             <Form.Item
               name="userId"
-              rules={[{ required: true, message: "Please select User name!" }]}
+              rules={[{ required: true, message: "Please select user name" }]}
             >
               <Space
                 style={{
@@ -302,7 +306,7 @@ const SubscribeUser = () => {
           <div>
             <Form.Item
               name="planId"
-              rules={[{ required: true, message: "Please select Plan!" }]}
+              rules={[{ required: true, message: "Please select Plan" }]}
             >
               <Space
                 style={{

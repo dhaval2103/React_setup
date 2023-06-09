@@ -11,9 +11,12 @@ const SocketContextProvider = (props) => {
     const [connected, setConnected] = useState(false);
     const [pathName, setPathName] = useState({});
     const [userId, setUserId] = useState();
+    const [maintenceId, setmaintenceId] = useState();
     const [sendMessages, setSendMessages] = useState();
     const [chatData, setChatData] = useState();
+    const [userData, setUserData] = useState();
     const [chatId, setChatId] = useState();
+    const [isLive, setLive] = useState(false);
 
     // connection
     useEffect(() => {
@@ -22,6 +25,7 @@ const SocketContextProvider = (props) => {
                 const client = socketio(SocketUrl, {
                     query: {
                         userId: admin?.id,
+                        type: 2
                     },
                     transports: ["websocket"],
                     upgrade: true,
@@ -43,21 +47,59 @@ const SocketContextProvider = (props) => {
         }
     }, [admin]);
 
+    // Maintenance chat
     useEffect(() => {
         setTimeout(() => {
-            if (connected == true && pathName && pathName.path !== undefined && userId !== undefined) {
+            if (connected == true && pathName && pathName.path !== undefined && userId !== undefined && isLive == false) {
                 chatClient.emit('createConversation', {
                     "from": admin.id,
-                    "to": userId
+                    "to": userId,
+                    "chatId": maintenceId
                 }, function (data) {
-                    setChatId(data.chatId)
+                    setChatId(data?.chatId)
                 })
             }
         }, 500)
-    }, [connected, pathName, userId])
+    }, [connected, pathName, userId, maintenceId, isLive])
+
+    // live chat
+    useEffect(() => {
+        setTimeout(() => {
+            if (connected == true && pathName && pathName.path !== undefined) {
+                chatClient.emit('liveConnection', {
+                    "isLive": true
+                }, function (data) {
+                    setUserData(data)
+                })
+            }
+        }, 500)
+    }, [connected, pathName])
 
     useEffect(() => {
-        if(userId !== undefined){
+        if (connected == true) {
+            chatClient.on('liveConnection', function (data) {
+                if (data) {
+                    setUserData(data)
+                }
+            })
+        }
+    }, [connected])
+
+    useEffect(() => {
+        setTimeout(() => {
+            if (connected == true && userId !== undefined && isLive == true) {
+                chatClient.emit('createLiveConversation', {
+                    "from": admin.id,
+                    "to": userId,
+                }, function (data) {
+                    setChatId(data.livechatId)
+                })
+            }
+        }, 500)
+    }, [connected, userId, isLive])
+
+    useEffect(() => {
+        if (userId !== undefined) {
             chatClient.emit('messageStatus', {
                 "event": "readAllMessages",
                 "from": userId,
@@ -76,7 +118,7 @@ const SocketContextProvider = (props) => {
             }
         })
 
-        chatClient.on('message',  function (data) {
+        chatClient.on('message', function (data) {
             if (data) {
                 getMessages();
             }
@@ -107,7 +149,7 @@ const SocketContextProvider = (props) => {
     }, [chatId])
 
     return (
-        <SocketContext.Provider value={{ connected, setPathName, setUserId, setSendMessages, chatData, chatClient }} >
+        <SocketContext.Provider value={{ connected, setPathName, setUserId, setSendMessages, setLive, setmaintenceId, chatData, userData, chatClient }} >
             {props.children}
         </SocketContext.Provider>
     );

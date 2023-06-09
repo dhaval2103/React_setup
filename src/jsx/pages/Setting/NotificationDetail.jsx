@@ -8,7 +8,7 @@ const NotificationDetail = () => {
 
     return (
         <>
-            <Row>
+            <Row className='table_custom'>
                 <Col xl="12">
                     <Card className="text-white bg-dark">
                         <Card.Header>

@@ -9,6 +9,7 @@ import Swal from 'sweetalert2';
 import moment from 'moment';
 import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
+import PageLoader from '../Common/PageLoader';
 
 const Cms = () => {
     const dispatch = useDispatch();
@@ -17,6 +18,7 @@ const Cms = () => {
     const [description, setDescription] = useState();
     const [id, setId] = useState('');
     const [form] = Form.useForm();
+    const [loading, setLoading] = useState(true);
 
     const getCms = () => {
         dispatch(UserService.getCms())
@@ -35,6 +37,7 @@ const Cms = () => {
                         }
                     )
                 }
+                setLoading(false);
                 setData(newArr);
             })
             .catch((errors) => {
@@ -218,6 +221,7 @@ const Cms = () => {
     return (
         <>
             {/* <PageTitle activeMenu="Filtering" motherMenu="Table" /> */}
+            <PageLoader loading={loading} />
             <div className="card">
                 <div className="card-header">
                     <h4 className="card-title">CMS List</h4>
@@ -229,7 +233,7 @@ const Cms = () => {
                     <div className="table-responsive">
                         {
                             data && data.length > 0 ?
-                                <Table dataSource={data} columns={columnss} /> : <Empty />
+                                <Table dataSource={data} columns={columnss} className='table_custom' /> : <Empty />
                         }
                     </div>
                 </div>

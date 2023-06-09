@@ -7,6 +7,7 @@ import { Dropdown } from "react-bootstrap";
 import ToastMe from '../Common/ToastMe';
 import moment from 'moment';
 import { SearchOutlined } from '@ant-design/icons';
+import PageLoader from '../Common/PageLoader';
 
 const Faq = () => {
     const dispatch = useDispatch();
@@ -19,6 +20,7 @@ const Faq = () => {
     const [valueCategory, setCategory] = useState([]);
     const [getError, setError] = useState('');
     const [isactive, isactives] = useState(false);
+    const [loading, setLoading] = useState(true);
 
     const editModal = (text) => {
         setVisible(true)
@@ -31,11 +33,12 @@ const Faq = () => {
             setType(text.type);
             setId(text.id)
         } else {
-            form.setFieldsValue({
-                group: '',
-                question: '',
-                answer: '',
-            })
+            // form.setFieldsValue({
+            //     group: '',
+            //     question: '',
+            //     answer: '',
+            // })
+            form.resetFields();
             setType('');
             setId('')
         }
@@ -119,6 +122,7 @@ const Faq = () => {
                         }
                     )
                 }
+                setLoading(false);
                 setData(newArr);
             })
             .catch((errors) => {
@@ -225,31 +229,32 @@ const Faq = () => {
                 </div>
             ),
         },
-        {
-            title: 'Actions',
-            key: 'actions',
-            render: (text) => (
-                <>
-                    <Dropdown>
-                        <Dropdown.Toggle
-                            variant="danger"
-                            className="light sharp i-false"
-                        >
-                            {svg1}
-                        </Dropdown.Toggle>
-                        <Dropdown.Menu>
-                            {/* <Dropdown.Item onClick={() => editModal(text)}>Edit</Dropdown.Item> */}
-                            {/* <Dropdown.Item onClick={() => deleteCms(text)}>Delete</Dropdown.Item> */}
-                        </Dropdown.Menu>
-                    </Dropdown>
-                </>
-            )
-        },
+        // {
+        //     title: 'Actions',
+        //     key: 'actions',
+        //     render: (text) => (
+        //         <>
+        //             <Dropdown>
+        //                 <Dropdown.Toggle
+        //                     variant="danger"
+        //                     className="light sharp i-false"
+        //                 >
+        //                     {svg1}
+        //                 </Dropdown.Toggle>
+        //                 <Dropdown.Menu>
+        //                     {/* <Dropdown.Item onClick={() => editModal(text)}>Edit</Dropdown.Item> */}
+        //                     {/* <Dropdown.Item onClick={() => deleteCms(text)}>Delete</Dropdown.Item> */}
+        //                 </Dropdown.Menu>
+        //             </Dropdown>
+        //         </>
+        //     )
+        // },
     ];
 
     return (
         <>
             {/* <PageTitle activeMenu="Filtering" motherMenu="Table" /> */}
+            <PageLoader loading={loading} />
             <div className="card">
                 <div className="card-header">
                     <h4 className="card-title">FAQ List</h4>
@@ -265,7 +270,7 @@ const Faq = () => {
                     <div className="table-responsive">
                         {
                             data && data.length > 0 ?
-                                <Table dataSource={data} columns={columnss} /> : <Empty />
+                                <Table dataSource={data} columns={columnss} className='table_custom' /> : <Empty />
                         }
                     </div>
                 </div>
@@ -313,10 +318,10 @@ const Faq = () => {
                     <div>
                         <Form.Item
                             name="category"
-                            rules={[{ required: true, message: "Please select group name!" }]}
+                            rules={[{ required: true, message: "Please select group name" }]}
                         >
                             <Select
-                                placeholder="Select a duration"
+                                placeholder="Select a group"
                                 name="category"
                                 id="category"
                                 label="category"
@@ -338,12 +343,9 @@ const Faq = () => {
                         rules={[
                             {
                                 required: true,
-                                message: "Please enter question!"
+                                message: "Please enter question"
                             },
-                            {
-                                pattern: new RegExp(/^[a-zA-Z@~`!@#$%^&*()_=+\\\\';:\"\\/?>.<,-]+$/i),
-                                message: "Enter only characters"
-                            }
+                            { pattern: new RegExp(".*\\S.*[a-zA-z0-9 ]"), message: 'Only space is not allowed' }
                         ]}
                     >
                         <Input type="textarea" placeholder='Enter question' />
@@ -355,12 +357,9 @@ const Faq = () => {
                         rules={[
                             {
                                 required: true,
-                                message: "Please enter answer!"
+                                message: "Please enter answer"
                             },
-                            {
-                                pattern: new RegExp(/^[a-zA-Z@~`!@#$%^&*()_=+\\\\';:\"\\/?>.<,-]+$/i),
-                                message: "Enter only characters"
-                            }
+                            { pattern: new RegExp(".*\\S.*[a-zA-z0-9 ]"), message: 'Only space is not allowed' }
                         ]}
                     >
                         <Input type="textarea" placeholder='Enter answer' />

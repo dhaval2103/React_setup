@@ -7,6 +7,7 @@ import { Dropdown } from "react-bootstrap";
 import ToastMe from '../Common/ToastMe';
 import dummy from "../../../images/dummy.png";
 import { SearchOutlined } from '@ant-design/icons';
+import PageLoader from '../Common/PageLoader';
 
 const TechnicianList = () => {
   const dispatch = useDispatch();
@@ -18,6 +19,7 @@ const TechnicianList = () => {
   const [imageName, setImageName] = useState();
   const [serverErrors, setServerErrors] = useState({});
   const [test, setTest] = useState('');
+  const [loading, setLoading] = useState(true);
 
   const editModal = (text) => {
     setVisible(true)
@@ -34,6 +36,7 @@ const TechnicianList = () => {
     } else {
       form.resetFields();
       setId('')
+      setImageName('')
     }
   }
 
@@ -47,10 +50,12 @@ const TechnicianList = () => {
           ToastMe("Techician Updated Successfully", 'success')
           setVisible(false);
           setUserImg('')
-          form.resetFields();
           setId('')
+          form.resetFields();
         })
         .catch((errors) => {
+          setTest(errors.errors.email);
+          ToastMe(errors.errors.email, 'error')
           console.log({ errors })
         })
     } else {
@@ -65,6 +70,7 @@ const TechnicianList = () => {
         .catch((errors) => {
           console.log(errors)
           setTest(errors.errors.email);
+          ToastMe(errors.errors.email, 'error')
         })
     }
   }
@@ -87,6 +93,7 @@ const TechnicianList = () => {
           )
         }
         setData(newArr);
+        setLoading(false);
       })
       .catch((errors) => {
         console.log({ errors })
@@ -101,10 +108,11 @@ const TechnicianList = () => {
     setUserImg(userImgSrc);
     const image = new FormData();
     image.append('image', filesPath);
-    dispatch(UserService.uploadUserProfile(image))
+    dispatch(UserService.uploadCommonImage(image))
       .then((res) => {
         if (res.data) {
           setImageName(res.data.imageWithName)
+          setUserImg('')
         }
       })
       .catch((errors, statusCode) => {
@@ -214,11 +222,12 @@ const TechnicianList = () => {
   return (
     <>
       {/* <PageTitle activeMenu="Filtering" motherMenu="Table" /> */}
+      <PageLoader loading={loading} />
       <div className="card">
         <div className="card-header">
           <h4 className="card-title">Technician List</h4>
-          <div className="d-flex align-items-center gap-3"> 
-            <Input placeholder='Search....' onChange={(e) => getSearchValue(e)} prefix={<SearchOutlined className="site-form-item-icon" />}/>
+          <div className="d-flex align-items-center gap-3">
+            <Input placeholder='Search....' onChange={(e) => getSearchValue(e)} prefix={<SearchOutlined className="site-form-item-icon" />} />
             <Button type="primary" onClick={() => editModal()}>
               Add Technician
             </Button>
@@ -228,14 +237,14 @@ const TechnicianList = () => {
           <div className="table-responsive">
             {
               data && data.length > 0 ?
-                <Table dataSource={data} columns={columnss} /> : <Empty />
+                <Table dataSource={data} columns={columnss} className='table_custom' /> : <Empty />
             }
           </div>
         </div>
       </div>
       <Modal
         open={visible}
-        title={id != null ? 'Add Technician' : 'Edit Technician'}
+        title={id ? 'Edit Technician' : 'Add Technician'}
         okText="Submit"
         cancelText="Cancel"
         onCancel={() => {
@@ -277,38 +286,33 @@ const TechnicianList = () => {
             className='mb-2'
             name="name"
             rules={[
-              {
-                required: true,
-                message: "Please enter name!",
-              },
-              { max: 30, message: 'You can not enter more than 15 characters' },
-              {
-                pattern: new RegExp(/^[^-\s][a-zA-Z_\s-]+$/),
-                message: "Enter only characters"
-              }
+              { required: true, message: "Please enter name" },
+              { max: 50, message: 'You can not enter more than 50 characters' },
+              { pattern: new RegExp(".*\\S.*[a-zA-z0-9 ]"), message: 'Only space is not allowed' }
+
             ]}
           >
             <Input type="text" placeholder='Enter name' />
           </Form.Item>
 
-          <label className="label-name">Email</label>
+          <label className="label-name" >Email</label>
           <Form.Item
             className='mb-2'
             name="email"
             rules={[
               {
                 required: true,
-                message: "Please enter email!"
+                message: "Please enter email"
               },
               {
                 pattern: new RegExp(/^([A-Z0-9a-z._%+-])+\@([A-Za-z0-9.-])+(\.[A-Za-z]{2,4})+$/),
-                message: "'Please enter valid email address!"
+                message: "Please enter valid email address"
               }
             ]}
           >
             <Input type="text" placeholder='Enter email' />
           </Form.Item>
-          <span style={{ color: 'red' }}>{test}</span><br></br>
+          {/* <span style={{ color: 'red' }}>{test}</span><br></br> */}
           <label className="label-name">About</label>
           <Form.Item
             className='mb-2'
@@ -316,20 +320,30 @@ const TechnicianList = () => {
             rules={[
               {
                 required: true,
-                message: "Please enter about!"
+                message: "Please enter about"
               }
             ]}
           >
-            <Input.TextArea />
+            <Input.TextArea type="text" placeholder='Enter about' />
           </Form.Item>
           <label className="label-name">Image</label>
           <Form.Item
             className='mb-2'
             name="image"
           >
-            <Input type="file" name='image' className="file-input-control" id='file-input-control' onChange={previewUserImageOnChange} accept="image/*" />
+            <Input type="file" name='image' className="file-input-control" id='file-input-control'
+              // onChange={(event) => {
+              //   const files = event.target.files[0];
+              //   if (files !== undefined) {
+              //     setFlag('asd')
+              //     previewUserImageOnChange(files);
+              //   }
+              // }}
+              onChange={previewUserImageOnChange}
+              accept="image/*" />
           </Form.Item>
           {userImg != '' ? <img src={userImg} style={{ width: "20%" }} alt="gallery" /> : ''}
+          {imageName != '' ? <img src={process.env.REACT_APP_PROFILE_URL + 'images/' + imageName} style={{ width: "20%" }} alt="gallery" /> : ''}
 
         </Form>
       </Modal>

@@ -8,6 +8,7 @@ import ToastMe from '../Common/ToastMe';
 import Swal from 'sweetalert2';
 import SubscriptionService from '../../../services/subscription';
 import moment from "moment";
+import PageLoader from '../Common/PageLoader';
 
 const ManageSubscriptions = () => {
     const dispatch = useDispatch();
@@ -16,6 +17,7 @@ const ManageSubscriptions = () => {
     const [type, setType] = useState('');
     const [id, setId] = useState('');
     const [form] = Form.useForm();
+    const [loading, setLoading] = useState(true);
 
     const editModal = (text) => {
 
@@ -29,11 +31,12 @@ const ManageSubscriptions = () => {
             setType(text?.duration);
             setId(text?.id)
         } else {
-            form.setFieldsValue({
-                duration: '',
-                packageName: '',
-                price: '',
-            })
+            // form.setFieldsValue({
+            //     duration: '',
+            //     packageName: '',
+            //     price: '',
+            // })
+            form.resetFields();
             setType('');
             setId('')
         }
@@ -49,11 +52,11 @@ const ManageSubscriptions = () => {
             dispatch(SubscriptionService.editSubscriptionPlan(values))
                 .then((res) => {
                     getSubscription();
-                    ToastMe(res.data.message, 'success')
+                    ToastMe("Suscription plan updated successfully", 'success')
+                    setVisible(false);
+                    setType('')
+                    setId('')
                 })
-            setVisible(false);
-            setType('')
-            setId('')
                 .catch((errors) => {
                     console.log({ errors })
                 })
@@ -61,7 +64,7 @@ const ManageSubscriptions = () => {
             dispatch(SubscriptionService.addSubscriptionPlan(values))
                 .then((res) => {
                     getSubscription();
-                    ToastMe(res.data.message, 'success')
+                    ToastMe("Suscription plan added successfully", 'success')
                 })
                 .catch((errors) => {
                     console.log({ errors })
@@ -93,6 +96,7 @@ const ManageSubscriptions = () => {
                     )
                 }
                 setData(newArr);
+                setLoading(false);
             })
             .catch((errors) => {
                 console.log({ errors })
@@ -218,6 +222,7 @@ const ManageSubscriptions = () => {
 
     return (
         <>
+            <PageLoader loading={loading} />
             <div className="card">
                 <div className="card-header">
                     <h4 className="card-title">Subscriptions Plan List</h4>
@@ -229,12 +234,12 @@ const ManageSubscriptions = () => {
                     <div className="table-responsive">
                         {
                             data && data.length > 0 ?
-                                <Table dataSource={data} columns={columnss} /> : <Empty />
+                                <Table dataSource={data} columns={columnss} className='table_custom' /> : <Empty />
                         }
                     </div>
                 </div>
             </div>
-            <Modal open={visible} title="Add Plan" okText="Submit" cancelText="Cancel"
+            <Modal open={visible} title={id ? "Edit Plan" : "Add Plan"} okText="Submit" cancelText="Cancel"
                 onCancel={() => {
                     setVisible(false);
                 }}
@@ -266,7 +271,7 @@ const ManageSubscriptions = () => {
                         <label className="label-name">Duration</label>
                         <Form.Item
                             name="duration"
-                            rules={[{ required: true, message: "Please select plan duration!" }]}
+                            rules={[{ required: true, message: "Please select plan duration" }]}
                         >
                             <Select className="select-control" value={type} style={{ width: 120 }} onChange={handleChange}
                                 options={[
@@ -280,7 +285,7 @@ const ManageSubscriptions = () => {
                     <div>
                         <Form.Item
                             name="duration"
-                            rules={[{ required: true, message: "Please select plan duration!" }]}
+                            rules={[{ required: true, message: "Please select plan duration" }]}
                         >
                             <Select
                                 placeholder="Select a duration"
@@ -303,9 +308,9 @@ const ManageSubscriptions = () => {
                     <label className="label-name">Package Name</label>
                     <Form.Item name="packageName"
                         rules={[
-                            { required: true, message: "Please entre package name!" },
-                            { max: 15, message: 'You can not enter more than 15 characters' },
-                            { pattern: new RegExp("[a-zA-Z]+$"), message: 'Please enter only characters' }
+                            { required: true, message: "Please enter package name" },
+                            { max: 50, message: 'You can not enter more than 50 characters' },
+                            { pattern: new RegExp(".*\\S.*[a-zA-z0-9 ]"), message: 'Only space is not allowed' }
                         ]}
                     >
                         <Input placeholder='Enter Package Name' />
@@ -314,7 +319,7 @@ const ManageSubscriptions = () => {
                     <label className="label-name">Price</label>
                     <Form.Item
                         name="price"
-                        rules={[{ required: true, message: "Please enter price!" },
+                        rules={[{ required: true, message: "Please enter price" },
                         { pattern: new RegExp("^[1-9]"), message: 'Price should be greater then 1.' }]}
                     >
                         <Input type='number' max={5} placeholder='Enter Price' />

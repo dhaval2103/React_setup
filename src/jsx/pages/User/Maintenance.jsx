@@ -7,6 +7,7 @@ import ToastMe from '../Common/ToastMe';
 import { Modal, Table, Button, Input, Form, DatePicker, Select, TimePicker, Space, Empty } from 'antd';
 import moment from 'moment';
 import { SearchOutlined } from '@ant-design/icons';
+import PageLoader from '../Common/PageLoader';
 
 const User = (props) => {
     const dispatch = useDispatch();
@@ -20,7 +21,7 @@ const User = (props) => {
     const [form] = Form.useForm();
     const [userData, setuserData] = useState([]);
     const [userId, setuserId] = useState();
-
+    const [loading, setLoading] = useState(true);
 
     const onDateChange = (date, dateString) => {
         form.setFieldsValue({
@@ -50,12 +51,14 @@ const User = (props) => {
                             _id: res?.data[i]?._id,
                             attachments: res?.data[i]?.attachments,
                             verifyStatus: res?.data[i]?.verifyStatus,
+                            technicianStatus: res?.data[i]?.technicianStatus,
                             user: res?.data[i]?.user,
                             technician: res?.data[i]?.technician || '-',
                         }
                     )
                 }
                 setData(arr);
+                setLoading(false);
             })
             .catch((errors) => {
                 console.log({ errors })
@@ -68,33 +71,17 @@ const User = (props) => {
             .then((res) => {
                 ToastMe(res.data.message, 'success')
                 getMaintenance();
+                setVisibleApprove(false)
+                form.resetFields()
             })
-        setVisibleApprove(false)
-        form.resetFields()
             .catch((errors) => {
                 console.log({ errors })
             })
     }
-    // const approveRequest = (values) => {
-    //     values.verifyStatus = 2
-    //     dispatch(UserService.approveRequest(values))
-    //         .then((res) => {
-    //             ToastMe(res.data.message, 'success')
-    //             getMaintenance();
-    //         })
-    //     setVisibleApprove(false)
-    //         .catch((errors) => {
-    //             console.log({ errors })
-    //         })
-    // }
-
-    // const openapprovemodal = (text) => {
-    //     setVisibleApprove(true);
-    //     setId(text._id)
-    // }
     const editModal = (text) => {
         setVisible(true)
         setTest('')
+        setuserId('')
         form.resetFields()
     }
 
@@ -104,11 +91,13 @@ const User = (props) => {
                 getMaintenance();
                 ToastMe("Maintance Request Added Successfully", 'success')
                 setVisible(false)
+                setTest('')
+                setuserId('')
                 form.resetFields()
             })
             .catch((errors) => {
-                console.log({ errors })
                 setTest(errors.errorData.date);
+                ToastMe(errors.errorData.date, 'error')
             })
 
     }
@@ -131,7 +120,7 @@ const User = (props) => {
     const handleChangeUserName = (e) => {
         setuserId(e);
         form.setFieldValue('userId', e)
-      }
+    }
     const getUser = (value = '') => {
         dispatch(UserService.getUser(value))
             .then((res) => {
@@ -207,26 +196,30 @@ const User = (props) => {
         },
         {
             title: 'Status',
-            key: 'verifyStatus',
+            key: 'technicianStatus',
             render: (text) => {
-                if (text.verifyStatus == 0) {
+                if (text.technicianStatus == 0) {
                     return (
-                        <span className="badge badge-warning text-dark">Pending</span>
+                        <span className="badge badge-primary">Pending</span>
                     )
-                } else if (text.verifyStatus == 1) {
+                } else if (text.technicianStatus == 1) {
                     return (
                         <span className="badge badge-success">Completed</span>
                     )
-                } else if (text.verifyStatus == 2) {
+                } else if (text.technicianStatus == 2) {
                     return (
-                        <span className="badge badge-success">In progress
+                        <span className="badge badge-warning">In progress
                         </span>
                     )
-                } else {
+                } else if (text.technicianStatus == 4){
+                    return (
+                        <span className="badge badge-info">Closed</span>
+                    )
+                }else{
                     return (
                         <span className="badge badge-danger">Reject</span>
                     )
-                }
+                }   
             }
         },
         {
@@ -257,9 +250,28 @@ const User = (props) => {
         props.history.push("/chat", { userDetail: text })
     }
 
-
+    const generateHours = () => {
+        const now = moment();
+        const selectedDate = form.getFieldValue('date');
+        if (selectedDate && moment(selectedDate).isSame(now, 'day')) {
+          return [...Array(now.hour())].map((_, i) => i);
+        }
+        return [];
+      };
+      
+      const generateMinutes = (selectedHour) => {
+        const now = moment();
+        const selectedDate = form.getFieldValue('date');
+        if (selectedDate && moment(selectedDate).isSame(now, 'day') && selectedHour === now.hour()) {
+          return [...Array(now.minute())].map((_, i) => i);
+        }
+        return [];
+      };
+      
+      
     return (
         <>
+            <PageLoader loading={loading} />
             <div className="card">
                 <div className="card-header">
                     <h4 className="card-title">Request List</h4>
@@ -273,7 +285,7 @@ const User = (props) => {
                     <div className="table-responsive">
                         {
                             data && data.length > 0 ?
-                                <Table dataSource={data} columns={columnss} /> : <Empty />
+                                <Table dataSource={data} columns={columnss} className='table_custom' /> : <Empty />
                         }
                     </div>
                 </div>
@@ -310,36 +322,7 @@ const User = (props) => {
                     </Button>
                 ]}
             >
-                <label className="label-name">Select User</label>
-                <div>
-                    <Form.Item
-                        name="userId"
-                        rules={[{ required: true, message: "Please select User name!" }]}
-                    >
-                        <Space
-                            style={{
-                                width: '100%',
-                            }}
-                            direction="vertical"
-                        >
-                            <Select
-                                allowClear
-                                style={{
-                                    width: '100%',
-                                }}
-                                showSearch
-                                placeholder="Please select"
-                                value={userId}
-                                onChange={handleChangeUserName}
-                                options={userData}
-                                filterOption={(inputValue, option) =>
-                                    option.label.toUpperCase().indexOf(inputValue.toUpperCase()) !== -1
-                                }
-                            />
-                        </Space>
 
-                    </Form.Item>
-                </div>
                 <Form
                     form={form}
                     layout="vertical"
@@ -347,49 +330,74 @@ const User = (props) => {
                     initialValues={{
                         modifier: "public"
                     }}
+
                 >
+                    <label className="label-name">Select User</label>
+                    <div>
+                        <Form.Item
+                            name="userId"
+                            rules={[{ required: true, message: "Please select User name" }]}
+                        >
+                            <Space
+                                style={{
+                                    width: '100%',
+                                }}
+                                direction="vertical"
+                            >
+                                <Select
+                                    allowClear
+                                    style={{
+                                        width: '100%',
+                                    }}
+                                    showSearch
+                                    placeholder="Please select"
+                                    value={userId}
+                                    onChange={handleChangeUserName}
+                                    options={userData}
+                                    filterOption={(inputValue, option) =>
+                                        option.label.toUpperCase().indexOf(inputValue.toUpperCase()) !== -1
+                                    }
+                                />
+                            </Space>
+
+                        </Form.Item>
+                    </div>
                     <label className="label-name">Location</label>
                     <Form.Item
                         name="location"
                         rules={[
-                            {
-                                required: true,
-                                message: "Please enter location!"
-                            },
-                            { max: 20, message: 'You can not enter more than 15 characters' },
+                            { required: true, message: "Please enter location" },
+                            { max: 50, message: 'You can not enter more than 50 characters' },
+                            { pattern: new RegExp(".*\\S.*[a-zA-z0-9 ]"), message: 'Only space is not allowed' }
                         ]}
                     >
-                        <Input type="textarea" placeholder='Enter location' />
+                        <Input type="text" placeholder='Enter location' />
                     </Form.Item>
                     <label className="label-name">Select Date</label>
                     <Form.Item
                         name="date"
                         rules={[
-                            {
-                                required: true,
-                                message: "Please enter date!"
-                            }
-                        ]}
+                            { required: true, message: "Please enter date" }]}
                         className='form_item_datepicker mb-2'
                     >
                         <Space direction="vertical" className='d-block w-100'>
-                            <DatePicker onChange={onDateChange} className='' />
+                            <DatePicker onChange={onDateChange} disabledDate={(current) => current && current < moment().startOf('day')} className='' />
                         </Space>
                     </Form.Item>
-                    <span style={{ color: 'red' }}>{test}</span><br></br>
+                    {/* <span style={{ color: 'red' }}>{test}</span><br></br> */}
                     <label className="label-name">Select Time</label>
                     <Form.Item
                         name="time"
                         rules={[
-                            {
-                                required: true,
-                                message: "Please enter time!"
-                            }
+                            { required: true, message: "Please enter time" }
                         ]}
                         className='form_item_datepicker'
                     >
                         <Space direction="vertical" className='d-block w-100'>
-                            <TimePicker format={'HH:mm'} onChange={onTimeChange} />
+                            <TimePicker format={'HH:mm'} onChange={onTimeChange}
+                               disabledHours={() => generateHours()}
+                               disabledMinutes={(selectedHour) => generateMinutes(selectedHour)}
+                            />
                         </Space>
                     </Form.Item>
 
@@ -397,19 +405,16 @@ const User = (props) => {
                     <Form.Item
                         name="message"
                         rules={[
-                            {
-                                required: true,
-                                message: "Please enter message!"
-                            }
+                            { required: true, message: "Please enter message" },
+                            { pattern: new RegExp(".*\\S.*[a-zA-z0-9 ]"), message: 'Only space is not allowed' }
                         ]}
                     >
-                        <Input type="textarea" placeholder='Enter message' />
+                        <Input.TextArea type="text" placeholder='Enter message' />
                     </Form.Item>
                     <label className="label-name">Technician Name</label>
                     <div>
                         <Form.Item
                             name="technicianId"
-                            rules={[{ required: true, message: "Please select Technician name!" }]}
                         >
                             <Select
                                 placeholder="Select a Technician"
@@ -473,7 +478,7 @@ const User = (props) => {
                     <div>
                         <Form.Item
                             name="technicianId"
-                            rules={[{ required: true, message: "Please select Technician name!" }]}
+                            rules={[{ required: true, message: "Please select Technician name" }]}
                         >
                             <Select
                                 placeholder="Select a Technician"

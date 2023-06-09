@@ -5,9 +5,10 @@ import { loginConfirmedAction } from '../../store/actions/AuthActions';
 const BaseUrl = process.env.REACT_APP_BASE_URL;
 
 export function getUser(value) {
+    let search = value || '';
     return dispatch => (
         new Promise((resolve, reject) => {
-            Http.callApi('get', BaseUrl + '/admin/userList?search=' + value)
+            Http.callApi('get', BaseUrl + '/admin/userList?search=' + search)
                 .then(function (res) {
                     // dispatch(action.setNotificationData(res));
                     return resolve(res);
@@ -63,6 +64,25 @@ export function updateUserProfile(data, adminData) {
     )
 }
 
+export function uploadProfile(data) {
+    data.env = 'test';
+    return dispatch => (
+        new Promise((resolve, reject) => {
+            Http.callApi('post', BaseUrl + '/admin/uploadImage', data)
+                .then(function (res) {
+                    return resolve(res);
+                })
+                .catch(function (error) {
+                    console.log(error);
+                    const data = {
+                        errorData: error.response.data.message,
+                        // statusCode: error.response.status,
+                    };
+                    return reject(data);
+                })
+        })
+    )
+}
 export function uploadUserProfile(data) {
     data.env = 'test';
     return dispatch => (
@@ -82,6 +102,27 @@ export function uploadUserProfile(data) {
         })
     )
 }
+
+export function uploadCommonImage(data) {
+    data.env = 'test';
+    return dispatch => (
+        new Promise((resolve, reject) => {
+            Http.callApi('post', BaseUrl + '/admin/commonuploadImage', data)
+                .then(function (res) {
+                    return resolve(res);
+                })
+                .catch(function (error) {
+                    console.log(error);
+                    const data = {
+                        errorData: error.response.data.message,
+                        // statusCode: error.response.status,
+                    };
+                    return reject(data);
+                })
+        })
+    )
+}
+
 export function getCms() {
     return dispatch => (
         new Promise((resolve, reject) => {
@@ -140,7 +181,7 @@ export function approveRequest(data) {
     let data_ = {
         mId: data._id,
         env: 'test',
-        verifyStatus: data?.verifyStatus,
+        technicianStatus: data?.technicianStatus,
         technicianId: data?.technicianId
     }
     return dispatch => (
@@ -458,9 +499,8 @@ export function updateTechician(data) {
                     return resolve(res);
                 })
                 .catch(function (error) {
-                    console.log(error);
                     const data = {
-                        errorData: error.response.data.message,
+                        errors: error.response.data.errors,
                         // statusCode: error.response.status,
                     };
                     return reject(data);
@@ -593,7 +633,45 @@ export function updateUser(data) {
                 .catch(function (error) {
                     console.log(error);
                     const data = {
-                        errorData: error.response.data.message,
+                        errors: error.response.data.errors,
+                        // statusCode: error.response.status,
+                    };
+                    return reject(data);
+                })
+        })
+    )
+}
+export function addUser(data) {
+    data.env = 'test'
+    return dispatch => (
+        new Promise((resolve, reject) => {
+            Http.callApi('post', BaseUrl + '/admin/userRegister', data)
+                .then(function (res) {
+                    return resolve(res);
+                })
+                .catch(function (error) {
+                    console.log(error);
+                    const data = {
+                        errors: error.response.data.errors,
+                        // statusCode: error.response.status,
+                    };
+                    return reject(data);
+                })
+        })
+    )
+}
+export function getPaymentHistory() {
+    // data.env = 'test'
+    return dispatch => (
+        new Promise((resolve, reject) => {
+            Http.callApi('get', BaseUrl + '/admin/PaymentHistory')
+                .then(function (res) {
+                    return resolve(res);
+                })
+                .catch(function (error) {
+                    console.log(error);
+                    const data = {
+                        errorData: error.response.data.errors,
                         // statusCode: error.response.status,
                     };
                     return reject(data);

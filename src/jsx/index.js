@@ -130,6 +130,7 @@ import TechnicianList from "./pages/User/TechnicianList";
 import ViewMaintence from "./pages/User/ViewMaintence";
 import UserNotification from "./pages/Setting/UserNotification";
 import NotificationDetail from "./pages/Setting/NotificationDetail";
+import LiveChat from "./pages/User/LiveChat";
 
 const Markup = () => {
   const { menuToggle } = useContext(ThemeContext);
@@ -170,6 +171,8 @@ const Markup = () => {
     { url: "faq-group-list", component: FagGroup },
     { url: "technician-list", component: TechnicianList },
 
+    // Live Chat
+    { url: "live-chat", component:LiveChat },
 	
 	///Demo
     { url: "theme1", component: Theme1 },

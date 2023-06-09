@@ -12,13 +12,14 @@ import PhoneInput from "react-phone-input-2";
 import dummy from "../../../images/dummy.png";
 import 'react-phone-input-2/lib/style.css';
 import startsWith from 'lodash.startswith';
+import PageLoader from '../Common/PageLoader';
 
 
 const User = (props) => {
     const dispatch = useDispatch();
     const [data, setData] = useState([]);
     const { chatClient } = useContext(SocketContext);
-    const [id, setId] = useState('');
+    const [id, setId] = useState(null);
     const [phoneValue, setPhoneValue] = useState();
     const [visible, setVisible] = useState(false);
     const [userImg, setUserImg] = useState('');
@@ -27,6 +28,10 @@ const User = (props) => {
     const [isDefaultCountryCode, setIsDefaultCountryCode] = useState('in');
     const [phoneNo, setPhoneNo] = useState('');
     const [countryCode, setCountryCode] = useState('');
+    const [loading, setLoading] = useState(true);
+    const [mobile, setMobile] = useState('');
+    const [email, setEmail] = useState('');
+    const [phoneVelidation, setPhoneVlidation] = useState('')
 
     useEffect(() => {
         chatClient.on('message', function (data) {
@@ -36,9 +41,18 @@ const User = (props) => {
         })
     }, [chatClient])
 
+
     const handlePhoneValue = (value, data) => {
+
         setPhoneNo(value.slice(data.dialCode.length));
         setCountryCode(data.dialCode);
+
+        let dataValue = '' + phoneNo;
+        // console.log("dataValue", dataValue.length);
+        setPhoneVlidation('')
+        if (dataValue.length == 1) {
+            setPhoneVlidation('please enter your phone number')
+        }
     };
 
     const previewUserImageOnChange = (ev) => {
@@ -47,7 +61,7 @@ const User = (props) => {
         setUserImg(userImgSrc);
         const image = new FormData();
         image.append('image', filesPath);
-        dispatch(UserService.uploadUserProfile(image))
+        dispatch(UserService.uploadCommonImage(image))
             .then((res) => {
                 if (res.data) {
                     setUserImg('');
@@ -60,7 +74,7 @@ const User = (props) => {
             });
     }
 
-    const getUserList = (value = '') => {
+    const getUserList = (value) => {
         dispatch(UserService.getUser(value))
             .then((res) => {
                 var newArr = [];
@@ -89,6 +103,7 @@ const User = (props) => {
                     )
                 }
                 setData(newArr);
+                setLoading(false)
             })
             .catch((errors) => {
                 console.log({ errors })
@@ -96,18 +111,33 @@ const User = (props) => {
     }
 
     const editModal = (text) => {
-        let number = text?.countryCode + text?.mobile;
-        form.setFieldsValue({
-            email: text?.email || '',
-            mobile: number || '',
-            fullName: text?.fullName || '',
-        })
-        setVisible(true)
-        setImageName(text?.image)
-        setUserImg('')
-        setCountryCode(text?.countryCode)
-        setPhoneNo(text?.mobile)
-        setId(text?.id)
+        setVisible(true);
+        form.resetFields();
+        setPhoneVlidation('')
+        setEmail('');
+        setMobile('');
+        if (text) {
+            let number = text?.countryCode + text?.mobile;
+            form.setFieldsValue({
+                email: text?.email || '',
+                mobile: number || '',
+                fullName: text?.fullName || '',
+            })
+            setImageName(text?.image)
+            setUserImg('')
+            setPhoneVlidation('')
+            setCountryCode(text?.countryCode)
+            setPhoneNo(text?.mobile)
+            setId(text?.id)
+        } else {
+            form.resetFields();
+            setImageName('')
+            setUserImg('')
+            setCountryCode('')
+            setPhoneNo('')
+            setPhoneVlidation('')
+            setId(null)
+        }
     }
 
     const activeInactiveUser = (text) => {
@@ -137,21 +167,43 @@ const User = (props) => {
 
     const onSubmit = (values) => {
         values.profilePic = imageName;
-        values.user_id = id;
         values.countryCode = countryCode;
         values.mobile = phoneNo;
-        dispatch(UserService.updateUser(values))
-            .then((res) => {
-                getUserList();
-                ToastMe("User Updated Successfully", 'success')
-                setVisible(false);
-                setPhoneNo('');
-                setCountryCode('');
-                form.resetFields();
-            })
-            .catch((errors) => {
-                console.log(errors)
-            })
+        if (id) {
+            values.user_id = id;
+            dispatch(UserService.updateUser(values))
+                .then((res) => {
+                    getUserList();
+                    ToastMe("User Updated Successfully", 'success')
+                    setVisible(false);
+                    setUserImg('')
+                    setId('')
+                    setPhoneVlidation('');
+                    setEmail('');
+                })
+                .catch((errors) => {
+                    setEmail(errors.errors.email);
+                    ToastMe(errors.errors.email, 'error')
+                    setMobile(errors.errors.mobile);
+                    ToastMe(errors.errors.mobile, 'error')
+                })
+        } else {
+            dispatch(UserService.addUser(values))
+                .then((res) => {
+                    getUserList();
+                    ToastMe("User Added Successfully", 'success')
+                    setVisible(false);
+                    setPhoneVlidation('');
+                    setEmail('');
+                    setMobile('');
+                    form.resetFields();
+                })
+                .catch((errors) => {
+                    console.log(errors)
+                    setEmail(errors.errors.email);
+                    setMobile(errors.errors.mobile);
+                })
+        }
     }
 
     useEffect(() => {
@@ -249,7 +301,7 @@ const User = (props) => {
             key: 'profilePic',
             render: (text) => (
                 <div className='col-6'>
-                    <img src={text == '-' ? dummy : text} alt="" width="70px" height="70px" />
+                    <img src={text == '-' ? dummy : text} alt="" width="120px" height="80px" />
                 </div>
             ),
         },
@@ -307,30 +359,34 @@ const User = (props) => {
     // const viewChat = (text) => {
     //     props.history.push("/chat", { userDetail: text })
     // }
-    const handleSearch = (value) => {
-        getUserList(value)
+    const handleSearch = (e) => {
+        getUserList(e.target.value)
     }
 
     return (
         <>
+            <PageLoader loading={loading} />
             <div className="card">
                 <div className="card-header">
                     <h4 className="card-title">User List</h4>
-                    <div className="search-group">
-                        <Input placeholder='Search' onChange={(e) => handleSearch(e.target.value)} prefix={<SearchOutlined className="site-form-item-icon" />} />
+                    <div className="d-flex align-items-center gap-3">
+                        <Input placeholder='Search....' onChange={(e) => handleSearch(e)} prefix={<SearchOutlined className="site-form-item-icon" />} />
+                        <Button type="primary" onClick={() => editModal()}>
+                            Add User
+                        </Button>
                     </div>
                 </div>
                 <div className="card-body">
                     <div className="table-responsive">
                         {
                             data && data.length > 0 ?
-                                <Table dataSource={data} columns={columnss} /> : <Empty />
+                                <Table dataSource={data} columns={columnss} className='table_custom' /> : <Empty />
                         }
                     </div>
                 </div>
             </div>
 
-            <Modal open={visible} title="Edit User" okText="Submit" cancelText="Cancel"
+            <Modal open={visible} title={id != null ? 'Edit User' : 'Add User'} okText="Submit" cancelText="Cancel"
                 onCancel={() => {
                     setVisible(false);
                 }}
@@ -361,9 +417,9 @@ const User = (props) => {
                     <label className="label-name">Full Name</label>
                     <Form.Item name="fullName"
                         rules={[
-                            { required: true, message: "Please entre package name!" },
-                            { max: 30, message: 'You can not enter more than 15 characters' },
-                            { pattern: new RegExp("[a-zA-Z]+$"), message: 'Please enter only characters' }
+                            { required: true, message: "Please enter name" },
+                            { max: 50, message: 'You can not enter more than 50 characters' },
+                            { pattern: new RegExp(".*\\S.*[a-zA-z0-9 ]"), message: 'Only space is not allowed' }
                         ]}
                     >
                         <Input placeholder='Enter Name' />
@@ -374,28 +430,40 @@ const User = (props) => {
                         className='mb-2'
                         name="email"
                         rules={[
-                            {
-                                required: true,
-                                message: "Please enter email!"
-                            },
+                            { required: true, message: "Please enter email" },
                             {
                                 pattern: new RegExp(/^([A-Z0-9a-z._%+-])+\@([A-Za-z0-9.-])+(\.[A-Za-z]{2,4})+$/),
-                                message: "'Please enter valid email address!"
+                                message: "Please enter valid email address"
                             }
                         ]}
                     >
                         <Input type="text" placeholder='Enter email' />
                     </Form.Item>
-                    {/* <label class="label-name">Mobile Number</label> */}
+                    {/* <span style={{ color: 'red' }}>{email}</span><br></br> */}
+                    {id == null ?
+                        <>
+                            <label className="label-name">Password</label>
+                            <Form.Item
+                                className='mb-2'
+                                name="password"
+                                rules={[
+                                    { required: true, message: "Please enter password" },
+                                    { min: 8, message: 'You can not enter atleast 8 characters' },
+                                    {
+                                        pattern: new RegExp('^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[@$!%*?&])[A-Za-z\\d@$!%*?&]{8,}$'),
+                                        message: 'Password must contain at least one lowercase letter, uppercase letter, number, and special character'
+                                    }
+                                ]}
+                            >
+                                <Input type="password" />
+                            </Form.Item>
+                        </> : ''}
+                    <label class="label-name">Mobile Number</label>
                     <Form.Item
+                        className='mb-2'
                         name="mobile"
-                        rules={[{ required: true, message: 'Please enter your mobile number!' }]}
+                        rules={[{ required: true, message: 'Please enter your mobile number' }]}
                     >
-                        {/* <PhoneInput
-                            country={'us'}
-                            onChange={(e) => handlePhoneValue(e)}
-                        /> */}
-
                         <PhoneInput
                             country={isDefaultCountryCode}
                             countryCodeEditable={false}
@@ -411,7 +479,10 @@ const User = (props) => {
                                 });
                             }}
                         />
+
                     </Form.Item>
+                    <span style={{ color: 'red' }}>{phoneVelidation}</span><br></br>
+                    {/* <span style={{ color: 'red' }}>{mobile}</span><br></br> */}
                     <label className="label-name">Profile</label>
                     <Form.Item
                         className='mb-2'
@@ -420,7 +491,7 @@ const User = (props) => {
                         <Input type="file" name='image' className="file-input-control" id='file-input-control' onChange={previewUserImageOnChange} accept="image/*" />
                     </Form.Item>
                     {userImg != '' ? <img src={userImg} style={{ width: "20%" }} alt="gallery" /> : ''}
-                    {imageName != '' ? <img src={process.env.REACT_APP_PROFILE_URL + 'images/' + imageName} style={{ width: "20%" }} alt="gallery" /> : ''}
+                    {imageName != '' ? <img src={process.env.REACT_APP_PROFILE_URL + 'images/' + imageName} style={{ width: "35%" }} alt="gallery" /> : ''}
                 </Form>
             </Modal>
         </>

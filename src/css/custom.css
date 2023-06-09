@@ -1,0 +1,71 @@
+body[data-theme-version="dark"] .table-responsive .table_custom .ant-table{
+     background-color: #202020 !important;
+}
+body[data-theme-version="dark"] .table-responsive .table_custom .ant-table .ant-table-container .ant-table-content table tbody tr:hover td {
+    background-color: #b3b3b3 !important;
+    color:#000000 !important;
+}
+
+body[data-theme-version="dark"] .table-responsive .table_custom .ant-table .ant-table-container .ant-table-content table tbody tr > td,
+body[data-theme-version="dark"] .table-responsive .table_custom .ant-table .ant-table-container .ant-table-content table thead tr > th{
+      border-bottom: 1px solid #313131 !important;
+}
+body[data-theme-version="dark"] .table-responsive .table_custom .ant-table .ant-table-container .ant-table-content table tbody tr > td{
+    background-color: #202020 !important;
+    color:#ffffff !important;
+}
+body[data-theme-version="dark"] .table-responsive .table_custom .ant-table .ant-table-container .ant-table-content table thead tr > th{
+    background-color:#b3b3b3 !important;
+    color:#000000 !important;
+}
+
+@media screen and (max-width: 767px){
+    /* #main-wrapper .custom_navbar_header .nav-control {
+        display: block;
+        right: -4rem;
+    }
+    #main-wrapper .header .header-content{
+        padding-left: 5rem;
+    } */
+    .nav-header{
+        width: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 14px;
+        padding-left: 14px;
+        padding-right: 14px;
+    }
+    .nav-control{
+        position: unset;
+        right: 0;
+        top: unset;
+        transform: none;
+        width: auto;
+
+    }
+    .nav-header .brand-logo{
+        justify-content: flex-start;
+    }
+    .nav-header .brand-logo > div{
+        max-width: 130px;
+        margin: 0px !important;
+    }
+    .nav-header .brand-logo img{
+        width: auto;
+        max-width: 100%;
+        height: auto;
+    }
+
+    .nav-header .brand-logo .logo{
+        height: 85px;
+    }
+}
+
+@media screen and (max-width: 1400px){
+    .nav-header .brand-logo img{
+        width: auto;
+        max-width: 70%;
+        height: auto;
+    }
+}

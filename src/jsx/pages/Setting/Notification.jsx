@@ -7,6 +7,7 @@ import { Dropdown } from "react-bootstrap";
 import ToastMe from '../Common/ToastMe';
 import Swal from 'sweetalert2';
 import moment from "moment";
+import PageLoader from '../Common/PageLoader';
 
 
 const Notification = () => {
@@ -15,6 +16,7 @@ const Notification = () => {
     const [visible, setVisible] = useState(false);
     const [id, setId] = useState('');
     const [form] = Form.useForm();
+    const [loading, setLoading] = useState(true);
 
     const editModal = (text) => {
         setVisible(true)
@@ -25,10 +27,11 @@ const Notification = () => {
                 message: text.message,
             })
         } else {
-            form.setFieldsValue({
-                title: '',
-                message: '',
-            })
+            // form.setFieldsValue({
+            //     title: '',
+            //     message: '',
+            // })
+            form.resetFields();
         }
     }
 
@@ -65,6 +68,7 @@ const Notification = () => {
                     )
                 }
                 setData(newArr);
+                setLoading(false);
             })
             .catch((errors) => {
                 console.log({ errors })
@@ -131,6 +135,7 @@ const Notification = () => {
 
     return (
         <>
+            <PageLoader loading={loading} />
             <div className="card">
                 <div className="card-header">
                     <h4 className="card-title">Notification</h4>
@@ -142,7 +147,7 @@ const Notification = () => {
                     <div className="table-responsive">
                         {
                             data && data.length > 0 ?
-                                <Table dataSource={data} columns={columnss} /> : <Empty />
+                                <Table dataSource={data} columns={columnss} className='table_custom' /> : <Empty />
                         }
                     </div>
                 </div>
@@ -178,7 +183,7 @@ const Notification = () => {
 
                     <label className="label-name">Title</label>
                     <Form.Item name="title"
-                        rules={[{ required: true, message: "Please entre title!" },{ max: 15, message: 'You can not enter more than 15 characters' }]}
+                        rules={[{ required: true, message: "Please enter title" }, { max: 50, message: 'You can not enter more than 50 characters' }]}
                     >
                         <Input type="text" placeholder='Enter Title' />
                     </Form.Item>
@@ -186,7 +191,7 @@ const Notification = () => {
                     <label className="label-name">Message</label>
                     <Form.Item
                         name="message"
-                        rules={[{ required: true, message: "Please enter message!" }]}
+                        rules={[{ required: true, message: "Please enter message" }]}
                     >
                         <Input type="text" placeholder='Enter Message' />
                     </Form.Item>

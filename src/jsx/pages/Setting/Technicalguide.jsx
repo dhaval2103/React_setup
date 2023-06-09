@@ -6,6 +6,7 @@ import { Dropdown } from "react-bootstrap";
 import ToastMe from '../Common/ToastMe';
 import moment from "moment";
 import { SearchOutlined } from '@ant-design/icons';
+import PageLoader from '../Common/PageLoader';
 
 const Technicalguide = () => {
     const dispatch = useDispatch();
@@ -18,11 +19,17 @@ const Technicalguide = () => {
     const [viewImage, setViewImage] = useState([]);
     const [viewVideo, setViewVideo] = useState([]);
     const [urlImage, setUrlImage] = useState([]);
+    const [urlVideo, setUrlVideo] = useState([]);
+
+    const [loading, setLoading] = useState(true);
 
     const editModal = async (text) => {
         form.resetFields();
         setVisible(true)
         setUrlImage([])
+        setUrlVideo([])
+        setUploadedVideo([])
+        setUploadedImage([])
         if (text) {
             setId(text.id)
             setViewImage(text.image)
@@ -35,35 +42,32 @@ const Technicalguide = () => {
             setId('')
             setViewImage([])
             setViewVideo([])
-            form.setFieldsValue({
-                title: '',
-                description: '',
-            })
+            form.resetFields();
         }
     }
 
     const onSubmit = async (values) => {
         if (id) {
-            if (uploadedImage || uploadedVideo) {
+            if (uploadedImage.length > 0 || uploadedVideo.length > 0) {
                 const formData = new FormData();
-                if (uploadedImage) {
+                if (uploadedImage.length > 0) {
                     uploadedImage?.map((file) => {
                         formData.append('images', file)
                     })
                 }
-                if (uploadedVideo) {
+                if (uploadedVideo.length > 0) {
                     uploadedVideo?.map((file) => {
                         formData.append('videos', file)
                     })
                 }
                 dispatch(UserService.uploadMedia(formData))
                     .then((res) => {
-                        if (res.data.images) {
+                        if (res.data.images.length > 0) {
                             res.data.images.map((result) => {
                                 viewImage.push(result)
                             })
                         }
-                        if (res.data.video) {
+                        if (res.data.video.length > 0) {
                             res.data.video.map((result) => {
                                 viewVideo.push(result)
                             })
@@ -74,10 +78,14 @@ const Technicalguide = () => {
                         dispatch(UserService.editTechnicalguides(values))
                             .then((res) => {
                                 getTechnicalGuides();
-                                form.setFieldsValue({
-                                    title: '',
-                                    description: '',
-                                })
+                                // form.resetFields();
+                                setUrlImage([])
+                                setUrlVideo([])
+                                setUploadedVideo([])
+                                setUploadedImage([])
+                                setViewImage([])
+                                setViewVideo([])
+                                setId('')
                                 ToastMe(res.data.message, 'success')
                                 setVisible(false)
                             })
@@ -95,10 +103,14 @@ const Technicalguide = () => {
                 dispatch(UserService.editTechnicalguides(values))
                     .then((res) => {
                         getTechnicalGuides();
-                        form.setFieldsValue({
-                            title: '',
-                            description: '',
-                        })
+                        form.resetFields();
+                        setUrlImage([])
+                        setUrlVideo([])
+                        setUploadedVideo([])
+                        setUploadedImage([])
+                        setViewImage([])
+                        setViewVideo([])
+                        setId('')
                         ToastMe(res.data.message, 'success')
                         setVisible(false)
                     })
@@ -122,10 +134,13 @@ const Technicalguide = () => {
                         dispatch(UserService.addTechnicalguides(values))
                             .then((res) => {
                                 getTechnicalGuides();
-                                form.setFieldsValue({
-                                    title: '',
-                                    description: '',
-                                })
+                                // form.resetFields();
+                                setUrlImage([])
+                                setUrlVideo([])
+                                setUploadedVideo([])
+                                setUploadedImage([])
+                                setViewImage([])
+                                setViewVideo([])
                                 ToastMe(res.data.message, 'success')
                                 setVisible(false)
                             })
@@ -140,25 +155,6 @@ const Technicalguide = () => {
         }
     }
 
-    const uploadImageVideo = async () => {
-        if (uploadedImage || uploadedVideo) {
-            const formData = new FormData();
-
-            uploadedImage?.map((file) => {
-                formData.append('images', file)
-            })
-            uploadedVideo?.map((file) => {
-                formData.append('videos', file)
-            })
-            dispatch(UserService.uploadMedia(formData))
-                .then((res) => {
-                    // setMedia(res?.data)
-                })
-                .catch((errors) => {
-                    console.log({ errors })
-                })
-        }
-    }
     const getSearchValue = (e) => {
         getTechnicalGuides(e.target.value)
     }
@@ -180,6 +176,7 @@ const Technicalguide = () => {
                     )
                 }
                 setData(newArr);
+                setLoading(false);
             })
             .catch((errors) => {
                 console.log({ errors })
@@ -189,10 +186,21 @@ const Technicalguide = () => {
     const Uid = () => {
         return "_" + Math.random().toString(36).substring(2, 9);
     };
-    const handleProfilePicOnChange = (ev) => {
+    const handleVideoOnChange = (ev) => {
         const fileTypes = [...ev.target.files];
-        // setUploadedImage([])
-        // setUploadedVideo([])
+        fileTypes.map((file) => {
+            let userSelectedfiles = [file];
+            userSelectedfiles.map((file) => {
+                file.id = Uid();
+                return file;
+            });
+            setUrlVideo((prev) => [...prev, ...userSelectedfiles]);
+            setUploadedVideo((prev) => [...prev, file])
+
+        })
+    };
+    const handleImageOnChange = (ev) => {
+        const fileTypes = [...ev.target.files];
         fileTypes.map((file) => {
             let userSelectedfiles = [file];
             userSelectedfiles.map((file) => {
@@ -200,11 +208,7 @@ const Technicalguide = () => {
                 return file;
             });
             setUrlImage((prev) => [...prev, ...userSelectedfiles]);
-            if (file.type.includes('video')) {
-                setUploadedVideo((prev) => [...prev, file])
-            } else if (file.type.includes('image')) {
-                setUploadedImage((prev) => [...prev, file])
-            }
+            setUploadedImage((prev) => [...prev, file])
         })
     };
 
@@ -215,6 +219,7 @@ const Technicalguide = () => {
             })
         )
     }
+
     const removeVideo = (img) => {
         setViewVideo(
             viewVideo?.filter((ele) => {
@@ -223,6 +228,13 @@ const Technicalguide = () => {
         )
     }
     const removeVideoUrl = (img) => {
+        setUrlVideo(
+            urlVideo?.filter((ele) => {
+                return ele !== img;
+            })
+        )
+    }
+    const removeImageUrl = (img) => {
         setUrlImage(
             urlImage?.filter((ele) => {
                 return ele !== img;
@@ -354,11 +366,12 @@ const Technicalguide = () => {
 
     return (
         <>
+            <PageLoader loading={loading} />
             <div className="card">
                 <div className="card-header">
                     <h4 className="card-title">Technical guide</h4>
                     <div className="d-flex align-items-center gap-3">
-                        <Input placeholder='Search....' onChange={(e) => getSearchValue(e)}prefix={<SearchOutlined className="site-form-item-icon" />} />
+                        <Input placeholder='Search....' onChange={(e) => getSearchValue(e)} prefix={<SearchOutlined className="site-form-item-icon" />} />
                         <Button type="primary" onClick={() => editModal()}>
                             Add Technical guide
                         </Button>
@@ -368,12 +381,13 @@ const Technicalguide = () => {
                     <div className="table-responsive">
                         {
                             data && data.length > 0 ?
-                                <Table dataSource={data} columns={columnss} /> : <Empty />
+                                <Table dataSource={data} columns={columnss} className='table_custom' /> : <Empty />
                         }
                     </div>
                 </div>
             </div>
-            <Modal open={visible} title={id ? "Edit Technical guide" : "Add Technical guide"} okText="Submit" cancelText="Cancel"
+            <Modal open={visible} title={id ? "Edit Technical guide" : "Add Technical guide"}
+                width={600} okText="Submit" cancelText="Cancel"
                 onCancel={() => {
                     setVisible(false);
                 }}
@@ -404,12 +418,9 @@ const Technicalguide = () => {
                 >
                     <label className="label-name">Title</label>
                     <Form.Item name="title"
-                        rules={[{ required: true, message: "Please entre title!" },
-                        { max: 15, message: 'You can not enter more than 15 characters' },
-                        {
-                            pattern: new RegExp(/^[a-zA-Z@~`!@#$%^&*()_=+\\\\';:\"\\/?>.<,-]+$/i),
-                            message: "Enter only characters"
-                        }
+                        rules={[{ required: true, message: "Please enter title" },
+                        { max: 50, message: 'You can not enter more than 50 characters' },
+                        { pattern: new RegExp(".*\\S.*[a-zA-z0-9 ]"), message: 'Only space is not allowed' }
                         ]}
                     >
                         <Input type="text" placeholder='Enter title' />
@@ -418,19 +429,25 @@ const Technicalguide = () => {
                     <label className="label-name">Description</label>
                     <Form.Item
                         name="description"
-                        rules={[{ required: true, message: "Please enter description!" }, {
-                            pattern: new RegExp(/^[a-zA-Z@~`!@#$%^&*()_=+\\\\';:\"\\/?>.<,-]+$/i),
-                            message: "Enter only characters"
-                        }]}
+                        rules={[{ required: true, message: "Please enter description" },
+                        { pattern: new RegExp(".*\\S.*[a-zA-z0-9 ]"), message: 'Only space is not allowed' }
+                        ]}
                     >
-                        <Input type="text" placeholder='Enter description' />
+                        <Input.TextArea type="text" placeholder='Enter description' />
                     </Form.Item>
-                    <label className="label-name">Media</label>
+                    <label className="label-name">Images</label>
                     <Form.Item
-                        name="media"
+                        name="image"
                     // rules={[{ required: true, message: "Please select image or video!" }]}
                     >
-                        <Input type="file" id='file-input' multiple onChange={(e) => handleProfilePicOnChange(e)} />
+                        <Input type="file" id='file-input' multiple onChange={(e) => handleImageOnChange(e)} accept="image/*" />
+                    </Form.Item>
+                    <label className="label-name">Videos</label>
+                    <Form.Item
+                        name="video"
+                    // rules={[{ required: true, message: "Please select image or video!" }]}
+                    >
+                        <Input type="file" id='file-input' multiple onChange={(e) => handleVideoOnChange(e)} accept="video/*" />
                     </Form.Item>
                     <div className="card-body pb-1">
                         <div id="lightgallery" className="row gx-2">
@@ -452,7 +469,7 @@ const Technicalguide = () => {
                                         item.type?.includes("image") ?
                                             <a className="col-lg-6 col-md-6 mb-6" key={index}>
                                                 <div className='img_video_wrapper'>
-                                                    <span id="close" onClick={() => removeVideoUrl(item)} className='close_icon'>
+                                                    <span id="close" onClick={() => removeImageUrl(item)} className='close_icon'>
                                                         <svg xmlns="http://www.w3.org/2000/svg" width="18" height="20" viewBox="0 0 24 24" fill="none"><path d="M12 22c5.5 0 10-4.5 10-10S17.5 2 12 2 2 6.5 2 12s4.5 10 10 10ZM9.17 14.83l5.66-5.66M14.83 14.83 9.17 9.17" stroke="#ffffff" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path></svg></span>
                                                     <img src={URL.createObjectURL(item)} alt="profile" width="190px" height="100px" />
                                                 </div>
@@ -477,7 +494,7 @@ const Technicalguide = () => {
                                 </>
                             ))}
                             {
-                                urlImage?.map((item, index) => {
+                                urlVideo?.map((item, index) => {
                                     return (
                                         item.type?.includes("video") ?
                                             <a className='col-lg-6 col-md-6 mb-4' key={index}>

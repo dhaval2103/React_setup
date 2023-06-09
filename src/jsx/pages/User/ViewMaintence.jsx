@@ -7,6 +7,7 @@ import { Badge } from "react-bootstrap";
 import UserService from "../../../services/user";
 import { useDispatch } from "react-redux";
 import ToastMe from "../Common/ToastMe";
+import swal from "sweetalert";
 
 const ViewMaintence = () => {
     const { state } = useLocation();
@@ -29,17 +30,35 @@ const ViewMaintence = () => {
 
     const approveRejectRequest = (text) => {
         let values = {};
-        values.verifyStatus = text
-        values._id = userDetail?._id
+        values.technicianStatus = text;
+        values._id = userDetail?._id;
+        let status = "";
+        if (text == 3) {
+            status = "reject";
+        } else {
+            status = "close"
+        }
+        swal({
+            title: 'Confirm Status Update',
+            text: 'Are you sure you want to ' + status + ' this request?',
+            icon: 'warning',
+            buttons: ['Cancel', 'Confirm'],
+            dangerMode: true,
+        }).then((confirmed) => {
+            if (confirmed) {
+                dispatch(UserService.approveRequest(values))
+                    .then((res) => {
+                        ToastMe(res.data.message, 'success');
+                        databyId();
 
-        dispatch(UserService.approveRequest(values))
-            .then((res) => {
-                ToastMe(res.data.message, 'success')
-                databyId()
-            })
-            .catch((errors) => {
-                console.log({ errors })
-            })
+                    })
+                    .catch((errors) => {
+                        console.log({ errors });
+                    });
+            } else {
+                console.log('Status update cancelled');
+            }
+        });
     }
 
     const databyId = () => {
@@ -55,12 +74,12 @@ const ViewMaintence = () => {
     }
 
     const onSubmits = (values) => {
-        values._id = userDetail?._id
+        values._id = userDetail?._id;
         dispatch(UserService.approveRequest(values))
             .then((res) => {
-                ToastMe(res.data.message, 'success')
+                ToastMe('Technician assign successfully', 'success')
                 databyId()
-                setVisibleApprove(false)
+                setVisibleApprove(false);
             })
         form.resetFields()
             .catch((errors) => {
@@ -84,29 +103,51 @@ const ViewMaintence = () => {
         <>
             <Row>
                 <Col xl="12">
-                    <Card className="text-white bg-dark">
+                    <Card className='table_custom'>
                         <Card.Header>
                             <Card.Title className="text-white">Maintenance Detail</Card.Title>
-                            {userDetail?.verifyStatus == 0 ?
-                                <Dropdown className="drop" drop="end">
-                                    <Dropdown.Toggle
-                                        variant="danger"
-                                        className="light sharp i-false"
+                            <div className="d-flex align-items-center gap-3">
+                                {userDetail?.technicianStatus == 0 ?
+                                    <span className="badge badge-primary" >Pending</span> :
+                                    userDetail?.technicianStatus === 1 ?
+                                        <span className="badge badge-success" >Completed</span> :
+                                        userDetail?.technicianStatus === 2 ?
+                                            <span className="badge badge-warning" >In progress</span> :
+                                            userDetail?.technicianStatus === 3 ?
+                                                <span className="badge badge-danger" >Reject</span> :
+                                                userDetail?.technicianStatus === 4 ?
+                                                    <span className="badge badge-info" >Closed</span> : ''
 
-                                    >
-                                        Change Status
-                                    </Dropdown.Toggle>
-                                    <Dropdown.Menu className="dropdown-menu-end">
-                                        <Dropdown.Item onClick={() => approveRejectRequest(2)}>In Progress</Dropdown.Item>
-                                        <Dropdown.Item onClick={() => approveRejectRequest(3)}>Reject</Dropdown.Item>
-                                    </Dropdown.Menu>
-                                </Dropdown> :
-                                userDetail?.verifyStatus == 2 ?
-                                    <Button className="badge badge-primary" onClick={() => approveRejectRequest(1)}>Approve</Button> :
-                                    userDetail?.verifyStatus == 1 ?
-                                        <span className="badge badge-success">Completed</span> :
-                                        <span className="badge badge-danger">Reject</span>
-                            }
+                                }
+                                {userDetail?.technicianStatus == 0 ?
+                                    <Dropdown className="drop" drop="end">
+                                        <Dropdown.Toggle
+                                            variant="danger"
+                                            className="light sharp i-false"
+
+                                        >
+                                            Change Status
+                                        </Dropdown.Toggle>
+                                        <Dropdown.Menu className="dropdown-menu-end">
+                                            <Dropdown.Item onClick={() => approveRejectRequest(3)}>Reject</Dropdown.Item>
+                                        </Dropdown.Menu>
+                                    </Dropdown> :
+                                    userDetail?.technicianStatus == 1 ?
+                                        <Dropdown className="drop" drop="end">
+                                            <Dropdown.Toggle
+                                                variant="danger"
+                                                className="light sharp i-false"
+
+                                            >
+                                                Change Status
+                                            </Dropdown.Toggle>
+                                            <Dropdown.Menu className="dropdown-menu-end">
+                                                <Dropdown.Item onClick={() => approveRejectRequest(4)}>Closed</Dropdown.Item>
+                                            </Dropdown.Menu>
+                                        </Dropdown> : ''
+                                }
+                            </div>
+
                         </Card.Header>
                         <Card.Body className="mb-0">
                             <Card.Text>
@@ -144,13 +185,13 @@ const ViewMaintence = () => {
                         </Card.Body>
                     </Card>
                 </Col>
-                {userDetail?.verifyStatus == 3 ? '' :
+                {userDetail?.technicianStatus == 3 ? '' :
                     <Col xl="12">
-                        <Card className="text-white bg-dark">
+                        <Card className='table_custom'>
                             <Card.Header>
                                 <Card.Title className="text-white">Assign Technician</Card.Title>
-                                {userDetail?.verifyStatus == 3 || userDetail?.verifyStatus == 1 ?
-                                    '' : <Button onClick={() => openapprovemodal(userDetail)}>Assign Technician</Button>}
+                                {userDetail?.technicianStatus == 0 ?
+                                    <Button onClick={() => openapprovemodal(userDetail)}>Assign Technician</Button> : ''}
                             </Card.Header>
                             <Card.Body className="mb-0">
 
@@ -161,19 +202,19 @@ const ViewMaintence = () => {
                                             <Card.Text>
                                                 <div>
                                                     <label className="label-name">Name:</label>
-                                                    {userDetail?.technician?.name}
+                                                    {userDetail?.technician?.name ? userDetail?.technician?.name : '-'}
                                                 </div>
                                             </Card.Text>
                                             <Card.Text>
                                                 <div>
                                                     <label className="label-name">Email:</label>
-                                                    {userDetail?.technician?.email}
+                                                    {userDetail?.technician?.email ? userDetail?.technician?.email : '-'}
                                                 </div>
                                             </Card.Text>
                                             <Card.Text>
                                                 <div>
                                                     <label className="label-name">About:</label>
-                                                    {userDetail?.technician?.about}
+                                                    {userDetail?.technician?.about ? userDetail?.technician?.about : '-'}
                                                 </div>
                                             </Card.Text>
                                         </div>
