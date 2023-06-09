@@ -50,7 +50,7 @@ export function updateUserProfile(data, adminData) {
                     adminData.displayName = data.username;
                     adminData.email = data.email;
                     adminData.profileImage = data.image
-                    localStorage.setItem('userDetails', JSON.stringify(adminData));
+                    localStorage.setItem('adminDetails', JSON.stringify(adminData));
                     return resolve(res);
                 })
                 .catch(function (error) {
