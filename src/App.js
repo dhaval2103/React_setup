@@ -32,9 +32,13 @@ function App(props) {
     }, [dispatch, props.history]);
 
     useEffect(() => {
+        const tokenDetailsString = localStorage.getItem('adminDetails');
+        if (tokenDetailsString && location?.pathname?.split("/")?.[1] == 'login') {
+            props.history.push('/dashboard');
+        }
         if (routess) {
             routess && routess.map((data) => {
-                if(location?.pathname?.split("/")?.[1] != 'login'){
+                if (location?.pathname?.split("/")?.[1] != 'login') {
                     if (data != location?.pathname?.split("/")?.[1]) {
                         props.history.push('/dashboard');
                     }

@@ -19,7 +19,7 @@ const route = [
     'technical-guide-list',
     'faq-group-list',
     'technician-list',
-    'live-chat'
+    'live-chat',
 ]
 
 export default route
