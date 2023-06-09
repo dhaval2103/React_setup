@@ -139,12 +139,12 @@ const Markup = () => {
     { url: "", component: Home },
     { url: "dashboard", component: Home },
     { url: "dashboard-dark", component: DashboardDark },
-    { url: "wallet", component: MyWallet },
-    { url: "invoices-list", component: InvoicesList },
-    { url: "create-invoices", component: CreateInvoices },
-    { url: "card-center", component: CardCenter },
-    { url: "transaction-details", component: TransactionDetails },
-    { url: "task", component: Task },
+    // { url: "wallet", component: MyWallet },
+    // { url: "invoices-list", component: InvoicesList },
+    // { url: "create-invoices", component: CreateInvoices },
+    // { url: "card-center", component: CardCenter },
+    // { url: "transaction-details", component: TransactionDetails },
+    // { url: "task", component: Task },
     
     // User
     { url: "user-list", component: User },
