@@ -82,23 +82,14 @@ const User = (props) => {
                     newArr.push(
                         {
                             key: i,
-                            email: res.data[i].email.text,
+                            firstName: res.data[i].firstName,
+                            lastName: res.data[i].lastName,
+                            companyName: res.data[i].companyName,
+                            email: res.data[i].email,
                             id: res.data[i]._id,
-                            emailVerify: res.data[i].email.verified,
-                            mobile: res.data[i].mobile.text,
-                            user: res.data[i].user,
-                            role: res.data[i].role,
-                            mobileVerify: res.data[i].mobile.verified,
-                            fullName: res.data[i].fullName,
-                            securityQuestion: res.data[i].securityQuestion,
-                            yourQuestion: res.data[i].yourQuestion,
-                            profilePic: res.data[i].profilePic,
-                            image: res.data[i].image,
-                            answer: res.data[i].answer,
-                            readStatusCount: res.data[i].readStatusCount,
+                            mobile: res.data[i].mobile,
                             createdAt: res.data[i].createdAt,
-                            isActive: res.data[i].isActive,
-                            countryCode: res.data[i].countryCode
+                            isApprove: res.data[i].isApprove,
                         }
                     )
                 }
@@ -110,35 +101,35 @@ const User = (props) => {
             })
     }
 
-    const editModal = (text) => {
-        setVisible(true);
-        form.resetFields();
-        setPhoneVlidation('')
-        setEmail('');
-        setMobile('');
-        if (text) {
-            let number = text?.countryCode + text?.mobile;
-            form.setFieldsValue({
-                email: text?.email || '',
-                mobile: number || '',
-                fullName: text?.fullName || '',
-            })
-            setImageName(text?.image)
-            setUserImg('')
-            setPhoneVlidation('')
-            setCountryCode(text?.countryCode)
-            setPhoneNo(text?.mobile)
-            setId(text?.id)
-        } else {
-            form.resetFields();
-            setImageName('')
-            setUserImg('')
-            setCountryCode('')
-            setPhoneNo('')
-            setPhoneVlidation('')
-            setId(null)
-        }
-    }
+    // const editModal = (text) => {
+    //     setVisible(true);
+    //     form.resetFields();
+    //     setPhoneVlidation('')
+    //     setEmail('');
+    //     setMobile('');
+    //     if (text) {
+    //         let number = text?.countryCode + text?.mobile;
+    //         form.setFieldsValue({
+    //             email: text?.email || '',
+    //             mobile: number || '',
+    //             fullName: text?.fullName || '',
+    //         })
+    //         setImageName(text?.image)
+    //         setUserImg('')
+    //         setPhoneVlidation('')
+    //         setCountryCode(text?.countryCode)
+    //         setPhoneNo(text?.mobile)
+    //         setId(text?.id)
+    //     } else {
+    //         form.resetFields();
+    //         setImageName('')
+    //         setUserImg('')
+    //         setCountryCode('')
+    //         setPhoneNo('')
+    //         setPhoneVlidation('')
+    //         setId(null)
+    //     }
+    // }
 
     const activeInactiveUser = (text) => {
         let data = {};
@@ -165,46 +156,46 @@ const User = (props) => {
         })
     };
 
-    const onSubmit = (values) => {
-        values.profilePic = imageName;
-        values.countryCode = countryCode;
-        values.mobile = phoneNo;
-        if (id) {
-            values.user_id = id;
-            dispatch(UserService.updateUser(values))
-                .then((res) => {
-                    getUserList();
-                    ToastMe("User Updated Successfully", 'success')
-                    setVisible(false);
-                    setUserImg('')
-                    setId('')
-                    setPhoneVlidation('');
-                    setEmail('');
-                })
-                .catch((errors) => {
-                    setEmail(errors.errors.email);
-                    ToastMe(errors.errors.email, 'error')
-                    setMobile(errors.errors.mobile);
-                    ToastMe(errors.errors.mobile, 'error')
-                })
-        } else {
-            dispatch(UserService.addUser(values))
-                .then((res) => {
-                    getUserList();
-                    ToastMe("User Added Successfully", 'success')
-                    setVisible(false);
-                    setPhoneVlidation('');
-                    setEmail('');
-                    setMobile('');
-                    form.resetFields();
-                })
-                .catch((errors) => {
-                    console.log(errors)
-                    setEmail(errors.errors.email);
-                    setMobile(errors.errors.mobile);
-                })
-        }
-    }
+    // const onSubmit = (values) => {
+    //     values.profilePic = imageName;
+    //     values.countryCode = countryCode;
+    //     values.mobile = phoneNo;
+    //     if (id) {
+    //         values.user_id = id;
+    //         dispatch(UserService.updateUser(values))
+    //             .then((res) => {
+    //                 getUserList();
+    //                 ToastMe("User Updated Successfully", 'success')
+    //                 setVisible(false);
+    //                 setUserImg('')
+    //                 setId('')
+    //                 setPhoneVlidation('');
+    //                 setEmail('');
+    //             })
+    //             .catch((errors) => {
+    //                 setEmail(errors.errors.email);
+    //                 ToastMe(errors.errors.email, 'error')
+    //                 setMobile(errors.errors.mobile);
+    //                 ToastMe(errors.errors.mobile, 'error')
+    //             })
+    //     } else {
+    //         dispatch(UserService.addUser(values))
+    //             .then((res) => {
+    //                 getUserList();
+    //                 ToastMe("User Added Successfully", 'success')
+    //                 setVisible(false);
+    //                 setPhoneVlidation('');
+    //                 setEmail('');
+    //                 setMobile('');
+    //                 form.resetFields();
+    //             })
+    //             .catch((errors) => {
+    //                 console.log(errors)
+    //                 setEmail(errors.errors.email);
+    //                 setMobile(errors.errors.mobile);
+    //             })
+    //     }
+    // }
 
     useEffect(() => {
         getUserList();
@@ -233,9 +224,19 @@ const User = (props) => {
             ),
         },
         {
-            title: 'Full name',
-            dataIndex: 'fullName',
-            key: 'fullName',
+            title: 'First name',
+            dataIndex: 'firstName',
+            key: 'firstName',
+        },
+        {
+            title: 'Last name',
+            dataIndex: 'lastName',
+            key: 'lastName',
+        },
+        {
+            title: 'Company name',
+            dataIndex: 'companyName',
+            key: 'companyName',
         },
         {
             title: 'Email',
@@ -247,72 +248,24 @@ const User = (props) => {
             dataIndex: 'mobile',
             key: 'mobile',
         },
+        // {
+        //     title: 'Profile',
+        //     dataIndex: 'profilePic',
+        //     key: 'profilePic',
+        //     render: (text) => (
+        //         <div className='col-6'>
+        //             <img src={text == '-' ? dummy : text} alt="" width="120px" height="80px" />
+        //         </div>
+        //     ),
+        // },
         {
-            title: 'Role',
-            dataIndex: 'role',
-            render: (text) => {
-                if (text == 1) {
-                    return (
-                        <span>Master</span>
-                    )
-                } else if (text == 2) {
-                    return (
-                        <span >User</span>
-                    )
-                }
-                else if (text == 3) {
-                    return (
-                        <span >Pro</span>
-                    )
-                } else {
-                    return (
-                        <span >-</span>
-                    )
-                }
-            }
-        },
-        {
-            title: 'Email Verified',
-            dataIndex: 'emailVerify',
-            key: 'emailVerify',
-            render: (text) => (
-                <div>
-                    <Badge as="a" bg="primary badge-circle">
-                        {text === true ? <i className="fa fa-check" aria-hidden="true"></i> : <i className="fa fa-times" aria-hidden="true"></i>}
-                    </Badge>
-                </div>
-            )
-        },
-        {
-            title: 'Mobile Verified',
-            dataIndex: 'mobileVerify',
-            key: 'mobileVerify',
-            render: (text) => (
-                <div>
-                    <Badge as="a" bg="primary badge-circle">
-                        {text === true ? <i className="fa fa-check" aria-hidden="true"></i> : <i className="fa fa-times" aria-hidden="true"></i>}
-                    </Badge>
-                </div>
-            )
-        },
-        {
-            title: 'Profile',
-            dataIndex: 'profilePic',
-            key: 'profilePic',
-            render: (text) => (
-                <div className='col-6'>
-                    <img src={text == '-' ? dummy : text} alt="" width="120px" height="80px" />
-                </div>
-            ),
-        },
-        {
-            title: 'Status',
-            dataIndex: 'status',
-            key: 'status',
+            title: 'Is Approve',
+            dataIndex: 'isApprove',
+            key: 'isApprove',
             render: (text, data) => (
                 <div>
-                    {data.isActive === 1 ? <Badge bg=" badge-lg " className='badge-primary light badge-xs' style={{ cursor: 'pointer' }} onClick={() => activeInactiveUser(data.id)} >Active</Badge>
-                        : <Badge bg=" badge-lg " className='badge-danger light badge-xs' style={{ cursor: 'pointer' }} onClick={() => activeInactiveUser(data.id)} >Deactive</Badge>}
+                    {data.isApprove === 1 ? <Badge bg=" badge-lg " className='badge-primary light badge-xs' style={{ cursor: 'pointer' }}>Active</Badge>
+                        : <Badge bg=" badge-lg " className='badge-danger light badge-xs' style={{ cursor: 'pointer' }}>Deactive</Badge>}
                 </div>
             ),
         },
@@ -326,31 +279,30 @@ const User = (props) => {
                 </div>
             ),
         },
-        {
-            title: 'Actions',
-            key: 'actions',
-            render: (text) => (
-                <>
-                    <Dropdown>
-                        <Dropdown.Toggle
-                            variant="danger"
-                            className="light sharp i-false badge_label"
-                        >
-                            {svg1}
-                            {
-                                text.readStatusCount > 0 ?
-                                    <span className="badge light text-white bg-danger rounded-circle">{text.readStatusCount}</span> : ''
-                            }
-                        </Dropdown.Toggle>
-                        <Dropdown.Menu>
-                            <Dropdown.Item onClick={() => viewUser(text)}>View</Dropdown.Item>
-                            {/* <Dropdown.Item onClick={() => viewChat(text)}>Chat</Dropdown.Item> */}
-                            <Dropdown.Item onClick={() => editModal(text)}>Edit</Dropdown.Item>
-                        </Dropdown.Menu>
-                    </Dropdown>
-                </>
-            )
-        },
+        // {
+        //     title: 'Actions',
+        //     key: 'actions',
+        //     render: (text) => (
+        //         <>
+        //             <Dropdown>
+        //                 <Dropdown.Toggle
+        //                     variant="danger"
+        //                     className="light sharp i-false badge_label"
+        //                 >
+        //                     {svg1}
+        //                     {
+        //                         text.readStatusCount > 0 ?
+        //                             <span className="badge light text-white bg-danger rounded-circle">{text.readStatusCount}</span> : ''
+        //                     }
+        //                 </Dropdown.Toggle>
+        //                 <Dropdown.Menu>
+        //                     <Dropdown.Item onClick={() => viewUser(text)}>View</Dropdown.Item>
+        //                     <Dropdown.Item onClick={() => editModal(text)}>Edit</Dropdown.Item>
+        //                 </Dropdown.Menu>
+        //             </Dropdown>
+        //         </>
+        //     )
+        // },
     ];
 
     const viewUser = (text) => {
@@ -369,12 +321,12 @@ const User = (props) => {
             <div className="card">
                 <div className="card-header">
                     <h4 className="card-title">User List</h4>
-                    <div className="d-flex align-items-center gap-3">
+                    {/* <div className="d-flex align-items-center gap-3">
                         <Input placeholder='Search....' onChange={(e) => handleSearch(e)} prefix={<SearchOutlined className="site-form-item-icon" />} />
                         <Button type="primary" onClick={() => editModal()}>
                             Add User
                         </Button>
-                    </div>
+                    </div> */}
                 </div>
                 <div className="card-body">
                     <div className="table-responsive">
@@ -386,7 +338,7 @@ const User = (props) => {
                 </div>
             </div>
 
-            <Modal open={visible} title={id != null ? 'Edit User' : 'Add User'} okText="Submit" cancelText="Cancel"
+            {/* <Modal open={visible} title={id != null ? 'Edit User' : 'Add User'} okText="Submit" cancelText="Cancel"
                 onCancel={() => {
                     setVisible(false);
                 }}
@@ -439,7 +391,6 @@ const User = (props) => {
                     >
                         <Input type="text" placeholder='Enter email' />
                     </Form.Item>
-                    {/* <span style={{ color: 'red' }}>{email}</span><br></br> */}
                     {id == null ?
                         <>
                             <label className="label-name">Password</label>
@@ -482,7 +433,6 @@ const User = (props) => {
 
                     </Form.Item>
                     <span style={{ color: 'red' }}>{phoneVelidation}</span><br></br>
-                    {/* <span style={{ color: 'red' }}>{mobile}</span><br></br> */}
                     <label className="label-name">Profile</label>
                     <Form.Item
                         className='mb-2'
@@ -493,7 +443,7 @@ const User = (props) => {
                     {userImg != '' ? <img src={userImg} style={{ width: "20%" }} alt="gallery" /> : ''}
                     {imageName != '' ? <img src={process.env.REACT_APP_PROFILE_URL + 'images/' + imageName} style={{ width: "35%" }} alt="gallery" /> : ''}
                 </Form>
-            </Modal>
+            </Modal> */}
         </>
     )
 }

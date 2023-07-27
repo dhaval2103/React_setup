@@ -60,7 +60,7 @@ const SideBar = (props) => {
     // handleheartBlast.addEventListener('click', heartBlast);
 
   }, []);
-  let scrollPosition = useScrollPosition();
+  // let scrollPosition = useScrollPosition();
   /// Path
   let path = window.location.pathname;
   path = path.split("/");
@@ -174,10 +174,10 @@ const SideBar = (props) => {
       className={`dlabnav ${iconHover} ${sidebarposition.value === "fixed" &&
         sidebarLayout.value === "horizontal" &&
         headerposition.value === "static"
-        ? scrollPosition > 120
-          ? "fixed"
-          : ""
-        : ""
+        // ? scrollPosition > 120
+        //   ? "fixed"
+        //   : ""
+        // : ""
         }`}
     >
       <PerfectScrollbar className="dlabnav-scroll">
@@ -206,16 +206,6 @@ const SideBar = (props) => {
               </svg>
               <span className="ms-2">Profile </span>
             </Link>
-            {/* <Link to="/email-inbox" className="dropdown-item ai-icon">
-              <svg id="icon-inbox" xmlns="http://www.w3.org/2000/svg" className="text-success me-1" width={18}
-                height={18} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2}
-                strokeLinecap="round" strokeLinejoin="round"
-              >
-                <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z" />
-                <polyline points="22,6 12,13 2,6" />
-              </svg>
-              <span className="ms-2">Inbox</span>
-            </Link> */}
             <LogoutPage />
           </Dropdown.Menu>
         </Dropdown>

@@ -41,7 +41,7 @@ export function login(email, password) {
 
 export function formatError(errorResponse) {
     console.log('errorResponse',errorResponse);
-    switch (errorResponse.error.message) {
+    switch (errorResponse) {
         case 'EMAIL_EXISTS':
             //return 'Email already exists';
             swal("Oops", "Email already exists", "error");
