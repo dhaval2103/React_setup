@@ -6,7 +6,7 @@ import {
 } from '../../store/actions/AuthActions';
 
 // image
-import logo from "../../icons/appIcon.svg";
+import logo from "../../icons/logo.png";
 import loginbg from "../../images/bg-login.jpg";
 
 function Login(props) {
@@ -45,8 +45,8 @@ function Login(props) {
             <img src={logo} alt="" width="210px" />
           </Link>
           <div className="login-description">
-            <h2 className="main-title mb-2">Welcome To AZ Security</h2>
-            <p className="">AZ Security & Smart Home</p>
+            <h2 className="main-title mb-2">Welcome To KYT</h2>
+            <p className="">Know Your Trucker</p>
             <ul className="social-icons mt-4">
               {/* <li><Link to={"#"}><i className="fab fa-facebook-f"></i></Link></li>
               <li><Link to={"#"}><i className="fab fa-twitter"></i></Link></li>
