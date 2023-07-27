@@ -61,7 +61,7 @@ const DashboardDark = () => {
 
 	useEffect(() => {
 		changeBackground({ value: "dark", label: "Dark" });
-		dashboardCountData();
+		// dashboardCountData();
 	}, []);
 
 	return (

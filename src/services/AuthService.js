@@ -26,14 +26,21 @@ export function login(email, password) {
         password,
         returnSecureToken: true,
     };
+    console.log('postData',postData);
     return axios.post(
         `${BaseUrl}/admin/login`,
+        JSON.stringify(postData), {
+            headers: { "Content-Type": "application/json", "env": "test" },
+            withCredentials: true,
+          },
         // `https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=AIzaSyD3RPAp3nuETDn9OQimqn_YF6zdzqWITII`,
-        postData,
+        // postData,
     );
 }
 
+
 export function formatError(errorResponse) {
+    console.log('errorResponse',errorResponse);
     switch (errorResponse.error.message) {
         case 'EMAIL_EXISTS':
             //return 'Email already exists';

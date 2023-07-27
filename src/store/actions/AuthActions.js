@@ -36,6 +36,7 @@ export function signupAction(email, password, history) {
 }
 
 export function logout(history) {
+    console.log(history);
     localStorage.removeItem('adminDetails');
     history.push('/login');
     return {
@@ -72,9 +73,9 @@ export function loginAction(email, password, history) {
             })
             .catch((error) => {
                 console.log('errorrrrrTest',error);
-                ToastMe(error.response.data.message, 'error')
-                const errorMessage = formatError(error.response.data.message);
-                dispatch(loginFailedAction(errorMessage));
+                // ToastMe(error.response.data.message, 'error')
+                // const errorMessage = formatError(error.response.data.message);
+                // dispatch(loginFailedAction(errorMessage));
             });
     };
 }

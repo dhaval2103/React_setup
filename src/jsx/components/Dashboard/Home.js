@@ -58,7 +58,7 @@ const Home = () => {
 
 	useEffect(() => {
 		changeBackground({ value: "light", label: "Light" });
-		dashboardCountData();
+		// dashboardCountData();
 	}, []);
 
 	return (
