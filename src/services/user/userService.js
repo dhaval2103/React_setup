@@ -23,6 +23,27 @@ export function getUser(value) {
         })
     )
 }
+
+export function getBroker(value) {
+    let search = value || '';
+    return dispatch => (
+        new Promise((resolve, reject) => {
+            Http.callApi('get', BaseUrl + '/admin/brokerList?search=' + search)
+                .then(function (res) {
+                    // dispatch(action.setNotificationData(res));
+                    return resolve(res);
+                })
+                .catch(function (error) {
+                    const data = {
+                        errorData: error.response.data,
+                        // statusCode: error.response.status,
+                    };
+                    return reject(data);
+                })
+        })
+    )
+}
+
 export function getProfile() {
     return dispatch => (
         new Promise((resolve, reject) => {
@@ -63,7 +84,6 @@ export function updateUserProfile(data, adminData) {
         })
     )
 }
-
 export function uploadProfile(data) {
     data.env = 'test';
     return dispatch => (
@@ -102,7 +122,6 @@ export function uploadUserProfile(data) {
         })
     )
 }
-
 export function uploadCommonImage(data) {
     data.env = 'test';
     return dispatch => (
@@ -122,7 +141,6 @@ export function uploadCommonImage(data) {
         })
     )
 }
-
 export function getCms() {
     return dispatch => (
         new Promise((resolve, reject) => {
@@ -316,7 +334,6 @@ export function addFaq(data) {
         })
     )
 }
-
 export function getFaq(data) {
     let search = data || '';
     return dispatch => (
@@ -336,7 +353,6 @@ export function getFaq(data) {
         })
     )
 }
-
 export function getGroup() {
     return dispatch => (
         new Promise((resolve, reject) => {

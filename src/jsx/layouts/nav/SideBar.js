@@ -230,13 +230,11 @@ const SideBar = (props) => {
           <li className={`${app.includes(path) ? "mm-active" : ""}`}>
             <Link className="has-arrow ai-icon" to="#" >
               <i className="fa fa-user"></i>
-              <span className="nav-text">Users</span>
+              <span className="nav-text">Users List</span>
             </Link>
             <ul >
-              <li><Link className={`${path === "user-list" ? "mm-active" : ""}`} to="/user-list">User List</Link></li>
-              <li><Link className={`${path === "subscribe-user-list" ? "mm-active" : ""}`} to="/subscribe-user-list">Subscribed User List</Link></li>
-              <li><Link className={`${path === "payment-history" ? "mm-active" : ""}`} to="/payment-history">Payment History</Link></li>
-              <li><Link className={`${path === "upcoming-subscriptions" ? "mm-active" : ""}`} to="/upcoming-subscriptions">Upcoming Subscriptions</Link></li>
+              <li><Link className={`${path === "carrier-list" ? "mm-active" : ""}`} to="/carrier-list">Carrier List</Link></li>
+              <li><Link className={`${path === "broker-list" ? "mm-active" : ""}`} to="/broker-list">Broker List</Link></li>
             </ul>
           </li>
           <li className={`${app.includes(path) ? "mm-active" : ""}`}>

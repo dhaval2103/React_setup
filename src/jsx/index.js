@@ -112,7 +112,7 @@ import Error404 from "./pages/Error404";
 import Error500 from "./pages/Error500";
 import Error503 from "./pages/Error503";
 import { ThemeContext } from "../context/ThemeContext";
-import User from "./pages/User/User";
+import User from "./pages/User/Carrier";
 import Cms from "./pages/Setting/Cms";
 import Faq from "./pages/Setting/Faq"
 import ViewUser from "./pages/User/ViewUser";
@@ -123,7 +123,7 @@ import Technicalguide from "./pages/Setting/Technicalguide";
 import ContactUs from "./pages/Setting/ContactUs";
 import Chat from "./pages/User/Chat";
 import FagGroup from "./pages/Setting/FaqGroup";
-import SubscribeUser from "./pages/User/SubscribeUser";
+import BrokerList from "./pages/User/BrokerList";
 import PaymentHistory from "./pages/User/PaymentHistory";
 import UpcomingSubscriptions from "./pages/User/UpcomingSubscriptions";
 import TechnicianList from "./pages/User/TechnicianList";
@@ -147,8 +147,8 @@ const Markup = () => {
     // { url: "task", component: Task },
     
     // User
-    { url: "user-list", component: User },
-    { url: "subscribe-user-list", component: SubscribeUser },
+    { url: "carrier-list", component: User },
+    { url: "broker-list", component: BrokerList },
     { url: "payment-history", component: PaymentHistory },
     { url: "upcoming-subscriptions", component: UpcomingSubscriptions },
     { url: "view-maintence", component: ViewMaintence },
