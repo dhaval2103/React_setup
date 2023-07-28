@@ -106,6 +106,25 @@ export function updateUserProfile(data, adminData) {
         })
     )
 }
+export function changepassword(data, adminData) {
+    data.env = 'test'
+    return dispatch => (
+        new Promise((resolve, reject) => {
+            Http.callApi('post', BaseUrl + '/admin/changePassword', data)
+                .then(function (res) {
+                    console.log(res);
+                    return resolve(res);
+                })
+                .catch(function (error) {
+                    const data = {
+                        errorData: error.response.data,
+                        // statusCode: error.response.status,
+                    };
+                    return reject(data);
+                })
+        })
+    )
+}
 export function uploadProfile(data) {
     data.env = 'test';
     return dispatch => (

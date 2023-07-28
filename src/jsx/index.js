@@ -131,6 +131,7 @@ import ViewMaintence from "./pages/User/ViewMaintence";
 import UserNotification from "./pages/Setting/UserNotification";
 import NotificationDetail from "./pages/Setting/NotificationDetail";
 import LiveChat from "./pages/User/LiveChat";
+import ChangePassword from "./components/AppsMenu/AppProfile/ChangePassword";
 
 const Markup = () => {
   const { menuToggle } = useContext(ThemeContext);
@@ -184,6 +185,7 @@ const Markup = () => {
 	
 	/// Apps
     { url: "app-profile", component: AppProfile },
+    { url: "changepassword", component: ChangePassword },
     { url: "email-compose", component: Compose },
     { url: "email-inbox", component: Inbox },
     { url: "email-read", component: Read },
