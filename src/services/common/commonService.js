@@ -1,7 +1,7 @@
 import Http from '../../Http'
 const BaseUrl = process.env.REACT_APP_BASE_URL;
 
-export function dashboardCountData() {
+export function dashboard() {
     return dispatch => (
         new Promise((resolve, reject) => {
             Http.callApi('get', BaseUrl + '/admin/dashboardCountData')
