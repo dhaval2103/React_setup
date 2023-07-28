@@ -44,6 +44,27 @@ export function getBroker(value) {
     )
 }
 
+export function changeUserStatus(data) {
+    // data.env = 'test'
+    return dispatch => (
+        new Promise((resolve, reject) => {
+            Http.callApi('post', BaseUrl + '/admin/changeUserStatus', data, {env:'test'})
+                .then(function (res) {
+                    console.log('resss',res)
+                    return resolve(res);
+                })
+                .catch(function (error) {
+                    console.log('error',error);
+                    // const data = {
+                    //     // errorData: error.response.data.message,
+                    //     // statusCode: error.response.status,
+                    // };
+                    return reject(data);
+                })
+        })
+    )
+}
+
 export function getProfile() {
     return dispatch => (
         new Promise((resolve, reject) => {
@@ -63,15 +84,35 @@ export function getProfile() {
     )
 }
 export function updateUserProfile(data, adminData) {
+    // data.env = 'test'
+    return dispatch => (
+        new Promise((resolve, reject) => {
+            Http.callApi('patch', BaseUrl + '/admin/updateProfile', data)
+                .then(function (res) {
+                    adminData.name = data.name;
+                    adminData.email = data.email;
+                    adminData.mobile = data.mobile;
+                    // adminData.profileImage = data.image
+                    localStorage.setItem('adminDetails', JSON.stringify(adminData));
+                    return resolve(res);
+                })
+                .catch(function (error) {
+                    const data = {
+                        errorData: error.response.data,
+                        // statusCode: error.response.status,
+                    };
+                    return reject(data);
+                })
+        })
+    )
+}
+export function changepassword(data, adminData) {
     data.env = 'test'
     return dispatch => (
         new Promise((resolve, reject) => {
-            Http.callApi('put', BaseUrl + '/admin/updateAdmin', data)
+            Http.callApi('post', BaseUrl + '/admin/changePassword', data)
                 .then(function (res) {
-                    adminData.displayName = data.username;
-                    adminData.email = data.email;
-                    adminData.profileImage = data.image
-                    localStorage.setItem('adminDetails', JSON.stringify(adminData));
+                    console.log(res);
                     return resolve(res);
                 })
                 .catch(function (error) {
@@ -586,25 +627,6 @@ export function listSubscribeUser(data) {
     return dispatch => (
         new Promise((resolve, reject) => {
             Http.callApi('get', BaseUrl + '/admin/listSubscribeUser?search='+search)
-                .then(function (res) {
-                    return resolve(res);
-                })
-                .catch(function (error) {
-                    console.log(error);
-                    const data = {
-                        errorData: error.response.data.message,
-                        // statusCode: error.response.status,
-                    };
-                    return reject(data);
-                })
-        })
-    )
-}
-export function changeUserStatus(data) {
-    data.env = 'test'
-    return dispatch => (
-        new Promise((resolve, reject) => {
-            Http.callApi('post', BaseUrl + '/admin/changeUserStatus', data)
                 .then(function (res) {
                     return resolve(res);
                 })

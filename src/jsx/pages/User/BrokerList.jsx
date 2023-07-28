@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useContext, useEffect, useMemo, useState } from 'react';
 import UserService from '../../../services/user';
 import { useDispatch } from 'react-redux';
 import { Button, Empty, Form, Input, Modal, Table } from 'antd';
@@ -32,6 +32,7 @@ const User = (props) => {
     const [mobile, setMobile] = useState('');
     const [email, setEmail] = useState('');
     const [phoneVelidation, setPhoneVlidation] = useState('')
+    const [selectedFilter, setSelectedFilter] = useState(null);
 
     const getBrokerList = (value) => {
         dispatch(UserService.getBroker(value))
@@ -60,13 +61,52 @@ const User = (props) => {
             })
     }
 
-    const pendingBroker = (text) => {
+    const handleFilterChange = (filterOption) => {
+        setSelectedFilter(filterOption);
+    };
 
-    }
+    const approvePendingUser = (text) => {
+        console.log('text',text);
+        let data = {};
+        data.userid = text.id
+        data.isApprove = text.isApprove = 0 ? 1 : 0
+        console.log('dataaa',data);
+        Swal.fire({
+            title: 'Are you sure?',
+            text: "To change this User status!",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Yes, Change it!'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                dispatch(UserService.changeUserStatus(data))
+                    .then((res) => {
+                        getBrokerList();
+                        ToastMe("User status change successfully", 'success')
+                    })
+                    .catch((errors) => {
+                        console.log({ errors })
+                    })
+            }
+        })
+    };
 
-    const approveBroker = (text) => {
-        
-    }
+    const filteredData = useMemo(() => {
+    if (selectedFilter === null) return data; // No filter selected, return all data
+
+    // Filter based on the "isApprove" property
+    return data.filter((item) => {
+        if (selectedFilter === 0) {
+        return item.isApprove === 0; // Filter for "Pending" brokers
+        } else if (selectedFilter === 1) {
+        return item.isApprove === 1; // Filter for "Approved" brokers
+        }
+        return true;
+    });
+    }, [data, selectedFilter]);
+    
     
     useEffect(() => {
         getBrokerList();
@@ -125,8 +165,8 @@ const User = (props) => {
             key: 'isApprove',
             render: (text, data) => (
                 <div>
-                    {data.isApprove === 1 ? <Badge bg=" badge-lg " className='badge-primary light badge-xs' style={{ cursor: 'pointer' }}>Approve</Badge>
-                        : <Badge bg=" badge-lg " className='badge-danger light badge-xs' style={{ cursor: 'pointer' }}>Pending</Badge>}
+                    {data.isApprove === 1 ? <Badge bg=" badge-lg " className='badge-primary light badge-xs' style={{ cursor: 'pointer' }} onClick={() => approvePendingUser(data)}>Approve</Badge>
+                        : <Badge bg=" badge-lg " className='badge-danger light badge-xs' style={{ cursor: 'pointer' }} onClick={() => approvePendingUser(data)}>Pending</Badge>}
                 </div>
             ),
         },
@@ -140,30 +180,6 @@ const User = (props) => {
                 </div>
             ),
         },
-        {
-            title: 'Actions',
-            key: 'actions',
-            render: (text) => (
-                <>
-                    <Dropdown>
-                        <Dropdown.Toggle
-                            variant="danger"
-                            className="light sharp i-false badge_label"
-                        >
-                            {svg1}
-                            {
-                                text.readStatusCount > 0 ?
-                                    <span className="badge light text-white bg-danger rounded-circle">{text.readStatusCount}</span> : ''
-                            }
-                        </Dropdown.Toggle>
-                        <Dropdown.Menu>
-                            <Dropdown.Item onClick={() => pendingBroker(text)}>Pending Broker</Dropdown.Item>
-                            <Dropdown.Item onClick={() => approveBroker(text)}>Approve Broker</Dropdown.Item>
-                        </Dropdown.Menu>
-                    </Dropdown>
-                </>
-            )
-        },
     ];
 
     return (
@@ -172,20 +188,27 @@ const User = (props) => {
             <div className="card">
                 <div className="card-header">
                     <h4 className="card-title">Broker List</h4>
-                    {/* <div className="d-flex align-items-center gap-3">
-                        <Input placeholder='Search....' onChange={(e) => handleSearch(e)} prefix={<SearchOutlined className="site-form-item-icon" />} />
-                        <Button type="primary" onClick={() => editModal()}>
-                            Add User
-                        </Button>
-                    </div> */}
+                    <div>
+                        <Dropdown>
+                        <Dropdown.Toggle variant="primary">
+                            Filter by Status
+                        </Dropdown.Toggle>
+                        <Dropdown.Menu>
+                            <Dropdown.Item onClick={() => handleFilterChange(1)}>Approved</Dropdown.Item>
+                            <Dropdown.Item onClick={() => handleFilterChange(0)}>Pending</Dropdown.Item>
+                            {/* Add more filter options here */}
+                        </Dropdown.Menu>
+                        </Dropdown>
+                    </div>
                 </div>
                 <div className="card-body">
-                    <div className="table-responsive">
-                        {
-                            data && data.length > 0 ?
-                                <Table dataSource={data} columns={columnss} className='table_custom' /> : <Empty />
-                        }
-                    </div>
+                <div className="table-responsive">
+                    {filteredData && filteredData.length > 0 ? (
+                    <Table dataSource={filteredData} columns={columnss} className='table_custom' />
+                    ) : (
+                    <Empty />
+                    )}
+                </div>
                 </div>
             </div>
         </>
