@@ -84,14 +84,15 @@ export function getProfile() {
     )
 }
 export function updateUserProfile(data, adminData) {
-    data.env = 'test'
+    // data.env = 'test'
     return dispatch => (
         new Promise((resolve, reject) => {
-            Http.callApi('put', BaseUrl + '/admin/updateAdmin', data)
+            Http.callApi('patch', BaseUrl + '/admin/updateProfile', data)
                 .then(function (res) {
-                    adminData.displayName = data.username;
+                    adminData.name = data.name;
                     adminData.email = data.email;
-                    adminData.profileImage = data.image
+                    adminData.mobile = data.mobile;
+                    // adminData.profileImage = data.image
                     localStorage.setItem('adminDetails', JSON.stringify(adminData));
                     return resolve(res);
                 })
