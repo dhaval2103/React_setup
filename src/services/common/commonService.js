@@ -4,7 +4,7 @@ const BaseUrl = process.env.REACT_APP_BASE_URL;
 export function dashboard() {
     return dispatch => (
         new Promise((resolve, reject) => {
-            Http.callApi('get', BaseUrl + '/admin/dashboardCountData')
+            Http.callApi('get', BaseUrl + '/admin/dashboard')
                 .then(function (res) {
                     return resolve(res);
                 })
