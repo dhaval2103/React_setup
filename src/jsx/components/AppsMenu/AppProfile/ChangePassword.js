@@ -72,6 +72,7 @@ const ChangePassword = (props) => {
 			.catch((errors) => {
 				// setButtonLoading(false)
 				console.log({ errors })
+				ToastMe(errors?.errorData?.message, 'error');
 			})
 	};
 	const previewUserImageOnChange = (ev) => {
@@ -118,13 +119,13 @@ const ChangePassword = (props) => {
 					<div className="profile card card-body px-3 pt-3 pb-0">
 						<div className="profile-head">
 							<div className="photo-content">
-								<div className="cover-photo rounded" style={{height: '350px' }}></div>
+								<div className="cover-photo rounded" style={{ height: '350px' }}></div>
 							</div>
 							<div className="profile-info">
-								<div className="profile-photo" 
-									// style={{ position: 'relative', width: '400px', height: '200px' ,margin: '0 auto' }}
+								<div className="profile-photo"
+								// style={{ position: 'relative', width: '400px', height: '200px' ,margin: '0 auto' }}
 								>
-										{/* <div className="img_wrapper">
+									{/* <div className="img_wrapper">
 											<img
 												src={user?.image != '' ? user?.image : dummy}
 												className="img-fluid rounded-circle custome_imag"
@@ -132,23 +133,23 @@ const ChangePassword = (props) => {
 												alt="profile"
 											/>
 										</div> */}
-									<label htmlFor='file-input-control' className="edit_btn" 
-									style={{
-											position: 'absolute', marginTop:'-20px', right: '0', display: 'flex',
-											justifyContent: 'center', alignItems: 'center', width: '40px', height: '40px', backgroundColor: '#fff' ,
+									{/* <label htmlFor='file-input-control' className="edit_btn"
+										style={{
+											position: 'absolute', marginTop: '-20px', right: '0', display: 'flex',
+											justifyContent: 'center', alignItems: 'center', width: '40px', height: '40px', backgroundColor: '#fff',
 											borderRadius: '50%', boxShadow: '0px 0px 5px rgba(0, 0, 0, 0.2)', cursor: 'pointer', zIndex: '1'
 										}}>
-										<a role={"button"} style={{display: 'flex',justifyContent: 'center',alignItems: 'center',width: '100%',height: '100%'}}>
+										<a role={"button"} style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', width: '100%', height: '100%' }}>
 											<Edit2 size="20" color="#333230" />
-											<div className="col d-none" style={{position: 'absolute',top: '0',left: '0',width: '100%',height: '100%',opacity: '0'}}>
+											<div className="col d-none" style={{ position: 'absolute', top: '0', left: '0', width: '100%', height: '100%', opacity: '0' }}>
 												<Input type="file" name='image' className="file-input-control"
-												style={{
-													position: 'absolute',top: '0',left: '0',width: '100%',height: '100%',cursor: 'pointer',opacity: '0',zIndex: '-1'
-												}} 
-												id='file-input-control' onChange={previewUserImageOnChange} accept="image/*" />
+													style={{
+														position: 'absolute', top: '0', left: '0', width: '100%', height: '100%', cursor: 'pointer', opacity: '0', zIndex: '-1'
+													}}
+													id='file-input-control' onChange={previewUserImageOnChange} accept="image/*" />
 											</div>
 										</a>
-									</label>
+									</label> */}
 								</div>
 
 								<Form
@@ -169,7 +170,7 @@ const ChangePassword = (props) => {
 												>
 													<Input type="password" placeholder="Current Password" className='input-control' />
 												</Form.Item>
-												
+
 											</div>
 										</div>
 										<div className="col-lg-12">
@@ -177,7 +178,20 @@ const ChangePassword = (props) => {
 												<label htmlFor="" className="fs14 fw500 lh-1 mb-2"><b>New Password</b></label>
 												<Form.Item
 													name="new_password"
-													rules={[{ required: true, message: 'Please enter your New Password' }]}
+													rules={[
+														{
+															required: true,
+															message: 'Please enter your New Password'
+														},
+														{
+															min: 6,
+															message: 'Password Minimum Length 6',
+														},
+														{
+															max: 50,
+															message: 'Password Maximum Length 50',
+														},
+													]}
 												>
 													<Input type="password" placeholder="New Password" className='input-control' />
 												</Form.Item>
@@ -188,18 +202,30 @@ const ChangePassword = (props) => {
 												<label htmlFor="" className="fs14 fw500 lh-1 mb-2"><b>Confirm Password</b></label>
 												<Form.Item
 													name="confirm_password"
-													rules={[{ required: true, message: 'Please enter your Confirm Password' },
-													({ getFieldValue }) => ({
-														validator(_, value) {
-															if (!value || getFieldValue('new_password') === value) {
-																return Promise.resolve();
-															}
-															return Promise.reject('Password Mismatch');
+													rules={[
+														{
+															required: true,
+															message: 'Please enter your Confirm Password'
 														},
-													}),
-												]}
+														{
+															min: 6,
+															message: 'Password Minimum Length 6',
+														},
+														{
+															max: 50,
+															message: 'Password Maximum Length 50',
+														},
+														({ getFieldValue }) => ({
+															validator(_, value) {
+																if (!value || getFieldValue('new_password') === value) {
+																	return Promise.resolve();
+																}
+																return Promise.reject('The confirm password and new password fields must match.');
+															},
+														}),
+													]}
 												>
-													<Input type="password"  placeholder="Confirm Password" className='input-control' />
+													<Input type="password" placeholder="Confirm Password" className='input-control' />
 												</Form.Item>
 											</div>
 										</div>
