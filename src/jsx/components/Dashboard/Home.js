@@ -5,6 +5,7 @@ import pMinDelay from "p-min-delay";
 import { Tabs } from 'antd';
 import CommonService from '../../../services/common';
 import { Dropdown } from 'react-bootstrap';
+import PageLoader from '../../pages/Common/PageLoader';
 
 ///Images
 import small from "./../../../images/profile/small/pic1.jpg";
@@ -45,12 +46,14 @@ const ChartBarApex = loadable(() =>
 const Home = () => {
 	const dispatch = useDispatch();
 	const [countData, setCountData] = useState();
+	const [loading, setLoading] = useState(true);
 	const { changeBackground } = useContext(ThemeContext);
 
 	const dashboardCountData = () => {
 		dispatch(CommonService.dashboard())
 			.then((res) => {
 				setCountData(res.data)
+				setLoading(false)
 			})
 			.catch((errors) => {
 				console.log({ errors })
@@ -114,6 +117,7 @@ const Home = () => {
 
 	return (
 		<>
+		  <PageLoader loading={loading} />
 			<div className="row">
 				<h4><b>Users</b></h4>
 				<div className="col-xl-12">

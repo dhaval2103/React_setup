@@ -62,11 +62,7 @@ const ChangePassword = (props) => {
 		// setButtonLoading(true)
 		dispatch(UserService.changepassword(data, props?.adminData))
 			.then((res) => {
-				// setButtonLoading(false)
 				ToastMe("Change passwode Successfully", 'success');
-				// setTimeout(() => {
-				// 	window.location.reload();
-				// }, 500)
 				props.history.push('/dashboard')
 			})
 			.catch((errors) => {
