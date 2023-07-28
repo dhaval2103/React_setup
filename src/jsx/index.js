@@ -113,6 +113,7 @@ import Error500 from "./pages/Error500";
 import Error503 from "./pages/Error503";
 import { ThemeContext } from "../context/ThemeContext";
 import User from "./pages/User/Carrier";
+import RequestList from "./pages/User/Request";
 import Cms from "./pages/Setting/Cms";
 import Faq from "./pages/Setting/Faq"
 import ViewUser from "./pages/User/ViewUser";
@@ -150,6 +151,7 @@ const Markup = () => {
     // User
     { url: "carrier-list", component: User },
     { url: "broker-list", component: BrokerList },
+    { url: "request-list", component: RequestList },
     { url: "payment-history", component: PaymentHistory },
     { url: "upcoming-subscriptions", component: UpcomingSubscriptions },
     { url: "view-maintence", component: ViewMaintence },

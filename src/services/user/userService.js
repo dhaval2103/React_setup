@@ -24,6 +24,24 @@ export function getUser(value) {
     )
 }
 
+export function getRequest(value) {
+    let search = value || '';
+    return dispatch => (
+        new Promise((resolve, reject) => {
+            Http.callApi('get', BaseUrl + '/admin/requestList?search=' + search)
+                .then(function (res) {
+                    return resolve(res);
+                })
+                .catch(function (error) {
+                    const data = {
+                        errorData: error.response.data,
+                        // statusCode: error.response.status,
+                    };
+                    return reject(data);
+                })
+        })
+    )
+}
 export function getBroker(value) {
     let search = value || '';
     return dispatch => (
