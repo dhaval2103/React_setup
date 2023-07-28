@@ -237,7 +237,7 @@ const DashboardDark = () => {
 					</div>
 				</div>
 				<h4><b>Careers Request</b></h4>
-				<Tabs defaultActiveKey="8" items={items} onChange={onChange}></Tabs>
+				<Tabs defaultActiveKey="All" items={items} onChange={onChange}></Tabs>
 				<div className="col-xl-12">
 					<div className="row">
 						<div className="col-xl-3 col-sm-6">

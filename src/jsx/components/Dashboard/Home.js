@@ -50,7 +50,6 @@ const Home = () => {
 	const dashboardCountData = () => {
 		dispatch(CommonService.dashboard())
 			.then((res) => {
-				console.log(res,'res');
 				setCountData(res.data)
 			})
 			.catch((errors) => {
@@ -58,7 +57,13 @@ const Home = () => {
 			})
 	}
 	const onChange = (key) => {
-		console.log(key);
+		dispatch(CommonService.dashboard(key))
+			.then((res) => {
+				setCountData(res.data)
+			})
+			.catch((errors) => {
+				console.log({ errors })
+			})
 	  };
 	const items = [
 		{
@@ -234,7 +239,7 @@ const Home = () => {
 					</div>
 				</div>
 				<h4><b>Careers Request</b></h4>
-				<Tabs defaultActiveKey="8" items={items} onChange={onChange}></Tabs>
+				<Tabs defaultActiveKey="All" items={items} onChange={onChange}></Tabs>
 				<div className="col-xl-12">
 					<div className="row">
 						<div className="col-xl-3 col-sm-6">

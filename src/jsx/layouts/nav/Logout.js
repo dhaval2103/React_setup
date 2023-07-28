@@ -4,17 +4,18 @@ import { Link, withRouter } from 'react-router-dom';
 
 import { logout } from '../../../store/actions/AuthActions';
 import { isAuthenticated } from '../../../store/selectors/AuthSelectors';
+import { Button } from 'antd';
 
 function LogoutPage(props){
     const dispatch = useDispatch();
 
     function onLogout() {
        dispatch(logout(props.history));
-       window.location.reload(); // Temporary
+    //    window.location.reload(); // Temporary
     }
     return(
         <>
-            <Link  className="dropdown-item ai-icon" onClick={onLogout}>
+            <Button role={'button'} className="dropdown-item ai-icon" onClick={onLogout}>
                 <svg
                   id="icon-logout" xmlns="http://www.w3.org/2000/svg"
                   className="text-danger me-1" width={18} height={18} viewBox="0 0 24 24" 
@@ -25,7 +26,7 @@ function LogoutPage(props){
                     <line x1={21} y1={12} x2={9} y2={12} />
                 </svg>
                 <span className="ms-2" >Logout </span>
-            </Link>
+            </Button>
         </>
     )
 } 
