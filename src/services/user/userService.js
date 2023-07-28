@@ -44,6 +44,27 @@ export function getBroker(value) {
     )
 }
 
+export function changeUserStatus(data) {
+    // data.env = 'test'
+    return dispatch => (
+        new Promise((resolve, reject) => {
+            Http.callApi('post', BaseUrl + '/admin/changeUserStatus', data, {env:'test'})
+                .then(function (res) {
+                    console.log('resss',res)
+                    return resolve(res);
+                })
+                .catch(function (error) {
+                    console.log('error',error);
+                    // const data = {
+                    //     // errorData: error.response.data.message,
+                    //     // statusCode: error.response.status,
+                    // };
+                    return reject(data);
+                })
+        })
+    )
+}
+
 export function getProfile() {
     return dispatch => (
         new Promise((resolve, reject) => {
@@ -586,25 +607,6 @@ export function listSubscribeUser(data) {
     return dispatch => (
         new Promise((resolve, reject) => {
             Http.callApi('get', BaseUrl + '/admin/listSubscribeUser?search='+search)
-                .then(function (res) {
-                    return resolve(res);
-                })
-                .catch(function (error) {
-                    console.log(error);
-                    const data = {
-                        errorData: error.response.data.message,
-                        // statusCode: error.response.status,
-                    };
-                    return reject(data);
-                })
-        })
-    )
-}
-export function changeUserStatus(data) {
-    data.env = 'test'
-    return dispatch => (
-        new Promise((resolve, reject) => {
-            Http.callApi('post', BaseUrl + '/admin/changeUserStatus', data)
                 .then(function (res) {
                     return resolve(res);
                 })
