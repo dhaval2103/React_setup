@@ -392,12 +392,12 @@ const SideBar = (props) => {
           </ul>
          </li> */}
           {/* Widget */}
-          {/* <li className={`${widget.includes(path) ? "mm-active" : ""}`}>
+          <li className={`${widget.includes(path) ? "mm-active" : ""}`}>
             <Link to="widget-basic" className="ai-icon" >
               <i className="fas fa-user-check"></i>
               <span className="nav-text">Widget</span>
             </Link>
-          </li> */}
+          </li>
           {/* Forms */}
           {/* <li className={`${forms.includes(path) ? "mm-active" : ""}`}>
             <Link className="has-arrow ai-icon" to="#" >
