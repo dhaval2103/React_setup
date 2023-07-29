@@ -17,24 +17,25 @@ const Request = (props) => {
     const getRequestList = (value) => {
         dispatch(UserService.getRequest(value))
             .then((res) => {
-                console.log(res.data);
+                console.log(res.data,"res.data");
+                setData(res.data)
                 var newArr = [];
-                for (var i = 0; i < res.data.length; i++) {
-                    newArr.push(
-                        {
-                            key: i,
-                            firstName: res.data[i].firstName,
-                            lastName: res.data[i].lastName,
-                            trackingNumber: res.data[i].trackingNumber,
-                            ticketNumber: res.data[i].ticketNumber,
-                            mobile: res.data[i].mobile,
-                            // createdAt: res.data[i].createdAt,
-                            id: res.data[i]._id,
-                        }
-                    )
-                }
+                // for (var i = 0; i < res.data.length; i++) {
+                //     newArr.push(
+                //         {
+                //             key: i,
+                //             firstName: res.data[i].firstName,
+                //             lastName: res.data[i].lastName,
+                //             trackingNumber: res. [i].trackingNumber,
+                //             ticketNumber: res.data[i].ticketNumber,
+                //             mobile: res.data[i].mobile,
+                //             // createdAt: res.data[i].createdAt,
+                //             id: res.data[i]._id,
+                //         }
+                //     )
+                // }
                 console.log(newArr,'sdsd');
-                setData(newArr);
+                // setData(newArr);
                 setLoading(false)
             })
             .catch((errors) => {
@@ -62,7 +63,7 @@ const Request = (props) => {
             title: 'ID',
             dataIndex: 'key',
             key: 'key',
-            render: (text) => (
+            render: (text =0) => (
                 <div>
                     {text + 1}
                 </div>
@@ -104,8 +105,7 @@ const Request = (props) => {
             key: 'action',
             render: (text, data) => (
                 <div>
-                    <Button to="">View
-                                    </Button>
+                    <Button to="" onClick={() => viewUser(data)}>View</Button>
                 </div>
             ),
         },
@@ -122,7 +122,8 @@ const Request = (props) => {
     ];
 
     const viewUser = (text) => {
-        props.history.push("/user-detail", { userDetail: text })
+        console.log(text,'text');
+        props.history.push("/request-detail", { requestDetail: text })
     }
     const handleSearch = (e) => {
         getRequestList(e.target.value)

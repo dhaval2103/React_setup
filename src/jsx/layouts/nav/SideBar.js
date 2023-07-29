@@ -255,7 +255,7 @@ const SideBar = (props) => {
               <span className="nav-text">Request List</span>
             </Link>
           </li>
-          <li className={`${app.includes(path) ? "mm-active" : ""}`}>
+          {/* <li className={`${app.includes(path) ? "mm-active" : ""}`}>
             <Link className="has-arrow ai-icon" to="#" >
               <i class="fa fa-cog" aria-hidden="true"></i>
               <span className="nav-text">General Setting</span>
@@ -298,7 +298,7 @@ const SideBar = (props) => {
 
               <span className="nav-text">Live Chat</span>
             </Link>
-          </li>
+          </li> */}
           {/* Apps */}
           {/* <li className={`${app.includes(path) ? "mm-active" : ""}`}>
             <Link className="has-arrow ai-icon" to="#" >
