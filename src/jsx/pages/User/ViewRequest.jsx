@@ -124,7 +124,7 @@ const ViewRequest = () => {
                                     </Paragraph>
                                 </div>
                                 <Divider />
-                                <div className="card_body">
+                                {/* <div className="card_body">
                                     <Row gutter={12}>
                                         <Col xs={24} md={8} lg={6}>
                                             <Typography>
@@ -212,7 +212,7 @@ const ViewRequest = () => {
                                         </Col>
 
                                     </Row>
-                                </div>
+                                </div> */}
                             </div>
                         </div>
                     </div>

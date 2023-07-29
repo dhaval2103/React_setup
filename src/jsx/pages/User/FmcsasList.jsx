@@ -61,7 +61,7 @@ const User = (props) => {
                 console.log({ errors })
             })
     }
-
+    
     const handleFilterChange = (filterOption) => {
         setSelectedFilter(filterOption);
     };
@@ -114,7 +114,7 @@ const User = (props) => {
     }, [])
     const viewUser = (text) =>{
         console.log(text,"text");
-        // props.history.push("/fmcsas-view",{state:text})
+        props.history.push("/fmcsas-view",{state:text})
     }
 
     const svg1 = (
