@@ -43,6 +43,24 @@ export function getBroker(value) {
         })
     )
 }
+export function getfmcsas(value) {
+    let search = value || '';
+    return dispatch => (
+        new Promise((resolve, reject) => {
+            Http.callApi('get', BaseUrl + '/admin/fmcsasList')
+                .then(function (res) {
+                    // dispatch(action.setNotificationData(res));
+                    return resolve(res);
+                })
+                .catch(function (error) {
+                    const data = {
+                        errorData: error.response.data,
+                    };
+                    return reject(data);
+                })
+        })
+    )
+}
 
 export function changeUserStatus(data) {
     // data.env = 'test'
