@@ -83,6 +83,7 @@ export function getProfile() {
         })
     )
 }
+
 export function updateUserProfile(data, adminData) {
     // data.env = 'test'
     return dispatch => (
@@ -106,6 +107,27 @@ export function updateUserProfile(data, adminData) {
         })
     )
 }
+
+// userService.js
+export function carrierDetails(data) {
+    data.env = 'test'
+    const queryParam = `?dotNumber=${data.dotNumber}&env=${data.env}`;
+    return new Promise((resolve, reject) => {
+        Http.callApi('get', BaseUrl + '/admin/carrierDetails' + queryParam,[])
+            .then(function (res) {
+                resolve(res);
+            })
+            .catch(function (error) {
+                const data = {
+                    errorData: error.response.data.message,
+                    // statusCode: error.response.status,
+                };
+                reject(data);
+            });
+    });
+}
+
+
 export function changepassword(data, adminData) {
     data.env = 'test'
     return dispatch => (
