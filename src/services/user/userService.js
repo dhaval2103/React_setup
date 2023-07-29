@@ -185,17 +185,17 @@ export function changepassword(data, adminData) {
 }
 
 // 2FA
-export function enableGoogle2FA(email) {
-    return Http.callApi('post', BaseUrl + '/admin/generateGoogle2fa', { email });
-}
+// export function enableGoogle2FA(email) {
+//     return Http.callApi('post', BaseUrl + '/admin/generateGoogle2fa', { email });
+// }
   
-export function disableGoogle2FA() {
-    return Http.callApi('post', BaseUrl + '/admin/disableGoogle2fa');
-}
+// export function disableGoogle2FA() {
+//     return Http.callApi('post', BaseUrl + '/admin/disableGoogle2fa');
+// }
   
-export function verifyGoogle2FA(secret, code) {
-    return Http.callApi('post', BaseUrl + '/admin/google2faCheck', { secret, code });
-}
+// export function verifyGoogle2FA(secret, code) {
+//     return Http.callApi('post', BaseUrl + '/admin/google2faCheck', { secret, code });
+// }
 
 
 export function uploadProfile(data) {
