@@ -1,9 +1,13 @@
 import React, { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
 import { Row, Card, Col } from "react-bootstrap";
-import { Button, Empty, Table } from 'antd';
+import { Button, Empty, Table, Avatar, Divider, Typography } from 'antd';
 import moment from "moment";
 import dummy from "../../../images/dummy.png";
+import { } from 'antd'
+import { UserOutlined } from '@ant-design/icons';
+import Title from 'antd/es/typography/Title';
+import Paragraph from 'antd/es/typography/Paragraph';
 
 
 const ViewRequest = () => {
@@ -99,52 +103,123 @@ const ViewRequest = () => {
     return (
         <Row>
             <Col xl="Col-lg-12">
-          <Card>
-            <Card.Header className=" border-0 pb-0">
-              <Card.Title>Card title</Card.Title>
-            </Card.Header>
-            <Card.Body>
-              <Card.Text>
-                <Col md="6 mb-3">
-                    <label>Title: </label>
-                    <label>GGGGG</label>
-                </Col>
-                <Col md="6 mb-3">
-                    <label>Title: </label>
-                    <label>GGGGG</label>
-                </Col>
-                <Col md="6 mb-3">
-                    <label>Title: </label>
-                    <label>GGGGG</label>
-                </Col>
+                <Card>
+                    <div className="main_test_wrapper">
+                        <div className='container'>
+                            <div className="request_detail_card">
+                                <div className="card_header d-flex align-items-center justify-content-between">
+                                    <div className="d-flex align-items-center gap-3">
+                                        <Avatar size={64} icon={<UserOutlined />} />
+                                        <div className="text_content">
+                                            <Title level={5} className=''>
+                                                Thomos John
+                                            </Title>
+                                            <Paragraph className=' mb-0'>
+                                                Thomos Trucking LLC
+                                            </Paragraph>
+                                        </div>
+                                    </div>
+                                    <Paragraph className='paragraph'>
+                                        expired
+                                    </Paragraph>
+                                </div>
+                                <Divider />
+                                <div className="card_body">
+                                    <Row gutter={12}>
+                                        <Col xs={24} md={8} lg={6}>
+                                            <Typography>
+                                                <Title level={5}>
+                                                    MC Number:
+                                                </Title>
+                                                <Paragraph>
+                                                    1212343434
+                                                </Paragraph>
+                                            </Typography>
+                                        </Col>
+                                        <Col xs={24} md={8} lg={6}>
+                                            <Typography>
+                                                <Title level={5}>
+                                                    MC Number:
+                                                </Title>
+                                                <Paragraph>
+                                                    1212343434
+                                                </Paragraph>
+                                            </Typography>
+                                        </Col>
+                                        <Col xs={24} md={8} lg={6}>
+                                            <Typography>
+                                                <Title level={5}>
+                                                    MC Number:
+                                                </Title>
+                                                <Paragraph>
+                                                    1212343434
+                                                </Paragraph>
+                                            </Typography>
+                                        </Col>
+                                        <Col xs={24} md={8} lg={6}>
+                                            <Typography>
+                                                <Title level={5}>
+                                                    MC Number:
+                                                </Title>
+                                                <Paragraph>
+                                                    1212343434
+                                                </Paragraph>
+                                            </Typography>
+                                        </Col>
 
-              </Card.Text>
-              <Card.Text>
-                <Col md="6 mb-3">
-                    <label>Title: </label>
-                    <label>GGGGG</label>
-                </Col>
-                <Col md="6 mb-3">
-                    <label>Title: </label>
-                    <label>GGGGG</label>
-                </Col>
-                <Col md="6 mb-3">
-                    <label>Title: </label>
-                    <label>GGGGG</label>
-                </Col>
+                                    </Row>
+                                    <Divider />
+                                    <Row gutter={12}>
+                                        <Col xs={24} md={8} lg={6}>
+                                            <Typography>
+                                                <Title level={5}>
+                                                    MC Number:
+                                                </Title>
+                                                <Paragraph>
+                                                    1212343434
+                                                </Paragraph>
+                                            </Typography>
+                                        </Col>
+                                        <Col xs={24} md={8} lg={6}>
+                                            <Typography>
+                                                <Title level={5}>
+                                                    MC Number:
+                                                </Title>
+                                                <Paragraph>
+                                                    1212343434
+                                                </Paragraph>
+                                            </Typography>
+                                        </Col>
+                                        <Col xs={24} md={8} lg={6}>
+                                            <Typography>
+                                                <Title level={5}>
+                                                    MC Number:
+                                                </Title>
+                                                <Paragraph>
+                                                    1212343434
+                                                </Paragraph>
+                                            </Typography>
+                                        </Col>
+                                        <Col xs={24} md={8} lg={6}>
+                                            <Typography>
+                                                <Title level={5}>
+                                                    MC Number:
+                                                </Title>
+                                                <Paragraph>
+                                                    1212343434
+                                                </Paragraph>
+                                            </Typography>
+                                        </Col>
 
-              </Card.Text>
-            </Card.Body>
-            <Card.Footer className=" border-0 pt-0">
-              <Card.Text className=" d-inline">Card footer</Card.Text>
-              <Card.Link href="#" className="float-end">
-                Card link
-              </Card.Link>
-            </Card.Footer>
-          </Card>
-        </Col>
+                                    </Row>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </Card>
+            </Col>
         </Row>
-      );
+    );
 }
 
 export default ViewRequest
