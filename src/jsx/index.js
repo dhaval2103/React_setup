@@ -15,7 +15,6 @@ import ScrollToTop from "./layouts/ScrollToTop";
 /// Dashboard
 import Home from "./components/Dashboard/Home";
 import DashboardDark from "./components/Dashboard/DashboardDark";
-import MyWallet from "./components/Dashboard/MyWallet";
 import InvoicesList from "./components/Dashboard/InvoicesList";
 import CreateInvoices from "./components/Dashboard/CreateInvoices";
 import CardCenter from "./components/Dashboard/CardCenter";
@@ -113,24 +112,19 @@ import Error500 from "./pages/Error500";
 import Error503 from "./pages/Error503";
 import { ThemeContext } from "../context/ThemeContext";
 import User from "./pages/User/Carrier";
+import RequestList from "./pages/User/Request";
+import viewRequest from "./pages/User/ViewRequest";
 import Cms from "./pages/Setting/Cms";
 import Faq from "./pages/Setting/Faq"
 import ViewUser from "./pages/User/ViewUser";
 import Maintenance from "./pages/User/Maintenance";
-import ManageSubscriptions from "./pages/Setting/ManageSubscriptions";
 import Notification from "./pages/Setting/Notification";
 import Technicalguide from "./pages/Setting/Technicalguide";
 import ContactUs from "./pages/Setting/ContactUs";
-import Chat from "./pages/User/Chat";
-import FagGroup from "./pages/Setting/FaqGroup";
 import BrokerList from "./pages/User/BrokerList";
-import PaymentHistory from "./pages/User/PaymentHistory";
-import UpcomingSubscriptions from "./pages/User/UpcomingSubscriptions";
-import TechnicianList from "./pages/User/TechnicianList";
 import ViewMaintence from "./pages/User/ViewMaintence";
 import UserNotification from "./pages/Setting/UserNotification";
 import NotificationDetail from "./pages/Setting/NotificationDetail";
-import LiveChat from "./pages/User/LiveChat";
 import ChangePassword from "./components/AppsMenu/AppProfile/ChangePassword";
 
 const Markup = () => {
@@ -150,16 +144,14 @@ const Markup = () => {
     // User
     { url: "carrier-list", component: User },
     { url: "broker-list", component: BrokerList },
-    { url: "payment-history", component: PaymentHistory },
-    { url: "upcoming-subscriptions", component: UpcomingSubscriptions },
+    { url: "request-list", component: RequestList },
+    { url: "request-detail", component: viewRequest },
     { url: "view-maintence", component: ViewMaintence },
 
     //Setting
     { url: "cms-list", component: Cms },
-    { url: "manage-subscriptions", component: ManageSubscriptions },
     { url: "faq-list", component: Faq },
     { url: "contact-us", component: ContactUs },
-    { url: "chat", component: Chat },
     
     //Notification
     { url: "general-notification", component: Notification },
@@ -169,11 +161,7 @@ const Markup = () => {
     { url: "user-detail", component: ViewUser },
     { url: "maintenance-request-list", component: Maintenance },
     { url: "technical-guide-list", component: Technicalguide },
-    { url: "faq-group-list", component: FagGroup },
-    { url: "technician-list", component: TechnicianList },
 
-    // Live Chat
-    { url: "live-chat", component:LiveChat },
 	
 	///Demo
     { url: "theme1", component: Theme1 },
