@@ -122,11 +122,15 @@ import Notification from "./pages/Setting/Notification";
 import Technicalguide from "./pages/Setting/Technicalguide";
 import ContactUs from "./pages/Setting/ContactUs";
 import BrokerList from "./pages/User/BrokerList";
+import PaymentHistory from "./pages/User/PaymentHistory";
+import UpcomingSubscriptions from "./pages/User/UpcomingSubscriptions";
+import TechnicianList from "./pages/User/TechnicianList";
 import ViewMaintence from "./pages/User/ViewMaintence";
 import UserNotification from "./pages/Setting/UserNotification";
 import NotificationDetail from "./pages/Setting/NotificationDetail";
 import ChangePassword from "./components/AppsMenu/AppProfile/ChangePassword";
 import Google2fa from "./components/AppsMenu/AppProfile/Google2fa";
+import FmcsasView from "./pages/User/FmcsasView";
 
 const Markup = () => {
   const { menuToggle } = useContext(ThemeContext);
@@ -145,8 +149,8 @@ const Markup = () => {
     // User
     { url: "carrier-list", component: User },
     { url: "broker-list", component: BrokerList },
-    { url: "request-list", component: RequestList },
-    { url: "request-detail", component: viewRequest },
+    { url: "payment-history", component: PaymentHistory },
+    { url: "upcoming-subscriptions", component: UpcomingSubscriptions },
     { url: "view-maintence", component: ViewMaintence },
 
     //Setting
