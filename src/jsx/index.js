@@ -182,7 +182,7 @@ const Markup = () => {
 	/// Apps
     { url: "app-profile", component: AppProfile },
     { url: "changepassword", component: ChangePassword },
-    { url: "google2fa", component: Google2fa },
+    // { url: "google2fa", component: Google2fa },
     { url: "email-compose", component: Compose },
     { url: "email-inbox", component: Inbox },
     { url: "email-read", component: Read },
