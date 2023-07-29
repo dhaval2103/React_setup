@@ -85,6 +85,7 @@ const User = (props) => {
                             firstName: res.data[i].firstName,
                             lastName: res.data[i].lastName,
                             companyName: res.data[i].companyName,
+                            dotNumber: res.data[i].dotNumber,
                             email: res.data[i].email,
                             id: res.data[i]._id,
                             mobile: res.data[i].mobile,
@@ -152,6 +153,11 @@ const User = (props) => {
             dataIndex: 'mobile',
             key: 'mobile',
         },
+        {
+            title: 'DOT number',
+            dataIndex: 'dotNumber',
+            key: 'dotNumber',
+        },
         // {
         //     title: 'Is Approve',
         //     dataIndex: 'isApprove',
@@ -172,6 +178,29 @@ const User = (props) => {
                     {moment(text).format("DD MMM YYYY h:mm A")}
                 </div>
             ),
+        },
+        {
+            title: 'Actions',
+            key: 'actions',
+            render: (text) => (
+                <>
+                    <Dropdown>
+                        <Dropdown.Toggle
+                            variant="danger"
+                            className="light sharp i-false badge_label"
+                        >
+                            {svg1}
+                            {
+                                text.readStatusCount > 0 ?
+                                    <span className="badge light text-white bg-danger rounded-circle">{text.readStatusCount}</span> : ''
+                            }
+                        </Dropdown.Toggle>
+                        <Dropdown.Menu>
+                            <Dropdown.Item onClick={() => viewUser(text)}>View</Dropdown.Item>
+                        </Dropdown.Menu>
+                    </Dropdown>
+                </>
+            )
         },
     ];
 

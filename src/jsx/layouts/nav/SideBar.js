@@ -215,7 +215,24 @@ const SideBar = (props) => {
                 <path d="M11.02 19.5H7.5c-.62 0-1.17-.02-1.66-.09-2.63-.29-3.34-1.53-3.34-4.91v-5c0-3.38.71-4.62 3.34-4.91.49-.07 1.04-.09 1.66-.09h3.46M15.02 4.5h1.48c.62 0 1.17.02 1.66.09 2.63.29 3.34 1.53 3.34 4.91v5c0 3.38-.71 4.62-3.34 4.91-.49.07-1.04.09-1.66.09h-1.48M15 2v20M11.02 19.5H7.5c-.62 0-1.17-.02-1.66-.09-2.63-.29-3.34-1.53-3.34-4.91v-5c0-3.38.71-4.62 3.34-4.91.49-.07 1.04-.09 1.66-.09h3.46M15.02 4.5h1.48c.62 0 1.17.02 1.66.09 2.63.29 3.34 1.53 3.34 4.91v5c0 3.38-.71 4.62-3.34 4.91-.49.07-1.04.09-1.66.09h-1.48M15 2v20" />
                 <circle cx={12} cy={15} r={4} />
               </svg>
-              <span className="ms-2">Changepassword</span>
+              <span className="ms-2">Change Password</span>
+            </Link>
+            <Link to="/google2fa" className="dropdown-item ai-icon">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  className="text-primary me-1"
+                  width="18"
+                  height="18"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="2"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                >
+                <path d="M12 2c-3.314 0-6 2.686-6 6 0 4 6 10 6 10s6-6 6-10c0-3.314-2.686-6-6-6zm0 18c-1.916 0-3.604-1.304-4.136-3h8.272c-.532 1.696-2.22 3-4.136 3zm-4.363-5c-.5-1.112-.918-2.356-1.236-3.676-.42-1.52-.764-2.942-.888-3.324a1 1 0 0 1 1.964-.552c.057.256.276 1.704.648 3.3.4 1.684.946 3.302 1.544 4.824a1 1 0 0 1-1.08 1.404z" />
+              </svg>
+              <span className="ms-2">Google2fa Authentication</span>
             </Link>
             
             <LogoutPage />
