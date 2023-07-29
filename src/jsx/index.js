@@ -122,10 +122,16 @@ import Notification from "./pages/Setting/Notification";
 import Technicalguide from "./pages/Setting/Technicalguide";
 import ContactUs from "./pages/Setting/ContactUs";
 import BrokerList from "./pages/User/BrokerList";
+import PaymentHistory from "./pages/User/PaymentHistory";
+// import UpcomingSubscriptions from "./pages/User/UpcomingSubscriptions";
+// import TechnicianList from "./pages/User/TechnicianList";
 import ViewMaintence from "./pages/User/ViewMaintence";
 import UserNotification from "./pages/Setting/UserNotification";
 import NotificationDetail from "./pages/Setting/NotificationDetail";
 import ChangePassword from "./components/AppsMenu/AppProfile/ChangePassword";
+// import Google2fa from "./components/AppsMenu/AppProfile/";
+import FmcsasView from "./pages/User/FmcsasView";
+import FmcsasList from "./pages/User/FmcsasList";
 
 const Markup = () => {
   const { menuToggle } = useContext(ThemeContext);
@@ -144,8 +150,10 @@ const Markup = () => {
     // User
     { url: "carrier-list", component: User },
     { url: "broker-list", component: BrokerList },
-    { url: "request-list", component: RequestList },
-    { url: "request-detail", component: viewRequest },
+    { url: "fmcsas-list", component: FmcsasList },
+    { url: "fmcsas-view", component: FmcsasView },
+    { url: "payment-history", component: PaymentHistory },
+    // { url: "upcoming-subscriptions", component: UpcomingSubscriptions },
     { url: "view-maintence", component: ViewMaintence },
 
     //Setting
@@ -174,6 +182,7 @@ const Markup = () => {
 	/// Apps
     { url: "app-profile", component: AppProfile },
     { url: "changepassword", component: ChangePassword },
+    // { url: "google2fa", component: Google2fa },
     { url: "email-compose", component: Compose },
     { url: "email-inbox", component: Inbox },
     { url: "email-read", component: Read },

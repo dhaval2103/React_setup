@@ -61,6 +61,24 @@ export function getBroker(value) {
         })
     )
 }
+export function getfmcsas(value) {
+    let search = value || '';
+    return dispatch => (
+        new Promise((resolve, reject) => {
+            Http.callApi('get', BaseUrl + '/admin/fmcsasList')
+                .then(function (res) {
+                    // dispatch(action.setNotificationData(res));
+                    return resolve(res);
+                })
+                .catch(function (error) {
+                    const data = {
+                        errorData: error.response.data,
+                    };
+                    return reject(data);
+                })
+        })
+    )
+}
 
 export function changeUserStatus(data) {
     // data.env = 'test'
@@ -101,6 +119,7 @@ export function getProfile() {
         })
     )
 }
+
 export function updateUserProfile(data, adminData) {
     // data.env = 'test'
     return dispatch => (
@@ -124,6 +143,27 @@ export function updateUserProfile(data, adminData) {
         })
     )
 }
+
+// userService.js
+export function carrierDetails(data) {
+    data.env = 'test'
+    const queryParam = `?dotNumber=${data.dotNumber}&env=${data.env}`;
+    return new Promise((resolve, reject) => {
+        Http.callApi('get', BaseUrl + '/admin/carrierDetails' + queryParam,[])
+            .then(function (res) {
+                resolve(res);
+            })
+            .catch(function (error) {
+                const data = {
+                    errorData: error.response.data.message,
+                    // statusCode: error.response.status,
+                };
+                reject(data);
+            });
+    });
+}
+
+// userService.js
 export function changepassword(data, adminData) {
     data.env = 'test'
     return dispatch => (
@@ -143,6 +183,21 @@ export function changepassword(data, adminData) {
         })
     )
 }
+
+// 2FA
+// export function enableGoogle2FA(email) {
+//     return Http.callApi('post', BaseUrl + '/admin/generateGoogle2fa', { email });
+// }
+  
+// export function disableGoogle2FA() {
+//     return Http.callApi('post', BaseUrl + '/admin/disableGoogle2fa');
+// }
+  
+// export function verifyGoogle2FA(secret, code) {
+//     return Http.callApi('post', BaseUrl + '/admin/google2faCheck', { secret, code });
+// }
+
+
 export function uploadProfile(data) {
     data.env = 'test';
     return dispatch => (
