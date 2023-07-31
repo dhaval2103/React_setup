@@ -28,7 +28,7 @@ export function getRequest(value) {
     let search = value || '';
     return dispatch => (
         new Promise((resolve, reject) => {
-            Http.callApi('get', BaseUrl + '/admin/requestList?search=' + search)
+            Http.callApi('get', BaseUrl + '/admin/requestList')
                 .then(function (res) {
                     return resolve(res);
                 })

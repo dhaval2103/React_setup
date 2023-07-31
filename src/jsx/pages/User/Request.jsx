@@ -16,8 +16,8 @@ const Request = (props) => {
     const [selectedFilter, setSelectedFilter] = useState(null);
 
 
-    const getRequestList = (value) => {
-        dispatch(UserService.getRequest(value))
+    const getRequestList = () => {
+        dispatch(UserService.getRequest())
             .then((res) => {
                 setData(res.data)
                 var newArr = [];

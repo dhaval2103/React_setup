@@ -150,6 +150,8 @@ const Markup = () => {
     // User
     { url: "carrier-list", component: User },
     { url: "broker-list", component: BrokerList },
+    { url: "request-list", component: RequestList },
+    { url: "request-detail", component: viewRequest },
     { url: "fmcsas-list", component: FmcsasList },
     { url: "fmcsas-view", component: FmcsasView },
     { url: "payment-history", component: PaymentHistory },

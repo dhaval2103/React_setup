@@ -132,7 +132,7 @@ const ViewRequest = () => {
                                     </Paragraph>
                                 </div>
                                 <Divider />
-                                {/* <div className="card_body">
+                                <div className="card_body">
                                     <Row gutter={12}>
                                         <Col xs={24} md={8} lg={6}>
                                             <Typography>
@@ -241,7 +241,7 @@ const ViewRequest = () => {
                                         <Col xs={24} md={8} lg={6}>
                                             <Typography>
                                                 <Title level={5}>
-                                                    Legal Name:
+                                                    FMCSA Legal Name:
                                                 </Title>
                                                 <Paragraph>
                                                     {data?.fmcsa?.legal_name}
@@ -251,7 +251,7 @@ const ViewRequest = () => {
                                         <Col xs={24} md={8} lg={6}>
                                             <Typography>
                                                 <Title level={5}>
-                                                    Dot Number:
+                                                    FMCSA Dot Number:
                                                 </Title>
                                                 <Paragraph>
                                                     {data?.fmcsa?.dotNumber}
@@ -260,7 +260,7 @@ const ViewRequest = () => {
                                         </Col>
 
                                     </Row>
-                                </div> */}
+                                </div>
                             </div>
                         </div>
                     </div>

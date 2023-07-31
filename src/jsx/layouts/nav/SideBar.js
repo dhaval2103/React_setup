@@ -267,7 +267,7 @@ const SideBar = (props) => {
               <li><Link className={`${path === "fmcsas-list" ? "mm-active" : ""}`} to="/fmcsas-list">Fmcsas List</Link></li>
             </ul>
           </li>
-          <li className={`${path === "request-list" ? "mm-active" : ""}`}>
+          <li className={`${path === "request-list" || path == "request-detail" ? "mm-active" : ""}`}>
             <Link to="/request-list" >
               <i className="fa fa-question-circle"></i>
               <span className="nav-text">Request List</span>
