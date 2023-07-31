@@ -126,11 +126,15 @@ import BrokerList from "./pages/User/BrokerList";
 // import UpcomingSubscriptions from "./pages/User/UpcomingSubscriptions";
 // import TechnicianList from "./pages/User/TechnicianList";
 // import ViewMaintence from "./pages/User/ViewMaintence";
+// import UpcomingSubscriptions from "./pages/User/UpcomingSubscriptions";
+// import TechnicianList from "./pages/User/TechnicianList";
 import UserNotification from "./pages/Setting/UserNotification";
 import NotificationDetail from "./pages/Setting/NotificationDetail";
 import ChangePassword from "./components/AppsMenu/AppProfile/ChangePassword";
-import Google2fa from "./components/AppsMenu/AppProfile/Google2fa";
+// import Google2fa from "./components/AppsMenu/AppProfile/Google2fa";
+// import Google2fa from "./components/AppsMenu/AppProfile/";
 import FmcsasView from "./pages/User/FmcsasView";
+import FmcsasList from "./pages/User/FmcsasList";
 
 const Markup = () => {
   const { menuToggle } = useContext(ThemeContext);
@@ -152,6 +156,10 @@ const Markup = () => {
     // { url: "payment-history", component: PaymentHistory },
     // { url: "upcoming-subscriptions", component: UpcomingSubscriptions },
     // { url: "view-maintence", component: ViewMaintence },
+    { url: "request-list", component: RequestList },
+    { url: "request-detail", component: viewRequest },
+    { url: "fmcsas-list", component: FmcsasList },
+    { url: "fmcsas-view", component: FmcsasView },
 
     //Setting
     { url: "cms-list", component: Cms },
@@ -179,7 +187,7 @@ const Markup = () => {
 	/// Apps
     { url: "app-profile", component: AppProfile },
     { url: "changepassword", component: ChangePassword },
-    { url: "google2fa", component: Google2fa },
+    // { url: "google2fa", component: Google2fa },
     { url: "email-compose", component: Compose },
     { url: "email-inbox", component: Inbox },
     { url: "email-read", component: Read },
