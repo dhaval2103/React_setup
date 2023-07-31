@@ -135,8 +135,6 @@ import Google2fa from "./components/AppsMenu/AppProfile/Google2fa";
 // import Google2fa from "./components/AppsMenu/AppProfile/";
 import FmcsasView from "./pages/User/FmcsasView";
 import FmcsasList from "./pages/User/FmcsasList";
-import RequestList from "./pages/User/Request";
-import viewRequest from "./pages/User/ViewRequest";
 
 
 const Markup = () => {
