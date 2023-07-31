@@ -42,6 +42,7 @@ export function getRequest(value) {
         })
     )
 }
+
 export function getBroker(value) {
     let search = value || '';
     return dispatch => (
@@ -61,6 +62,7 @@ export function getBroker(value) {
         })
     )
 }
+
 export function getfmcsas(value) {
     let search = value || '';
     return dispatch => (
@@ -106,6 +108,7 @@ export function getProfile() {
         new Promise((resolve, reject) => {
             Http.callApi('get', BaseUrl + '/admin/profile')
                 .then(function (res) {
+                    console.log('profile',res);
                     // dispatch(action.setNotificationData(res));
                     return resolve(res);
                 })
@@ -193,8 +196,8 @@ export function disableGoogle2FA() {
     return Http.callApi('post', BaseUrl + '/admin/disableGoogle2fa');
 }
   
-export function verifyGoogle2FA(secret, code) {
-    return Http.callApi('post', BaseUrl + '/admin/google2faCheck', { secret, code });
+export function verifyGoogle2FA(values) {
+    return Http.callApi('post', BaseUrl + '/admin/google2faCheck', values );
 }
 
 
@@ -217,6 +220,7 @@ export function uploadProfile(data) {
         })
     )
 }
+
 export function uploadUserProfile(data) {
     data.env = 'test';
     return dispatch => (
@@ -236,6 +240,7 @@ export function uploadUserProfile(data) {
         })
     )
 }
+
 export function uploadCommonImage(data) {
     data.env = 'test';
     return dispatch => (
@@ -255,6 +260,7 @@ export function uploadCommonImage(data) {
         })
     )
 }
+
 export function getCms() {
     return dispatch => (
         new Promise((resolve, reject) => {
@@ -273,6 +279,7 @@ export function getCms() {
         })
     )
 }
+
 export function addCms(data) {
     data.env = 'test';
     return dispatch => (
@@ -291,6 +298,7 @@ export function addCms(data) {
         })
     )
 }
+
 export function getMaintenance(data) {
     let search = data || '';
     return dispatch => (
@@ -309,6 +317,7 @@ export function getMaintenance(data) {
         })
     )
 }
+
 export function approveRequest(data) {
     let data_ = {
         mId: data._id,
@@ -333,6 +342,7 @@ export function approveRequest(data) {
         })
     )
 }
+
 export function updateCms(data) {
     data.env = 'test';
     return dispatch => (
@@ -352,6 +362,7 @@ export function updateCms(data) {
         })
     )
 }
+
 export function deleteCms(data) {
 
     return dispatch => (
@@ -371,8 +382,9 @@ export function deleteCms(data) {
         })
     )
 }
+
 export function sendNotification(data) {
-    data.env = 'test'
+    // data.env = 'test'
     data.type = 1
     return dispatch => (
         new Promise((resolve, reject) => {
@@ -391,8 +403,9 @@ export function sendNotification(data) {
         })
     )
 }
+
 export function sendUserNotification(data) {
-    data.env = 'test'
+    // data.env = 'test'
     data.type = 2
     return dispatch => (
         new Promise((resolve, reject) => {
@@ -411,8 +424,8 @@ export function sendUserNotification(data) {
         })
     )
 }
-export function getNotificationlist(type) {
 
+export function getNotificationlist(type) {
     return dispatch => (
         new Promise((resolve, reject) => {
             Http.callApi('get', BaseUrl + '/admin/getNotification?type=' + type)
@@ -430,6 +443,7 @@ export function getNotificationlist(type) {
         })
     )
 }
+
 export function addFaq(data) {
     return dispatch => (
         new Promise((resolve, reject) => {
@@ -448,6 +462,7 @@ export function addFaq(data) {
         })
     )
 }
+
 export function getFaq(data) {
     let search = data || '';
     return dispatch => (
@@ -467,6 +482,7 @@ export function getFaq(data) {
         })
     )
 }
+
 export function getGroup() {
     return dispatch => (
         new Promise((resolve, reject) => {
@@ -485,6 +501,7 @@ export function getGroup() {
         })
     )
 }
+
 export function uploadMedia(data) {
     data.env = 'test'
     return dispatch => (
@@ -504,6 +521,7 @@ export function uploadMedia(data) {
         })
     )
 }
+
 export function addTechnicalguides(data) {
     // data.env = 'test'
     return dispatch => (
@@ -523,6 +541,7 @@ export function addTechnicalguides(data) {
         })
     )
 }
+
 export function getTechnicalGuides(data) {
     // data.env = 'test'
     let search = data || ''
@@ -543,6 +562,7 @@ export function getTechnicalGuides(data) {
         })
     )
 }
+
 export function editTechnicalguides(data) {
     // data.env = 'test'
     return dispatch => (
@@ -562,6 +582,7 @@ export function editTechnicalguides(data) {
         })
     )
 }
+
 export function createGroup(data) {
     // data.env = 'test'
     return dispatch => (
@@ -581,6 +602,7 @@ export function createGroup(data) {
         })
     )
 }
+
 export function editGroup(data) {
     // data.env = 'test'
     return dispatch => (
@@ -600,6 +622,7 @@ export function editGroup(data) {
         })
     )
 }
+
 export function getTechnician(data) {
     // data.env = 'test'
     let search = data || '';
@@ -620,6 +643,7 @@ export function getTechnician(data) {
         })
     )
 }
+
 export function updateTechician(data) {
     data.env = 'test'
     return dispatch => (
@@ -638,6 +662,7 @@ export function updateTechician(data) {
         })
     )
 }
+
 export function addTechician(data) {
     data.env = 'test'
     return dispatch => (
@@ -656,6 +681,7 @@ export function addTechician(data) {
         })
     )
 }
+
 export function addRequest(data) {
     data.env = 'test'
     return dispatch => (
@@ -675,6 +701,7 @@ export function addRequest(data) {
         })
     )
 }
+
 export function listRequestbyId(data) {
     // data.env = 'test'
     return dispatch => (
@@ -694,6 +721,7 @@ export function listRequestbyId(data) {
         })
     )
 }
+
 export function listSubscribeUser(data) {
     // data.env = 'test'
     let search = data || '';
@@ -714,6 +742,7 @@ export function listSubscribeUser(data) {
         })
     )
 }
+
 export function addSubscribeUser(data) {
     data.env = 'test'
     return dispatch => (
@@ -733,6 +762,7 @@ export function addSubscribeUser(data) {
         })
     )
 }
+
 export function updateUser(data) {
     data.env = 'test'
     return dispatch => (
@@ -752,6 +782,7 @@ export function updateUser(data) {
         })
     )
 }
+
 export function addUser(data) {
     data.env = 'test'
     return dispatch => (
@@ -771,6 +802,7 @@ export function addUser(data) {
         })
     )
 }
+
 export function getPaymentHistory() {
     // data.env = 'test'
     return dispatch => (

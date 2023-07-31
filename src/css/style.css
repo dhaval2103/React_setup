@@ -11397,7 +11397,7 @@ html[dir="rtl"] [direction="rtl"][data-sidebar-style="compact"]:not([data-layout
 
 .header-profile2 .dropdown-menu {
   -webkit-transform: translate(140px, 115px) !important;
-  transform: translate(100px, 115px) !important; }
+  transform: translate(50px, 115px) !important; }
 
 .header-profile2 .nav-link {
   padding: 0.5rem 1.6rem; }

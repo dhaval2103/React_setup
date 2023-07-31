@@ -48,14 +48,13 @@ const AppProfile = (props) => {
 	}
 
 	const onFinish = (data) => {
-		console.log('finish',data);
-
 		dispatch(UserService.updateUserProfile(data, props?.adminData))
 			.then((res) => {
 				ToastMe("Profile Updated Successfully", 'success');
-				setTimeout(() => {
-					window.location.reload();
-				}, 500)
+				// setTimeout(() => {
+				// 	window.location.reload();
+				// }, 500)
+				props.history.push('/dashboard');
 			})
 			.catch((errors) => {
 				console.log({ errors })

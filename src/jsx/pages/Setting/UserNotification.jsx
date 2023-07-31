@@ -83,7 +83,7 @@ const UserNotification = (props) => {
                 const newArr = [];
                 for (let i = 0; i < res.data.length; i++) {
                     newArr.push({
-                        label: res.data[i].fullName,
+                        label: res.data[i].firstName,
                         value: res.data[i]._id,
                     });
                 }

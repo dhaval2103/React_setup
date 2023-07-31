@@ -286,7 +286,7 @@ const SideBar = (props) => {
               <li><Link className={`${path === "technical-guide-list" ? "mm-active" : ""}`} to="/technical-guide-list">Technical Guide List</Link></li>
               <li><Link className={`${path === "contact-us" ? "mm-active" : ""}`} to="/contact-us">Contact Us</Link></li>
             </ul>
-          </li>
+          </li> */}
           <li className={`${app.includes(path) ? "mm-active" : ""}`}>
             <Link className="has-arrow ai-icon" to="#" >
               <i class="fa fa-bell" aria-hidden="true"></i>
@@ -295,11 +295,11 @@ const SideBar = (props) => {
             </Link>
             <ul >
             <li><Link className={`${path === "general-notification" ? "mm-active" : ""}`} to="/general-notification">General Notifications</Link></li>
-            <li><Link className={`${path === "user-notification" ? "mm-active" : ""}`} to="/user-notification">Individual/Group Notification</Link></li>
+            <li><Link className={`${path === "user-notification" ? "mm-active" : ""}`} to="/user-notification">Individual Notification</Link></li>
           
             </ul>
           </li>
-          <li className={`${app.includes(path) ? "mm-active" : ""}`}>
+          {/* <li className={`${app.includes(path) ? "mm-active" : ""}`}>
             <Link className="has-arrow ai-icon" to="#" >
               <i class="fa fa-bars" aria-hidden="true"></i>
 
@@ -309,8 +309,8 @@ const SideBar = (props) => {
               <li><Link className={`${path === "maintenance-request-list" ? "mm-active" : ""}`} to="/maintenance-request-list">Maintenance Request</Link></li>
               <li><Link className={`${path === "technician-list" ? "mm-active" : ""}`} to="/technician-list">Technician List</Link></li>
             </ul>
-          </li>
-          <li className={`${app.includes(path) ? "mm-active" : ""}`}>
+          </li> */}
+          {/* <li className={`${app.includes(path) ? "mm-active" : ""}`}>
             <Link className={`${path === "live-chat" ? "mm-active" : ""}`} to="/live-chat">
               <i class="fa fa-comments" aria-hidden="true"></i>
 
