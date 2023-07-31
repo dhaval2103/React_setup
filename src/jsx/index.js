@@ -131,7 +131,7 @@ import BrokerList from "./pages/User/BrokerList";
 import UserNotification from "./pages/Setting/UserNotification";
 import NotificationDetail from "./pages/Setting/NotificationDetail";
 import ChangePassword from "./components/AppsMenu/AppProfile/ChangePassword";
-// import Google2fa from "./components/AppsMenu/AppProfile/Google2fa";
+import Google2fa from "./components/AppsMenu/AppProfile/Google2fa";
 // import Google2fa from "./components/AppsMenu/AppProfile/";
 import FmcsasView from "./pages/User/FmcsasView";
 import FmcsasList from "./pages/User/FmcsasList";
@@ -190,7 +190,7 @@ const Markup = () => {
 	/// Apps
     { url: "app-profile", component: AppProfile },
     { url: "changepassword", component: ChangePassword },
-    // { url: "google2fa", component: Google2fa },
+    { url: "google2fa", component: Google2fa },
     { url: "email-compose", component: Compose },
     { url: "email-inbox", component: Inbox },
     { url: "email-read", component: Read },
