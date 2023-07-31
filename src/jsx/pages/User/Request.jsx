@@ -93,9 +93,20 @@ const Request = (props) => {
             dataIndex: 'action',
             key: 'action',
             render: (text, data) => (
-                <div>
-                    <Button to="" onClick={() => viewUser(data)}>View</Button>
-                </div>
+                <>
+                    <Dropdown>
+                        <Dropdown.Toggle
+                            variant="danger"
+                            className="light sharp i-false badge_label"
+                        >
+                            {svg1}
+                            
+                        </Dropdown.Toggle>
+                        <Dropdown.Menu>
+                            <Dropdown.Item onClick={() => viewUser(data)}>View</Dropdown.Item>
+                        </Dropdown.Menu>
+                    </Dropdown>
+                </>
             ),
         },
         // {
