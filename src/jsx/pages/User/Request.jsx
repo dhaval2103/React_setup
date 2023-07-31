@@ -19,23 +19,11 @@ const Request = (props) => {
     const getRequestList = () => {
         dispatch(UserService.getRequest())
             .then((res) => {
-                setData(res.data)
                 var newArr = [];
-                // for (var i = 0; i < res.data.length; i++) {
-                //     newArr.push(
-                //         {
-                //             key: i,
-                //             firstName: res.data[i].firstName,
-                //             lastName: res.data[i].lastName,
-                //             trackingNumber: res. [i].trackingNumber,
-                //             ticketNumber: res.data[i].ticketNumber,
-                //             mobile: res.data[i].mobile,
-                //             // createdAt: res.data[i].createdAt,
-                //             id: res.data[i]._id,
-                //         }
-                //     )
-                // }
-                // setData(newArr);
+                res.data.map((element, index) => {
+                    newArr.push({key: index,...element});
+                })
+                setData(newArr);
                 setLoading(false)
             })
             .catch((errors) => {
@@ -61,13 +49,9 @@ const Request = (props) => {
     const columnss = [
         {
             title: 'ID',
-            dataIndex: 'key',
-            key: 'key',
-            render: (text = 0) => (
-                <div>
-                    {text + 1}
-                </div>
-            ),
+            dataIndex: "key",
+            key: "key",
+            render: (text) => <div>{text + 1}</div>,
         },
         {
             title: 'First Name',
@@ -79,11 +63,6 @@ const Request = (props) => {
             dataIndex: 'lastName',
             key: 'lastName',
         },
-        // {
-        //     title: 'Company name',
-        //     dataIndex: 'companyName',
-        //     key: 'companyName',
-        // },
         {
             title: 'Tracking Number',
             dataIndex: 'trackingNumber',

@@ -49,8 +49,9 @@ const Home = () => {
 	const [loading, setLoading] = useState(true);
 	const { changeBackground } = useContext(ThemeContext);
 
-	const dashboardCountData = () => {
-		dispatch(CommonService.dashboard())
+	const dashboardCountData = (key) => {
+		key = "All"
+		dispatch(CommonService.dashboard(key))
 			.then((res) => {
 				setCountData(res.data)
 				setLoading(false)
@@ -58,9 +59,9 @@ const Home = () => {
 			.catch((errors) => {
 				console.log({ errors })
 			})
-	}
-	const onChange = (key) => {
-		dispatch(CommonService.dashboard(key))
+		}
+		const onChange = (key) => {
+			dispatch(CommonService.dashboard(key))
 			.then((res) => {
 				setCountData(res.data)
 			})
