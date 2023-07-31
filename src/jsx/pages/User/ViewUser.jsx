@@ -11,6 +11,13 @@ const ViewUser = () => {
     const { state } = useLocation();
     const userDetail = state?.userDetail;
     const [data, setData] = useState([]);
+
+   
+useEffect(()=>{
+    setData([userDetail])
+},[])
+   
+   
     
     const [expandedIndices, setExpandedIndices] = useState([]);
 
@@ -32,12 +39,17 @@ const ViewUser = () => {
             // Call the API to fetch carrier details by dotNumber
             UserService.carrierDetails({ dotNumber: userDetail?.dotNumber })
                 .then((res) => {
-                    console.log('res',res);
-                    setData(res.data); // Update the state with fetched data
+                    if(res.data.length !== 0){
+                        console.log(1);
+                        setData(res.data);
+                    }else{
+                        console.log(2);
+                        setData([userDetail]);
+                    } 
                 })
                 .catch((error) => {
                     console.log(error);
-                    setData([]); // If an error occurs, reset the data to an empty array
+                  
                 });
         }
     }
@@ -98,15 +110,15 @@ const ViewUser = () => {
     useEffect(() => {
         getDetail();
     }, [])
-
+console.log(data);
     return (
         <Row>
             {data.map((carrierData, index) => (
                 <Col key={index} md={8} lg={6} className="mb-4">
-                    <div className="card custome_card bg-dark text-white">
+                    <div className="card custome_card" >
                         <div className="card-body">
                             <h5 className="card-title mb-4">
-                                {carrierData.user?.firstName ? carrierData?.user.firstName : "-"}
+                                {carrierData.user?.firstName ? carrierData?.user.firstName : userDetail?.firstName}
                             </h5>
                             <p className="card-text">
                                 Last Name: {carrierData.user?.lastName ? carrierData.user?.lastName : "-"}
