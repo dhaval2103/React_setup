@@ -76,6 +76,15 @@ const SideBar = (props) => {
     "transaction-details",
     "task",
   ],
+  user = [
+    "carrier-list",
+    "broker-list",
+    "fmcsas-list",
+  ],
+  notification = [
+    "general-notification",
+    "user-notification",
+  ],
     app = [
       "app-profile",
       "post-details",
@@ -256,7 +265,7 @@ const SideBar = (props) => {
             </ul> */}
           </li>
 
-          <li className={`${app.includes(path) ? "mm-active" : ""}`}>
+          <li className={`${user.includes(path) ? "mm-active" : ""}`}>
             <Link className="has-arrow ai-icon" to="#" >
               <i className="fa fa-user"></i>
               <span className="nav-text">Users List</span>
@@ -287,7 +296,7 @@ const SideBar = (props) => {
               <li><Link className={`${path === "contact-us" ? "mm-active" : ""}`} to="/contact-us">Contact Us</Link></li>
             </ul>
           </li> */}
-          <li className={`${app.includes(path) ? "mm-active" : ""}`}>
+          <li className={`${notification.includes(path) ? "mm-active" : ""}`}>
             <Link className="has-arrow ai-icon" to="#" >
               <i class="fa fa-bell" aria-hidden="true"></i>
 

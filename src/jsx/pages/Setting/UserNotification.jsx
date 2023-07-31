@@ -39,8 +39,11 @@ const UserNotification = (props) => {
     }
 
     const onSubmit = (values) => {
-        // values.userId = userId;
-        dispatch(UserService.sendUserNotification(values))
+        const notificationData = {
+            ...values,
+            userId: userId, // Send the array of selected user IDs
+          };
+        dispatch(UserService.sendUserNotification(notificationData))
             .then((res) => {
                 getNotificationlist();
                 form.resetFields();
@@ -77,8 +80,8 @@ const UserNotification = (props) => {
             })
     }
 
-    const getUser = (value = '') => {
-        dispatch(UserService.getUser(value))
+    const getAllUser = (value = '') => {
+        dispatch(UserService.getAllUser(value))
             .then((res) => {
                 const newArr = [];
                 for (let i = 0; i < res.data.length; i++) {
@@ -99,14 +102,16 @@ const UserNotification = (props) => {
         props.history.push("/notification-detail", { notification: text })
     }
 
-    const handleChangeName = (e) => {
-        setuserId(e);
-        form.setFieldValue('userId', e)
+    const handleChangeName = (selectedUsers) => {
+        setuserId(selectedUsers);
+    form.setFieldsValue({
+      userId: selectedUsers, // Update the userId field value in the form
+    });
     }
 
     useEffect(() => {
         getNotificationlist();
-        getUser();
+        getAllUser();
     }, [])
 
     const svg1 = (
@@ -186,6 +191,11 @@ const UserNotification = (props) => {
                 onCancel={() => {
                     setVisible(false);
                 }}
+                onOk={() => {
+                    form.validateFields().then((values) => {
+                      onSubmit(values);
+                    });
+                  }}
                 footer={[
                     <Button key="cancel" onClick={() => setVisible(false)}> Cancel </Button>,
                     <Button
