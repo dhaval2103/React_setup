@@ -5,9 +5,11 @@ import { Button, Empty, Table, Avatar, Divider, Typography } from 'antd';
 import moment from "moment";
 import dummy from "../../../images/dummy.png";
 import { } from 'antd'
+import { Badge, Dropdown } from "react-bootstrap";
 import { UserOutlined } from '@ant-design/icons';
 import Title from 'antd/es/typography/Title';
 import Paragraph from 'antd/es/typography/Paragraph';
+
 
 
 const ViewRequest = () => {
@@ -100,6 +102,7 @@ const ViewRequest = () => {
     useEffect(() => {
         getDetail();
     }, [])
+    console.log(data, 'data');
     return (
         <Row>
             <Col xl="Col-lg-12">
@@ -112,57 +115,82 @@ const ViewRequest = () => {
                                         <Avatar size={64} icon={<UserOutlined />} />
                                         <div className="text_content">
                                             <Title level={5} className=''>
-                                                Thomos John
+                                                {(data?.userfirstName) + ' ' + (data?.userlastName)}
                                             </Title>
                                             <Paragraph className=' mb-0'>
-                                                Thomos Trucking LLC
+                                                {data?.usercompanyName}
                                             </Paragraph>
                                         </div>
                                     </div>
                                     <Paragraph className='paragraph'>
-                                        expired
+                                        {data?.status == 0 ? <Badge bg=" badge-lg " className='badge-warning light badge-xs' style={{ cursor: 'pointer' }}>Pending</Badge> 
+                                        : data?.status == 1 ? <Badge bg=" badge-lg " className='badge-success light badge-xs' style={{ cursor: 'pointer' }}>Completed</Badge> 
+                                        : data?.status == 2 ? <Badge bg=" badge-lg " className='badge-danger light badge-xs' style={{ cursor: 'pointer' }}>Rejected</Badge> 
+                                        : data?.status == 3 ? <Badge bg=" badge-lg " className='badge-info light badge-xs' style={{ cursor: 'pointer' }}>Incompleted</Badge> 
+                                        : data?.status == 4 ? <Badge bg=" badge-lg " className='badge-danger light badge-xs' style={{ cursor: 'pointer' }}>Expired</Badge> 
+                                        : ''}
                                     </Paragraph>
                                 </div>
                                 <Divider />
-                                {/* <div className="card_body">
+                                <div className="card_body">
                                     <Row gutter={12}>
                                         <Col xs={24} md={8} lg={6}>
                                             <Typography>
                                                 <Title level={5}>
-                                                    MC Number:
+                                                    First Name:
                                                 </Title>
                                                 <Paragraph>
-                                                    1212343434
+                                                    {data?.firstName}
                                                 </Paragraph>
                                             </Typography>
                                         </Col>
                                         <Col xs={24} md={8} lg={6}>
                                             <Typography>
                                                 <Title level={5}>
-                                                    MC Number:
+                                                    Last Name:
                                                 </Title>
                                                 <Paragraph>
-                                                    1212343434
+                                                    {data?.lastName}
                                                 </Paragraph>
                                             </Typography>
                                         </Col>
                                         <Col xs={24} md={8} lg={6}>
                                             <Typography>
                                                 <Title level={5}>
-                                                    MC Number:
+                                                    Email:
                                                 </Title>
                                                 <Paragraph>
-                                                    1212343434
+                                                    {data?.email}
                                                 </Paragraph>
                                             </Typography>
                                         </Col>
                                         <Col xs={24} md={8} lg={6}>
                                             <Typography>
                                                 <Title level={5}>
-                                                    MC Number:
+                                                    Mobile No:
                                                 </Title>
                                                 <Paragraph>
-                                                    1212343434
+                                                    {data?.mobile}
+                                                </Paragraph>
+                                            </Typography>
+                                        </Col>
+                                        <Col xs={24} md={8} lg={6}>
+                                            <Typography>
+                                                <Title level={5}>
+                                                    Ticket Number:
+                                                </Title>
+                                                <Paragraph>
+                                                    {data?.ticketNumber}
+                                                </Paragraph>
+                                            </Typography>
+                                        </Col>
+                                        <Col xs={24} md={8} lg={6}>
+                                            <Typography>
+                                                <Title level={5}>
+                                                    Tracking Number:
+                                                </Title>
+                                                <Paragraph>
+                                                    {data?.trackingNumber}
                                                 </Paragraph>
                                             </Typography>
                                         </Col>
@@ -173,10 +201,20 @@ const ViewRequest = () => {
                                         <Col xs={24} md={8} lg={6}>
                                             <Typography>
                                                 <Title level={5}>
-                                                    MC Number:
+                                                    From:
                                                 </Title>
                                                 <Paragraph>
-                                                    1212343434
+                                                    {data?.fromstates?.name ?? '-'}
+                                                </Paragraph>
+                                            </Typography>
+                                        </Col>
+                                        <Col xs={24} md={8} lg={6}>
+                                            <Typography>
+                                                <Title level={5}>
+                                                    To:
+                                                </Title>
+                                                <Paragraph>
+                                                   {data?.tostates?.name ?? '-'}
                                                 </Paragraph>
                                             </Typography>
                                         </Col>
@@ -186,33 +224,43 @@ const ViewRequest = () => {
                                                     MC Number:
                                                 </Title>
                                                 <Paragraph>
-                                                    1212343434
+                                                    {data?.mcNumber}
                                                 </Paragraph>
                                             </Typography>
                                         </Col>
                                         <Col xs={24} md={8} lg={6}>
                                             <Typography>
                                                 <Title level={5}>
-                                                    MC Number:
+                                                    Dot Number:
                                                 </Title>
                                                 <Paragraph>
-                                                    1212343434
+                                                    {data?.dotNumber}
                                                 </Paragraph>
                                             </Typography>
                                         </Col>
                                         <Col xs={24} md={8} lg={6}>
                                             <Typography>
                                                 <Title level={5}>
-                                                    MC Number:
+                                                    FMCSA Legal Name:
                                                 </Title>
                                                 <Paragraph>
-                                                    1212343434
+                                                    {data?.fmcsa?.legal_name}
+                                                </Paragraph>
+                                            </Typography>
+                                        </Col>
+                                        <Col xs={24} md={8} lg={6}>
+                                            <Typography>
+                                                <Title level={5}>
+                                                    FMCSA Dot Number:
+                                                </Title>
+                                                <Paragraph>
+                                                    {data?.fmcsa?.dotNumber}
                                                 </Paragraph>
                                             </Typography>
                                         </Col>
 
                                     </Row>
-                                </div> */}
+                                </div>
                             </div>
                         </div>
                     </div>

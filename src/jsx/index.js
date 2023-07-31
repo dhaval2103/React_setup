@@ -130,6 +130,7 @@ import UserNotification from "./pages/Setting/UserNotification";
 import NotificationDetail from "./pages/Setting/NotificationDetail";
 import ChangePassword from "./components/AppsMenu/AppProfile/ChangePassword";
 // import Google2fa from "./components/AppsMenu/AppProfile/Google2fa";
+// import Google2fa from "./components/AppsMenu/AppProfile/";
 import FmcsasView from "./pages/User/FmcsasView";
 import FmcsasList from "./pages/User/FmcsasList";
 
@@ -150,6 +151,8 @@ const Markup = () => {
     // User
     { url: "carrier-list", component: User },
     { url: "broker-list", component: BrokerList },
+    { url: "request-list", component: RequestList },
+    { url: "request-detail", component: viewRequest },
     { url: "fmcsas-list", component: FmcsasList },
     { url: "fmcsas-view", component: FmcsasView },
     { url: "payment-history", component: PaymentHistory },
