@@ -118,28 +118,30 @@ console.log(data);
                     <div className="card custome_card" >
                         <div className="card-body">
                             <h5 className="card-title mb-4">
-                                {carrierData.user?.firstName ? carrierData?.user.firstName : userDetail?.firstName}
+                                {carrierData.user?.firstName ? carrierData?.user.firstName : carrierData?.firstName}
                             </h5>
                             <p className="card-text">
-                                Last Name: {carrierData.user?.lastName ? carrierData.user?.lastName : "-"}
+                                Last Name: {carrierData.user?.lastName ? carrierData.user?.lastName : carrierData?.lastName}
                             </p>
                             <p className="card-text">
                                 Company Name:{" "}
-                                {carrierData.user?.companyName ? carrierData.user?.companyName : "-"}
+                                {carrierData.user?.companyName ? carrierData.user?.companyName : carrierData?.companyName}
                             </p>
                             <p className="card-text">
-                                DOT Number: {carrierData.user?.dotNumber ? carrierData.user?.dotNumber : "-"}
+                                DOT Number: {carrierData.user?.dotNumber ? carrierData.user?.dotNumber :  carrierData?.dotNumber}
                             </p>
                             <p className="card-text">
-                                Email: {carrierData.user?.email ? carrierData.user?.email : "-"}
+                                Email: {carrierData.user?.email ? carrierData.user?.email : carrierData?.email}
                             </p>
                             <p className="card-text">
-                                Mobile: {carrierData.user?.mobile ? carrierData.user?.mobile : "-"}
+                                Mobile: {carrierData.user?.mobile ? carrierData.user?.mobile : carrierData?.mobile}
                             </p>
-                            <hr />
+                            {carrierData?.firstName ? "":
+                            <><hr />
                             <Button variant="primary" onClick={() => toggleFMCSA(index)}>
                                 {expandedIndices[index] ? "Hide FMCSA Details" : "Show FMCSA Details"}
-                            </Button>
+                            </Button></>
+                            }
                             {expandedIndices[index] && (
                                 <div className="fmcsa-details">
                                     <h6 className="card-subtitle mt-3"></h6>

@@ -37,9 +37,12 @@ const User = (props) => {
     const getBrokerList = (value) => {
         dispatch(UserService.getfmcsas(value))
             .then((res) => {
+                var newArr = [];
                 console.log(res,"result");
-                setData(res?.data)
-                // var newArr = [];
+                res.data.map((element, index) => {
+                    newArr.push({key: index,...element});
+                })
+                setData(newArr)
                 // for (var i = 0; i < res.data.length; i++) {
                 //     newArr.push(
                 //         {
@@ -70,8 +73,6 @@ const User = (props) => {
         console.log('text',text);
         let data = {};
         data.userid = text.id
-        data.isApprove = text.isApprove = 0 ? 1 : 0
-        console.log('dataaa',data);
         Swal.fire({
             title: 'Are you sure?',
             text: "To change this User status!",
@@ -131,13 +132,9 @@ const User = (props) => {
     const columnss = [
         {
             title: 'ID',
-            dataIndex: 'key',
-            key: 'key',
-            render: (text) => (
-                <div>
-                    {text + 1}
-                </div>
-            ),
+            dataIndex: "key",
+            key: "key",
+            render: (text) => <div>{text + 1}</div>,
         },
         {
             title: 'Dot Number',
