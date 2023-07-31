@@ -6,19 +6,6 @@ import { Tabs } from 'antd';
 import { Dropdown } from 'react-bootstrap';
 import PageLoader from '../../pages/Common/PageLoader';
 
-///Images
-import small from "./../../../images/profile/small/pic1.jpg";
-import avt1 from "./../../../images/avatar/1.jpg";
-import avt2 from "./../../../images/avatar/2.jpg";
-import avt3 from "./../../../images/avatar/3.jpg";
-import avt4 from "./../../../images/avatar/4.jpg";
-import avt5 from "./../../../images/avatar/5.jpg";
-import avt6 from "./../../../images/avatar/6.jpg";
-
-
-
-
-
 //Import Components
 import { ThemeContext } from "../../../context/ThemeContext";
 
@@ -52,8 +39,9 @@ const DashboardDark = () => {
 	const [loading, setLoading] = useState(true);
 	const { changeBackground } = useContext(ThemeContext);
 
-	const dashboardCountData = () => {
-		dispatch(CommonService.dashboard())
+	const dashboardCountData = (key) => {
+		key = "All"
+		dispatch(CommonService.dashboard(key))
 			.then((res) => {
 				setCountData(res.data)
 				setLoading(false)
@@ -63,7 +51,13 @@ const DashboardDark = () => {
 			})
 	}
 	const onChange = (key) => {
-		console.log(key);
+		dispatch(CommonService.dashboard(key))
+			.then((res) => {
+				setCountData(res.data)
+			})
+			.catch((errors) => {
+				console.log({ errors })
+			})
 	  };
 	const items = [
 		{
