@@ -99,10 +99,12 @@ const User = (props) => {
     // Filter based on the "isApprove" property
     return data.filter((item) => {
         if (selectedFilter === 0) {
-        return item.isApprove === 0; // Filter for "Pending" brokers
+            return item.isApprove === 0; // Filter for "Pending" brokers
         } else if (selectedFilter === 1) {
-        return item.isApprove === 1; // Filter for "Approved" brokers
-        }
+            return item.isApprove === 1; // Filter for "Approved" brokers
+        } else if (selectedFilter === 2) {
+            return item; // Filter for "Approved" brokers
+        } 
         return true;
     });
     }, [data, selectedFilter]);
@@ -194,6 +196,7 @@ const User = (props) => {
                             Filter by Status
                         </Dropdown.Toggle>
                         <Dropdown.Menu>
+                            <Dropdown.Item onClick={() => handleFilterChange(2)}>All</Dropdown.Item>
                             <Dropdown.Item onClick={() => handleFilterChange(1)}>Approved</Dropdown.Item>
                             <Dropdown.Item onClick={() => handleFilterChange(0)}>Pending</Dropdown.Item>
                             {/* Add more filter options here */}
