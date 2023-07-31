@@ -10,20 +10,20 @@ const NotificationDetail = () => {
         <>
             <Row className='table_custom'>
                 <Col xl="12">
-                    <Card className="text-white bg-dark">
+                    <Card>
                         <Card.Header>
-                            <Card.Title className="text-white">Notification Detail</Card.Title>
+                            <Card.Title style={{fontWeight:700}}>Notification Detail</Card.Title>
                         </Card.Header>
                         <Card.Body className="mb-0">
                             <Card.Text>
                                 <div>
-                                    <label className="label-name">Title :&nbsp;</label>
+                                    <label className="label-name" style={{fontWeight:700}}>Title :&nbsp;</label>
                                     {notification?.title ? notification?.title : '-'}
                                 </div>
                             </Card.Text>
                             <Card.Text>
                                 <div>
-                                    <label className="label-name">Message :&nbsp;</label>
+                                    <label className="label-name" style={{fontWeight:700}}>Message :&nbsp;</label>
                                     {notification?.message ? notification?.message : '-'}
                                 </div>
                             </Card.Text>
@@ -31,35 +31,35 @@ const NotificationDetail = () => {
                     </Card>
                 </Col>
                 <Col xl="12">
-                    <Card className="text-white bg-dark">
+                    <Card>
                         <Card.Header>
-                            <Card.Title className="text-white">User Detail</Card.Title>
+                            <Card.Title style={{fontWeight:700}}>User Detail</Card.Title>
                         </Card.Header>
                         {notification && notification.users && notification.users.length > 0 ? (
                             notification.users.map((item, index) => (
-                                <Card key={index} className="text-white bg-dark mb-3">
+                                <Card key={index}>
                                     <Card.Body>
                                         <Card.Text>
                                             <div>
-                                            <label className="label-name">First Name :&nbsp;</label>
+                                            <label className="label-name" style={{fontWeight:700}}>First Name :&nbsp;</label>
                                                 {item?.firstName}
                                             </div>
                                         </Card.Text>
                                         <Card.Text>
                                             <div>
-                                            <label className="label-name">Last Name :&nbsp;</label>
+                                            <label className="label-name" style={{fontWeight:700}}>Last Name :&nbsp;</label>
                                                 {item?.lastName}
                                             </div>
                                         </Card.Text>
                                         <Card.Text>
                                             <div>
-                                            <label className="label-name">Email :&nbsp;</label>
+                                            <label className="label-name" style={{fontWeight:700}}>Email :&nbsp;</label>
                                                 {item?.email}
                                             </div>
                                         </Card.Text>
                                         <Card.Text>
                                             <div>
-                                            <label className="label-name">Mobile :&nbsp;</label>
+                                            <label className="label-name" style={{fontWeight:700}}>Mobile :&nbsp;</label>
                                                 {item?.mobile}
                                             </div>
                                         </Card.Text>
