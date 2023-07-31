@@ -145,6 +145,8 @@ const Request = (props) => {
                 return item.status === 3; // Filter for "Incompleted" brokers
             } else if (selectedFilter == 4) {
                 return item.status === 4; // Filter for "Expired" brokers
+            } else if (selectedFilter == 5) {
+                return item; // Filter for "Expired" brokers
             }
             return true;
         });
@@ -168,6 +170,7 @@ const Request = (props) => {
                                 Filter by Status
                             </Dropdown.Toggle>
                             <Dropdown.Menu>
+                                <Dropdown.Item onClick={() => handleFilterChange(5)}>All</Dropdown.Item>
                                 <Dropdown.Item onClick={() => handleFilterChange(0)}>Pending</Dropdown.Item>
                                 <Dropdown.Item onClick={() => handleFilterChange(1)}>Completed</Dropdown.Item>
                                 <Dropdown.Item onClick={() => handleFilterChange(2)}>Rejected</Dropdown.Item>

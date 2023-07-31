@@ -24,6 +24,27 @@ export function getUser(value) {
     )
 }
 
+export function getAllUser(value) {
+    let search = value || '';
+    return dispatch => (
+        new Promise((resolve, reject) => {
+            Http.callApi('get', BaseUrl + '/admin/allUserList?search=' + search)
+                .then(function (res) {
+                    // dispatch(action.setNotificationData(res));
+                    return resolve(res);
+                })
+                .catch(function (error) {
+                    const data = {
+                        errorData: error.response.data,
+                        // statusCode: error.response.status,
+                    };
+                    return reject(data);
+                })
+        })
+    )
+}
+
+
 export function getRequest(value) {
     let search = value || '';
     return dispatch => (
