@@ -2,9 +2,9 @@ import React, { useContext, useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import loadable from "@loadable/component";
 import pMinDelay from "p-min-delay";
-import { Tabs } from 'antd';
+// import { Tabs } from 'antd';
 import CommonService from '../../../services/common';
-import { Dropdown } from 'react-bootstrap';
+import { Card, Dropdown, Nav, Tab, Tabs } from 'react-bootstrap';
 import PageLoader from '../../pages/Common/PageLoader';
 
 ///Images
@@ -48,6 +48,7 @@ const Home = () => {
 	const [countData, setCountData] = useState();
 	const [loading, setLoading] = useState(true);
 	const { changeBackground } = useContext(ThemeContext);
+	const [key, setKey] = useState('home');
 
 	const dashboardCountData = (key) => {
 		key = "All"
@@ -59,58 +60,58 @@ const Home = () => {
 			.catch((errors) => {
 				console.log({ errors })
 			})
-		}
-		const onChange = (key) => {
-			dispatch(CommonService.dashboard(key))
+	}
+	const onChange = (key) => {
+		dispatch(CommonService.dashboard(key))
 			.then((res) => {
 				setCountData(res.data)
 			})
 			.catch((errors) => {
 				console.log({ errors })
 			})
-	  };
+	};
 	const items = [
 		{
 			key: '1D',
 			label: `1D`,
-		  //   children: `Content of Tab Pane 1`,
-		  },
-		  {
+			//   children: `Content of Tab Pane 1`,
+		},
+		{
 			key: '7D',
 			label: `7D`,
-		  //   children: `Content of Tab Pane 2`,
-		  },
-		  {
+			//   children: `Content of Tab Pane 2`,
+		},
+		{
 			key: '15D',
 			label: `15D`,
-		  //   children: `Content of Tab Pane 3`,
-		  },
-		  {
+			//   children: `Content of Tab Pane 3`,
+		},
+		{
 			key: '30D',
 			label: `30D`,
-		  //   children: `Content of Tab Pane 3`,
-		  },
-		  {
+			//   children: `Content of Tab Pane 3`,
+		},
+		{
 			key: '45D',
 			label: `45D`,
-		  //   children: `Content of Tab Pane 3`,
-		  },
-		  {
+			//   children: `Content of Tab Pane 3`,
+		},
+		{
 			key: '60D',
 			label: `60D`,
-		  //   children: `Content of Tab Pane 3`,
-		  },
-		  {
+			//   children: `Content of Tab Pane 3`,
+		},
+		{
 			key: '90D',
 			label: `90D`,
-		  //   children: `Content of Tab Pane 3`,
-		  },
-		  {
+			//   children: `Content of Tab Pane 3`,
+		},
+		{
 			key: 'All',
 			label: `All`,
-		  //   children: `Content of Tab Pane 3`,
-		  },
-	  ];
+			//   children: `Content of Tab Pane 3`,
+		},
+	];
 	useEffect(() => {
 		changeBackground({ value: "light", label: "Light" });
 		dashboardCountData();
@@ -118,7 +119,7 @@ const Home = () => {
 
 	return (
 		<>
-		  <PageLoader loading={loading} />
+			<PageLoader loading={loading} />
 			<div className="row">
 				<h4><b>Users</b></h4>
 				<div className="col-xl-12">
@@ -244,7 +245,24 @@ const Home = () => {
 					</div>
 				</div>
 				<h4><b>Careers Request</b></h4>
-				<Tabs defaultActiveKey="All" items={items} onChange={onChange}></Tabs>
+				
+				<Card style={{ backgroundColor: 'transparent', boxShadow: 'none' }} className='mt-1'>
+
+					<Tab.Container onSelect={onChange} defaultActiveKey={'All'}>
+						<Nav as="ul" className="nav-pills mb-4">
+							{items.map(
+								(data, i) =>
+									
+										<Nav.Item as="li" key={i}>
+											<Nav.Link eventKey={data.key}>
+												{data.label}
+											</Nav.Link>
+										</Nav.Item>
+							)}
+						</Nav>
+
+					</Tab.Container>
+				</Card>
 				<div className="col-xl-12">
 					<div className="row">
 						<div className="col-xl-3 col-sm-6">

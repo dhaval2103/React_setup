@@ -240,20 +240,20 @@ const SideBar = (props) => {
         </Dropdown>
         <MM className="metismenu" id="menu">
           <li className={`${deshBoard.includes(path) ? "mm-active" : ""}`}>
-            <Link className="has-arrow" to="#" >
+            <Link to="/" >
               <i className="fas fa-home"></i>
               <span className="nav-text">Dashboard</span>
             </Link>
-            <ul >
+            {/* <ul >
               <li><Link className={`${path === "dashboard" ? "mm-active" : ""}`} to="/dashboard"> Dashboard Light</Link></li>
               <li><Link className={`${path === "dashboard-dark" ? "mm-active" : ""}`} to="/dashboard-dark"> Dashboard Dark</Link></li>
-              {/* <li><Link className={`${path === "wallet" ? "mm-active" : ""}`} to="/wallet">My Wallet</Link></li>
+              <li><Link className={`${path === "wallet" ? "mm-active" : ""}`} to="/wallet">My Wallet</Link></li>
               <li><Link className={`${path === "invoices-list" ? "mm-active" : ""}`} to="/invoices-list"> Invoices</Link></li>
               <li><Link className={`${path === "create-invoices" ? "mm-active" : ""}`} to="/create-invoices">Create Invoices</Link></li>
               <li><Link className={`${path === "card-center" ? "mm-active" : ""}`} to="/card-center">Card-Center</Link></li>
               <li><Link className={`${path === "transaction-details" ? "mm-active" : ""}`} to="/transaction-details"> Transaction</Link></li>
-              <li><Link className={`${path === "task" ? "mm-active" : ""}`} to="/task">Task</Link></li> */}
-            </ul>
+              <li><Link className={`${path === "task" ? "mm-active" : ""}`} to="/task">Task</Link></li>
+            </ul> */}
           </li>
 
           <li className={`${app.includes(path) ? "mm-active" : ""}`}>
