@@ -19,90 +19,13 @@ const ViewRequest = () => {
 
     const getDetail = () => {
         if (requestDetail) {
-            // var newArr = [];
-            // for (var i = 0; i < requestDetail?.user.length; i++) {
-            //     newArr.push(
-            //         {
-            //             key: i,
-            //             email: requestDetail?.user[i]?.email?.text,
-            //             id: requestDetail?.user[i]?._id,
-            //             mobile: requestDetail?.user[i]?.mobile?.text,
-            //             role: requestDetail?.user[i]?.role,
-            //             fullName: requestDetail?.user[i]?.fullName,
-            //             createdAt: requestDetail?.user[i]?.createdAt
-            //         }
-            //     )
-            // }
             setData(requestDetail)
         }
     }
 
-    const columnss = [
-        {
-            title: 'ID',
-            dataIndex: 'key',
-            key: 'key',
-            render: (text) => (
-                <div>
-                    {text + 1}
-                </div>
-            ),
-        },
-        {
-            title: 'Full name',
-            dataIndex: 'fullName',
-            key: 'fullName',
-        },
-        {
-            title: 'Email',
-            dataIndex: 'email',
-            key: 'email',
-        },
-        {
-            title: 'Mobile',
-            dataIndex: 'mobile',
-            key: 'mobile',
-        },
-        {
-            title: 'Role',
-            dataIndex: 'role',
-            render: (text) => {
-                if (text == 1) {
-                    return (
-                        <span>Master</span>
-                    )
-                } else if (text == 2) {
-                    return (
-                        <span >User</span>
-                    )
-                }
-                else if (text == 3) {
-                    return (
-                        <span >Pro</span>
-                    )
-                } else {
-                    return (
-                        <span >-</span>
-                    )
-                }
-            }
-        },
-        {
-            title: 'Created At',
-            dataIndex: 'createdAt',
-            key: 'createdAt',
-            render: (text) => (
-                <div>
-                    {moment(text).format("DD MMM YYYY h:mm A")}
-                </div>
-            ),
-        },
-    ];
-
     useEffect(() => {
         getDetail();
     }, [])
-    console.log(data, 'data');
     return (
         <Row>
             <Col xl="Col-lg-12">
@@ -123,11 +46,11 @@ const ViewRequest = () => {
                                         </div>
                                     </div>
                                     <Paragraph className='paragraph'>
-                                        {data?.status == 0 ? <Badge bg=" badge-lg " className='badge-warning light badge-xs' style={{ cursor: 'pointer' }}>Pending</Badge> 
-                                        : data?.status == 1 ? <Badge bg=" badge-lg " className='badge-success light badge-xs' style={{ cursor: 'pointer' }}>Completed</Badge> 
-                                        : data?.status == 2 ? <Badge bg=" badge-lg " className='badge-danger light badge-xs' style={{ cursor: 'pointer' }}>Rejected</Badge> 
-                                        : data?.status == 3 ? <Badge bg=" badge-lg " className='badge-info light badge-xs' style={{ cursor: 'pointer' }}>Incompleted</Badge> 
-                                        : data?.status == 4 ? <Badge bg=" badge-lg " className='badge-danger light badge-xs' style={{ cursor: 'pointer' }}>Expired</Badge> 
+                                        {data?.status == 0 ? <Badge bg="badge-lg" className='badge-warning light badge-xs' style={{ cursor: 'pointer' }}>Pending</Badge> 
+                                        : data?.status == 1 ? <Badge bg="badge-lg" className='badge-success light badge-xs' style={{ cursor: 'pointer' }}>Completed</Badge> 
+                                        : data?.status == 2 ? <Badge bg="badge-lg" className='badge-danger light badge-xs' style={{ cursor: 'pointer' }}>Rejected</Badge> 
+                                        : data?.status == 3 ? <Badge bg="badge-lg" className='badge-info light badge-xs' style={{ cursor: 'pointer' }}>Incompleted</Badge> 
+                                        : data?.status == 4 ? <Badge bg="badge-lg" className='badge-danger light badge-xs' style={{ cursor: 'pointer' }}>Expired</Badge> 
                                         : ''}
                                     </Paragraph>
                                 </div>
@@ -140,7 +63,7 @@ const ViewRequest = () => {
                                                     First Name:
                                                 </Title>
                                                 <Paragraph>
-                                                    {data?.firstName}
+                                                    {data?.firstName ?? '-'}
                                                 </Paragraph>
                                             </Typography>
                                         </Col>
@@ -150,7 +73,7 @@ const ViewRequest = () => {
                                                     Last Name:
                                                 </Title>
                                                 <Paragraph>
-                                                    {data?.lastName}
+                                                    {data?.lastName ?? '-'}
                                                 </Paragraph>
                                             </Typography>
                                         </Col>
@@ -160,7 +83,7 @@ const ViewRequest = () => {
                                                     Email:
                                                 </Title>
                                                 <Paragraph>
-                                                    {data?.email}
+                                                    {data?.email ?? '-'}
                                                 </Paragraph>
                                             </Typography>
                                         </Col>
@@ -170,7 +93,7 @@ const ViewRequest = () => {
                                                     Mobile No:
                                                 </Title>
                                                 <Paragraph>
-                                                    {data?.mobile}
+                                                    {data?.mobile ?? '-'}
                                                 </Paragraph>
                                             </Typography>
                                         </Col>
@@ -180,7 +103,7 @@ const ViewRequest = () => {
                                                     Ticket Number:
                                                 </Title>
                                                 <Paragraph>
-                                                    {data?.ticketNumber}
+                                                    {data?.ticketNumber ?? '-'}
                                                 </Paragraph>
                                             </Typography>
                                         </Col>
@@ -190,7 +113,7 @@ const ViewRequest = () => {
                                                     Tracking Number:
                                                 </Title>
                                                 <Paragraph>
-                                                    {data?.trackingNumber}
+                                                    {data?.trackingNumber ?? '-'}
                                                 </Paragraph>
                                             </Typography>
                                         </Col>
@@ -224,7 +147,7 @@ const ViewRequest = () => {
                                                     MC Number:
                                                 </Title>
                                                 <Paragraph>
-                                                    {data?.mcNumber}
+                                                    {data?.mcNumber ?? '-'}
                                                 </Paragraph>
                                             </Typography>
                                         </Col>
@@ -234,7 +157,7 @@ const ViewRequest = () => {
                                                     Dot Number:
                                                 </Title>
                                                 <Paragraph>
-                                                    {data?.dotNumber}
+                                                    {data?.dotNumber ?? '-'}
                                                 </Paragraph>
                                             </Typography>
                                         </Col>
@@ -244,7 +167,7 @@ const ViewRequest = () => {
                                                     FMCSA Legal Name:
                                                 </Title>
                                                 <Paragraph>
-                                                    {data?.fmcsa?.legal_name}
+                                                    {data?.fmcsa?.legal_name ?? '-'}
                                                 </Paragraph>
                                             </Typography>
                                         </Col>
@@ -254,7 +177,7 @@ const ViewRequest = () => {
                                                     FMCSA Dot Number:
                                                 </Title>
                                                 <Paragraph>
-                                                    {data?.fmcsa?.dotNumber}
+                                                    {data?.fmcsa?.dotNumber ?? '-'}
                                                 </Paragraph>
                                             </Typography>
                                         </Col>
