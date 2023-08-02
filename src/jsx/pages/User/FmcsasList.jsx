@@ -43,21 +43,6 @@ const User = (props) => {
                     newArr.push({key: index,...element});
                 })
                 setData(newArr)
-                // for (var i = 0; i < res.data.length; i++) {
-                //     newArr.push(
-                //         {
-                //             key: i,
-                //             dotNumber: res.data[i].dotNumber,
-                //             mcNumber: res.data[i].mc_number ? res.data[i].mc_number :"-",
-                //             legalname: res.data[i].legal_name,
-                //             phone: res.data[i].phone,
-                //             latestupdate: res.data[i].latest_update,
-                //             createdAt: res.data[i].createdAt,
-                //             isApprove: res.data[i].isApprove,
-                //         }
-                //     )
-                // }
-                // setData(newArr);
                 setLoading(false)
             })
             .catch((errors) => {

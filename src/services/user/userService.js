@@ -187,6 +187,27 @@ export function carrierDetails(data) {
     });
 }
 
+export function googleimage(data) {
+    data.env = 'test'
+    console.log(data,"data");
+    const queryParam = `?id=${data.id}&env=${data.env}`;
+    return new Promise((resolve, reject) => {
+        Http.callApi('get', BaseUrl + '/admin/physicalAddressPhotos' + queryParam,[])
+            .then(function (res) {
+                console.log(res,"firstimg");
+                resolve(res);
+            })
+            .catch(function (error) {
+                const data = {
+                    errorData: error.response.data.message,
+                    // statusCode: error.response.status,
+                };
+                reject(data);
+            });
+    });
+}
+
+
 // userService.js
 export function changepassword(data, adminData) {
     data.env = 'test'

@@ -66,7 +66,6 @@ const User = (props) => {
     };
 
     const approvePendingUser = (text) => {
-        console.log('text',text);
         let data = {};
         data.userid = text.id
         data.isApprove = text.isApprove = 0 ? 1 : 0
@@ -167,7 +166,7 @@ const User = (props) => {
             key: 'isApprove',
             render: (text, data) => (
                 <div>
-                    {data.isApprove === 1 ? <Badge bg=" badge-lg " className='badge-primary light badge-xs' style={{ cursor: 'pointer' }} onClick={() => approvePendingUser(data)}>Approve</Badge>
+                    {data.isApprove === 1 ? <Badge bg=" badge-lg " className='badge-primary light badge-xs' style={{ cursor: 'pointer' }}>Approve</Badge>
                         : <Badge bg=" badge-lg " className='badge-danger light badge-xs' style={{ cursor: 'pointer' }} onClick={() => approvePendingUser(data)}>Pending</Badge>}
                 </div>
             ),
