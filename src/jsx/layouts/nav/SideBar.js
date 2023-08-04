@@ -68,6 +68,7 @@ const SideBar = (props) => {
   /// Active menu
   let deshBoard = [
     "",
+    "/dashboard",
     "dashboard-dark",
     "wallet",
     "invoices-list",
@@ -80,6 +81,8 @@ const SideBar = (props) => {
     "carrier-list",
     "broker-list",
     "fmcsas-list",
+    'fmcsas-view',
+    'user-detail'
   ],
   notification = [
     "general-notification",
@@ -248,7 +251,7 @@ const SideBar = (props) => {
           </Dropdown.Menu>
         </Dropdown>
         <MM className="metismenu" id="menu">
-          <li className={`${deshBoard.includes(path) ? "mm-active" : ""}`}>
+          <li className={`${deshBoard.includes(path) || path == 'dashboard' ? "mm-active" : ""}`}>
             <Link to="/" >
               <i className="fas fa-home"></i>
               <span className="nav-text">Dashboard</span>
@@ -264,7 +267,6 @@ const SideBar = (props) => {
               <li><Link className={`${path === "task" ? "mm-active" : ""}`} to="/task">Task</Link></li>
             </ul> */}
           </li>
-
           <li className={`${user.includes(path) ? "mm-active" : ""}`}>
             <Link className="has-arrow ai-icon" to="#" >
               <i className="fa fa-user"></i>
@@ -273,7 +275,7 @@ const SideBar = (props) => {
             <ul >
               <li><Link className={`${path === "carrier-list" ? "mm-active" : ""}`} to="/carrier-list">Carrier List</Link></li>
               <li><Link className={`${path === "broker-list" ? "mm-active" : ""}`} to="/broker-list">Broker List</Link></li>
-              <li><Link className={`${path === "fmcsas-list" ? "mm-active" : ""}`} to="/fmcsas-list">Fmcsas List</Link></li>
+              <li><Link className={`${path === "fmcsas-list" || path == 'fmcsas-view'  ? "mm-active" : ""}`} to="/fmcsas-list">Fmcsas List</Link></li>
             </ul>
           </li>
           <li className={`${path === "request-list" || path == "request-detail" ? "mm-active" : ""}`}>
