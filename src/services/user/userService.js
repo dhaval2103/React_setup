@@ -44,7 +44,6 @@ export function getAllUser(value) {
     )
 }
 
-
 export function getRequest(value) {
     let search = value || '';
     return dispatch => (
@@ -83,6 +82,49 @@ export function getBroker(value) {
         })
     )
 }
+
+export function getSubUserList(data) {
+    return dispatch => (
+        new Promise((resolve, reject) => {
+            const id = data.state.id
+            console.log(id,"idddd");
+            Http.callApi('get',  `${BaseUrl}/admin/subUserList?id=${id}`, [])
+                .then(function (res) {
+                    return resolve(res);
+                })
+                .catch(function (error) {
+                    console.log(error);
+                    const data = {
+                        errorData: error.response.data.message,
+                        // statusCode: error.response.status,
+                    };
+                    return reject(data);
+                })
+        })
+    )
+}
+
+export function getLinkList(data) {
+    return dispatch => (
+        new Promise((resolve, reject) => {
+            const id = data.state.id
+            console.log(id,"idddd");
+            Http.callApi('get',  `${BaseUrl}/admin/linkList?id=${id}`, [])
+                .then(function (res) {
+                    return resolve(res);
+                })
+                .catch(function (error) {
+                    console.log(error);
+                    const data = {
+                        errorData: error.response.data.message,
+                        // statusCode: error.response.status,
+                    };
+                    return reject(data);
+                })
+        })
+    )
+}
+
 
 export function getfmcsas(value) {
     let search = value || '';
@@ -207,7 +249,6 @@ export function googleimage(data) {
     });
 }
 
-
 // userService.js
 export function changepassword(data, adminData) {
     data.env = 'test'
@@ -241,7 +282,6 @@ export function disableGoogle2FA() {
 export function verifyGoogle2FA(values) {
     return Http.callApi('post', BaseUrl + '/admin/google2faCheck', values );
 }
-
 
 export function uploadProfile(data) {
     data.env = 'test';
@@ -447,7 +487,6 @@ export function sendNotification(data) {
 }
 
 export function sendUserNotification(data) {
-    // data.env = 'test'
     data.type = 2
     return dispatch => (
         new Promise((resolve, reject) => {
