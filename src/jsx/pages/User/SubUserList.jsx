@@ -13,6 +13,7 @@ import dummy from "../../../images/dummy.png";
 import 'react-phone-input-2/lib/style.css';
 import startsWith from 'lodash.startswith';
 import PageLoader from '../Common/PageLoader';
+import { useLocation } from 'react-router-dom/cjs/react-router-dom.min';
 
 
 const User = (props) => {
@@ -33,9 +34,11 @@ const User = (props) => {
     const [email, setEmail] = useState('');
     const [phoneVelidation, setPhoneVlidation] = useState('')
     const [selectedFilter, setSelectedFilter] = useState(null);
+    const location = useLocation();
+    const subUserdata = location.state;
 
-    const getBrokerList = (value) => {
-        dispatch(UserService.getBroker(value))
+    const getBrokerList = () => {
+        dispatch(UserService.getSubUserList(subUserdata))
             .then((res) => {
                 var newArr = [];
                 for (var i = 0; i < res.data.length; i++) {
@@ -49,7 +52,6 @@ const User = (props) => {
                             id: res.data[i]._id,
                             mobile: res.data[i].mobile,
                             createdAt: res.data[i].createdAt,
-                            isApprove: res.data[i].isApprove,
                         }
                     )
                 }
@@ -60,60 +62,9 @@ const User = (props) => {
                 console.log({ errors })
             })
     }
-
-    const handleFilterChange = (filterOption) => {
-        setSelectedFilter(filterOption);
-    };
-
-    const approvePendingUser = (text) => {
-        let data = {};
-        data.userid = text.id
-        data.isApprove = text.isApprove = 0 ? 1 : 0
-        console.log('dataaa',data);
-        Swal.fire({
-            title: 'Are you sure?',
-            text: "To change this User status!",
-            icon: 'warning',
-            showCancelButton: true,
-            confirmButtonColor: '#3085d6',
-            cancelButtonColor: '#d33',
-            confirmButtonText: 'Yes, Change it!'
-        }).then((result) => {
-            if (result.isConfirmed) {
-                dispatch(UserService.changeUserStatus(data))
-                    .then((res) => {
-                        getBrokerList();
-                        ToastMe("User status change successfully", 'success')
-                    })
-                    .catch((errors) => {
-                        console.log({ errors })
-                    })
-            }
-        })
-    };
-
-    const filteredData = useMemo(() => {
-    if (selectedFilter === null) return data; // No filter selected, return all data
-
-    // Filter based on the "isApprove" property
-    return data.filter((item) => {
-        if (selectedFilter === 0) {
-            return item.isApprove === 0; // Filter for "Pending" brokers
-        } else if (selectedFilter === 1) {
-            return item.isApprove === 1; // Filter for "Approved" brokers
-        } else if (selectedFilter === 2) {
-            return item; // Filter for "Approved" brokers
-        } 
-        return true;
-    });
-    }, [data, selectedFilter]);
     
-    const viewSubUser = (text) => {
-        props.history.push("/sub-user-list",{state:text})
-    }
-
     const LinkListData = (text) => {
-        props.history.push("/link-list",{state:text})
+        props.history.push("/sub-user-link-list",{state:text})
     }
 
     useEffect(() => {
@@ -168,17 +119,6 @@ const User = (props) => {
             key: 'mobile',
         },
         {
-            title: 'Is Approve',
-            dataIndex: 'isApprove',
-            key: 'isApprove',
-            render: (text, data) => (
-                <div>
-                    {data.isApprove === 1 ? <Badge bg=" badge-lg " className='badge-primary light badge-xs' style={{ cursor: 'pointer' }}>Approve</Badge>
-                        : <Badge bg=" badge-lg " className='badge-danger light badge-xs' style={{ cursor: 'pointer' }} onClick={() => approvePendingUser(data)}>Pending</Badge>}
-                </div>
-            ),
-        },
-        {
             title: 'Created At',
             dataIndex: 'createdAt',
             key: 'createdAt',
@@ -203,7 +143,6 @@ const User = (props) => {
                             
                         </Dropdown.Toggle>
                         <Dropdown.Menu>
-                            <Dropdown.Item onClick={() => viewSubUser(data)}>Sub User List</Dropdown.Item>
                             <Dropdown.Item onClick={() => LinkListData(data)}>Link List</Dropdown.Item>
                         </Dropdown.Menu>
                     </Dropdown>
@@ -217,28 +156,12 @@ const User = (props) => {
             <PageLoader loading={loading} />
             <div className="card">
                 <div className="card-header">
-                    <h4 className="card-title">Broker List</h4>
-                    <div>
-                        <Dropdown>
-                        <Dropdown.Toggle variant="primary">
-                            Filter by Status
-                        </Dropdown.Toggle>
-                        <Dropdown.Menu>
-                            <Dropdown.Item onClick={() => handleFilterChange(2)}>All</Dropdown.Item>
-                            <Dropdown.Item onClick={() => handleFilterChange(1)}>Approved</Dropdown.Item>
-                            <Dropdown.Item onClick={() => handleFilterChange(0)}>Pending</Dropdown.Item>
-                            {/* Add more filter options here */}
-                        </Dropdown.Menu>
-                        </Dropdown>
-                    </div>
+                    <h4 className="card-title">Sub User List</h4>
                 </div>
                 <div className="card-body">
                 <div className="table-responsive">
-                    {filteredData && filteredData.length > 0 ? (
-                    <Table dataSource={filteredData} columns={columnss} className='table_custom' />
-                    ) : (
-                    <Empty />
-                    )}
+                    <Table columns={columnss} className='table_custom' dataSource={data} />
+                    {data.length === 0 && <Empty />}
                 </div>
                 </div>
             </div>
