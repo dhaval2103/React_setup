@@ -45,8 +45,8 @@ const User = (props) => {
                     newArr.push(
                         {
                             key: i,
-                            userfirstName: res.data[i].userfirstName,
-                            userlastName: res.data[i].userlastName,
+                            userfirstName: res.data[i].firstName,
+                            userlastName: res.data[i].lastName,
                             usercompanyName: res.data[i].usercompanyName,
                             email: res.data[i].email,
                             id: res.data[i]._id,
