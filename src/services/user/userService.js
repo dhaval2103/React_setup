@@ -124,6 +124,26 @@ export function getCarrierSubUserList(data) {
     )
 }
 
+export function getCarrierSubUserLinkList(data) {
+    return dispatch => (
+        new Promise((resolve, reject) => {
+            const id = data.state.id
+            Http.callApi('get',  `${BaseUrl}/admin/carrierfmcsasList?id=${id}`, [])
+                .then(function (res) {
+                    return resolve(res);
+                })
+                .catch(function (error) {
+                    console.log(error);
+                    const data = {
+                        errorData: error.response.data.message,
+                        // statusCode: error.response.status,
+                    };
+                    return reject(data);
+                })
+        })
+    )
+}
+
 export function getSubUserFmcsasList(data) {
     data.env = 'test'
     const queryParam = `?dotNumber=${data.dotNumber}&env=${data.env}`;

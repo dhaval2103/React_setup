@@ -36,30 +36,30 @@ export function signupAction(email, password, history) {
 }
 
 export function logout(history) {
-    new Promise((resolve, reject) => {
-        Http.callApi('patch', BaseUrl + '/admin/logout')
-            .then(function (res) {
-                return resolve(res);
-            })
-            .catch(function (error) {
-                const data = {
-                    errorData: error.response.data,
-                };
-                return reject(data);
-            })
-    })
-    new Promise((resolve, reject) => {
-        Http.callApi('get', BaseUrl + '/admin/refreshToken')
-            .then(function (res) {
-                return resolve(res);
-            })
-            .catch(function (error) {
-                const data = {
-                    errorData: error.response.data,
-                };
-                return reject(data);
-            })
-    })
+    // new Promise((resolve, reject) => {
+    //     Http.callApi('patch', BaseUrl + '/admin/logout')
+    //         .then(function (res) {
+    //             return resolve(res);
+    //         })
+    //         .catch(function (error) {
+    //             const data = {
+    //                 errorData: error.response.data,
+    //             };
+    //             return reject(data);
+    //         })
+    // })
+    // new Promise((resolve, reject) => {
+    //     Http.callApi('get', BaseUrl + '/admin/refreshToken')
+    //         .then(function (res) {
+    //             return resolve(res);
+    //         })
+    //         .catch(function (error) {
+    //             const data = {
+    //                 errorData: error.response.data,
+    //             };
+    //             return reject(data);
+    //         })
+    // })
     console.log(history);
     localStorage.removeItem('adminDetails');
     history.push('/login');
