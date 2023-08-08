@@ -108,7 +108,6 @@ export function getCarrierSubUserList(data) {
     return dispatch => (
         new Promise((resolve, reject) => {
             const id = data.state.id
-            console.log(id,"idddd");
             Http.callApi('get',  `${BaseUrl}/admin/carriersubUserList?id=${id}`, [])
                 .then(function (res) {
                     return resolve(res);

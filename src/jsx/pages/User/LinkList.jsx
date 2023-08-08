@@ -136,7 +136,7 @@ const User = (props) => {
                 <div className="card-body">
                 <div className="table-responsive">
                     <Table columns={columnss} className='table_custom' dataSource={data} />
-                    {data.length === 0 && <Empty />}
+                    {/* {data.length === 0 && <Empty />} */}
                 </div>
                 </div>
             </div>

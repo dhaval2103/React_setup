@@ -117,8 +117,7 @@ const User = (props) => {
                 <circle fill="#000000" cx="19" cy="12" r="2"></circle>
             </g>
         </svg>
-    );
-
+    )
     const columnss = [
         {
             title: 'ID',
@@ -199,7 +198,7 @@ const User = (props) => {
                         </Dropdown.Toggle>
                         <Dropdown.Menu>
                             <Dropdown.Item onClick={() => viewUser(text)}>View</Dropdown.Item>
-                            <Dropdown.Item onClick={() => viewSubUser(data)}>Sub User List</Dropdown.Item>
+                            <Dropdown.Item onClick={() => viewSubUser(text)}>Sub User List</Dropdown.Item>
                         </Dropdown.Menu>
                     </Dropdown>
                 </>

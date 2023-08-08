@@ -36,7 +36,7 @@ const User = (props) => {
     const [selectedFilter, setSelectedFilter] = useState(null);
     const location = useLocation();
     const subUserdata = location.state;
-
+    
     const getBrokerList = () => {
         dispatch(UserService.getCarrierSubUserList(subUserdata))
             .then((res) => {
@@ -173,7 +173,7 @@ const User = (props) => {
                 <div className="card-body">
                 <div className="table-responsive">
                     <Table columns={columnss} className='table_custom' dataSource={data} />
-                    {data.length === 0 && <Empty />}
+                    {/* {data.length === 0 && <Empty />} */}
                 </div>
                 </div>
             </div>
