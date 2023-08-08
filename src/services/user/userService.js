@@ -104,6 +104,45 @@ export function getSubUserList(data) {
     )
 }
 
+export function getCarrierSubUserList(data) {
+    return dispatch => (
+        new Promise((resolve, reject) => {
+            const id = data.state.id
+            console.log(id,"idddd");
+            Http.callApi('get',  `${BaseUrl}/admin/carriersubUserList?id=${id}`, [])
+                .then(function (res) {
+                    return resolve(res);
+                })
+                .catch(function (error) {
+                    console.log(error);
+                    const data = {
+                        errorData: error.response.data.message,
+                        // statusCode: error.response.status,
+                    };
+                    return reject(data);
+                })
+        })
+    )
+}
+
+export function getSubUserFmcsasList(data) {
+    data.env = 'test'
+    const queryParam = `?dotNumber=${data.dotNumber}&env=${data.env}`;
+    return new Promise((resolve, reject) => {
+        Http.callApi('get', BaseUrl + '/admin/carrierfmcsasList' + queryParam,[])
+            .then(function (res) {
+                resolve(res);
+            })
+            .catch(function (error) {
+                const data = {
+                    errorData: error.response.data.message,
+                    // statusCode: error.response.status,
+                };
+                reject(data);
+            });
+    });
+}
+
 export function getLinkList(data) {
     return dispatch => (
         new Promise((resolve, reject) => {
@@ -124,7 +163,6 @@ export function getLinkList(data) {
         })
     )
 }
-
 
 export function getfmcsas(value) {
     let search = value || '';

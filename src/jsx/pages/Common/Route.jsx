@@ -7,6 +7,8 @@ const route = [
     'sub-user-list',
     'link-list',
     'sub-user-link-list',
+    'carrier-sub-user-list',
+    'sub-user-fmcsas-list',
     'payment-history',
     'upcoming-subscriptions',
     'view-maintence',

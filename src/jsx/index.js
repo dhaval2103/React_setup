@@ -138,6 +138,9 @@ import FmcsasList from "./pages/User/FmcsasList";
 import SubUserList from "./pages/User/SubUserList";
 import LinkList from "./pages/User/LinkList";
 import SubUserLinkList from "./pages/User/SubUserLinkList";
+import CarrierSubUserList from "./pages/User/CarrierSubUserList";
+import SubUserFmcsasList from "./pages/User/SubUserFmcsasList";
+
 
 
 
@@ -161,6 +164,8 @@ const Markup = () => {
     { url: "sub-user-list", component: SubUserList },
     { url: "link-list", component: LinkList },
     { url: "sub-user-link-list", component: SubUserLinkList },
+    { url: "carrier-sub-user-list", component: CarrierSubUserList },
+    { url: "sub-user-fmcsas-list", component: SubUserFmcsasList },
     // { url: "payment-history", component: PaymentHistory },
     // { url: "upcoming-subscriptions", component: UpcomingSubscriptions },
     // { url: "view-maintence", component: ViewMaintence },

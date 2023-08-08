@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useContext, useEffect, useMemo, useState } from 'react';
 import UserService from '../../../services/user';
 import { useDispatch } from 'react-redux';
 import { Button, Empty, Form, Input, Modal, Table } from 'antd';
@@ -13,6 +13,7 @@ import dummy from "../../../images/dummy.png";
 import 'react-phone-input-2/lib/style.css';
 import startsWith from 'lodash.startswith';
 import PageLoader from '../Common/PageLoader';
+import { useLocation } from 'react-router-dom/cjs/react-router-dom.min';
 
 
 const User = (props) => {
@@ -32,48 +33,12 @@ const User = (props) => {
     const [mobile, setMobile] = useState('');
     const [email, setEmail] = useState('');
     const [phoneVelidation, setPhoneVlidation] = useState('')
+    const [selectedFilter, setSelectedFilter] = useState(null);
+    const location = useLocation();
+    const subUserdata = location.state;
 
-    useEffect(() => {
-        chatClient.on('message', function (data) {
-            if (data) {
-                getUserList();
-            }
-        })
-    }, [chatClient])
-
-    const handlePhoneValue = (value, data) => {
-        setPhoneNo(value.slice(data.dialCode.length));
-        setCountryCode(data.dialCode);
-
-        let dataValue = '' + phoneNo;
-        // console.log("dataValue", dataValue.length);
-        setPhoneVlidation('')
-        if (dataValue.length == 1) {
-            setPhoneVlidation('please enter your phone number')
-        }
-    };
-
-    const previewUserImageOnChange = (ev) => {
-        let userImgSrc = URL.createObjectURL(ev.target.files[0]);
-        let filesPath = ev.target.files[0];
-        setUserImg(userImgSrc);
-        const image = new FormData();
-        image.append('image', filesPath);
-        dispatch(UserService.uploadCommonImage(image))
-            .then((res) => {
-                if (res.data) {
-                    setUserImg('');
-                    setImageName(res.data.imageWithName)
-                }
-            })
-            .catch((errors, statusCode) => {
-                setUserImg('')
-                ToastMe(errors.errorData, "error");
-            });
-    }
-
-    const getUserList = (value) => {
-        dispatch(UserService.getUser(value))
+    const getBrokerList = () => {
+        dispatch(UserService.getCarrierSubUserList(subUserdata))
             .then((res) => {
                 var newArr = [];
                 for (var i = 0; i < res.data.length; i++) {
@@ -84,11 +49,11 @@ const User = (props) => {
                             lastName: res.data[i].lastName,
                             companyName: res.data[i].companyName,
                             dotNumber: res.data[i].dotNumber,
+                            mcNumber: res.data[i].mcNumber,
                             email: res.data[i].email,
                             id: res.data[i]._id,
                             mobile: res.data[i].mobile,
                             createdAt: res.data[i].createdAt,
-                            // isApprove: res.data[i].isApprove,
                         }
                     )
                 }
@@ -99,13 +64,13 @@ const User = (props) => {
                 console.log({ errors })
             })
     }
-
-    const viewSubUser = (text) => {
-        props.history.push("/carrier-sub-user-list",{state:text})
+    
+    const FmcsasListData = (text) => {
+        props.history.push("/sub-user-fmcsas-list",{state:text})
     }
 
     useEffect(() => {
-        getUserList();
+        getBrokerList();
     }, [])
 
     const svg1 = (
@@ -146,6 +111,16 @@ const User = (props) => {
             key: 'companyName',
         },
         {
+            title: 'Dot number',
+            dataIndex: 'dotNumber',
+            key: 'dotNumber',
+        },
+        {
+            title: 'MC number',
+            dataIndex: 'mcNumber',
+            key: 'mcNumber',
+        },
+        {
             title: 'Email',
             dataIndex: 'email',
             key: 'email',
@@ -155,22 +130,6 @@ const User = (props) => {
             dataIndex: 'mobile',
             key: 'mobile',
         },
-        {
-            title: 'DOT number',
-            dataIndex: 'dotNumber',
-            key: 'dotNumber',
-        },
-        // {
-        //     title: 'Is Approve',
-        //     dataIndex: 'isApprove',
-        //     key: 'isApprove',
-        //     render: (text, data) => (
-        //         <div>
-        //             {data.isApprove === 1 ? <Badge bg=" badge-lg " className='badge-primary light badge-xs' style={{ cursor: 'pointer' }}>Active</Badge>
-        //                 : <Badge bg=" badge-lg " className='badge-danger light badge-xs' style={{ cursor: 'pointer' }}>Deactive</Badge>}
-        //         </div>
-        //     ),
-        // },
         {
             title: 'Created At',
             dataIndex: 'createdAt',
@@ -182,9 +141,10 @@ const User = (props) => {
             ),
         },
         {
-            title: 'Actions',
-            key: 'actions',
-            render: (text) => (
+            title: 'Action',
+            dataIndex: 'action',
+            key: 'action',
+            render: (text, data) => (
                 <>
                     <Dropdown>
                         <Dropdown.Toggle
@@ -192,51 +152,29 @@ const User = (props) => {
                             className="light sharp i-false badge_label"
                         >
                             {svg1}
-                            {
-                                text.readStatusCount > 0 ?
-                                    <span className="badge light text-white bg-danger rounded-circle">{text.readStatusCount}</span> : ''
-                            }
+                            
                         </Dropdown.Toggle>
                         <Dropdown.Menu>
-                            <Dropdown.Item onClick={() => viewUser(text)}>View</Dropdown.Item>
-                            <Dropdown.Item onClick={() => viewSubUser(data)}>Sub User List</Dropdown.Item>
+                            <Dropdown.Item onClick={() => FmcsasListData(data)}>Fmcsas List</Dropdown.Item>
                         </Dropdown.Menu>
                     </Dropdown>
                 </>
-            )
+            ),
         },
     ];
-
-    const viewUser = (text) => {
-        props.history.push("/user-detail", { userDetail: text })
-    }
-    // const viewChat = (text) => {
-    //     props.history.push("/chat", { userDetail: text })
-    // }
-    const handleSearch = (e) => {
-        getUserList(e.target.value)
-    }
 
     return (
         <>
             <PageLoader loading={loading} />
             <div className="card">
                 <div className="card-header">
-                    <h4 className="card-title">Carrier List</h4>
-                    {/* <div className="d-flex align-items-center gap-3">
-                        <Input placeholder='Search....' onChange={(e) => handleSearch(e)} prefix={<SearchOutlined className="site-form-item-icon" />} />
-                        <Button type="primary" onClick={() => editModal()}>
-                            Add User
-                        </Button>
-                    </div> */}
+                    <h4 className="card-title">Sub User List</h4>
                 </div>
                 <div className="card-body">
-                    <div className="table-responsive">
-                        {
-                            data && data.length > 0 ?
-                                <Table dataSource={data} columns={columnss} className='table_custom' /> : <Empty />
-                        }
-                    </div>
+                <div className="table-responsive">
+                    <Table columns={columnss} className='table_custom' dataSource={data} />
+                    {data.length === 0 && <Empty />}
+                </div>
                 </div>
             </div>
         </>
