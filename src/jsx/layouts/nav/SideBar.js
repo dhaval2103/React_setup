@@ -80,8 +80,6 @@ const SideBar = (props) => {
   user = [
     "carrier-list",
     "broker-list",
-    "fmcsas-list",
-    'fmcsas-view',
     'user-detail'
   ],
   notification = [
@@ -278,7 +276,7 @@ const SideBar = (props) => {
               {/* <li><Link className={`${path === "fmcsas-list" ? "mm-active" : ""}`} to="/fmcsas-list">Fmcsas List</Link></li> */}
             </ul>
           </li>
-          <li className={`${path === "fmcsas-list" ? "mm-active" : ""}`}>
+          <li className={`${path === "fmcsas-list" || path === "fmcsas-view" ? "mm-active" : ""}`}>
             <Link to="/fmcsas-list" >
               <i className="fa fa-question-circle"></i>
               <span className="nav-text">Fmcsas List</span>
