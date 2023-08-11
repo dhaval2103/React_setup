@@ -73,7 +73,6 @@ const Faq = () => {
 
     const onSubmit = (values) => {
         values.group = mainCategory;
-        // console.log('values', values);
         // if (id) {
         //     values.id = id;
         //     dispatch(UserService.updateCms(values))
@@ -90,7 +89,6 @@ const Faq = () => {
         // } else {
         dispatch(UserService.addFaq(values))
             .then((res) => {
-                console.log('res', res);
                 getFaq();
                 ToastMe("FAQ Added Successfully", 'success')
             })

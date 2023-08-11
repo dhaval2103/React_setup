@@ -134,7 +134,6 @@ const Request = (props) => {
 
         // Filter based on the "isApprove" property
         return data.filter((item) => {
-            console.log(selectedFilter,'item');
             if (selectedFilter === 0) {
                 return item.status === 0; // Filter for "Pending" brokers
             } else if (selectedFilter === 1) {

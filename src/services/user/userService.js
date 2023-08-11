@@ -87,13 +87,11 @@ export function getSubUserList(data) {
     return dispatch => (
         new Promise((resolve, reject) => {
             const id = data.state.id
-            console.log(id,"idddd");
             Http.callApi('get',  `${BaseUrl}/admin/subUserList?id=${id}`, [])
                 .then(function (res) {
                     return resolve(res);
                 })
                 .catch(function (error) {
-                    console.log(error);
                     const data = {
                         errorData: error.response.data.message,
                         // statusCode: error.response.status,
@@ -166,7 +164,6 @@ export function getLinkList(data) {
     return dispatch => (
         new Promise((resolve, reject) => {
             const id = data.state.id
-            console.log(id,"idddd");
             Http.callApi('get',  `${BaseUrl}/admin/linkList?id=${id}`, [])
                 .then(function (res) {
                     return resolve(res);
@@ -208,7 +205,6 @@ export function changeUserStatus(data) {
         new Promise((resolve, reject) => {
             Http.callApi('post', BaseUrl + '/admin/changeUserStatus', data, {env:'test'})
                 .then(function (res) {
-                    console.log('resss',res)
                     return resolve(res);
                 })
                 .catch(function (error) {
@@ -228,7 +224,6 @@ export function getProfile() {
         new Promise((resolve, reject) => {
             Http.callApi('get', BaseUrl + '/admin/profile')
                 .then(function (res) {
-                    console.log('profile',res);
                     // dispatch(action.setNotificationData(res));
                     return resolve(res);
                 })
@@ -293,7 +288,6 @@ export function googleimage(data) {
     return new Promise((resolve, reject) => {
         Http.callApi('get', BaseUrl + '/admin/physicalAddressPhotos' + queryParam,[])
             .then(function (res) {
-                console.log(res,"firstimg");
                 resolve(res);
             })
             .catch(function (error) {
@@ -313,7 +307,6 @@ export function changepassword(data, adminData) {
         new Promise((resolve, reject) => {
             Http.callApi('post', BaseUrl + '/admin/changePassword', data)
                 .then(function (res) {
-                    console.log(res);
                     return resolve(res);
                 })
                 .catch(function (error) {

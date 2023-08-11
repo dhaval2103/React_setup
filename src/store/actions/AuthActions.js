@@ -97,8 +97,8 @@ export function loginAction(email, password, history) {
             })
             .catch((error) => {
                 console.log('error',error);
-                ToastMe(error.response.data.message, 'error')
-                const errorMessage = formatError(error.response.data.message);
+                ToastMe(error?.response?.data?.message, 'error')
+                const errorMessage = formatError(error?.response?.data?.message);
                 dispatch(loginFailedAction(errorMessage));
             });
     };
@@ -112,6 +112,7 @@ export function loginFailedAction(data) {
 }
 
 export function loginConfirmedAction(data) {
+    console.log('data',data);
     return {
         type: LOGIN_CONFIRMED_ACTION,
         payload: data,

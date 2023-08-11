@@ -38,7 +38,6 @@ const User = (props) => {
         dispatch(UserService.getfmcsas(value))
             .then((res) => {
                 var newArr = [];
-                console.log(res,"result");
                 res.data.map((element, index) => {
                     newArr.push({key: index,...element});
                 })
@@ -55,7 +54,6 @@ const User = (props) => {
     };
 
     const approvePendingUser = (text) => {
-        console.log('text',text);
         let data = {};
         data.userid = text.id
         Swal.fire({
@@ -99,7 +97,6 @@ const User = (props) => {
         getBrokerList();
     }, [])
     const viewUser = (text) =>{
-        console.log(text,"text");
         props.history.push("/fmcsas-view",{state:text})
     }
 
