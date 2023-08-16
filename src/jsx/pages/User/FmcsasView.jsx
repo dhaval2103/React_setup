@@ -11,7 +11,6 @@ import PageLoader from "../Common/PageLoader";
 
 const FmcsasView = (props) => {
   const location = useLocation();
-  console.log("location", location.state);
   const data = location?.state?.state;
   const [loading, setLoading] = useState(true);
   const [img, setImg] = useState();
@@ -20,7 +19,6 @@ const FmcsasView = (props) => {
     if (data) {
       UserService.googleimage({ id: data?._id })
         .then((res) => {
-          console.log(res.data);
           const photoRef = res?.data?.data;
           const image = `https://maps.googleapis.com/maps/api/place/photo?maxwidth=1280&maxheight=1020&photoreference=${photoRef}&key=${process.env.REACT_APP_GOOGLE_MAP_LEY}`
           setImg(image)
@@ -35,7 +33,6 @@ const FmcsasView = (props) => {
   useEffect(()=>{
     getgoogleimage();
   },[])
-  console.log(img);
 
   return (
     <>

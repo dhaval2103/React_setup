@@ -28,6 +28,9 @@ const User = (props) => {
             })
     }
     
+
+
+
     const filteredData = useMemo(() => {
     if (selectedFilter === null) return data; // No filter selected, return all data
 
@@ -48,7 +51,6 @@ const User = (props) => {
     })
 
     const viewUser = (text) =>{
-        console.log(text,"text");
         props.history.push("/fmcsas-view",{state:text})
     }
 

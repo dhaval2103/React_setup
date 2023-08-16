@@ -51,7 +51,6 @@ const User = (props) => {
         let data = {};
         data.userid = text.id
         data.isApprove = text.isApprove = 0 ? 1 : 0
-        console.log('dataaa',data);
         Swal.fire({
             title: 'Are you sure?',
             text: "To change this User status!",

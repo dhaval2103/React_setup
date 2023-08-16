@@ -28,14 +28,23 @@ const User = (props) => {
             mobile: res.data[i].mobile,
             createdAt: res.data[i].createdAt,
           });
-        }
-        setData(newArr);
-        setLoading(false);
-      })
-      .catch((errors) => {
-        console.log({ errors });
-      });
-  };
+                  }
+                })
+              }
+    // const handlePhoneValue = (value, data) => {
+    //     setPhoneNo(value.slice(data.dialCode.length));
+    //     setCountryCode(data.dialCode);
+
+    //     let dataValue = '' + phoneNo;
+    //     setPhoneVlidation('')
+    //     if (dataValue.length == 1) {
+    //         setPhoneVlidation('please enter your phone number')
+    //     }
+    //     setData(newArr);
+    //     setLoading(false);
+    //   })
+    //   .catch((errors) => {
+    //     console.log({ errors });
 
   const viewSubUser = (text) => {
     props.history.push("/carrier-sub-user-list", { state: text });

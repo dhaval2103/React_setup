@@ -40,10 +40,8 @@ useEffect(()=>{
             UserService.carrierDetails({ dotNumber: userDetail?.dotNumber })
                 .then((res) => {
                     if(res.data.length !== 0){
-                        console.log(1);
                         setData(res.data);
                     }else{
-                        console.log(2);
                         setData([userDetail]);
                     } 
                 })
@@ -110,7 +108,6 @@ useEffect(()=>{
     useEffect(() => {
         getDetail();
     }, [])
-console.log(data);
     return (
         <Row>
             {data.map((carrierData, index) => (
