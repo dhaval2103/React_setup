@@ -110,7 +110,6 @@ export function loginFailedAction(data) {
 }
 
 export function loginConfirmedAction(data) {
-    console.log('data',data);
     return {
         type: LOGIN_CONFIRMED_ACTION,
         payload: data,
