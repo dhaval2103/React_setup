@@ -279,7 +279,7 @@ const SideBar = (props) => {
           <li className={`${path === "fmcsas-list" || path === "fmcsas-view" ? "mm-active" : ""}`}>
             <Link to="/fmcsas-list" >
               <i className="fa fa-question-circle"></i>
-              <span className="nav-text">Fmcsas List</span>
+              <span className="nav-text">FMCSAS List</span>
             </Link>
           </li>
           <li className={`${path === "request-list" || path == "request-detail" ? "mm-active" : ""}`}>

@@ -32,7 +32,7 @@ const Request = (props) => {
 
     useEffect(() => {
         getRequestList();
-    })
+    },[])
 
     const svg1 = (
         <svg width="20px" height="20px" viewBox="0 0 24 24" version="1.1">
@@ -56,21 +56,33 @@ const Request = (props) => {
             title: 'First Name',
             dataIndex: 'firstName',
             key: 'firstName',
+            render:(data)=>(
+                data === '' || data === null ? "-" : data
+            )
         },
         {
             title: 'Last Name',
             dataIndex: 'lastName',
             key: 'lastName',
+            render:(data)=>(
+                data === '' || data === null ? "-" : data
+            )
         },
         {
             title: 'Tracking Number',
             dataIndex: 'trackingNumber',
             key: 'trackingNumber',
+            render:(data)=>(
+                data === '' || data === null ? "-" : data
+            )
         },
         {
             title: 'Ticket Number',
             dataIndex: 'ticketNumber',
             key: 'ticketNumber',
+            render:(data)=>(
+                data === '' || data === null ? "-" : data
+            )
         },
         {
             title: 'Status',

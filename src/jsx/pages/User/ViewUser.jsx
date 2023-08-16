@@ -7,6 +7,7 @@ import dummy from "../../../images/dummy.png";
 import UserService from '../../../services/user';
 
 
+
 const ViewUser = () => {
     const { state } = useLocation();
     const userDetail = state?.userDetail;
@@ -37,16 +38,16 @@ useEffect(()=>{
     const getDetail = () => {
         if (userDetail) {
             // Call the API to fetch carrier details by dotNumber
-            UserService.carrierDetails({ dotNumber: userDetail?.dotNumber })
+            UserService.carrierDetails({ id: userDetail?.id })
                 .then((res) => {
                     if(res.data.length !== 0){
-                        setData(res.data);
+                        setData([res.data.userData]);
                     }else{
                         setData([userDetail]);
                     } 
                 })
                 .catch((error) => {
-                    console.log(error);
+                    // console.log(error);
                   
                 });
         }

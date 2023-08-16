@@ -50,7 +50,7 @@ const CarrierSubUserLinkList = (props) => {
 
     useEffect(() => {
         carriersubuserlinkList();
-    })
+    },[])
 
     const svg1 = (
         <svg width="20px" height="20px" viewBox="0 0 24 24" version="1.1">

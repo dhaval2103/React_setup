@@ -13,38 +13,42 @@ const User = (props) => {
   const [loading, setLoading] = useState(true);
 
   const getUserList = (value) => {
-    dispatch(UserService.getUser(value))
-      .then((res) => {
-        var newArr = [];
-        for (var i = 0; i < res.data.length; i++) {
-          newArr.push({
-            key: i,
-            firstName: res.data[i].firstName,
-            lastName: res.data[i].lastName,
-            companyName: res.data[i].companyName,
-            dotNumber: res.data[i].dotNumber,
-            email: res.data[i].email,
-            id: res.data[i]._id,
-            mobile: res.data[i].mobile,
-            createdAt: res.data[i].createdAt,
-          });
-                  }
-                })
-              }
-    // const handlePhoneValue = (value, data) => {
-    //     setPhoneNo(value.slice(data.dialCode.length));
-    //     setCountryCode(data.dialCode);
+    dispatch(UserService.getUser(value)).then((res) => {
+      var newArr = [];
+      for (var i = 0; i < res.data.length; i++) {
+        newArr.push({
+          key: i,
+          firstName: res.data[i].firstName,
+          lastName: res.data[i].lastName,
+          companyName: res.data[i].companyName,
+          dotNumber: res.data[i].dotNumber,
+          email: res.data[i].email,
+          id: res.data[i]._id,
+          mobile: res.data[i].mobile,
+          createdAt: res.data[i].createdAt,
+        });
+      }
+      setData(newArr);
+      setLoading(false);
+    })
+    .catch((errors) => {
+        console.log({ errors })
+    })
+  };
+  // const handlePhoneValue = (value, data) => {
+  //     setPhoneNo(value.slice(data.dialCode.length));
+  //     setCountryCode(data.dialCode);
 
-    //     let dataValue = '' + phoneNo;
-    //     setPhoneVlidation('')
-    //     if (dataValue.length == 1) {
-    //         setPhoneVlidation('please enter your phone number')
-    //     }
-    //     setData(newArr);
-    //     setLoading(false);
-    //   })
-    //   .catch((errors) => {
-    //     console.log({ errors });
+  //     let dataValue = '' + phoneNo;
+  //     setPhoneVlidation('')
+  //     if (dataValue.length == 1) {
+  //         setPhoneVlidation('please enter your phone number')
+  //     }
+  //     setData(newArr);
+  //     setLoading(false);
+  //   })
+  //   .catch((errors) => {
+  //     console.log({ errors });
 
   const viewSubUser = (text) => {
     props.history.push("/carrier-sub-user-list", { state: text });
@@ -55,7 +59,7 @@ const User = (props) => {
 
   useEffect(() => {
     getUserList();
-  });
+  }, []);
 
   const svg1 = (
     <svg width="20px" height="20px" viewBox="0 0 24 24" version="1.1">
@@ -161,7 +165,6 @@ const User = (props) => {
   // const viewChat = (text) => {
   //     props.history.push("/chat", { userDetail: text })
   // }
-
 
   return (
     <>

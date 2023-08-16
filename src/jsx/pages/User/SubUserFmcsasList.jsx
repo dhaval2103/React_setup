@@ -50,7 +50,7 @@ const User = (props) => {
     
     useEffect(() => {
         getBrokerList();
-    })
+    },[])
 
     const columnss = [
         {
