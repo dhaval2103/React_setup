@@ -13,7 +13,7 @@ const FmcsasView = (props) => {
   const location = useLocation();
   console.log("location", location.state);
   const data = location?.state?.state;
-//   const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(true);
   const [img, setImg] = useState();
 
   const getgoogleimage = () => {
@@ -22,11 +22,13 @@ const FmcsasView = (props) => {
         .then((res) => {
           console.log(res.data);
           const photoRef = res?.data?.data;
-          setImg( `https://maps.googleapis.com/maps/api/place/photo?maxwidth=1280&maxheight=1020&photoreference=${photoRef}&key=${process.env.REACT_APP_GOOGLE_MAP_LEY}`)
-        //   setLoading(false)
+          const image = `https://maps.googleapis.com/maps/api/place/photo?maxwidth=1280&maxheight=1020&photoreference=${photoRef}&key=${process.env.REACT_APP_GOOGLE_MAP_LEY}`
+          setImg(image)
+          setLoading(false)
         })
         .catch((error) => {
           console.log(error);
+          setLoading(false)
         });
     }
   };
@@ -37,7 +39,7 @@ const FmcsasView = (props) => {
 
   return (
     <>
-    {/* <PageLoader loading={loading} /> */}
+    <PageLoader loading={loading} />
       <Row>
         <Col xl="Col-lg-12">
           <Card>
@@ -45,8 +47,8 @@ const FmcsasView = (props) => {
               <div className="container">
                 <div className="request_detail_card">
                   {img ?
-                      <img src={`${img}`} alt="" srcset="" width="100%" height="300px"  style={{paddingBottom:"10px",objectFit:"cover"}}/>
-                    :"`"}
+                      <img src={`${img}`} alt="" srcset="" width="100%" height="400px"  style={{paddingBottom:"10px",objectFit:"contain"}}/>
+                    :""}
                   <div className="card_header d-flex align-items-center justify-content-between">
                     <div className="d-flex align-items-center gap-3">
                       <Avatar size={64} icon={<UserOutlined />} />

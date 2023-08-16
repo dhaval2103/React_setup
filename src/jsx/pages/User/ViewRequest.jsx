@@ -46,11 +46,11 @@ const ViewRequest = () => {
                                         </div>
                                     </div>
                                     <Paragraph className='paragraph'>
-                                        {data?.status == 0 ? <Badge bg="badge-lg" className='badge-warning light badge-xs' style={{ cursor: 'pointer' }}>Pending</Badge> 
-                                        : data?.status == 1 ? <Badge bg="badge-lg" className='badge-success light badge-xs' style={{ cursor: 'pointer' }}>Completed</Badge> 
-                                        : data?.status == 2 ? <Badge bg="badge-lg" className='badge-danger light badge-xs' style={{ cursor: 'pointer' }}>Rejected</Badge> 
-                                        : data?.status == 3 ? <Badge bg="badge-lg" className='badge-info light badge-xs' style={{ cursor: 'pointer' }}>Incompleted</Badge> 
-                                        : data?.status == 4 ? <Badge bg="badge-lg" className='badge-danger light badge-xs' style={{ cursor: 'pointer' }}>Expired</Badge> 
+                                        {data?.status == 0 ? <Badge bg="badge-lg" className='badge-warning light' style={{ cursor: 'pointer'  , fontSize:"15px"}}>Pending</Badge> 
+                                        : data?.status == 1 ? <Badge bg="badge-lg" className='badge-success light ' style={{ cursor: 'pointer'  , fontSize:"15px"}}>Completed</Badge> 
+                                        : data?.status == 2 ? <Badge bg="badge-lg" className='badge-danger light' style={{ cursor: 'pointer' , fontSize:"15px" }}>Rejected</Badge> 
+                                        : data?.status == 3 ? <Badge bg="badge-lg" className='badge-info light ' style={{ cursor: 'pointer' , fontSize:"15px" }}>Incompleted</Badge> 
+                                        : data?.status == 4 ? <Badge bg="badge-lg" className='badge-danger light ' style={{ cursor: 'pointer'  , fontSize:"15px"}}>Expired</Badge> 
                                         : ''}
                                     </Paragraph>
                                 </div>

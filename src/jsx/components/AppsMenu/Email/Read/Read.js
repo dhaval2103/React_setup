@@ -1,6 +1,5 @@
 import React, { Fragment } from "react";
 import { Link } from "react-router-dom";
-import profileImage from "../../../../../images/avatar/1.jpg";
 
 import { Dropdown } from "react-bootstrap";
 import PageTitle from "../../../../layouts/PageTitle";
@@ -203,7 +202,6 @@ const Read = () => {
                                   <div className="read-content">
                                     <div className="media pt-3 d-sm-flex d-block justify-content-between">
                                       <div className="clearfix mb-3 d-flex">
-                                        <img className="me-3 rounded" width="70" alt="" src={profileImage}/>
                                         <div className="media-body me-2">
                                           <h5 className="text-primary mb-0 mt-1">Ingredia Nutrisha</h5>
                                           <p className="mb-0">20 May 2021</p>

@@ -1,46 +1,24 @@
-import React, { useContext, useEffect, useMemo, useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import UserService from '../../../services/user';
 import { useDispatch } from 'react-redux';
-import { Button, Empty, Form, Input, Modal, Table } from 'antd';
-import { Badge, Dropdown } from "react-bootstrap";
-import moment from 'moment';
-import { SocketContext } from '../../../context/Socket';
-import { SearchOutlined } from '@ant-design/icons';
-import Swal from 'sweetalert2';
-import ToastMe from '../Common/ToastMe';
-import PhoneInput from "react-phone-input-2";
-import dummy from "../../../images/dummy.png";
+import {  Empty, Table } from 'antd';
+import { Dropdown } from "react-bootstrap";
 import 'react-phone-input-2/lib/style.css';
-import startsWith from 'lodash.startswith';
 import PageLoader from '../Common/PageLoader';
 
 
 const User = (props) => {
     const dispatch = useDispatch();
     const [data, setData] = useState([]);
-    const { chatClient } = useContext(SocketContext);
-    const [id, setId] = useState(null);
-    const [phoneValue, setPhoneValue] = useState();
-    const [visible, setVisible] = useState(false);
-    const [userImg, setUserImg] = useState('');
-    const [imageName, setImageName] = useState();
-    const [form] = Form.useForm();
-    const [isDefaultCountryCode, setIsDefaultCountryCode] = useState('in');
-    const [phoneNo, setPhoneNo] = useState('');
-    const [countryCode, setCountryCode] = useState('');
     const [loading, setLoading] = useState(true);
-    const [mobile, setMobile] = useState('');
-    const [email, setEmail] = useState('');
-    const [phoneVelidation, setPhoneVlidation] = useState('')
     const [selectedFilter, setSelectedFilter] = useState(null)
 
     const getBrokerList = (value) => {
         dispatch(UserService.getfmcsas(value))
             .then((res) => {
                 var newArr = [];
-                console.log(res,"result");
                 res.data.map((element, index) => {
-                    newArr.push({key: index,...element});
+                  return  newArr.push({key: index,...element});
                 })
                 setData(newArr)
                 setLoading(false)
@@ -50,36 +28,6 @@ const User = (props) => {
             })
     }
     
-    const handleFilterChange = (filterOption) => {
-        setSelectedFilter(filterOption);
-    };
-
-    const approvePendingUser = (text) => {
-        console.log('text',text);
-        let data = {};
-        data.userid = text.id
-        Swal.fire({
-            title: 'Are you sure?',
-            text: "To change this User status!",
-            icon: 'warning',
-            showCancelButton: true,
-            confirmButtonColor: '#3085d6',
-            cancelButtonColor: '#d33',
-            confirmButtonText: 'Yes, Change it!'
-        }).then((result) => {
-            if (result.isConfirmed) {
-                dispatch(UserService.changeUserStatus(data))
-                    .then((res) => {
-                        getBrokerList();
-                        ToastMe("User status change successfully", 'success')
-                    })
-                    .catch((errors) => {
-                        console.log({ errors })
-                    })
-            }
-        })
-    };
-
     const filteredData = useMemo(() => {
     if (selectedFilter === null) return data; // No filter selected, return all data
 
@@ -97,7 +45,8 @@ const User = (props) => {
     
     useEffect(() => {
         getBrokerList();
-    }, [])
+    })
+
     const viewUser = (text) =>{
         console.log(text,"text");
         props.history.push("/fmcsas-view",{state:text})

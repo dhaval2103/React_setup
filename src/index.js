@@ -7,19 +7,16 @@ import { store } from './store/store';
 import reportWebVitals from "./reportWebVitals";
 import SimpleReactLightbox from "simple-react-lightbox";
 import ThemeContext from "./context/ThemeContext";
-import SocketContextProvider from "./context/Socket";
 
 ReactDOM.render(
     <React.StrictMode>
         <Provider store={store}>
             <SimpleReactLightbox>
-                <SocketContextProvider>
                     <BrowserRouter basename={process.env.PUBLIC_URL}>
                         <ThemeContext>
                             <App />
                         </ThemeContext>
                     </BrowserRouter>
-                </SocketContextProvider>
             </SimpleReactLightbox>
         </Provider>
     </React.StrictMode>,

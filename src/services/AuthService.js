@@ -26,7 +26,6 @@ export function login(email, password) {
         password,
         returnSecureToken: true,
     };
-    console.log('postData',postData);
     return axios.post(
         `${BaseUrl}/admin/login`,
         JSON.stringify(postData), {

@@ -7,7 +7,6 @@ import {
 } from '../../services/AuthService';
 import Http from '../../Http';
 import ToastMe from '../../jsx/pages/Common/ToastMe';
-const BaseUrl = process.env.REACT_APP_BASE_URL;
 
 export const SIGNUP_CONFIRMED_ACTION = '[signup action] confirmed signup';
 export const SIGNUP_FAILED_ACTION = '[signup action] failed signup';
@@ -60,7 +59,6 @@ export function logout(history) {
     //             return reject(data);
     //         })
     // })
-    console.log(history);
     localStorage.removeItem('adminDetails');
     history.push('/login');
     return {

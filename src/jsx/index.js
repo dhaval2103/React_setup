@@ -48,30 +48,8 @@ import Invoice from "./components/AppsMenu/Shop/Invoice/Invoice";
 import ProductOrder from "./components/AppsMenu/Shop/ProductOrder";
 import Customers from "./components/AppsMenu/Shop/Customers/Customers";
 
-/// Charts
-import SparklineChart from "./components/charts/Sparkline";
-import ChartJs from "./components/charts/Chartjs";
-import Chartist from "./components/charts/chartist";
-import RechartJs from "./components/charts/rechart";
-import ApexChart from "./components/charts/apexcharts";
 
-/// Bootstrap
-import UiAlert from "./components/bootstrap/Alert";
-import UiAccordion from "./components/bootstrap/Accordion";
-import UiBadge from "./components/bootstrap/Badge";
-import UiButton from "./components/bootstrap/Button";
-import UiModal from "./components/bootstrap/Modal";
-import UiButtonGroup from "./components/bootstrap/ButtonGroup";
-import UiListGroup from "./components/bootstrap/ListGroup";
-import UiCards from "./components/bootstrap/Cards";
-import UiCarousel from "./components/bootstrap/Carousel";
-import UiDropDown from "./components/bootstrap/DropDown";
-import UiPopOver from "./components/bootstrap/PopOver";
-import UiProgressBar from "./components/bootstrap/ProgressBar";
-import UiTab from "./components/bootstrap/Tab";
-import UiPagination from "./components/bootstrap/Pagination";
-import UiGrid from "./components/bootstrap/Grid";
-import UiTypography from "./components/bootstrap/Typography";
+
 
 /// Plugins
 import Select2 from "./components/PluginsMenu/Select2/Select2";
@@ -209,30 +187,9 @@ const Markup = () => {
     { url: "app-calender", component: Calendar },
     { url: "post-details", component: PostDetails },
 
-    /// Chart
-    { url: "chart-sparkline", component: SparklineChart },
-    { url: "chart-chartjs", component: ChartJs },
-    { url: "chart-chartist", component: Chartist },
-    { url: "chart-apexchart", component: ApexChart },
-    { url: "chart-rechart", component: RechartJs },
 
-    /// Bootstrap
-    { url: "ui-alert", component: UiAlert },
-    { url: "ui-badge", component: UiBadge },
-    { url: "ui-button", component: UiButton },
-    { url: "ui-modal", component: UiModal },
-    { url: "ui-button-group", component: UiButtonGroup },
-    { url: "ui-accordion", component: UiAccordion },
-    { url: "ui-list-group", component: UiListGroup },
-    { url: "ui-card", component: UiCards },
-    { url: "ui-carousel", component: UiCarousel },
-    { url: "ui-dropdown", component: UiDropDown },
-    { url: "ui-popover", component: UiPopOver },
-    { url: "ui-progressbar", component: UiProgressBar },
-    { url: "ui-tab", component: UiTab },
-    { url: "ui-pagination", component: UiPagination },
-    { url: "ui-typography", component: UiTypography },
-    { url: "ui-grid", component: UiGrid },
+
+
 
     /// Plugin
     { url: "uc-select2", component: Select2 },

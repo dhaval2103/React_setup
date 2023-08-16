@@ -87,13 +87,11 @@ export function getSubUserList(data) {
     return dispatch => (
         new Promise((resolve, reject) => {
             const id = data.state.id
-            console.log(id,"idddd");
             Http.callApi('get',  `${BaseUrl}/admin/subUserList?id=${id}`, [])
                 .then(function (res) {
                     return resolve(res);
                 })
                 .catch(function (error) {
-                    console.log(error);
                     const data = {
                         errorData: error.response.data.message,
                         // statusCode: error.response.status,
@@ -113,7 +111,6 @@ export function getCarrierSubUserList(data) {
                     return resolve(res);
                 })
                 .catch(function (error) {
-                    console.log(error);
                     const data = {
                         errorData: error.response.data.message,
                         // statusCode: error.response.status,
@@ -133,7 +130,6 @@ export function getCarrierSubUserLinkList(data) {
                     return resolve(res);
                 })
                 .catch(function (error) {
-                    console.log(error);
                     const data = {
                         errorData: error.response.data.message,
                         // statusCode: error.response.status,
@@ -146,33 +142,33 @@ export function getCarrierSubUserLinkList(data) {
 
 export function getSubUserFmcsasList(data) {
     data.env = 'test'
-    const queryParam = `?dotNumber=${data.dotNumber}&env=${data.env}`;
-    return new Promise((resolve, reject) => {
+    const queryParam = `?dotNumber=${data?.state?.dotNumber}&env=${data?.env}`;
+    return dispatch => (
+     new Promise((resolve, reject) => {
         Http.callApi('get', BaseUrl + '/admin/carrierfmcsasList' + queryParam,[])
             .then(function (res) {
-                resolve(res);
+                return  resolve(res);
             })
             .catch(function (error) {
                 const data = {
                     errorData: error.response.data.message,
                     // statusCode: error.response.status,
                 };
-                reject(data);
+                return reject(data);
             });
-    });
+    })
+    )
 }
 
 export function getLinkList(data) {
     return dispatch => (
         new Promise((resolve, reject) => {
             const id = data.state.id
-            console.log(id,"idddd");
             Http.callApi('get',  `${BaseUrl}/admin/linkList?id=${id}`, [])
                 .then(function (res) {
                     return resolve(res);
                 })
                 .catch(function (error) {
-                    console.log(error);
                     const data = {
                         errorData: error.response.data.message,
                         // statusCode: error.response.status,
@@ -208,11 +204,9 @@ export function changeUserStatus(data) {
         new Promise((resolve, reject) => {
             Http.callApi('post', BaseUrl + '/admin/changeUserStatus', data, {env:'test'})
                 .then(function (res) {
-                    console.log('resss',res)
                     return resolve(res);
                 })
                 .catch(function (error) {
-                    console.log('error',error);
                     // const data = {
                     //     // errorData: error.response.data.message,
                     //     // statusCode: error.response.status,
@@ -228,7 +222,6 @@ export function getProfile() {
         new Promise((resolve, reject) => {
             Http.callApi('get', BaseUrl + '/admin/profile')
                 .then(function (res) {
-                    console.log('profile',res);
                     // dispatch(action.setNotificationData(res));
                     return resolve(res);
                 })
@@ -288,12 +281,10 @@ export function carrierDetails(data) {
 
 export function googleimage(data) {
     data.env = 'test'
-    console.log(data,"data");
     const queryParam = `?id=${data.id}&env=${data.env}`;
     return new Promise((resolve, reject) => {
         Http.callApi('get', BaseUrl + '/admin/physicalAddressPhotos' + queryParam,[])
             .then(function (res) {
-                console.log(res,"firstimg");
                 resolve(res);
             })
             .catch(function (error) {
@@ -313,7 +304,6 @@ export function changepassword(data, adminData) {
         new Promise((resolve, reject) => {
             Http.callApi('post', BaseUrl + '/admin/changePassword', data)
                 .then(function (res) {
-                    console.log(res);
                     return resolve(res);
                 })
                 .catch(function (error) {
@@ -349,7 +339,6 @@ export function uploadProfile(data) {
                     return resolve(res);
                 })
                 .catch(function (error) {
-                    console.log(error);
                     const data = {
                         errorData: error.response.data.message,
                         // statusCode: error.response.status,
@@ -369,7 +358,6 @@ export function uploadUserProfile(data) {
                     return resolve(res);
                 })
                 .catch(function (error) {
-                    console.log(error);
                     const data = {
                         errorData: error.response.data.message,
                         // statusCode: error.response.status,
@@ -389,7 +377,6 @@ export function uploadCommonImage(data) {
                     return resolve(res);
                 })
                 .catch(function (error) {
-                    console.log(error);
                     const data = {
                         errorData: error.response.data.message,
                         // statusCode: error.response.status,
@@ -408,7 +395,6 @@ export function getCms() {
                     return resolve(res);
                 })
                 .catch(function (error) {
-                    console.log(error);
                     const data = {
                         errorData: error.response.data.message,
                         // statusCode: error.response.status,
@@ -471,7 +457,6 @@ export function approveRequest(data) {
                     return resolve(res);
                 })
                 .catch(function (error) {
-                    console.log(error);
                     const data = {
                         errorData: error.response.data.message,
                         // statusCode: error.response.status,
@@ -491,7 +476,6 @@ export function updateCms(data) {
                     return resolve(res);
                 })
                 .catch(function (error) {
-                    console.log(error);
                     const data = {
                         errorData: error.response.data,
                         // statusCode: error.response.status,
@@ -511,7 +495,6 @@ export function deleteCms(data) {
                     return resolve(res);
                 })
                 .catch(function (error) {
-                    console.log(error);
                     const data = {
                         errorData: error.response.data.message,
                         // statusCode: error.response.status,
@@ -532,7 +515,6 @@ export function sendNotification(data) {
                     return resolve(res);
                 })
                 .catch(function (error) {
-                    console.log(error);
                     const data = {
                         errorData: error.response.data.message,
                         // statusCode: error.response.status,
@@ -552,7 +534,6 @@ export function sendUserNotification(data) {
                     return resolve(res);
                 })
                 .catch(function (error) {
-                    console.log(error);
                     const data = {
                         errorData: error.response.data.message,
                         // statusCode: error.response.status,
@@ -571,7 +552,6 @@ export function getNotificationlist(type) {
                     return resolve(res);
                 })
                 .catch(function (error) {
-                    console.log(error);
                     const data = {
                         errorData: error.response.data.message,
                         // statusCode: error.response.status,
@@ -590,7 +570,6 @@ export function addFaq(data) {
                     return resolve(res);
                 })
                 .catch(function (error) {
-                    console.log(error);
                     const data = {
                         errorData: error.response.data.message,
                         // statusCode: error.response.status,
@@ -610,7 +589,6 @@ export function getFaq(data) {
                     return resolve(res);
                 })
                 .catch(function (error) {
-                    console.log(error);
                     const data = {
                         errorData: error.response.data.message,
                         // statusCode: error.response.status,
@@ -629,7 +607,6 @@ export function getGroup() {
                     return resolve(res);
                 })
                 .catch(function (error) {
-                    console.log(error);
                     const data = {
                         errorData: error.response.data.message,
                         // statusCode: error.response.status,
@@ -649,7 +626,6 @@ export function uploadMedia(data) {
                     return resolve(res);
                 })
                 .catch(function (error) {
-                    console.log(error);
                     const data = {
                         errorData: error.response.data,
                         // statusCode: error.response.status,
@@ -669,7 +645,6 @@ export function addTechnicalguides(data) {
                     return resolve(res);
                 })
                 .catch(function (error) {
-                    console.log(error);
                     const data = {
                         errorData: error.response.data.message,
                         // statusCode: error.response.status,
@@ -690,7 +665,6 @@ export function getTechnicalGuides(data) {
                     return resolve(res);
                 })
                 .catch(function (error) {
-                    console.log(error);
                     const data = {
                         errorData: error.response.data.message,
                         // statusCode: error.response.status,
@@ -710,7 +684,6 @@ export function editTechnicalguides(data) {
                     return resolve(res);
                 })
                 .catch(function (error) {
-                    console.log(error);
                     const data = {
                         errorData: error.response.data,
                         // statusCode: error.response.status,
@@ -730,7 +703,6 @@ export function createGroup(data) {
                     return resolve(res);
                 })
                 .catch(function (error) {
-                    console.log(error);
                     const data = {
                         errorData: error.response.data.message,
                         // statusCode: error.response.status,
@@ -750,7 +722,6 @@ export function editGroup(data) {
                     return resolve(res);
                 })
                 .catch(function (error) {
-                    console.log(error);
                     const data = {
                         errorData: error.response.data.message,
                         // statusCode: error.response.status,
@@ -771,7 +742,6 @@ export function getTechnician(data) {
                     return resolve(res);
                 })
                 .catch(function (error) {
-                    console.log(error);
                     const data = {
                         errorData: error.response.data.message,
                         // statusCode: error.response.status,
@@ -829,7 +799,6 @@ export function addRequest(data) {
                     return resolve(res);
                 })
                 .catch(function (error) {
-                    console.log(error);
                     const data = {
                         errorData: error.response.data.errors,
                         // statusCode: error.response.status,
@@ -849,7 +818,6 @@ export function listRequestbyId(data) {
                     return resolve(res);
                 })
                 .catch(function (error) {
-                    console.log(error);
                     const data = {
                         errorData: error.response.data.message,
                         // statusCode: error.response.status,
@@ -870,7 +838,6 @@ export function listSubscribeUser(data) {
                     return resolve(res);
                 })
                 .catch(function (error) {
-                    console.log(error);
                     const data = {
                         errorData: error.response.data.message,
                         // statusCode: error.response.status,
@@ -890,7 +857,6 @@ export function addSubscribeUser(data) {
                     return resolve(res);
                 })
                 .catch(function (error) {
-                    console.log(error);
                     const data = {
                         errorData: error.response.data.message,
                         // statusCode: error.response.status,
@@ -910,7 +876,6 @@ export function updateUser(data) {
                     return resolve(res);
                 })
                 .catch(function (error) {
-                    console.log(error);
                     const data = {
                         errors: error.response.data.errors,
                         // statusCode: error.response.status,
@@ -930,7 +895,6 @@ export function addUser(data) {
                     return resolve(res);
                 })
                 .catch(function (error) {
-                    console.log(error);
                     const data = {
                         errors: error.response.data.errors,
                         // statusCode: error.response.status,
@@ -950,7 +914,6 @@ export function getPaymentHistory() {
                     return resolve(res);
                 })
                 .catch(function (error) {
-                    console.log(error);
                     const data = {
                         errorData: error.response.data.errors,
                         // statusCode: error.response.status,
