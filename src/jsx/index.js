@@ -151,7 +151,7 @@ const Markup = () => {
     // { url: "view-maintence", component: ViewMaintence },
     { url: "request-list", component: RequestList },
     { url: "request-detail", component: viewRequest },
-    { url: "fmcsas-list", component: FmcsasList },
+    { url: "FMCSAS-list", component: FmcsasList },
     { url: "fmcsas-view", component: FmcsasView },
 
     //Setting
@@ -179,7 +179,7 @@ const Markup = () => {
 	
 	/// Apps
     { url: "app-profile", component: AppProfile },
-    { url: "changepassword", component: ChangePassword },
+    { url: "change-password", component: ChangePassword },
     { url: "google2fa", component: Google2fa },
     { url: "email-compose", component: Compose },
     { url: "email-inbox", component: Inbox },
