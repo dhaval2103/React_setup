@@ -8,6 +8,7 @@ import Swal from 'sweetalert2';
 import ToastMe from '../Common/ToastMe';
 import 'react-phone-input-2/lib/style.css';
 import PageLoader from '../Common/PageLoader';
+import { phoneFormate } from "../helper";
 
 
 const User = (props) => {
@@ -147,6 +148,9 @@ const User = (props) => {
             title: 'Mobile',
             dataIndex: 'mobile',
             key: 'mobile',
+            render: (text) => {
+                return <span>{phoneFormate(text)}</span>;
+              },
         },
         {
             title: 'Is Approve',

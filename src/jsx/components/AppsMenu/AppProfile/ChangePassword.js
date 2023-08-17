@@ -121,7 +121,6 @@ const ChangePassword = (props) => {
                 ></div>
               </div>
               <div className="profile-info">
-                <div className="profile-photo"></div>
 
                 <Form
                   name="basic"
@@ -129,7 +128,7 @@ const ChangePassword = (props) => {
                   initialValues={{ remember: true }}
                   onFinish={onFinish}
                   autoComplete="off"
-                  className="mx-auto"
+                  className="w-75 m-auto"
                 >
                   <div className="row">
                     <div className="col-lg-12">

@@ -151,6 +151,10 @@ const AppProfile = (props) => {
                               message:
                                 "Only @ and . characters are allowed in the email!",
                             },
+                            {
+                              type: 'email',
+                              message: 'Please enter a valid email address!',
+                            },
                           ]}
                         >
                           <Input
