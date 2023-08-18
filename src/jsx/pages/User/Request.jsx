@@ -149,9 +149,11 @@ const Request = (props) => {
                 return item.status === 0; // Filter for "Pending" brokers
             } else if (selectedFilter === 1) {
                 return item.status === 1; // Filter for "completed" brokers
-            } else if (selectedFilter === 2) {
-                return item.status === 2; // Filter for "Rejected" brokers
-            } else if (selectedFilter === 3) {
+            }
+            //  else if (selectedFilter === 2) {
+            //     return item.status === 2; // Filter for "Rejected" brokers
+            // } 
+            else if (selectedFilter === 3) {
                 return item.status === 3; // Filter for "Incompleted" brokers
             } else if (selectedFilter === 4) {
                 return item.status === 4; // Filter for "Expired" brokers
@@ -183,7 +185,7 @@ const Request = (props) => {
                                 <Dropdown.Item onClick={() => handleFilterChange(5)}>All</Dropdown.Item>
                                 <Dropdown.Item onClick={() => handleFilterChange(0)}>Pending</Dropdown.Item>
                                 <Dropdown.Item onClick={() => handleFilterChange(1)}>Completed</Dropdown.Item>
-                                <Dropdown.Item onClick={() => handleFilterChange(2)}>Rejected</Dropdown.Item>
+                                {/* <Dropdown.Item onClick={() => handleFilterChange(2)}>Rejected</Dropdown.Item> */}
                                 <Dropdown.Item onClick={() => handleFilterChange(3)}>Incompleted</Dropdown.Item>
                                 <Dropdown.Item onClick={() => handleFilterChange(4)}>Expired</Dropdown.Item>
                                 {/* Add more filter options here */}
