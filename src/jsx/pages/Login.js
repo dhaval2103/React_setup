@@ -15,7 +15,7 @@ const loginSchema = Yup.object().shape({
     .min(3, "Your username must consist of at least 3 characters ")
     .max(50, "Your username must consist of at least 3 characters ")
     .required("Please enter a Email")
-    .matches(/^[a-zA-Z0-9.@]+$/, "Special characters are not allowed")
+    // .matches(/^[a-zA-Z0-9.@]+$/, "Special characters are not allowed")
     .email("email is not validate"),
   password: Yup.string()
     .min(5, "Your password must be at least 5 characters long")

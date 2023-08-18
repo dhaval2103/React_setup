@@ -208,7 +208,7 @@ const Home = () => {
 										</span>
 										<div className="invoices">
 											<h4>{countData?.user?.Carrier ?? 0}</h4>
-											<span>Career</span>
+											<span>carrier</span>
 										</div>
 									</div>
 								</div>
