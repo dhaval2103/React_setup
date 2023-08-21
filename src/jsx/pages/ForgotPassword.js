@@ -1,7 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 // image
-import logo from "../../images/logo-full.png";
+// import logo from "../../images/logo-full.png";
 const ForgotPassword = ({ history }) => {
   const onSubmit = (e) => {
     e.preventDefault();
@@ -19,7 +19,7 @@ const ForgotPassword = ({ history }) => {
                   <div className="auth-form">
                     <div className="text-center mb-3">
                       <Link to="/dashboard">
-                        <img src={logo} alt="" />
+                        {/* <img src={logo} alt="" /> */}
                       </Link>
                     </div>
                     <h4 className="text-center mb-4 ">Forgot Password</h4>

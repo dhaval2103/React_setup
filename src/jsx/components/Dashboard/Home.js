@@ -8,13 +8,12 @@ import { Card, Dropdown, Nav, Tab, Tabs } from 'react-bootstrap';
 import PageLoader from '../../pages/Common/PageLoader';
 
 ///Images
-import small from "./../../../images/profile/small/pic1.jpg";
-import avt1 from "./../../../images/avatar/1.jpg";
-import avt2 from "./../../../images/avatar/2.jpg";
-import avt3 from "./../../../images/avatar/3.jpg";
-import avt4 from "./../../../images/avatar/4.jpg";
-import avt5 from "./../../../images/avatar/5.jpg";
-import avt6 from "./../../../images/avatar/6.jpg";
+// import avt1 from "./../../../images/avatar/1.jpg";
+// import avt2 from "./../../../images/avatar/2.jpg";
+// import avt3 from "./../../../images/avatar/3.jpg";
+// import avt4 from "./../../../images/avatar/4.jpg";
+// import avt5 from "./../../../images/avatar/5.jpg";
+// import avt6 from "./../../../images/avatar/6.jpg";
 
 
 //Import Components

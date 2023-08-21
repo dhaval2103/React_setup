@@ -7,7 +7,7 @@ import {
     signupAction,
 } from '../../store/actions/AuthActions';
 // image
-import logo from "../../images/logo-full.png";
+// import logo from "../../images/logo-full.png";
 
 function Register(props) {
     const [email, setEmail] = useState('');
@@ -47,7 +47,7 @@ function Register(props) {
                   <div className="auth-form">
                     <div className="text-center mb-3">
                       <Link to="/login">
-                        <img src={logo} alt="" />
+                        {/* <img src={logo} alt="" /> */}
                       </Link>
                     </div>
                     <h4 className="text-center mb-4 ">Sign up your account</h4>

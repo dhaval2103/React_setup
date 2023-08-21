@@ -13414,7 +13414,7 @@ Fixing Order => Base + Typography >> General Layout + Grid >> Page Layout + Comp
   z-index: 9999; }
   .sidebar-right .bg-label-pattern {
     background: transparent;
-    background-image: url("../images/pattern/pattern5.png");
+    /* background-image: url("../images/pattern/pattern5.png"); */
     background-size: 130%; }
   .sidebar-right .bootstrap-select {
     height: 3rem;
@@ -25863,7 +25863,7 @@ table.dataTable.display tbody td {
     box-shadow: none; }
 
 .welcome-content {
-  background: url("./../images/1.jpg");
+  /* background: url("./../images/1.jpg"); */
   background-size: cover;
   background-position: center;
   height: 100%;
@@ -26360,7 +26360,7 @@ table.dataTable.display tbody td {
   width: 60px;
   height: 60px;
   display: inline-block;
-  background: url("../images/like.png");
+  /* background: url("../images/like.png"); */
   cursor: pointer;
   margin: -25px -15px; }
 
@@ -27048,7 +27048,7 @@ table.dataTable.display tbody td {
     content: "";
     top: 0;
     left: 0;
-    background-image: url(../images/pattern/pattern7.png);
+    /* background-image: url(../images/pattern/pattern7.png); */
     background-size: cover;
     background-position: inherit;
     background-repeat: no-repeat; }

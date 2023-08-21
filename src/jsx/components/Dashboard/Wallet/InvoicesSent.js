@@ -2,11 +2,11 @@ import React,{useState} from 'react';
 import {Link} from 'react-router-dom';
 
 //Images
-import avt1 from './../../../../images/avatar/1.jpg';
-import avt2 from './../../../../images/avatar/2.jpg';
-import avt3 from './../../../../images/avatar/3.jpg';
-import avt4 from './../../../../images/avatar/4.jpg';
-import avt5 from './../../../../images/avatar/5.jpg';
+// import avt1 from './../../../../images/avatar/1.jpg';
+// import avt2 from './../../../../images/avatar/2.jpg';
+// import avt3 from './../../../../images/avatar/3.jpg';
+// import avt4 from './../../../../images/avatar/4.jpg';
+// import avt5 from './../../../../images/avatar/5.jpg';
 
 const InvoiceList = [
 	{ image: avt1, title:'FSoziety',  doller: '25', },

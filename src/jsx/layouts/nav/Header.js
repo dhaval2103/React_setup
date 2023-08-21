@@ -6,7 +6,7 @@ import PerfectScrollbar from "react-perfect-scrollbar";
 
 /// Image
 //import profile from "../../../images/user.jpg";
-import avatar from "../../../images/avatar/1.jpg";
+// import avatar from "../../../images/avatar/1.jpg";
 import { Dropdown } from "react-bootstrap";
 //import LogoutPage from './Logout';
 
