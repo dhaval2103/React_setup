@@ -184,7 +184,7 @@ const ChangePassword = (props) => {
                             {
                               pattern: /(?=.*[a-z])(?=.*[A-Z])(?=.*[^a-zA-Z])/,
                               message:
-                                "Password must contain at least one uppercase letter, one lowercase letter, and one special character.",
+                                "Password must contain a capital letter, small letter, Number & a special.",
                             },
                           ]}
                         >
@@ -219,7 +219,7 @@ const ChangePassword = (props) => {
                             {
                               pattern: /(?=.*[a-z])(?=.*[A-Z])(?=.*[^a-zA-Z])/,
                               message:
-                                "Password must contain at least one uppercase letter, one lowercase letter, and one special character.",
+                                "Password must contain a capital letter, small letter, Number & a special .",
                             },
                             {
                               min: 6,
