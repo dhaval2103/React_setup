@@ -41,6 +41,7 @@ import SubUserLinkList from "./pages/User/SubUserLinkList";
 import CarrierSubUserList from "./pages/User/CarrierSubUserList";
 import SubUserFmcsasList from "./pages/User/SubUserFmcsasList";
 import CarrierSubUserLinkList from "./pages/User/CarrierSubUserLinkList";
+import AppProfile from "./components/AppsMenu/AppProfile/AppProfile";
 
 
 
@@ -77,6 +78,7 @@ const Markup = () => {
 
 	
 	/// Apps
+    { url: "app-profile", component: AppProfile },
     { url: "change-password", component: ChangePassword },
     { url: "google2fa", component: Google2fa },
 
