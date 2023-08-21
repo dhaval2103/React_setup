@@ -247,7 +247,7 @@ const SideBar = (props) => {
               <li><Link className={`${path === "broker-list" ? "mm-active" : ""}`} to="/broker-list">Broker List</Link></li>
             </ul>
           </li>
-          <li className={`${path === "FMCSAS-list" || path === "fmcsas-view" ? "mm-active" : ""}`}>
+          <li className={`${path === "FMCSAS-list" || path === "FMCSAS-view" ? "mm-active" : ""}`}>
             <Link to="/FMCSAS-list" >
               <i className="fa fa-question-circle"></i>
               <span className="nav-text">FMCSAS List</span>

@@ -51,7 +51,7 @@ const User = (props) => {
     },[])
 
     const viewUser = (text) =>{
-        props.history.push("/fmcsas-view",{state:text})
+        props.history.push("/FMCSAS-view",{state:text})
     }
 
     const svg1 = (

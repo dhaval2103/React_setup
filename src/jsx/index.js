@@ -65,7 +65,7 @@ const Markup = () => {
     { url: "request-list", component: RequestList },
     { url: "request-detail", component: viewRequest },
     { url: "FMCSAS-list", component: FmcsasList },
-    { url: "fmcsas-view", component: FmcsasView },
+    { url: "FMCSAS-view", component: FmcsasView },
 
     
     //Notification

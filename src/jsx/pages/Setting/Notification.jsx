@@ -71,6 +71,7 @@ const Notification = () => {
                 setLoading(false);
             })
             .catch((errors) => {
+                setLoading(false);
                 console.log({ errors })
             })
     }
