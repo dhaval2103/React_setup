@@ -48,7 +48,7 @@ const User = (props) => {
     
     useEffect(() => {
         getBrokerList();
-    })
+    },[])
 
     const viewUser = (text) =>{
         props.history.push("/fmcsas-view",{state:text})
@@ -76,27 +76,42 @@ const User = (props) => {
             title: 'Dot Number',
             dataIndex: 'dotNumber',
             key: 'dotNumber',
+            render:(data)=>(
+                data === '' || data === null ? "-" : data
+            )
         },
         {
             title: 'Mc Number',
             dataIndex: 'mc_number',
             key: 'mc_number',
+            render:(data)=>(
+                data === '' || data === null ? "-" : data
+            )
         },
         {
             title: 'Legal Name',
             dataIndex: 'legal_name',
             key: 'legal_name',
+            render:(data)=>(
+                data === '' || data === null ? "-" : data
+            )
         },
         {
             title: 'Phone',
             dataIndex: 'phone',
             key: 'phone',
+            render:(data)=>(
+                data === '' || data === null ? "-" : data
+            )
         },
 
         {
             title: 'Latest Update',
             dataIndex: 'latest_update',
             key: 'latest_update',
+            render:(data)=>(
+                data === '' || data === null ? "-" : data
+            )
         },
         {
             title: 'Actions',
@@ -128,7 +143,7 @@ const User = (props) => {
             <PageLoader loading={loading} />
             <div className="card">
                 <div className="card-header">
-                    <h4 className="card-title">Fmcsas List</h4>
+                    <h4 className="card-title">FMCSAS List</h4>
                     {/* <div>
                         <Dropdown>
                         <Dropdown.Toggle variant="primary">

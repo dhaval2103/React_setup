@@ -16,7 +16,6 @@ const ViewRequest = () => {
     const { state } = useLocation();
     const requestDetail = state?.requestDetail;
     const [data, setData] = useState([]);
-
     const getDetail = () => {
         if (requestDetail) {
             setData(requestDetail)
@@ -157,7 +156,7 @@ const ViewRequest = () => {
                                                     Dot Number:
                                                 </Title>
                                                 <Paragraph>
-                                                    {data?.dotNumber ?? '-'}
+                                                    {data?.dotNumber === "" ? '--' : data?.dotNumber}
                                                 </Paragraph>
                                             </Typography>
                                         </Col>

@@ -43,7 +43,7 @@ const User = (props) => {
     
     useEffect(() => {
         getBrokerList();
-    })
+    },[])
 
     
 

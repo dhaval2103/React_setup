@@ -89,7 +89,7 @@ const SideBar = (props) => {
     app = [
       "app-profile",
       "post-details",
-      "changepassword",
+      "change-password",
       "app-calender",
       "email-compose",
       "email-inbox",
@@ -217,7 +217,7 @@ const SideBar = (props) => {
               </svg>
               <span className="ms-2">Profile </span>
             </Link>
-            <Link to="/changepassword" className="dropdown-item ai-icon">
+            <Link to="/change-password" className="dropdown-item ai-icon">
               <svg id="icon-user1" xmlns="http://www.w3.org/2000/svg" className="text-primary me-1"
                 width={18} height={18} viewBox="0 0 24 24" fill="none"
                 stroke="currentColor" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round"
@@ -276,10 +276,10 @@ const SideBar = (props) => {
               {/* <li><Link className={`${path === "fmcsas-list" ? "mm-active" : ""}`} to="/fmcsas-list">Fmcsas List</Link></li> */}
             </ul>
           </li>
-          <li className={`${path === "fmcsas-list" || path === "fmcsas-view" ? "mm-active" : ""}`}>
-            <Link to="/fmcsas-list" >
+          <li className={`${path === "FMCSAS-list" || path === "fmcsas-view" ? "mm-active" : ""}`}>
+            <Link to="/FMCSAS-list" >
               <i className="fa fa-question-circle"></i>
-              <span className="nav-text">Fmcsas List</span>
+              <span className="nav-text">FMCSAS List</span>
             </Link>
           </li>
           <li className={`${path === "request-list" || path == "request-detail" ? "mm-active" : ""}`}>

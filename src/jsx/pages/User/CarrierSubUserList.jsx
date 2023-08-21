@@ -50,7 +50,7 @@ const User = (props) => {
 
     useEffect(() => {
         getBrokerList();
-    })
+    },[])
 
     const svg1 = (
         <svg width="20px" height="20px" viewBox="0 0 24 24" version="1.1">
@@ -134,7 +134,7 @@ const User = (props) => {
                             
                         </Dropdown.Toggle>
                         <Dropdown.Menu>
-                            <Dropdown.Item onClick={() => FmcsasListData(data)}>Fmcsas List</Dropdown.Item>
+                            <Dropdown.Item onClick={() => FmcsasListData(data)}>FMCSAS List</Dropdown.Item>
                         </Dropdown.Menu>
                     </Dropdown>
                 </>

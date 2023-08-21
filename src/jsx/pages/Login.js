@@ -8,6 +8,20 @@ import {
 // image
 import logo from "../../icons/logo.png";
 import loginbg from "../../images/bg-login.jpg";
+import * as Yup from "yup";
+
+const loginSchema = Yup.object().shape({
+  email: Yup.string()
+    .min(3, "Your username must consist of at least 3 characters ")
+    .max(50, "Your username must consist of at least 3 characters ")
+    .required("Please enter a Email")
+    // .matches(/^[a-zA-Z0-9.@]+$/, "Special characters are not allowed")
+    .email("email is not validate"),
+  password: Yup.string()
+    .min(5, "Your password must be at least 5 characters long")
+    .max(50, "Your password must be at least 5 characters long")
+    .required("Please enter a password"),
+});
 
 function Login(props) {
   const [email, setEmail] = useState('');
@@ -19,22 +33,19 @@ function Login(props) {
 
   function onLogin(e) {
     e.preventDefault();
-    let error = false;
-    const errorObj = { ...errorsObj };
-    if (email === '') {
-      errorObj.email = 'Email is Required';
-      error = true;
-    }
-    if (password === '') {
-      errorObj.password = 'Password is Required';
-      error = true;
-    }
-    setErrors(errorObj);
-    if (error) {
-      return;
-    }
-    dispatch(loadingToggleAction(true));
-    dispatch(loginAction(email, password, props.history));
+    loginSchema.validate({ email, password }, { abortEarly: false })
+    .then(() => {
+      // Validation successful, proceed with login action
+      dispatch(loadingToggleAction(true));
+      dispatch(loginAction(email, password, props.history));
+    })
+    .catch(validationErrors => {
+      const newErrors = {};
+      validationErrors.inner.forEach(error => {
+        newErrors[error.path] = error.message;
+      });
+      setErrors(newErrors);
+    });
   }
 
   return (
@@ -87,6 +98,7 @@ function Login(props) {
                           </label>
                           <input type="email" className="form-control"
                             value={email}
+                            validationSchema={loginSchema}
                             onChange={(e) => setEmail(e.target.value)}
                             placeholder="Type Your Email Address"
                           />
@@ -97,6 +109,7 @@ function Login(props) {
                           <input
                             type="password"
                             className="form-control"
+                            validationSchema={loginSchema}
                             value={password}
                             placeholder="Type Your Password"
                             onChange={(e) =>

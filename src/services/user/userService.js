@@ -263,7 +263,7 @@ export function updateUserProfile(data, adminData) {
 // userService.js
 export function carrierDetails(data) {
     data.env = 'test'
-    const queryParam = `?dotNumber=${data.dotNumber}&env=${data.env}`;
+    const queryParam = `?userId=${data?.id}&env=${data.env}`;
     return new Promise((resolve, reject) => {
         Http.callApi('get', BaseUrl + '/admin/carrierDetails' + queryParam,[])
             .then(function (res) {

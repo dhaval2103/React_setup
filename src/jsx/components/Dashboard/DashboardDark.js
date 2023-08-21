@@ -198,7 +198,7 @@ const DashboardDark = () => {
 										</span>
 										<div className="invoices">
 											<h4>{countData?.user?.Carrier ?? 0}</h4>
-											<span>Career</span>
+											<span>carrier</span>
 										</div>
 									</div>
 								</div>
@@ -234,7 +234,7 @@ const DashboardDark = () => {
 						</div>
 					</div>
 				</div>
-				<h4><b>Careers Request</b></h4>
+				<h4><b>carrier Request</b></h4>
 				<Card style={{ backgroundColor: 'transparent', boxShadow: 'none' }} className='mt-1'>
 					<Tab.Container onSelect={onChange} defaultActiveKey={'All'}>
 						<Nav as="ul" className="nav-pills mb-4">

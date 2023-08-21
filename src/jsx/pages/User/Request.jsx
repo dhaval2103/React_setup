@@ -32,7 +32,7 @@ const Request = (props) => {
 
     useEffect(() => {
         getRequestList();
-    })
+    },[])
 
     const svg1 = (
         <svg width="20px" height="20px" viewBox="0 0 24 24" version="1.1">
@@ -56,21 +56,33 @@ const Request = (props) => {
             title: 'First Name',
             dataIndex: 'firstName',
             key: 'firstName',
+            render:(data)=>(
+                data === '' || data === null ? "-" : data
+            )
         },
         {
             title: 'Last Name',
             dataIndex: 'lastName',
             key: 'lastName',
+            render:(data)=>(
+                data === '' || data === null ? "-" : data
+            )
         },
         {
             title: 'Tracking Number',
             dataIndex: 'trackingNumber',
             key: 'trackingNumber',
+            render:(data)=>(
+                data === '' || data === null ? "-" : data
+            )
         },
         {
             title: 'Ticket Number',
             dataIndex: 'ticketNumber',
             key: 'ticketNumber',
+            render:(data)=>(
+                data === '' || data === null ? "-" : data
+            )
         },
         {
             title: 'Status',
@@ -137,9 +149,11 @@ const Request = (props) => {
                 return item.status === 0; // Filter for "Pending" brokers
             } else if (selectedFilter === 1) {
                 return item.status === 1; // Filter for "completed" brokers
-            } else if (selectedFilter === 2) {
-                return item.status === 2; // Filter for "Rejected" brokers
-            } else if (selectedFilter === 3) {
+            }
+            //  else if (selectedFilter === 2) {
+            //     return item.status === 2; // Filter for "Rejected" brokers
+            // } 
+            else if (selectedFilter === 3) {
                 return item.status === 3; // Filter for "Incompleted" brokers
             } else if (selectedFilter === 4) {
                 return item.status === 4; // Filter for "Expired" brokers
@@ -171,7 +185,7 @@ const Request = (props) => {
                                 <Dropdown.Item onClick={() => handleFilterChange(5)}>All</Dropdown.Item>
                                 <Dropdown.Item onClick={() => handleFilterChange(0)}>Pending</Dropdown.Item>
                                 <Dropdown.Item onClick={() => handleFilterChange(1)}>Completed</Dropdown.Item>
-                                <Dropdown.Item onClick={() => handleFilterChange(2)}>Rejected</Dropdown.Item>
+                                {/* <Dropdown.Item onClick={() => handleFilterChange(2)}>Rejected</Dropdown.Item> */}
                                 <Dropdown.Item onClick={() => handleFilterChange(3)}>Incompleted</Dropdown.Item>
                                 <Dropdown.Item onClick={() => handleFilterChange(4)}>Expired</Dropdown.Item>
                                 {/* Add more filter options here */}
