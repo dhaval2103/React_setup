@@ -51,7 +51,7 @@ const User = (props) => {
     const approvePendingUser = (text) => {
         let data = {};
         data.userid = text.id
-        data.isApprove = text.isApprove = 0 ? 1 : 0
+        data.status = text.status = 0 ? 1 : 0
         Swal.fire({
             title: 'Are you sure?',
             text: "To change this User status!",
@@ -73,6 +73,33 @@ const User = (props) => {
             }
         })
     };
+
+    const rejectUser = (text) => {
+        let data = {};
+        data.userid = text.id
+        data.status = text.status = 2
+        Swal.fire({
+            title: 'Are you sure?',
+            text: "To change this User status!",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Yes, Change it!'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                dispatch(UserService.changeUserStatus(data))
+                    .then((res) => {
+                        getBrokerList();
+                        ToastMe("User rejected successfully", 'success')
+                    })
+                    .catch((errors) => {
+                        console.log({ errors })
+                    })
+            }
+        })
+    };
+
 
     const filteredData = useMemo(() => {
     if (selectedFilter === null) return data; // No filter selected, return all data
@@ -157,10 +184,14 @@ const User = (props) => {
             dataIndex: 'isApprove',
             key: 'isApprove',
             render: (text, data) => (
-                <div>
+                // <div>
+                //     {data.isApprove === 1 ? <Badge bg=" badge-lg " className='badge-primary light badge-xs' >Approve</Badge>
+                //         : <Badge bg=" badge-lg " className='badge-danger light badge-xs' style={{ cursor: 'pointer' }} onClick={() => approvePendingUser(data)}>Pending</Badge>}
+                // </div>
+                 <div>
                     {data.isApprove === 1 ? <Badge bg=" badge-lg " className='badge-primary light badge-xs' >Approve</Badge>
-                        : <Badge bg=" badge-lg " className='badge-danger light badge-xs' style={{ cursor: 'pointer' }} onClick={() => approvePendingUser(data)}>Pending</Badge>}
-                </div>
+                        : <Badge bg=" badge-lg " className='badge-danger light badge-xs' >Pending</Badge>}
+                 </div>
             ),
         },
         {
@@ -190,6 +221,8 @@ const User = (props) => {
                         <Dropdown.Menu>
                             <Dropdown.Item onClick={() => viewSubUser(data)}>Sub User List</Dropdown.Item>
                             <Dropdown.Item onClick={() => LinkListData(data)}>Link List</Dropdown.Item>
+                            <Dropdown.Item onClick={() => approvePendingUser(data)}>Accept</Dropdown.Item>
+                            <Dropdown.Item onClick={() => rejectUser(data)}>Reject</Dropdown.Item>
                         </Dropdown.Menu>
                     </Dropdown>
                 </>
