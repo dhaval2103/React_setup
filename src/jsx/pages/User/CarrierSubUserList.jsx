@@ -45,7 +45,7 @@ const User = (props) => {
     }
     
     const FmcsasListData = (text) => {
-        props.history.push("/sub-user-fmcsas-list",{state:text})
+        props.history.push("/sub-user-FMCSAS-list",{state:text})
     }
 
     useEffect(() => {

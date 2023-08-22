@@ -5,6 +5,7 @@ import {  Empty, Table } from 'antd';
 import { Dropdown } from "react-bootstrap";
 import 'react-phone-input-2/lib/style.css';
 import PageLoader from '../Common/PageLoader';
+import moment from 'moment';
 
 
 const User = (props) => {
@@ -107,10 +108,10 @@ const User = (props) => {
 
         {
             title: 'Latest Update',
-            dataIndex: 'latest_update',
-            key: 'latest_update',
+            dataIndex: 'updatedAt',
+            key: 'updatedAt',
             render:(data)=>(
-                data === '' || data === null ? "-" : data
+                data === '' || data === null ? "-" : moment(data).format('DD/MM/YYYY')
             )
         },
         {

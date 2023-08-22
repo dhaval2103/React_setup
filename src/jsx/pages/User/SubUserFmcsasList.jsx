@@ -17,7 +17,6 @@ const User = (props) => {
     const getBrokerList = () => {
         dispatch(UserService.getSubUserFmcsasList(linkdata))
             .then((res) => {
-                console.log(res.data,"ressssssssssss");
                 var newArr = [];
                 for (var i = 0; i < res.data.length; i++) {
                     newArr.push(
@@ -135,7 +134,7 @@ const User = (props) => {
             <PageLoader loading={loading} />
             <div className="card">
                 <div className="card-header">
-                    <h4 className="card-title">Sub User Fmcsas List</h4>
+                    <h4 className="card-title">Sub User FMCSAS List</h4>
                 </div>
                 <div className="card-body">
                 <div className="table-responsive">
