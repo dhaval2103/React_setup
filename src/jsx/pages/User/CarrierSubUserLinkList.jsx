@@ -134,7 +134,7 @@ const CarrierSubUserLinkList = (props) => {
                             
                         </Dropdown.Toggle>
                         <Dropdown.Menu>
-                            <Dropdown.Item onClick={() => FmcsasListData(data)}>Fmcsas List</Dropdown.Item>
+                            <Dropdown.Item onClick={() => FmcsasListData(data)}>Fmcsa List</Dropdown.Item>
                         </Dropdown.Menu>
                     </Dropdown>
                 </>

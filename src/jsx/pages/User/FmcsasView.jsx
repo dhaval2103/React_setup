@@ -117,7 +117,7 @@ const FmcsasView = (props) => {
                     <Row gutter={12}>
                       <Col xs={24} md={24} lg={24}>
                         <Typography>
-                          <Title level={5}>Power units:</Title>
+                          <Title level={5}>Physical address:</Title>
                           <Paragraph>{data?.physical_address}</Paragraph>
                         </Typography>
                       </Col>
@@ -125,7 +125,7 @@ const FmcsasView = (props) => {
                     <Row gutter={12}>
                       <Col xs={24} md={8} lg={6}>
                         <Typography>
-                          <Title level={5}>Internal Tracking Number:</Title>
+                          <Title level={5}>MC MX FF Number:</Title>
                           <Paragraph>
                             {data?.mc_mx_ff_numbers
                               ? data?.mc_mx_ff_numbers
@@ -141,7 +141,7 @@ const FmcsasView = (props) => {
                       </Col>
                       <Col xs={24} md={8} lg={6}>
                         <Typography>
-                          <Title level={5}>Link Up Geo Location:</Title>
+                          <Title level={5}>Mailing address:</Title>
                           <Paragraph>{data?.mailing_address}</Paragraph>
                         </Typography>
                       </Col>

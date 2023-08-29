@@ -52,7 +52,7 @@ const User = (props) => {
     },[])
 
     const viewUser = (text) =>{
-        props.history.push("/FMCSAS-view",{state:text})
+        props.history.push("/FMCSA-view",{state:text})
     }
 
     const svg1 = (
@@ -144,7 +144,7 @@ const User = (props) => {
             <PageLoader loading={loading} />
             <div className="card">
                 <div className="card-header">
-                    <h4 className="card-title">FMCSAS List</h4>
+                    <h4 className="card-title">FMCSA List</h4>
                     {/* <div>
                         <Dropdown>
                         <Dropdown.Toggle variant="primary">

@@ -45,7 +45,7 @@ const User = (props) => {
     }
     
     const FmcsasListData = (text) => {
-        props.history.push("/sub-user-FMCSAS-list",{state:text})
+        props.history.push("/sub-user-FMCSA-list",{state:text})
     }
 
     useEffect(() => {
@@ -134,7 +134,7 @@ const User = (props) => {
                             
                         </Dropdown.Toggle>
                         <Dropdown.Menu>
-                            <Dropdown.Item onClick={() => FmcsasListData(data)}>FMCSAS List</Dropdown.Item>
+                            <Dropdown.Item onClick={() => FmcsasListData(data)}>FMCSA List</Dropdown.Item>
                         </Dropdown.Menu>
                     </Dropdown>
                 </>

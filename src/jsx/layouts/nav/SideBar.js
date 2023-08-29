@@ -247,10 +247,10 @@ const SideBar = (props) => {
               <li><Link className={`${path === "broker-list" ? "mm-active" : ""}`} to="/broker-list">Broker List</Link></li>
             </ul>
           </li>
-          <li className={`${path === "FMCSAS-list" || path === "FMCSAS-view" ? "mm-active" : ""}`}>
-            <Link to="/FMCSAS-list" >
+          <li className={`${path === "FMCSA-list" || path === "FMCSA-view" ? "mm-active" : ""}`}>
+            <Link to="/FMCSA-list" >
               <i className="fa fa-question-circle"></i>
-              <span className="nav-text">FMCSAS List</span>
+              <span className="nav-text">FMCSA List</span>
             </Link>
           </li>
           <li className={`${path === "request-list" || path == "request-detail" ? "mm-active" : ""}`}>

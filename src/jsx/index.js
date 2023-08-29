@@ -62,11 +62,11 @@ const Markup = () => {
     { url: "sub-user-link-list", component: SubUserLinkList },
     { url: "carrier-sub-user-list", component: CarrierSubUserList },
     { url: "carrier-sub-user-Link-list", component: CarrierSubUserLinkList },
-    { url: "sub-user-FMCSAS-list", component: SubUserFmcsasList },
+    { url: "sub-user-FMCSA-list", component: SubUserFmcsasList },
     { url: "request-list", component: RequestList },
     { url: "request-detail", component: viewRequest },
-    { url: "FMCSAS-list", component: FmcsasList },
-    { url: "FMCSAS-view", component: FmcsasView },
+    { url: "FMCSA-list", component: FmcsasList },
+    { url: "FMCSA-view", component: FmcsasView },
 
     
     //Notification

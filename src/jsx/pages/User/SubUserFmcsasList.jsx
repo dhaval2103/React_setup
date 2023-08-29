@@ -134,7 +134,7 @@ const User = (props) => {
             <PageLoader loading={loading} />
             <div className="card">
                 <div className="card-header">
-                    <h4 className="card-title">Sub User FMCSAS List</h4>
+                    <h4 className="card-title">Sub User FMCSA List</h4>
                 </div>
                 <div className="card-body">
                 <div className="table-responsive">
