@@ -221,8 +221,12 @@ const User = (props) => {
                         <Dropdown.Menu>
                             <Dropdown.Item onClick={() => viewSubUser(data)}>Sub User List</Dropdown.Item>
                             <Dropdown.Item onClick={() => LinkListData(data)}>Link List</Dropdown.Item>
-                            <Dropdown.Item onClick={() => approvePendingUser(data)}>Accept</Dropdown.Item>
-                            <Dropdown.Item onClick={() => rejectUser(data)}>Reject</Dropdown.Item>
+                            {data.isApprove === 0 && (
+                                <Dropdown.Item onClick={() => approvePendingUser(data)}>Accept</Dropdown.Item>
+                            )}
+                            {data.isApprove === 0 && (
+                                <Dropdown.Item onClick={() => rejectUser(data)}>Reject</Dropdown.Item>
+                            )}
                         </Dropdown.Menu>
                     </Dropdown>
                 </>
