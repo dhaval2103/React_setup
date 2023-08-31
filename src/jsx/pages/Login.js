@@ -28,6 +28,7 @@ function Login(props) {
   let errorsObj = { email: '', password: '' };
   const [errors, setErrors] = useState(errorsObj);
   const [password, setPassword] = useState('');
+  const [showPassword, setShowPassword] = useState(false);
 
   const dispatch = useDispatch();
 
@@ -59,14 +60,8 @@ function Login(props) {
             <h2 className="main-title mb-2">Welcome To KYT</h2>
             <p className="">Know Your Trucker</p>
             <ul className="social-icons mt-4">
-              {/* <li><Link to={"#"}><i className="fab fa-facebook-f"></i></Link></li>
-              <li><Link to={"#"}><i className="fab fa-twitter"></i></Link></li>
-              <li><Link to={"#"}><i className="fab fa-linkedin-in"></i></Link></li> */}
             </ul>
             <div className="mt-5 bottom-privacy">
-              {/* <Link to={"#"} className="mr-4">Privacy Policy</Link>
-              <Link to={"#"} className="mr-4">Contact</Link>
-              <Link to={"#"} className="">© 20222 DexignLab</Link> */}
             </div>
           </div>
         </div>
@@ -106,35 +101,29 @@ function Login(props) {
                         </div>
                         <div className="form-group">
                           <label className="mb-2 "><strong>Password</strong></label>
-                          <input
-                            type="password"
-                            className="form-control"
-                            validationSchema={loginSchema}
-                            value={password}
-                            placeholder="Type Your Password"
-                            onChange={(e) =>
-                              setPassword(e.target.value)
-                            }
-                          />
+                            <div className="input-group" style={{borderBottom:"2px solid #000"}}>
+                              <input
+                                type={showPassword ? 'text' : 'password'}
+                                className="form-control border-0"
+                                validationSchema={loginSchema}
+                                value={password}
+                                placeholder="Type Your Password"
+                                onChange={(e) =>
+                                  setPassword(e.target.value)
+                                }
+                              />
+                              <div className="form-group text-center mb-0">
+                                <button
+                                  className="btn btn-link"
+                                  type="button"
+                                  onClick={() => setShowPassword(!showPassword)}
+                                >
+                                  <i className={`fas ${showPassword ? 'fa-eye-slash' : 'fa-eye'}`} />
+                                </button>
+                              </div>
+                          </div>
                           {errors.password && <div className="text-danger fs-12">{errors.password}</div>}
                         </div>
-                        {/* <div className="form-row d-flex justify-content-between mt-4 mb-2">
-                          <div className="form-group">
-                            <div className="form-check custom-checkbox ml-1">
-                              <input
-                                type="checkbox"
-                                className="form-check-input"
-                                id="basic_checkbox_1"
-                              />
-                              <label
-                                className="form-check-label"
-                                htmlFor="basic_checkbox_1"
-                              >
-                                Remember my preference
-                              </label>
-                            </div>
-                          </div>
-                        </div> */}
                         <div className="text-center">
                           <button
                             type="submit"
@@ -144,14 +133,6 @@ function Login(props) {
                           </button>
                         </div>
                       </form>
-                      {/* <div className="new-account mt-2">
-                        <p className="">
-                          Don't have an account?{" "}
-                          <Link className="text-primary" to="./page-register">
-                            Sign up
-                          </Link>
-                        </p>
-                      </div> */}
                     </div>
                   </div>
                 </div>

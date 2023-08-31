@@ -146,7 +146,7 @@ const ChangePassword = (props) => {
                           ]}
                         >
                           <Input.Password
-                            placeholder="Cuurent Password"
+                            placeholder="Current Password"
                             iconRender={(visible) =>
                               visible ? (
                                 <EyeOutlined />
@@ -174,8 +174,8 @@ const ChangePassword = (props) => {
                               message: "Please enter your New Password",
                             },
                             {
-                              min: 6,
-                              message: "Password Minimum Length 6",
+                              min: 8,
+                              message: "Password Minimum Length 8",
                             },
                             {
                               max: 50,
@@ -184,7 +184,7 @@ const ChangePassword = (props) => {
                             {
                               pattern: /(?=.*[a-z])(?=.*[A-Z])(?=.*[^a-zA-Z])/,
                               message:
-                                "Password must contain a capital letter, small letter, Number & a special.",
+                                "Password must contain a capital letter, small letter, Number & a special characters.",
                             },
                           ]}
                         >
@@ -219,11 +219,11 @@ const ChangePassword = (props) => {
                             {
                               pattern: /(?=.*[a-z])(?=.*[A-Z])(?=.*[^a-zA-Z])/,
                               message:
-                                "Password must contain a capital letter, small letter, Number & a special .",
+                                "Password must contain a capital letter, small letter, Number & a special characters.",
                             },
                             {
-                              min: 6,
-                              message: "Password Minimum Length 6",
+                              min: 8,
+                              message: "Password Minimum Length 8",
                             },
                             {
                               max: 50,
