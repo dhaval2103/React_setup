@@ -190,7 +190,8 @@ const UserNotification = (props) => {
             <Modal open={visible} title={id ? "Resend Notification" : "Add Notification"} okText="Submit" cancelText="Cancel"
                 onCancel={() => {
                     setVisible(false);
-                }}
+                }} 
+                maskClosable={false}
                 onOk={() => {
                     form.validateFields().then((values) => {
                       onSubmit(values);

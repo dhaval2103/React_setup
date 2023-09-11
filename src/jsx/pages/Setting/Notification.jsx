@@ -157,6 +157,7 @@ const Notification = () => {
                 onCancel={() => {
                     setVisible(false);
                 }}
+                maskClosable={false}
                 footer={[
                     <Button key="cancel" onClick={() => setVisible(false)}> Cancel </Button>,
                     <Button
