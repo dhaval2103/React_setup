@@ -104,7 +104,8 @@ const User = (props) => {
       dataIndex: "mobile",
       key: "mobile",
       render: (text) => {
-        return <span>{phoneFormate(text)}</span>;
+        // return <span>{phoneFormate(text)}</span>;
+        return <span>{text}</span>;
       },
     },
     {
