@@ -7,6 +7,7 @@ import moment from 'moment';
 import 'react-phone-input-2/lib/style.css';
 import PageLoader from '../Common/PageLoader';
 import { useLocation } from 'react-router-dom/cjs/react-router-dom.min';
+import { phoneFormate } from '../helper';
 
 
 const User = (props) => {
@@ -32,6 +33,7 @@ const User = (props) => {
                             email: res.data[i].email,
                             id: res.data[i]._id,
                             mobile: res.data[i].mobile,
+                            alternativeMobile: res.data[i].alternativeMobile,
                             createdAt: res.data[i].createdAt,
                         }
                     )
@@ -108,6 +110,14 @@ const User = (props) => {
             title: 'Mobile',
             dataIndex: 'mobile',
             key: 'mobile',
+        },
+        {
+            title: "Alternative Mobile",
+            dataIndex: "alternativeMobile",
+            key: "alternativeMobile",
+            render: (text) => {
+              return <span>{phoneFormate(text)}</span>;
+            },
         },
         {
             title: 'Created At',

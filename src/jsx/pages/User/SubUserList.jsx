@@ -30,6 +30,7 @@ const User = (props) => {
                             email: res.data[i].email,
                             id: res.data[i]._id,
                             mobile: res.data[i].mobile,
+                            ext: res.data[i].ext,
                             createdAt: res.data[i].createdAt,
                         }
                     )
@@ -96,6 +97,11 @@ const User = (props) => {
             title: 'Mobile',
             dataIndex: 'mobile',
             key: 'mobile',
+        },
+        {
+            title: 'Ext',
+            dataIndex: 'ext',
+            key: 'ext',
         },
         {
             title: 'Created At',

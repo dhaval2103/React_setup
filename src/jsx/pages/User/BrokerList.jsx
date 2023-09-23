@@ -31,6 +31,7 @@ const User = (props) => {
                             email: res.data[i].email,
                             id: res.data[i]._id,
                             mobile: res.data[i].mobile,
+                            ext: res.data[i].ext,
                             createdAt: res.data[i].createdAt,
                             isApprove: res.data[i].isApprove,
                         }
@@ -176,7 +177,7 @@ const User = (props) => {
             dataIndex: 'mobile',
             key: 'mobile',
             render: (text) => {
-                return <span>{text}</span>;
+                return <span>{phoneFormate(text)}</span>;
               },
         },
         {
@@ -193,6 +194,11 @@ const User = (props) => {
                         : <Badge bg=" badge-lg " className='badge-danger light badge-xs' >Pending</Badge>}
                  </div>
             ),
+        },
+        {
+            title: 'Ext',
+            dataIndex: 'ext',
+            key: 'ext',
         },
         {
             title: 'Created At',

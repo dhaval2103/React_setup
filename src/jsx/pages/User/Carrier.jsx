@@ -26,6 +26,7 @@ const User = (props) => {
           email: res.data[i].email,
           id: res.data[i]._id,
           mobile: res.data[i].mobile,
+          alternativeMobile: res.data[i].alternativeMobile,
           createdAt: res.data[i].createdAt,
         });
       }
@@ -104,8 +105,15 @@ const User = (props) => {
       dataIndex: "mobile",
       key: "mobile",
       render: (text) => {
-        // return <span>{phoneFormate(text)}</span>;
-        return <span>{text}</span>;
+        return <span>{phoneFormate(text)}</span>;
+      },
+    },
+    {
+      title: "Alternative Mobile",
+      dataIndex: "alternativeMobile",
+      key: "alternativeMobile",
+      render: (text) => {
+        return <span>{phoneFormate(text)}</span>;
       },
     },
     {
