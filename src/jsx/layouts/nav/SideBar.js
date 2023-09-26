@@ -266,7 +266,7 @@ const SideBar = (props) => {
               <span className="nav-text">Notifications</span>
             </Link>
             <ul >
-            <li><Link className={`${path === "general-notification" ? "mm-active" : ""}`} to="/general-notification">General Notifications</Link></li>
+            {/* <li><Link className={`${path === "general-notification" ? "mm-active" : ""}`} to="/general-notification">General Notifications</Link></li> */}
             <li><Link className={`${path === "user-notification" ? "mm-active" : ""}`} to="/user-notification">Individual Notification</Link></li>
             </ul>
           </li>
