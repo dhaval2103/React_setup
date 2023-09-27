@@ -181,6 +181,14 @@ const User = (props) => {
               },
         },
         {
+            title: 'Ext',
+            dataIndex: 'ext',
+            key: 'ext',
+            render: (text) => (
+                <span>{text || '-'}</span>
+            ),
+        },
+        {
             title: 'Is Approve',
             dataIndex: 'isApprove',
             key: 'isApprove',
@@ -194,11 +202,6 @@ const User = (props) => {
                         : <Badge bg=" badge-lg " className='badge-danger light badge-xs' >Pending</Badge>}
                  </div>
             ),
-        },
-        {
-            title: 'Ext',
-            dataIndex: 'ext',
-            key: 'ext',
         },
         {
             title: 'Created At',

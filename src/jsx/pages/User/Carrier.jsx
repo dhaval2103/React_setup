@@ -112,9 +112,9 @@ const User = (props) => {
       title: "Alternative Mobile",
       dataIndex: "alternativeMobile",
       key: "alternativeMobile",
-      render: (text) => {
-        return <span>{phoneFormate(text)}</span>;
-      },
+      render: (text) => (
+        <span>{text ? phoneFormate(text) : '-'}</span>
+      ),
     },
     {
       title: "DOT number",
