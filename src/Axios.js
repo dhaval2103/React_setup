@@ -39,6 +39,7 @@ axios.interceptors.response.use(
         return response
     },
     (error) => {
+        console.log('errrrrr', error);
         switch (error.response.status) {
             case 401:
                 // store.dispatch(actions.authLogout())

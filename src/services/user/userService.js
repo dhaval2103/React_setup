@@ -246,7 +246,7 @@ export function updateUserProfile(data, adminData) {
                     adminData.email = data.email;
                     adminData.mobile = data.mobile;
                     // adminData.profileImage = data.image
-                    localStorage.setItem('adminDetails', JSON.stringify(adminData));
+                    localStorage.setItem('userDetails', JSON.stringify(adminData));
                     return resolve(res);
                 })
                 .catch(function (error) {

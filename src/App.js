@@ -31,9 +31,12 @@ function App(props) {
         checkAutoLogin(dispatch, props.history);
     }, [dispatch, props.history]);
 
+    
     useEffect(() => {
-        const tokenDetailsString = localStorage.getItem('adminDetails');
+        const tokenDetailsString = localStorage.getItem('userDetails');
+        console.log(tokenDetailsString,222);
         if (tokenDetailsString) {
+            
             if (location?.pathname?.split("/")?.[1] == 'login') {
                 props.history.push('/dashboard');
             }

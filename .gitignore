@@ -1,6 +1,5 @@
 /node_modules
 /*.dio
-/src/uploads/
 /.vscode
 /.idea
 build

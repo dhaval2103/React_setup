@@ -57,8 +57,8 @@ function Login(props) {
             <img src={logo} alt="" width="210px" />
           </Link>
           <div className="login-description">
-            <h2 className="main-title mb-2">Welcome To KYT</h2>
-            <p className="">Know Your Trucker</p>
+            <h2 className="main-title mb-2">Welcome To React</h2>
+            <p className="">React Js</p>
             <ul className="social-icons mt-4">
             </ul>
             <div className="mt-5 bottom-privacy">

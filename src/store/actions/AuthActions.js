@@ -14,10 +14,12 @@ export const LOGIN_CONFIRMED_ACTION = '[login action] confirmed login';
 export const LOGIN_FAILED_ACTION = '[login action] failed login';
 export const LOADING_TOGGLE_ACTION = '[Loading action] toggle loading';
 export const LOGOUT_ACTION = '[Logout action] logout action';
+
 export function signupAction(email, password, history) {
     return (dispatch) => {
         signUp(email, password)
             .then((response) => {
+                console.log('response', response);
                 saveTokenInLocalStorage(response.data);
                 runLogoutTimer(
                     dispatch,
@@ -28,6 +30,7 @@ export function signupAction(email, password, history) {
                 history.push('/dashboard');
             })
             .catch((error) => {
+                // console.log('error1', error);
                 const errorMessage = formatError(error.response.data);
                 dispatch(signupFailedAction(errorMessage));
             });
@@ -59,7 +62,7 @@ export function logout(history) {
     //             return reject(data);
     //         })
     // })
-    localStorage.removeItem('adminDetails');
+    localStorage.removeItem('userDetails');
     history.push('/login');
     return {
         type: LOGOUT_ACTION,
@@ -73,7 +76,7 @@ export function loginAction(email, password, history) {
                 const resObject = {
                     kind: "identitytoolkit#VerifyPasswordResponse",
                     localId: "qmt6dRyipIad8UCc0QpMV2MENSy1",
-                    email: 'admin@admin.com',
+                    email: 'dhaval.k@elaunchinfotech.in',
                     id: response.data.user.id,
                     displayName: response.data.user.displayName,
                     profileImage: response.data.user.photoURL,
@@ -90,11 +93,12 @@ export function loginAction(email, password, history) {
                     resObject.expiresIn * 1000,
                     history,
                 );
+                console.log('cLLED');
                 history.push('/dashboard');
                 dispatch(loginConfirmedAction(resObject));
             })
             .catch((error) => {
-                console.log('error',error);
+                // console.log('error2',error);
                 ToastMe(error?.response?.data?.message, 'error')
                 const errorMessage = formatError(error?.response?.data?.message);
                 dispatch(loginFailedAction(errorMessage));

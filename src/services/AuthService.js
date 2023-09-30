@@ -27,7 +27,7 @@ export function login(email, password) {
         returnSecureToken: true,
     };
     return axios.post(
-        `${BaseUrl}/admin/login`,
+        `${BaseUrl}/user/login`,
         JSON.stringify(postData), {
             headers: { "Content-Type": "application/json", "env": "test" },
             withCredentials: true,
@@ -37,9 +37,7 @@ export function login(email, password) {
     );
 }
 
-
 export function formatError(errorResponse) {
-    console.log('errorResponse',errorResponse);
     switch (errorResponse) {
         case 'EMAIL_EXISTS':
             //return 'Email already exists';
@@ -65,7 +63,7 @@ export function saveTokenInLocalStorage(tokenDetails) {
     tokenDetails.expireDate = new Date(
         new Date().getTime() + tokenDetails.expiresIn * 1000,
     );
-    localStorage.setItem('adminDetails', JSON.stringify(tokenDetails));
+    localStorage.setItem('userDetails', JSON.stringify(tokenDetails));
 }
 
 export function runLogoutTimer(dispatch, timer, history) {
@@ -77,7 +75,8 @@ export function runLogoutTimer(dispatch, timer, history) {
 }
 
 export function checkAutoLogin(dispatch, history) {
-    const tokenDetailsString = localStorage.getItem('adminDetails');
+console.log(history,999)
+    const tokenDetailsString = localStorage.getItem('userDetails');
     let tokenDetails = '';
     if (!tokenDetailsString) {
         dispatch(logout(history));
