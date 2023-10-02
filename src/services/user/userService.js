@@ -8,7 +8,7 @@ export function getUser(value) {
     let search = value || '';
     return dispatch => (
         new Promise((resolve, reject) => {
-            Http.callApi('get', BaseUrl + '/admin/userList?search=' + search)
+            Http.callApi('get', BaseUrl + '/user/userList?search=' + search)
                 .then(function (res) {
                     // dispatch(action.setNotificationData(res));
                     return resolve(res);
@@ -246,7 +246,7 @@ export function updateUserProfile(data, adminData) {
                     adminData.email = data.email;
                     adminData.mobile = data.mobile;
                     // adminData.profileImage = data.image
-                    localStorage.setItem('userDetails', JSON.stringify(adminData));
+                    localStorage.setItem('adminDetails', JSON.stringify(adminData));
                     return resolve(res);
                 })
                 .catch(function (error) {

@@ -77,15 +77,15 @@ const SideBar = (props) => {
     "transaction-details",
     "task",
   ],
-  user = [
-    "carrier-list",
-    "broker-list",
-    'user-detail'
-  ],
-  notification = [
-    "general-notification",
-    "user-notification",
-  ],
+  // user = [
+  //   "carrier-list",
+  //   "broker-list",
+  //   'user-detail'
+  // ],
+  // notification = [
+  //   "general-notification",
+  //   "user-notification",
+  // ],
     app = [
       "app-profile",
       "post-details",
@@ -237,7 +237,13 @@ const SideBar = (props) => {
               <span className="nav-text">Dashboard</span>
             </Link>
           </li>
-          <li className={`${user.includes(path) ? "mm-active" : ""}`}>
+          <li className={`${path === "User-list" || path === "User-view" ? "mm-active" : ""}`}>
+            <Link to="/User-list" >
+              <i className="fa fa-question-circle"></i>
+              <span className="nav-text">User List</span>
+            </Link>
+          </li>
+          {/* <li className={`${user.includes(path) ? "mm-active" : ""}`}>
             <Link className="has-arrow ai-icon" to="#" >
               <i className="fa fa-user"></i>
               <span className="nav-text">Users List</span>
@@ -246,8 +252,8 @@ const SideBar = (props) => {
               <li><Link className={`${path === "carrier-list" ? "mm-active" : ""}`} to="/carrier-list">Carrier List</Link></li>
               <li><Link className={`${path === "broker-list" ? "mm-active" : ""}`} to="/broker-list">Broker List</Link></li>
             </ul>
-          </li>
-          <li className={`${path === "FMCSA-list" || path === "FMCSA-view" ? "mm-active" : ""}`}>
+          </li> */}
+          {/* <li className={`${path === "FMCSA-list" || path === "FMCSA-view" ? "mm-active" : ""}`}>
             <Link to="/FMCSA-list" >
               <i className="fa fa-question-circle"></i>
               <span className="nav-text">FMCSA List</span>
@@ -266,10 +272,9 @@ const SideBar = (props) => {
               <span className="nav-text">Notifications</span>
             </Link>
             <ul >
-            {/* <li><Link className={`${path === "general-notification" ? "mm-active" : ""}`} to="/general-notification">General Notifications</Link></li> */}
             <li><Link className={`${path === "user-notification" ? "mm-active" : ""}`} to="/user-notification">Individual Notification</Link></li>
             </ul>
-          </li>
+          </li> */}
         </MM>
       </PerfectScrollbar>
     </div>

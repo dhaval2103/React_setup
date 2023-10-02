@@ -19,7 +19,7 @@ export function signupAction(email, password, history) {
     return (dispatch) => {
         signUp(email, password)
             .then((response) => {
-                console.log('response', response);
+                console.log('response', response.data);
                 saveTokenInLocalStorage(response.data);
                 runLogoutTimer(
                     dispatch,
@@ -62,7 +62,7 @@ export function logout(history) {
     //             return reject(data);
     //         })
     // })
-    localStorage.removeItem('userDetails');
+    localStorage.removeItem('adminDetails');
     history.push('/login');
     return {
         type: LOGOUT_ACTION,
@@ -77,9 +77,9 @@ export function loginAction(email, password, history) {
                     kind: "identitytoolkit#VerifyPasswordResponse",
                     localId: "qmt6dRyipIad8UCc0QpMV2MENSy1",
                     email: 'dhaval.k@elaunchinfotech.in',
-                    id: response.data.user.id,
-                    displayName: response.data.user.displayName,
-                    profileImage: response.data.user.photoURL,
+                    // id: response.data.user.id,
+                    // displayName: response.data.user.displayName,
+                    // profileImage: response.data.user.photoURL,
                     registered: true,
                     refreshToken: response.data.refreshToken,
                     accessToken: response.data.accessToken,
@@ -93,7 +93,6 @@ export function loginAction(email, password, history) {
                     resObject.expiresIn * 1000,
                     history,
                 );
-                console.log('cLLED');
                 history.push('/dashboard');
                 dispatch(loginConfirmedAction(resObject));
             })

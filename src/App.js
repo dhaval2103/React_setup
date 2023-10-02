@@ -33,7 +33,7 @@ function App(props) {
 
     
     useEffect(() => {
-        const tokenDetailsString = localStorage.getItem('userDetails');
+        const tokenDetailsString = localStorage.getItem('adminDetails');
         console.log(tokenDetailsString,222);
         if (tokenDetailsString) {
             

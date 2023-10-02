@@ -55,32 +55,32 @@ const Markup = () => {
  
     
     // User
-    { url: "carrier-list", component: User },
-    { url: "broker-list", component: BrokerList },
-    { url: "sub-user-list", component: SubUserList },
-    { url: "link-list", component: LinkList },
-    { url: "sub-user-link-list", component: SubUserLinkList },
-    { url: "carrier-sub-user-list", component: CarrierSubUserList },
-    { url: "carrier-sub-user-Link-list", component: CarrierSubUserLinkList },
-    { url: "sub-user-FMCSA-list", component: SubUserFmcsasList },
-    { url: "request-list", component: RequestList },
-    { url: "request-detail", component: viewRequest },
-    { url: "FMCSA-list", component: FmcsasList },
-    { url: "FMCSA-view", component: FmcsasView },
+    // { url: "carrier-list", component: User },
+    // { url: "broker-list", component: BrokerList },
+    // { url: "sub-user-list", component: SubUserList },
+    // { url: "link-list", component: LinkList },
+    // { url: "sub-user-link-list", component: SubUserLinkList },
+    // { url: "carrier-sub-user-list", component: CarrierSubUserList },
+    // { url: "carrier-sub-user-Link-list", component: CarrierSubUserLinkList },
+    // { url: "sub-user-FMCSA-list", component: SubUserFmcsasList },
+    // { url: "request-list", component: RequestList },
+    // { url: "request-detail", component: viewRequest },
+    // { url: "FMCSA-list", component: FmcsasList },
+    // { url: "FMCSA-view", component: FmcsasView },
 
     
     //Notification
-    { url: "general-notification", component: Notification },
-    { url: "user-notification", component: UserNotification },
-    { url: "notification-detail", component: NotificationDetail },
+    // { url: "general-notification", component: Notification },
+    // { url: "user-notification", component: UserNotification },
+    // { url: "notification-detail", component: NotificationDetail },
 
-    { url: "user-detail", component: ViewUser },
+    // { url: "user-detail", component: ViewUser },
 
 	
 	/// Apps
-    { url: "app-profile", component: AppProfile },
-    { url: "change-password", component: ChangePassword },
-    { url: "google2fa", component: Google2fa },
+    // { url: "app-profile", component: AppProfile },
+    // { url: "change-password", component: ChangePassword },
+    // { url: "google2fa", component: Google2fa },
 
 
 
